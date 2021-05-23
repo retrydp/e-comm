@@ -9,9 +9,6 @@
   &__logo {
   }
 
-  &__wrapper {
-  }
-
   &__items {
     display: flex;
     justify-content: flex-end;
@@ -20,8 +17,8 @@
   &__item {
     @include reset-a;
     @include poppins24;
-    margin-left: 98px;
     text-transform: uppercase;
+    margin-left: 98px;
     &:hover {
       color: $primary-blue;
     }
