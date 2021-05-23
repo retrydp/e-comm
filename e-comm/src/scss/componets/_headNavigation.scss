@@ -6,6 +6,7 @@
   align-items: center;
   max-width: 1140px;
   margin: 12px auto;
+
   &__logo {
   }
 
@@ -19,6 +20,7 @@
     @include poppins24;
     text-transform: uppercase;
     margin-left: 98px;
+
     &:hover {
       color: $primary-blue;
     }
@@ -29,9 +31,11 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+
   &__text {
     @include poppins18bold;
   }
+
   &__icon {
     margin-right: 6px;
   }

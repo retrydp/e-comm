@@ -1,5 +1,5 @@
 import React from "react";
-import "../scss/componets/_headNavigation.scss";
+
 const HeadNavigation = () => {
   return (
     <div className="hnav">
