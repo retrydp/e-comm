@@ -1,0 +1,36 @@
+$hr-color: #fafbfa;
+$primary-blue: #40bfff;
+$primary-red: #ff4858;
+
+@mixin reset-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+@mixin proxima20 {
+  font-family: Proxima Nova;
+  font-size: 20px;
+}
+
+@mixin poppins18bold {
+  font-family: Poppins;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+@mixin poppins24 {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 24px;
+}
+@mixin poppinsbold {
+  font-family: Poppins;
+  font-weight: bold;
+}
+
+@mixin reset-a {
+  text-decoration: none;
+  color: inherit;
+}

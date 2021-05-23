@@ -1,0 +1,28 @@
+@import "../variables";
+
+.home {
+  &__offer-banner {
+    background: url(../../assets/img/banner.png) no-repeat;
+    background-size: 100% 654px;
+  }
+
+  &__wrapper {
+    margin: 0 auto;
+    max-width: 1140px;
+  }
+
+  &__offer-text {
+    @include poppinsbold;
+    color: #fff;
+    font-size: 64px;
+    max-width: 580px;
+    letter-spacing: 0.5px;
+    padding-top: 260px;
+    padding-bottom: 500px;
+  }
+
+  &__banner-item {
+  }
+}
+.banner-cart {
+}

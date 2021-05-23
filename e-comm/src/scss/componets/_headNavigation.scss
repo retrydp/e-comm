@@ -1,0 +1,41 @@
+@import "../variables";
+
+.hnav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1140px;
+  margin: 12px auto;
+  &__logo {
+  }
+
+  &__wrapper {
+  }
+
+  &__items {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__item {
+    @include reset-a;
+    @include poppins24;
+    margin-left: 98px;
+    text-transform: uppercase;
+    &:hover {
+      color: $primary-blue;
+    }
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &__text {
+    @include poppins18bold;
+  }
+  &__icon {
+    margin-right: 6px;
+  }
+}
