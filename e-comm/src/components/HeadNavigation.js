@@ -35,4 +35,5 @@ const HeadNavigation = () => {
     </div>
   );
 };
+
 export default HeadNavigation;

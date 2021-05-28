@@ -9,6 +9,11 @@ $primary-red: #ff4858;
   cursor: pointer;
 }
 
+@mixin reset-a {
+  text-decoration: none;
+  color: inherit;
+}
+
 @mixin proxima20 {
   font-family: Proxima Nova;
   font-size: 20px;
@@ -29,9 +34,4 @@ $primary-red: #ff4858;
 @mixin poppinsbold {
   font-family: Poppins;
   font-weight: bold;
-}
-
-@mixin reset-a {
-  text-decoration: none;
-  color: inherit;
 }
