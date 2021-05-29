@@ -239,6 +239,7 @@ export const BestSeller = () => {
           </div>
         </div>
       </div>
+      <button className="bestseller__loadmore">load more</button>
     </div>
   );
 };

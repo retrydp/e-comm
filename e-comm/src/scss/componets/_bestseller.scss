@@ -4,6 +4,7 @@
   max-width: 1140px;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 90px auto;
   flex-direction: column;
 
@@ -32,8 +33,15 @@
     &:hover,
     &_active {
       color: $primary-blue;
-      text-decoration: underline;
+      border-bottom: 3px solid $primary-blue;
     }
+  }
+  &__loadmore {
+    @include reset-button;
+    @include poppinsbold;
+    color: $primary-blue;
+    border-bottom: 3px solid $primary-blue;
+    text-transform: uppercase;
   }
 }
 
