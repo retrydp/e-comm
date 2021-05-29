@@ -7,9 +7,6 @@
   max-width: 1140px;
   margin: 12px auto;
 
-  // &__logo {
-  // }
-
   &__items {
     display: flex;
     justify-content: flex-end;
@@ -19,6 +16,7 @@
   &__item {
     @include reset-a;
     @include poppins24;
+
     text-transform: uppercase;
     margin-left: 98px;
 
@@ -29,12 +27,13 @@
 }
 
 .logo {
-  display: flex;
-  align-items: center;
   @include reset-a;
 
+  display: flex;
+  align-items: center;
+
   &__text {
-    @include poppins18bold;
+    @include fontset($poppins, 18px, bold, inherit);
   }
 
   &__icon {

@@ -9,7 +9,8 @@
   flex-direction: column;
 
   &__header {
-    @include poppins35semibold;
+    @include fontset($poppins, 35px, bold, inherit);
+
     text-align: center;
     text-transform: uppercase;
     margin: 30px 0;
@@ -26,7 +27,8 @@
 
   &__link {
     @include reset-a;
-    @include poppins22;
+    @include fontset($poppins, 22px, 400, inherit);
+
     text-transform: capitalize;
     margin-bottom: 24px;
 
@@ -39,8 +41,8 @@
 
   &__loadmore {
     @include reset-button;
-    @include poppinsbold;
-    color: $primary-blue;
+    @include fontset($poppins, 22px, bold, $primary-blue);
+
     border-bottom: 3px solid $primary-blue;
     text-transform: uppercase;
   }
@@ -61,8 +63,7 @@
   }
 
   &__title {
-    color: $neutral-dark;
-    @include poppins18bold;
+    @include fontset($poppins, 18px, bold, $neutral-dark);
   }
 
   &__rating {
@@ -84,8 +85,7 @@
   align-items: center;
 
   &__actual-price {
-    color: $primary-blue;
-    @include poppins18bold;
+    @include fontset($poppins, 18px, bold, $primary-blue);
   }
 
   &__old-price {
@@ -95,8 +95,6 @@
   }
 
   &__percent {
-    @include poppinsbold;
-    font-size: 14px;
-    color: $primary-red;
+    @include fontset($poppins, 14px, bold, $primary-red);
   }
 }

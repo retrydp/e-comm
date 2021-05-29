@@ -1,9 +1,14 @@
+//colors
 $hr-color: #fafbfa;
 $primary-blue: #40bfff;
 $primary-red: #fb7181;
 $neutral-dark: #223263;
 $neutral-grey: #9098b1;
 $primary-grey: #f6f7f8;
+//fonts
+$proxima: Proxima Nova;
+$poppins: Poppins;
+$raleway: Raleway;
 
 @mixin reset-button {
   border: none;
@@ -17,6 +22,12 @@ $primary-grey: #f6f7f8;
   color: inherit;
 }
 
+@mixin fontset($ff, $fz, $fw, $color) {
+  font-family: $ff;
+  font-size: $fz;
+  font-weight: $fw;
+  color: $color;
+}
 @mixin proxima20 {
   font-family: Proxima Nova;
   font-size: 20px;
@@ -56,6 +67,7 @@ $primary-grey: #f6f7f8;
   font-family: Poppins;
   font-weight: bold;
 }
+
 @mixin poppins35semibold {
   font-family: Poppins;
   font-size: 35px;

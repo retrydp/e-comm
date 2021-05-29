@@ -11,7 +11,7 @@
   }
 
   &__select {
-    @include proxima20;
+    @include fontset($proxima, 20px, 400, inherit);
   }
 
   &__choose {
@@ -37,10 +37,11 @@
   }
 
   &__profile {
+    @include reset-button;
+
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    @include reset-button;
   }
 
   &__profilelogo {
@@ -48,26 +49,26 @@
   }
 
   &__usertext {
-    @include proxima20;
+    @include fontset($proxima, 20px, 400, inherit);
   }
 
   &__cart {
     @include reset-button;
+
     display: flex;
     align-items: center;
     position: relative;
   }
 
   &__counter {
+    @include fontset($poppins, 10px, bold, #fff);
+
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: 20px;
     min-height: 20px;
     border-radius: 50%;
-    @include poppinsbold;
-    font-size: 10px;
-    color: #fff;
     background-color: $primary-red;
     padding: 0 5px;
     -webkit-box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 1);
@@ -78,15 +79,9 @@
     left: 81%;
   }
 
-  &__itemtext {
-    @include proxima20;
-  }
-
-  // &__price {
-  // }
-
+  &__itemtext,
   &__itemprice {
-    @include proxima20;
+    @include fontset($proxima, 20px, 400, inherit);
   }
 
   &__search {

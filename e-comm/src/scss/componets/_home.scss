@@ -12,9 +12,8 @@
   }
 
   &__offer-text {
-    @include poppinsbold;
-    color: #fff;
-    font-size: 64px;
+    @include fontset($poppins, 64px, bold, #fff);
+
     max-width: 580px;
     letter-spacing: 0.5px;
     margin-top: 23vh;
@@ -26,6 +25,7 @@
     box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   }
 }
+
 .promo {
   display: flex;
 
@@ -39,8 +39,8 @@
   }
 
   &__item-name {
-    color: $neutral-dark;
-    @include poppins20bold;
+    @include fontset($poppins, 20px, bold, $neutral-dark);
+
     max-height: 3em;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -55,9 +55,9 @@
   }
 
   &__prices {
+    @include fontset($poppins, 18px, 400, $neutral-grey);
+
     display: flex;
-    color: $neutral-grey;
-    @include poppins18;
     align-items: center;
     padding: 0 30px;
   }
@@ -68,14 +68,14 @@
   }
 
   &__percent {
-    color: $primary-red;
-    @include poppins18bold;
+    @include fontset($poppins, 18px, bold, $primary-red);
+
     text-decoration: none;
   }
 
   &__actual-price {
+    @include fontset($raleway, 30px, bold, $primary-blue);
+
     margin-left: auto;
-    @include ralewaybold30;
-    color: $primary-blue;
   }
 }
