@@ -1,6 +1,9 @@
 $hr-color: #fafbfa;
 $primary-blue: #40bfff;
-$primary-red: #ff4858;
+$primary-red: #fb7181;
+$neutral-dark: #223263;
+$neutral-grey: #9098b1;
+$primary-grey: #f6f7f8;
 
 @mixin reset-button {
   border: none;
@@ -25,13 +28,42 @@ $primary-red: #ff4858;
   font-size: 18px;
 }
 
+@mixin poppins22 {
+  font-family: Poppins;
+  font-weight: normal;
+  font-size: 22px;
+}
+
+@mixin poppins18 {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 18px;
+}
+
 @mixin poppins24 {
   font-family: Poppins;
   font-weight: 500;
   font-size: 24px;
 }
 
+@mixin poppins20bold {
+  font-family: Poppins;
+  font-weight: bold;
+  font-size: 20px;
+}
+
 @mixin poppinsbold {
   font-family: Poppins;
   font-weight: bold;
+}
+@mixin poppins35semibold {
+  font-family: Poppins;
+  font-size: 35px;
+  font-weight: 600;
+}
+
+@mixin ralewaybold30 {
+  font-family: "Raleway";
+  font-weight: bold;
+  font-size: 30px;
 }
