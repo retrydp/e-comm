@@ -31,6 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     & > *:not(:last-child) {
       margin-left: 36px;
     }
@@ -86,6 +87,7 @@
 
   &__search {
     @include reset-button;
+
     display: flex;
     margin-left: 5px;
   }
