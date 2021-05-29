@@ -5,6 +5,7 @@ $primary-red: #fb7181;
 $neutral-dark: #223263;
 $neutral-grey: #9098b1;
 $primary-grey: #f6f7f8;
+
 //fonts
 $proxima: Proxima Nova;
 $poppins: Poppins;
@@ -22,60 +23,9 @@ $raleway: Raleway;
   color: inherit;
 }
 
-@mixin fontset($ff, $fz, $fw, $color) {
-  font-family: $ff;
-  font-size: $fz;
-  font-weight: $fw;
+@mixin fontset($fontfamily, $fontsize, $font-weight, $color) {
+  font-family: $fontfamily;
+  font-size: $fontsize;
+  font-weight: $font-weight;
   color: $color;
-}
-@mixin proxima20 {
-  font-family: Proxima Nova;
-  font-size: 20px;
-}
-
-@mixin poppins18bold {
-  font-family: Poppins;
-  font-weight: bold;
-  font-size: 18px;
-}
-
-@mixin poppins22 {
-  font-family: Poppins;
-  font-weight: normal;
-  font-size: 22px;
-}
-
-@mixin poppins18 {
-  font-family: Poppins;
-  font-weight: 400;
-  font-size: 18px;
-}
-
-@mixin poppins24 {
-  font-family: Poppins;
-  font-weight: 500;
-  font-size: 24px;
-}
-
-@mixin poppins20bold {
-  font-family: Poppins;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-@mixin poppinsbold {
-  font-family: Poppins;
-  font-weight: bold;
-}
-
-@mixin poppins35semibold {
-  font-family: Poppins;
-  font-size: 35px;
-  font-weight: 600;
-}
-
-@mixin ralewaybold30 {
-  font-family: "Raleway";
-  font-weight: bold;
-  font-size: 30px;
 }
