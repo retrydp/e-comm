@@ -2,9 +2,11 @@
 $hr-color: #fafbfa;
 $primary-blue: #40bfff;
 $primary-red: #fb7181;
+$primary-dark: #22262a;
 $neutral-dark: #223263;
 $neutral-grey: #9098b1;
 $primary-grey: #f6f7f8;
+$alt-grey: #c1c8ce;
 
 //fonts
 $proxima: Proxima Nova;
@@ -23,9 +25,9 @@ $raleway: Raleway;
   color: inherit;
 }
 
-@mixin fontset($fontfamily, $fontsize, $font-weight, $color) {
+@mixin fontset($fontfamily, $fontsize, $fontweight, $color) {
   font-family: $fontfamily;
   font-size: $fontsize;
-  font-weight: $font-weight;
+  font-weight: $fontweight;
   color: $color;
 }

@@ -15,7 +15,7 @@
 
   &__item {
     @include reset-a;
-    @include fontset($poppins, 24px, 400, inherit);
+    @include fontset($poppins, 24px, 500, inherit);
 
     text-transform: uppercase;
     margin-left: 98px;

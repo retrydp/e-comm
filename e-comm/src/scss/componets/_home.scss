@@ -3,6 +3,7 @@
 .home {
   &__offer-banner {
     background: url(../../assets/img/banner.png) center / 100% auto no-repeat;
+    background-position: cover;
   }
 
   &__wrapper {
@@ -24,6 +25,12 @@
     margin: -90px auto;
     box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   }
+
+  &__benefits {
+    margin: 105px auto;
+  }
+  // &__news {
+  // }
 }
 
 .promo {
@@ -33,9 +40,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     width: 33.33%;
-
     border-radius: 5px;
     background-color: $primary-grey;
   }
@@ -54,6 +59,8 @@
 
   &__item-img {
     object-fit: cover;
+    width: 380px;
+    height: 325px;
   }
 
   &__prices {
@@ -61,7 +68,7 @@
 
     display: flex;
     align-items: center;
-    padding: 0 30px;
+    padding: 15px 30px;
   }
 
   &__old-price {
@@ -79,5 +86,114 @@
     @include fontset($raleway, 30px, bold, $primary-blue);
 
     margin-left: auto;
+  }
+}
+
+.shopbanner {
+  width: 100%;
+  background: $primary-blue;
+  padding: 180px 0;
+  z-index: 1;
+  position: relative;
+
+  &__wrapper {
+    max-width: 1170px;
+    margin: 0 auto;
+  }
+
+  &__header {
+    @include fontset($poppins, 55px, 400, #fff);
+    max-width: 595px;
+    margin-bottom: 24px;
+  }
+
+  &__text {
+    @include fontset($poppins, 24px, 400, #fff);
+    margin-bottom: 12px;
+  }
+
+  &__img {
+    position: absolute;
+    top: -12%;
+    left: 49%;
+    z-index: -1;
+  }
+
+  &__btn {
+    @include reset-button;
+    @include fontset($poppins, 20px, 600, #fff);
+    text-transform: uppercase;
+    position: relative;
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 73px;
+      height: 3px;
+      background-color: #fff;
+      left: 0;
+      top: 114%;
+    }
+  }
+}
+
+.benefits {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1170px;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 205px;
+    height: 270px;
+  }
+
+  &__header {
+    @include fontset($poppins, 27px, 500, $primary-dark);
+
+    text-transform: uppercase;
+  }
+
+  &__text {
+    @include fontset($proxima, 18px, 400, $primary-dark);
+    text-align: center;
+  }
+}
+
+.news {
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1170px;
+    margin: 86px auto 130px;
+  }
+
+  &__item {
+    display: flex;
+  }
+
+  &__img {
+    object-fit: contain;
+  }
+
+  &__inner {
+    margin-left: 35px;
+    max-width: 206px;
+  }
+
+  &__date {
+    @include fontset($poppins, 18px, 500, $alt-grey);
+  }
+
+  &__header {
+    @include fontset($poppins, 22px, 600, $primary-dark);
+  }
+
+  &__text {
+    @include fontset($proxima, 18px, 400, $primary-dark);
   }
 }

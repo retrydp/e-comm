@@ -1,4 +1,3 @@
-@import "./fonts.scss";
 @import "./componets/all";
 
 *,
@@ -68,4 +67,11 @@ select {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+.common-header {
+  @include fontset($poppins, 35px, bold, inherit);
+
+  text-align: center;
+  text-transform: uppercase;
 }

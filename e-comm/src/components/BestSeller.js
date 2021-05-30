@@ -1,10 +1,10 @@
 import React from "react";
-import nike from "../assets/img/nike.png";
+import nike from "../assets/img/nike.png"; //temp
 
 export const BestSeller = () => {
   return (
     <div className="bestseller">
-      <h2 className="bestseller__header">Best seller</h2>
+      <h2 className="bestseller__header common-header">Best seller</h2>
       <nav className="bestseller__navigation">
         <a href="/" className="bestseller__link bestseller__link_active">
           all
@@ -26,7 +26,9 @@ export const BestSeller = () => {
         <div className="bestcarts__cart">
           <img src={nike} alt="" className="bestcarts__img" />
           <div className="bestcarts__inner">
-            <span className="bestcarts__title">Nike Air Max 270 React</span>
+            <span className="bestcarts__title" title="Nike Air Max 270 React dsa dsa das">
+              Nike Air Max 270 React
+            </span>
             <div className="bestcarts__rating">
               <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -66,6 +68,7 @@ export const BestSeller = () => {
             </div>
           </div>
         </div>
+
         <div className="bestcarts__cart">
           <img src={nike} alt="" className="bestcarts__img" />
           <div className="bestcarts__inner">
@@ -109,6 +112,7 @@ export const BestSeller = () => {
             </div>
           </div>
         </div>
+
         <div className="bestcarts__cart">
           <img src={nike} alt="" className="bestcarts__img" />
           <div className="bestcarts__inner">
@@ -152,6 +156,7 @@ export const BestSeller = () => {
             </div>
           </div>
         </div>
+
         <div className="bestcarts__cart">
           <img src={nike} alt="" className="bestcarts__img" />
           <div className="bestcarts__inner">
@@ -195,6 +200,7 @@ export const BestSeller = () => {
             </div>
           </div>
         </div>
+
         <div className="bestcarts__cart">
           <img src={nike} alt="" className="bestcarts__img" />
           <div className="bestcarts__inner">

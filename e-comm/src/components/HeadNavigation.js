@@ -19,15 +19,19 @@ const HeadNavigation = () => {
         <a href="/" className="hnav__item">
           home
         </a>
+
         <a href="/" className="hnav__item">
           bags
         </a>
+
         <a href="/" className="hnav__item">
           sneakers
         </a>
+
         <a href="/" className="hnav__item">
           belt
         </a>
+
         <a href="/" className="hnav__item">
           contact
         </a>
