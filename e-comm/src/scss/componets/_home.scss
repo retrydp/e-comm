@@ -103,12 +103,14 @@
 
   &__header {
     @include fontset($poppins, 55px, 400, #fff);
+
     max-width: 595px;
     margin-bottom: 24px;
   }
 
   &__text {
     @include fontset($poppins, 24px, 400, #fff);
+
     margin-bottom: 12px;
   }
 
@@ -122,6 +124,7 @@
   &__btn {
     @include reset-button;
     @include fontset($poppins, 20px, 600, #fff);
+
     text-transform: uppercase;
     position: relative;
 
@@ -160,6 +163,7 @@
 
   &__text {
     @include fontset($proxima, 18px, 400, $primary-dark);
+
     text-align: center;
   }
 }

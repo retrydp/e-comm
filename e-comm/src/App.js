@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, HeadNavigation, Home } from "./components";
+import { Header, HeadNavigation, Home, Footer } from "./components";
 
 const App = () => {
   return (
@@ -7,6 +7,7 @@ const App = () => {
       <Header />
       <HeadNavigation />
       <Home />
+      <Footer />
     </>
   );
 };

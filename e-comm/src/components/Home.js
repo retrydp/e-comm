@@ -132,6 +132,12 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <div className="search">
+        <div className="search__wrapper">
+          <input className="search__query" type="text" placeholder="Search query..." />
+          <button className="search__submit">Search</button>
+        </div>
+      </div>
     </div>
   );
 };

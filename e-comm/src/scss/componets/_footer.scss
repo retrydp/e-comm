@@ -1,0 +1,39 @@
+@import "../variables";
+
+.footer {
+  margin-top: 95px;
+  background-color: $neutral-blue;
+
+  &__wrapper {
+    display: flex;
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 168px 0;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+
+    &:not(:last-child) {
+      margin-right: 200px;
+    }
+  }
+
+  &__header {
+    @include fontset($poppins, 18px, 500, $primary-dark);
+
+    margin-bottom: 26px;
+  }
+
+  &__text {
+    @include fontset($proxima, 12px, 400, $primary-dark);
+
+    max-width: 190px;
+    margin-bottom: 26px;
+  }
+
+  &__socials > * {
+    margin-right: 40px;
+  }
+}

@@ -1,6 +1,7 @@
 //colors
 $hr-color: #fafbfa;
 $primary-blue: #40bfff;
+$neutral-blue: #bcddfe;
 $primary-red: #fb7181;
 $primary-dark: #22262a;
 $neutral-dark: #223263;
@@ -22,7 +23,6 @@ $raleway: Raleway;
 
 @mixin reset-a {
   text-decoration: none;
-  color: inherit;
 }
 
 @mixin fontset($fontfamily, $fontsize, $fontweight, $color) {
