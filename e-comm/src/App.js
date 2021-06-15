@@ -1,12 +1,13 @@
 import React from "react";
-import { Header, HeadNavigation, Home, Footer } from "./components";
+import { Header, HeadNavigation, Home, Footer, ProductList } from "./components";
 
 const App = () => {
   return (
     <>
       <Header />
       <HeadNavigation />
-      <Home />
+      {/* <Home /> */}
+      <ProductList />
       <Footer />
     </>
   );

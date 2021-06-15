@@ -31,7 +31,6 @@ const Footer = () => {
           <p className="footer__text">E-Comm , 4578 Marmora Road, Glasgow D04 89GR</p>
         </div>
       </div>
-      dasd
     </footer>
   );
 };
