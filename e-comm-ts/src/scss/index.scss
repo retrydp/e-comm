@@ -276,3 +276,40 @@ select {
     @include fontset($proxima, 14px, 400, $primary-blue);
   }
 }
+
+.color-picker {
+  padding: 20px;
+  background-color: $primary-grey;
+  border-radius: 3px;
+
+  &__text {
+    @include fontset($poppins, 18px, 500, inherit);
+
+    text-transform: uppercase;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 22px;
+  }
+
+  &__input {
+    position: absolute;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  &__actual {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  &__input:checked + &__actual {
+    box-shadow: 0px 0px 0px 3px $primary-grey, 0px 0px 0px 6px $neutral-blue;
+    -webkit-box-shadow: 0px 0px 0px 3px $primary-grey, 0px 0px 0px 6px $neutral-blue;
+    -moz-box-shadow: 0px 0px 0px 3px $primary-grey, 0px 0px 0px 6px $neutral-blue;
+  }
+}
