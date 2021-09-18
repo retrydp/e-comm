@@ -98,6 +98,7 @@
 
   &__sort-by-name {
     @include fontset($proxima, 16px, 400, inherit);
+
     display: flex;
     align-items: center;
     gap: 12px;
@@ -105,6 +106,7 @@
 
   &__select {
     @include fontset($proxima, 16px, 400, inherit);
+
     border-radius: 3px;
     background-color: transparent;
     border: 2px solid $form-grey;
@@ -113,6 +115,7 @@
 
   &__show-count {
     @include fontset($proxima, 16px, 400, inherit);
+
     display: flex;
     align-items: center;
     gap: 12px;
