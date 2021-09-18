@@ -1,0 +1,45 @@
+@import '../variables';
+
+.bestseller {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1140px;
+  margin: 90px auto;
+  flex-direction: column;
+
+  &__navigation {
+    display: flex;
+    margin: 0 auto;
+
+    & *:not(:last-child) {
+      margin-right: 70px;
+    }
+  }
+
+  &__header {
+    margin: 30px 0;
+  }
+
+  &__link {
+    @include reset-a;
+    @include fontset($poppins, 22px, 400, inherit);
+
+    text-transform: capitalize;
+    margin-bottom: 24px;
+
+    &:hover,
+    &_active {
+      color: $primary-blue;
+      border-bottom: 3px solid $primary-blue;
+    }
+  }
+
+  &__loadmore {
+    @include reset-button;
+    @include fontset($poppins, 22px, bold, $primary-blue);
+
+    border-bottom: 3px solid $primary-blue;
+    text-transform: uppercase;
+  }
+}

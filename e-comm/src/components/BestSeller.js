@@ -1,5 +1,5 @@
-import React from "react";
-import nike from "../assets/img/nike.png"; //temp
+import React from 'react';
+import nike from '../assets/img/nike.png'; //temp
 
 export const BestSeller = () => {
   return (

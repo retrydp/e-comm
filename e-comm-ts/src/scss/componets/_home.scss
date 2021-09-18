@@ -2,6 +2,7 @@
 
 .home {
   margin-bottom: 95px;
+
   &__offer-banner {
     background: url(../../assets/img/banner.png);
     background-repeat: no-repeat;
@@ -95,7 +96,7 @@
 .benefits {
   display: flex;
   justify-content: space-between;
-  max-width: 1170px;
+  max-width: 1140px;
 
   &__item {
     display: flex;
@@ -123,7 +124,7 @@
   &__wrapper {
     display: flex;
     justify-content: space-between;
-    max-width: 1170px;
+    max-width: 1140px;
     margin: 86px auto 130px;
   }
 
@@ -132,10 +133,13 @@
   }
 
   &__img {
-    object-fit: contain;
+    margin-bottom: 30px;
   }
 
   &__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     margin-left: 35px;
     max-width: 206px;
   }

@@ -1,13 +1,15 @@
 import React from 'react';
-import { Header, HeadNavigation, Home, Footer, ProductList } from './components';
 
-const App = () => {
+import { Header, HeadNavigation, Home, Footer, ProductList, Product } from './components';
+
+const App = (): JSX.Element => {
   return (
     <>
       <Header />
       <HeadNavigation />
       <Home />
       <ProductList />
+      <Product />
       <Footer />
     </>
   );

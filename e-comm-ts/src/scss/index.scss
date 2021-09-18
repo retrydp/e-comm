@@ -79,15 +79,16 @@ select {
 .search {
   display: flex;
   justify-content: center;
+
   &__wrapper {
     flex-grow: 1;
     display: flex;
     justify-content: space-between;
     border: 2px solid $primary-blue;
     border-radius: 5px;
-
     max-width: 635px;
   }
+
   &__query {
     @include fontset($proxima, 18px, 400, $primary-dark);
 
@@ -98,17 +99,23 @@ select {
     &::placeholder {
       @include fontset($proxima, 18px, 400, $neutral-grey);
     }
+
     &:focus {
       outline: none;
       border: 2px solid black;
     }
   }
+
   &__submit {
     @include reset-button;
     @include fontset($poppins, 20px, 600, #fff);
 
     background-color: $primary-blue;
     padding: 14px 26px;
+
+    &:active {
+      padding: 16px 26px 12px 26px;
+    }
   }
 }
 
@@ -119,9 +126,47 @@ select {
   z-index: 1;
   position: relative;
 
+  &_inner {
+    padding: 55px 0;
+  }
+
   &__wrapper {
-    max-width: 1170px;
+    max-width: 1140px;
     margin: 0 auto;
+
+    &_inner {
+      max-width: 650px;
+
+      & .shopbanner__header {
+        @include fontset($poppins, 30px, 500, #fff);
+
+        max-width: 350px;
+        margin-bottom: 24px;
+      }
+
+      & .shopbanner__text {
+        @include fontset($poppins, 14px, 400, #fff);
+
+        margin-bottom: 25px;
+      }
+
+      & .shopbanner__btn {
+        @include fontset($poppins, 12px, 600, #fff);
+
+        margin-bottom: 12px;
+        &:after {
+          width: 38px;
+        }
+      }
+
+      & + .shopbanner__img {
+        position: absolute;
+        top: -10%;
+        left: 49%;
+        z-index: -1;
+        width: 45%;
+      }
+    }
   }
 
   &__header {
@@ -161,5 +206,73 @@ select {
       left: 0;
       top: 114%;
     }
+  }
+}
+
+.hot {
+  &:before {
+    @include fontset($proxima, 18px, 400, white);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    content: 'HOT';
+    background-color: $primary-red;
+    position: absolute;
+    width: 64px;
+    height: 33px;
+    border-radius: 3px;
+    top: 0;
+    left: 0;
+  }
+}
+
+.counter {
+  display: flex;
+
+  &-btn {
+    @include fontset($proxima, 16px, 400, $primary-blue);
+    @include reset-button;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 50px;
+    background-color: $ligth-blue;
+    padding: 20px;
+
+    &_clickable:active {
+      padding: 22px 20px 18px 20px;
+    }
+  }
+}
+.cart-opts {
+  &__button-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  &__btn {
+    @include reset-button;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px;
+    gap: 15px;
+    background-color: $ligth-blue;
+
+    &:active {
+      padding: 16px 14px 12px 14px;
+    }
+  }
+
+  &__icon {
+    height: 17px;
+  }
+
+  &__btn-text {
+    @include fontset($proxima, 14px, 400, $primary-blue);
   }
 }
