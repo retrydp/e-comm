@@ -1,14 +1,17 @@
 @import '../variables';
 
 .product {
+  @include laptop {
+    margin: 0 15px 90px 15px;
+  }
   display: flex;
   margin: 0 auto 90px auto;
   max-width: 1140px;
   flex-direction: column;
 
   &__cart {
-    gap: 50px;
     position: relative;
+    gap: 50px;
   }
 
   &__inner {
@@ -72,6 +75,10 @@
   }
 
   &__options {
+    @include phone {
+      flex-wrap: wrap;
+      gap: 15px;
+    }
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
@@ -88,11 +95,19 @@
   background-color: $form-grey;
 
   &__header {
+    @include laptop {
+      gap: 50px;
+    }
+    @include phone {
+      border-bottom: none;
+      flex-wrap: wrap;
+    }
     display: flex;
     flex-grow: 1;
     gap: 140px;
     border-bottom: 4px solid $alt-grey;
     padding: 40px 40px 30px 40px;
+    white-space: nowrap;
   }
 
   &__tab {
@@ -105,6 +120,9 @@
 
     &_active {
       &::after {
+        @include phone {
+          display: none;
+        }
         content: '';
         position: absolute;
         width: 120%;

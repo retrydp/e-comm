@@ -4,7 +4,7 @@ import nike from '../assets/img/nike.png'; //temp
 const Product = (): JSX.Element => {
   return (
     <div className="product">
-      <div className="goods-line__cart product__cart hot">
+      <div className="goods-line__cart product__cart hot ">
         <div className="product__images">
           <img src={nike} alt="" className="goods-line__img product__img" />
           <div className="product__img-wrapper">

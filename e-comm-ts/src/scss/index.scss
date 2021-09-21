@@ -137,6 +137,16 @@ select {
   z-index: 1;
   position: relative;
 
+  &__img {
+    position: absolute;
+    top: -10%;
+    left: 49%;
+    z-index: -1;
+    width: 45%;
+    height: 90%;
+    width: 40%;
+  }
+
   &_inner {
     padding: 55px 0;
   }
@@ -163,19 +173,11 @@ select {
 
       & .shopbanner__btn {
         @include fontset($poppins, 12px, 600, #fff);
-
         margin-bottom: 12px;
+
         &:after {
           width: 38px;
         }
-      }
-
-      & + .shopbanner__img {
-        position: absolute;
-        top: -10%;
-        left: 49%;
-        z-index: -1;
-        width: 45%;
       }
     }
   }

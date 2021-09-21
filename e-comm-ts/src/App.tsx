@@ -8,8 +8,8 @@ const App = (): JSX.Element => {
       <Header />
       <HeadNavigation />
       {/* <Home />
-      <ProductList /> */}
-      <Product />
+      <ProductList />
+      <Product /> */}
       <Cart />
       <Footer />
     </>
