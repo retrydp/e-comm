@@ -8,3 +8,4 @@ export { default as ProductCart } from './ProductCart';
 export { default as ProductCartLine } from './ProductCartLine';
 export { default as Product } from './Product';
 export { default as Slider } from './Slider';
+export { default as Cart } from './Cart';

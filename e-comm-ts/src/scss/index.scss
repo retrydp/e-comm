@@ -229,7 +229,7 @@ select {
 
 .counter {
   display: flex;
-
+  justify-content: center;
   &-btn {
     @include fontset($proxima, 16px, 400, $primary-blue);
     @include reset-button;
@@ -311,5 +311,20 @@ select {
     box-shadow: 0px 0px 0px 3px $primary-grey, 0px 0px 0px 6px $neutral-blue;
     -webkit-box-shadow: 0px 0px 0px 3px $primary-grey, 0px 0px 0px 6px $neutral-blue;
     -moz-box-shadow: 0px 0px 0px 3px $primary-grey, 0px 0px 0px 6px $neutral-blue;
+  }
+}
+
+.common-btn {
+  @include reset-button;
+  @include fontset($poppins, 18px, 500, white);
+
+  justify-content: center;
+  display: flex;
+  padding: 20px;
+  background-color: $primary-blue;
+  border-radius: 5px;
+  &:active {
+    padding-top: 22px;
+    padding-bottom: 18px;
   }
 }
