@@ -1,6 +1,10 @@
 @import '../variables';
 
 .goods {
+  @include laptop {
+    justify-content: center;
+    gap: 15px;
+  }
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

@@ -79,6 +79,9 @@ select {
 
 //search input
 .search {
+  @include laptop {
+    margin: 0 15px;
+  }
   display: flex;
   justify-content: center;
 
@@ -114,8 +117,13 @@ select {
 
     background-color: $primary-blue;
     padding: 14px 26px;
-
+    @include phone {
+      padding: 6px 11px;
+    }
     &:active {
+      @include phone {
+        padding: 8px 11px 4px 11px;
+      }
       padding: 16px 26px 12px 26px;
     }
   }
@@ -209,6 +217,11 @@ select {
       left: 0;
       top: 114%;
     }
+  }
+}
+.adapted-banner {
+  @include laptop {
+    display: none;
   }
 }
 

@@ -9,12 +9,19 @@
   margin: 90px auto;
 
   &__navigation {
+    @include laptop {
+      gap: 35px;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+    @include tablet {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
     display: flex;
     margin: 0 auto;
-
-    & *:not(:last-child) {
-      margin-right: 70px;
-    }
+    gap: 70px;
   }
 
   &__header {
@@ -22,6 +29,9 @@
   }
 
   &__link {
+    @include tablet {
+      margin-bottom: 0px;
+    }
     @include reset-a;
     @include fontset($poppins, 22px, 400, inherit);
 

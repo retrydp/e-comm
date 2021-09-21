@@ -58,7 +58,7 @@ export const ProductList = (): JSX.Element => {
       </aside>
       <main className="main-list-content">
         {/* banner used in common */}
-        <div className="shopbanner shopbanner_inner">
+        <div className="shopbanner shopbanner_inner adapted-banner">
           <div className="shopbanner__wrapper shopbanner__wrapper_inner">
             <h2 className="shopbanner__header">Adidas Men Running Sneakers</h2>
             <p className="shopbanner__text">Performance and design. Taken right to the edge.</p>
@@ -106,7 +106,7 @@ export const ProductList = (): JSX.Element => {
             </button>
           </div>
         </div>
-        <ProductCart />
+        {/* <ProductCart /> */}
         <ProductCartLine />
         <div className="pagination-bar">
           <button className="pagination-bar__link">1</button>

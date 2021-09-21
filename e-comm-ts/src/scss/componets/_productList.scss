@@ -1,6 +1,13 @@
 @import '../variables';
 
 .product-list {
+  @include laptop {
+    margin: 50px 15px 0 15px;
+  }
+  @include tablet {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   display: flex;
   max-width: 1140px;
   margin: 50px auto 0 auto;
@@ -79,13 +86,23 @@
 }
 
 .sortbar {
+  @include laptop {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 15px;
+  }
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: $primary-grey;
   border-radius: 3px;
+  white-space: nowrap;
 
   &__selection-items {
+    @include laptop {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
     display: flex;
     justify-content: flex-start;
     align-items: center;

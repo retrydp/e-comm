@@ -23,6 +23,9 @@
   }
 
   &__promo-block {
+    @include laptop {
+      margin: 15px auto;
+    }
     margin: -90px auto;
   }
 
@@ -35,6 +38,10 @@
 }
 
 .promo {
+  @include laptop {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   display: flex;
   gap: 15px;
 
@@ -42,6 +49,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     flex-basis: 32.45%;
     border-radius: 5px;
     background-color: $primary-grey;
@@ -61,6 +69,10 @@
   }
 
   &__item-img {
+    @include laptop {
+      width: 200px;
+      height: 150px;
+    }
     object-fit: cover;
     width: 380px;
     height: 325px;
@@ -81,7 +93,7 @@
 
   &__percent {
     @include fontset($poppins, 18px, bold, $primary-red);
-
+    white-space: nowrap;
     text-decoration: none;
   }
 
@@ -93,11 +105,18 @@
 }
 
 .benefits {
+  @include laptop {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   display: flex;
   justify-content: space-between;
   max-width: 1140px;
 
   &__item {
+    @include laptop {
+      margin: 15px;
+    }
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -121,6 +140,10 @@
 
 .news {
   &__wrapper {
+    @include laptop {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
     display: flex;
     justify-content: space-between;
     max-width: 1140px;
@@ -128,6 +151,9 @@
   }
 
   &__item {
+    @include laptop {
+      margin: 15px;
+    }
     display: flex;
   }
 

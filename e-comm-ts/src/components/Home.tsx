@@ -51,14 +51,14 @@ const Home = (): JSX.Element => {
       </div>
       <BestSeller />
       {/* banner used in common */}
-      <div className="shopbanner">
+      {/* <div className="shopbanner">
         <div className="shopbanner__wrapper">
           <h2 className="shopbanner__header">Adidas Men Running Sneakers</h2>
           <p className="shopbanner__text">Performance and design. Taken right to the edge.</p>
           <button className="shopbanner__btn">shop now</button>
         </div>
         <img src={shoe} alt="" className="shopbanner__img" />
-      </div>
+      </div> */}
       {/* banner used in common */}
       <div className="home__benefits benefits">
         <div className="benefits__item">

@@ -34,6 +34,9 @@
 
     & > *:not(:last-child) {
       margin-left: 36px;
+      @include phone {
+        margin-left: 20px;
+      }
     }
   }
 
@@ -51,6 +54,13 @@
 
   &__usertext {
     @include fontset($proxima, 20px, 400, inherit);
+    @include phone {
+      position: absolute;
+      clip: rect(0 0 0 0);
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+    }
   }
 
   &__cart {
@@ -80,6 +90,15 @@
     left: 81%;
   }
 
+  &__itemtext {
+    @include phone {
+      position: absolute;
+      clip: rect(0 0 0 0);
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+    }
+  }
   &__itemtext,
   &__itemprice {
     @include fontset($proxima, 20px, 400, inherit);

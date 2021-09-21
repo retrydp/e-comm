@@ -1,11 +1,23 @@
 @import '../variables';
 
 .goods-line {
+  @include laptop {
+    margin-right: 15px;
+  }
+
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 25px;
 
   &__cart {
+    @include laptop {
+      flex-wrap: wrap;
+    }
+    @include phone {
+      justify-content: center;
+    }
+
     display: flex;
     gap: 15px;
     border-bottom: 2px solid $hr-color;
@@ -53,6 +65,7 @@
 
   &__reviews {
     @include fontset($proxima, 14px, 400, $alt-grey);
+    white-space: nowrap;
   }
 
   &__review-submit {
