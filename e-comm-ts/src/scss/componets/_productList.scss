@@ -27,9 +27,10 @@
   }
 
   &__wrapper {
-    margin-top: 30px;
     display: flex;
     justify-content: space-between;
+    margin-top: 30px;
+
     &_active * {
       color: $primary-blue !important;
     }
@@ -80,8 +81,8 @@
 .sortbar {
   display: flex;
   justify-content: space-between;
-  background-color: $primary-grey;
   align-items: center;
+  background-color: $primary-grey;
   border-radius: 3px;
 
   &__selection-items {

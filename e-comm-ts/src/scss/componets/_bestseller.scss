@@ -3,10 +3,10 @@
 .bestseller {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   max-width: 1140px;
   margin: 90px auto;
-  flex-direction: column;
 
   &__navigation {
     display: flex;

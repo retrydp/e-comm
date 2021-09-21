@@ -56,6 +56,7 @@ const ProductCartLine = (): JSX.Element => {
             air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and scrunched the sneakers up a little bit, not sure if the box was always this
             small but the 90s are and will always be one of my favorites.
           </div>
+          {/* add to cart & favorite buttons container */}
           <div className="cart-opts">
             <div className="cart-opts__button-wrapper">
               <button className="cart-opts__btn">
@@ -85,6 +86,7 @@ const ProductCartLine = (): JSX.Element => {
               </button>
             </div>
           </div>
+          {/* add to cart & favorite buttons container */}
         </div>
       </div>
       <div className="goods-line__cart hot">
@@ -140,6 +142,7 @@ const ProductCartLine = (): JSX.Element => {
             vulputate g nisl ut dolor ...Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed et lectus lorem nunc leifend laorevtr istique et
             congue. Vivamus adipiscin vulputate g nisl ut dolor ...
           </div>
+          {/* add to cart & favorite buttons container */}
           <div className="cart-opts">
             <div className="cart-opts__button-wrapper">
               <button className="cart-opts__btn">
@@ -169,6 +172,7 @@ const ProductCartLine = (): JSX.Element => {
               </button>
             </div>
           </div>
+          {/* add to cart & favorite buttons container */}
         </div>
       </div>
     </div>

@@ -31,6 +31,7 @@ export const ProductList = (): JSX.Element => {
           </div>
           <Slider />
         </div>
+        {/* Color picker element styles */}
         <div className="color-picker">
           <div className="color-picker__text">color</div>
           <div className="color-picker__wrapper">
@@ -53,8 +54,10 @@ export const ProductList = (): JSX.Element => {
             <label htmlFor="colorpick6" className="color-picker__actual" style={{ backgroundColor: 'grey' }}></label>
           </div>
         </div>
+        {/* Color picker element styles */}
       </aside>
       <main className="main-list-content">
+        {/* banner used in common */}
         <div className="shopbanner shopbanner_inner">
           <div className="shopbanner__wrapper shopbanner__wrapper_inner">
             <h2 className="shopbanner__header">Adidas Men Running Sneakers</h2>
@@ -63,6 +66,7 @@ export const ProductList = (): JSX.Element => {
           </div>
           <img src={shoe} alt="" className="shopbanner__img" />
         </div>
+        {/* banner used in common */}
         <div className="sortbar">
           <div className="sortbar__selection-items">
             <div className="sortbar__total-count">13 items</div>

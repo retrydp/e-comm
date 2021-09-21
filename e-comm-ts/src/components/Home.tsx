@@ -50,6 +50,7 @@ const Home = (): JSX.Element => {
         </div>
       </div>
       <BestSeller />
+      {/* banner used in common */}
       <div className="shopbanner">
         <div className="shopbanner__wrapper">
           <h2 className="shopbanner__header">Adidas Men Running Sneakers</h2>
@@ -58,6 +59,7 @@ const Home = (): JSX.Element => {
         </div>
         <img src={shoe} alt="" className="shopbanner__img" />
       </div>
+      {/* banner used in common */}
       <div className="home__benefits benefits">
         <div className="benefits__item">
           <svg className="benefits__img" width="101" height="67" viewBox="0 0 101 67" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -132,12 +134,14 @@ const Home = (): JSX.Element => {
           </div>
         </div>
       </div>
+      {/* common search block */}
       <div className="search">
         <div className="search__wrapper">
           <input className="search__query" type="text" placeholder="Search query..." />
           <button className="search__submit">Search</button>
         </div>
       </div>
+      {/* common search block */}
     </div>
   );
 };

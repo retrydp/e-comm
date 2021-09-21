@@ -108,6 +108,7 @@ const Product = (): JSX.Element => {
             </div>
           </div>
           <div className="product__options">
+            {/* common counter block */}
             <div className="counter">
               <button className="counter-btn counter-btn_clickable">
                 <svg width="12" height="3" viewBox="0 0 12 3" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -122,7 +123,8 @@ const Product = (): JSX.Element => {
                 </svg>
               </button>
             </div>
-
+            {/* common counter block */}
+            {/* add to cart & favorite buttons container */}
             <div className="cart-opts__button-wrapper">
               <button className="cart-opts__btn">
                 <div className="cart-opts__icon">
@@ -150,6 +152,7 @@ const Product = (): JSX.Element => {
                 </div>
               </button>
             </div>
+            {/* add to cart & favorite buttons container */}
           </div>
         </div>
       </div>

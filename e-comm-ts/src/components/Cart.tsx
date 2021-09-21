@@ -29,6 +29,7 @@ const Cart = () => {
             </td>
             <td className="cart-table__totalprice">$998</td>
             <td className="cart-table__qty">
+              {/* common counter */}
               <div className="counter">
                 <button className="counter-btn counter-btn_clickable">
                   <svg width="12" height="3" viewBox="0 0 12 3" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -43,6 +44,7 @@ const Cart = () => {
                   </svg>
                 </button>
               </div>
+              {/* common counter */}
             </td>
             <td className="cart-table__price">$499</td>
           </tr>
