@@ -65,6 +65,7 @@
 
   &__reviews {
     @include fontset($proxima, 14px, 400, $alt-grey);
+
     white-space: nowrap;
   }
 

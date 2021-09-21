@@ -4,6 +4,7 @@
   @include laptop {
     margin: 0 15px 90px 15px;
   }
+
   display: flex;
   margin: 0 auto 90px auto;
   max-width: 1140px;
@@ -79,6 +80,7 @@
       flex-wrap: wrap;
       gap: 15px;
     }
+
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
@@ -102,6 +104,7 @@
       border-bottom: none;
       flex-wrap: wrap;
     }
+
     display: flex;
     flex-grow: 1;
     gap: 140px;

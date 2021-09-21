@@ -42,6 +42,7 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
   display: flex;
   gap: 15px;
 
@@ -73,6 +74,7 @@
       width: 200px;
       height: 150px;
     }
+
     object-fit: cover;
     width: 380px;
     height: 325px;
@@ -93,6 +95,7 @@
 
   &__percent {
     @include fontset($poppins, 18px, bold, $primary-red);
+
     white-space: nowrap;
     text-decoration: none;
   }
@@ -109,6 +112,7 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
   display: flex;
   justify-content: space-between;
   max-width: 1140px;
@@ -117,6 +121,7 @@
     @include laptop {
       margin: 15px;
     }
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -144,6 +149,7 @@
       flex-wrap: wrap;
       justify-content: center;
     }
+
     display: flex;
     justify-content: space-between;
     max-width: 1140px;
@@ -154,6 +160,7 @@
     @include laptop {
       margin: 15px;
     }
+
     display: flex;
   }
 
