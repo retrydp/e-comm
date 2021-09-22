@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import shoe from '../assets/img/shoe.png';
 import { ProductCart, Slider, ProductCartLine } from './';
+import classNames from 'classnames';
 
-export const ProductList = (): JSX.Element => {
+type TemplateType = 'extended' | 'grid';
+
+interface ProductListState {
+  value: TemplateType;
+}
+
+export const ProductList: React.FC = (): JSX.Element => {
+  const [template, setTemplate] = useState<ProductListState>({ value: 'grid' });
+
+  const visibilityHandler = (event: React.MouseEvent, style: TemplateType): void => {
+    setTemplate(({ value }) => ({ value: style }));
+  };
+
   return (
     <div className="product-list">
       <aside className="side-panel">
@@ -84,7 +97,12 @@ export const ProductList = (): JSX.Element => {
             </div>
           </div>
           <div className="view-change">
-            <button className="view-change__btn view-change__btn_grid view-change__btn_active">
+            <button
+              className={classNames('view-change__btn', 'view-change__btn_grid', {
+                'view-change__btn_active': template.value === 'grid',
+              })}
+              onClick={(event) => visibilityHandler(event, 'grid')}
+            >
               <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.29894 0.83374H0.87793V4.83374H5.29894V0.83374Z" fill="#C1C8CE" />
                 <path d="M5.29894 8.83374H0.87793V12.8337H5.29894V8.83374Z" fill="#C1C8CE" />
@@ -97,7 +115,12 @@ export const ProductList = (): JSX.Element => {
                 <path d="M22.9835 16.8337H18.5625V20.8337H22.9835V16.8337Z" fill="#C1C8CE" />
               </svg>
             </button>
-            <button className="view-change__btn view-change__btn_line">
+            <button
+              className={classNames('view-change__btn', 'view-change__btn_line', {
+                'view-change__btn_active': template.value === 'extended',
+              })}
+              onClick={(event) => visibilityHandler(event, 'extended')}
+            >
               <svg width="21" height="17" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20.0357 0.83374H0.141113V2.83374H20.0357V0.83374Z" fill="#C1C8CE" />
                 <path d="M20.0357 7.83374H0.141113V9.83374H20.0357V7.83374Z" fill="#C1C8CE" />
@@ -106,8 +129,10 @@ export const ProductList = (): JSX.Element => {
             </button>
           </div>
         </div>
-        {/* <ProductCart /> */}
-        <ProductCartLine />
+
+        {template.value === 'extended' && <ProductCartLine />}
+        {template.value === 'grid' && <ProductCart />}
+
         <div className="pagination-bar">
           <button className="pagination-bar__link">1</button>
           <button className="pagination-bar__link pagination-bar__link_active">2</button>

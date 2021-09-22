@@ -248,6 +248,12 @@ select {
 
 //+, count items and - buttons container
 .counter {
+  &.adapt {
+    @include phone {
+      flex-direction: column-reverse;
+    }
+  }
+
   display: flex;
   justify-content: center;
   &-btn {
@@ -339,6 +345,9 @@ select {
 
 //Common button styles
 .common-btn {
+  @include phone {
+    margin: 0 15px;
+  }
   @include reset-button;
   @include fontset($poppins, 18px, 500, white);
 

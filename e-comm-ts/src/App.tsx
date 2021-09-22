@@ -7,9 +7,9 @@ const App = (): JSX.Element => {
     <>
       <Header />
       <HeadNavigation />
-      {/* <Home />
+      <Home />
       <ProductList />
-      <Product /> */}
+      <Product />
       <Cart />
       <Footer />
     </>
