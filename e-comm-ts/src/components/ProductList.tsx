@@ -133,6 +133,7 @@ export const ProductList: React.FC = (): JSX.Element => {
 
         {template.value === 'extended' && <ProductCartLine />}
         {template.value === 'grid' && <ProductCart />}
+
         <ReactPaginate
           pageCount={5}
           pageRangeDisplayed={2}
@@ -145,6 +146,7 @@ export const ProductList: React.FC = (): JSX.Element => {
           previousClassName="pagination-bar__prev"
           activeClassName="pagination-bar__link_active"
           pageLinkClassName="pagination-bar__link"
+          onPageChange={(num) => console.log(num)}
         />
       </main>
     </div>

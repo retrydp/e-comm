@@ -91,6 +91,7 @@
   }
 
   &__itemtext {
+    @include fontset($proxima, 20px, 400, inherit);
     @include phone {
       position: absolute;
       clip: rect(0 0 0 0);
@@ -99,9 +100,9 @@
       margin: -1px;
     }
   }
-  &__itemtext,
+
   &__itemprice {
-    @include fontset($proxima, 20px, 400, inherit);
+    @include fontset($proxima, 20px, 400, $neutral-grey);
   }
 
   &__search {
