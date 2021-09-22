@@ -1,21 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ReactPaginate from 'react-paginate';
 import shoe from '../assets/img/shoe.png';
 import { ProductCart, Slider, ProductCartLine } from './';
 import classNames from 'classnames';
+import debounce from 'lodash.debounce';
 
 type TemplateType = 'extended' | 'grid';
 
-interface ProductListState {
+interface SliderValues {
+  minValue: number;
+  maxValue: number;
+}
+
+interface Template {
   value: TemplateType;
 }
 
 export const ProductList: React.FC = (): JSX.Element => {
-  const [template, setTemplate] = useState<ProductListState>({ value: 'grid' });
+  const [template, setTemplate] = useState<Template>({ value: 'grid' });
+  const [range, setRange] = useState<SliderValues>({
+    minValue: 0,
+    maxValue: 1500,
+  });
 
   const visibilityHandler = (style: TemplateType): void => {
-    setTemplate(({ value }) => ({ value: style }));
+    setTemplate({
+      value: style,
+    });
   };
+
+  const sliderHandler = useCallback(
+    debounce((values: number[]): void => {
+      setRange({
+        minValue: values[0],
+        maxValue: values[1],
+      });
+    }, 200),
+    []
+  );
 
   return (
     <div className="product-list">
@@ -41,9 +63,11 @@ export const ProductList: React.FC = (): JSX.Element => {
           <h3 className="price-picker__text">prices</h3>
           <div className="price-picker__ranger">
             <span>Ranger:</span>
-            <div className="price-picker__available-prices">$13.99 - $25.99</div>
+            <div className="price-picker__available-prices">
+              $<div className="price-picker__min">{range.minValue}</div> - <div className="price-picker__max">{range.maxValue}</div>
+            </div>
           </div>
-          <Slider />
+          <Slider handler={sliderHandler} />
         </div>
         {/* Color picker element styles */}
         <div className="color-picker">

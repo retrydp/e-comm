@@ -1,9 +1,13 @@
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-const Slider: React.FC = (): JSX.Element => (
+interface SliderProps {
+  handler: (value: number[]) => void;
+}
+
+const Slider: React.FC<SliderProps> = ({ handler }): JSX.Element => (
   <>
-    <Range defaultValue={[0, 100]} onChange={(e: number[]): void => console.log(e)} />
+    <Range min={0} max={1500} step={10} defaultValue={[10, 1500]} onChange={(range: number[]) => handler(range)} />
   </>
 );
 
