@@ -1,7 +1,7 @@
 import React from 'react';
 import nike from '../assets/img/nike.png'; //temp
 
-const Product = (): JSX.Element => {
+const Product: React.FC = (): JSX.Element => {
   return (
     <div className="product">
       <div className="goods-line__cart product__cart hot ">

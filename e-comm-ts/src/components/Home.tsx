@@ -8,7 +8,7 @@ import kronoslogo from '../assets/img/kronos-logo.png';
 
 import { BestSeller } from './';
 
-const Home = (): JSX.Element => {
+const Home: React.FC = (): JSX.Element => {
   return (
     <div className="home">
       <div className="home__offer-banner">

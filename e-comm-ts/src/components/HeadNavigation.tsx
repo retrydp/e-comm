@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeadNavigation = (): JSX.Element => {
+const HeadNavigation: React.FC = (): JSX.Element => {
   return (
     <div className="hnav">
       <a className="hnav__logo logo" href="/">

@@ -9,3 +9,6 @@ export { default as ProductCartLine } from './ProductCartLine';
 export { default as Product } from './Product';
 export { default as Slider } from './Slider';
 export { default as Cart } from './Cart';
+export { default as CartItem } from './CartItem';
+export { default as GridItem } from './GridItem';
+export { default as ExtendedItem } from './ExtendedItem';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ProductCart } from './';
 
-export const BestSeller = (): JSX.Element => {
+export const BestSeller: React.FC = (): JSX.Element => {
   return (
     <div className="bestseller">
       <h2 className="bestseller__header common-header">Best seller</h2>
@@ -15,7 +15,7 @@ export const BestSeller = (): JSX.Element => {
         <a href="/" className="bestseller__link">
           sneakers
         </a>
-        <a href="/"  className="bestseller__link">
+        <a href="/" className="bestseller__link">
           belt
         </a>
         <a href="/" className="bestseller__link">

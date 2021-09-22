@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import shoe from '../assets/img/shoe.png';
 import { ProductCart, Slider, ProductCartLine } from './';
 import classNames from 'classnames';
@@ -12,7 +13,7 @@ interface ProductListState {
 export const ProductList: React.FC = (): JSX.Element => {
   const [template, setTemplate] = useState<ProductListState>({ value: 'grid' });
 
-  const visibilityHandler = (event: React.MouseEvent, style: TemplateType): void => {
+  const visibilityHandler = (style: TemplateType): void => {
     setTemplate(({ value }) => ({ value: style }));
   };
 
@@ -101,7 +102,7 @@ export const ProductList: React.FC = (): JSX.Element => {
               className={classNames('view-change__btn', 'view-change__btn_grid', {
                 'view-change__btn_active': template.value === 'grid',
               })}
-              onClick={(event) => visibilityHandler(event, 'grid')}
+              onClick={() => visibilityHandler('grid')}
             >
               <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.29894 0.83374H0.87793V4.83374H5.29894V0.83374Z" fill="#C1C8CE" />
@@ -119,7 +120,7 @@ export const ProductList: React.FC = (): JSX.Element => {
               className={classNames('view-change__btn', 'view-change__btn_line', {
                 'view-change__btn_active': template.value === 'extended',
               })}
-              onClick={(event) => visibilityHandler(event, 'extended')}
+              onClick={() => visibilityHandler('extended')}
             >
               <svg width="21" height="17" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20.0357 0.83374H0.141113V2.83374H20.0357V0.83374Z" fill="#C1C8CE" />
@@ -132,14 +133,19 @@ export const ProductList: React.FC = (): JSX.Element => {
 
         {template.value === 'extended' && <ProductCartLine />}
         {template.value === 'grid' && <ProductCart />}
-
-        <div className="pagination-bar">
-          <button className="pagination-bar__link">1</button>
-          <button className="pagination-bar__link pagination-bar__link_active">2</button>
-          <button className="pagination-bar__link">3</button>
-          <button className="pagination-bar__link">4</button>
-          <button className="pagination-bar__link">5</button>
-        </div>
+        <ReactPaginate
+          pageCount={5}
+          pageRangeDisplayed={2}
+          marginPagesDisplayed={1}
+          containerClassName="pagination-bar"
+          pageClassName="pagination-bar__page"
+          nextLinkClassName="pagination-bar__next-link"
+          nextClassName="pagination-bar__next"
+          previousLinkClassName="pagination-bar__prev-link"
+          previousClassName="pagination-bar__prev"
+          activeClassName="pagination-bar__link_active"
+          pageLinkClassName="pagination-bar__link"
+        />
       </main>
     </div>
   );
