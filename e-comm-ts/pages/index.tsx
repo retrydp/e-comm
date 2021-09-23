@@ -6,9 +6,6 @@ const Index = (): JSX.Element => {
   return (
     <>
       <Home />
-      <ProductList />
-      <Product />
-      <Cart />
     </>
   );
 };

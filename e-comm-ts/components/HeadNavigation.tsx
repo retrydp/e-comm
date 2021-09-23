@@ -1,6 +1,19 @@
 import React from 'react';
+import Link from 'next/link';
+import classNames from 'classnames';
+import { useRouter } from 'next/router';
 
 const HeadNavigation: React.FC = (): JSX.Element => {
+  const router = useRouter();
+  const [activeTabFromUrl, setActiveTabFromUrl] = React.useState<string>('');
+
+  React.useEffect(() => {
+    //set active tab, when user comes exactly from address line
+    if (router.isReady) {
+      setActiveTabFromUrl(router.query.type as string);
+    }
+  }, [router.isReady]);
+
   return (
     <div className="hnav">
       <a className="hnav__logo logo" href="/">
@@ -15,26 +28,61 @@ const HeadNavigation: React.FC = (): JSX.Element => {
         </svg>
         <span className="logo__text">E-Comm</span>
       </a>
-      <nav className="hnav__items">
-        <a href="/" className="hnav__item">
-          home
-        </a>
+      <nav className="/hnav__items">
+        <Link href={'/'}>
+          <a
+            onClick={(): void => setActiveTabFromUrl('')}
+            className={classNames('hnav__item', {
+              'hnav__item-active': router.pathname === '/',
+            })}
+          >
+            home
+          </a>
+        </Link>
 
-        <a href="/" className="hnav__item">
-          bags
-        </a>
+        <Link href={{ pathname: '/product', query: { type: 'bags' } }}>
+          <a
+            onClick={(): void => setActiveTabFromUrl('bags')}
+            className={classNames('hnav__item', {
+              'hnav__item-active': activeTabFromUrl === 'bags' && router.pathname === '/product',
+            })}
+          >
+            bags
+          </a>
+        </Link>
 
-        <a href="/" className="hnav__item">
-          sneakers
-        </a>
+        <Link href={{ pathname: '/product', query: { type: 'sneakers' } }}>
+          <a
+            onClick={(): void => setActiveTabFromUrl('sneakers')}
+            className={classNames('hnav__item', {
+              'hnav__item-active': activeTabFromUrl === 'sneakers' && router.pathname === '/product',
+            })}
+          >
+            sneakers
+          </a>
+        </Link>
 
-        <a href="/" className="hnav__item">
-          belt
-        </a>
+        <Link href={{ pathname: '/product', query: { type: 'belts' } }}>
+          <a
+            onClick={(): void => setActiveTabFromUrl('belts')}
+            className={classNames('hnav__item', {
+              'hnav__item-active': activeTabFromUrl === 'belts' && router.pathname === '/product',
+            })}
+          >
+            belts
+          </a>
+        </Link>
 
-        <a href="/" className="hnav__item">
-          contact
-        </a>
+        <Link href={{ pathname: '/contacts' }}>
+          <a
+            onClick={(): void => setActiveTabFromUrl('')}
+            className={classNames('hnav__item', {
+              'hnav__item-active': router.pathname === '/contacts',
+            })}
+          >
+            contacts
+          </a>
+        </Link>
       </nav>
     </div>
   );

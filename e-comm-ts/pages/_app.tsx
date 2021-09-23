@@ -8,7 +8,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }): JSX.Element => {
     <>
       <Header />
       <HeadNavigation />
-      <Component {...pageProps} />
+      <main>
+        <Component {...pageProps} />
+      </main>
       <Footer />
     </>
   );

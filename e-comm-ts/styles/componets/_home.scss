@@ -1,6 +1,7 @@
 @import '../variables';
 
 .home {
+  margin-bottom: 90px;
   &__offer-banner {
     @include phone {
       background-position: center;
