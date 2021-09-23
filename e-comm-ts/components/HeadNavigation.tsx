@@ -6,6 +6,23 @@ import { useRouter } from 'next/router';
 const HeadNavigation: React.FC = (): JSX.Element => {
   const router = useRouter();
   const [activeTabFromUrl, setActiveTabFromUrl] = React.useState<string>('');
+  /**
+   * Provide classnames for a navigation tab according to URL params, triggers activation if needed
+   * @param tab Value which we compare with URL params (type/pathname)
+   * @param requirePath Flag to compare pathname instead of type
+   * @returns classes for active element
+   */
+  const generateCls = (tab: string, requirePath?: boolean): string => {
+    if (requirePath) {
+      return classNames('hnav__item', {
+        'hnav__item-active': router.pathname === tab,
+      });
+    }
+
+    return classNames('hnav__item', {
+      'hnav__item-active': activeTabFromUrl === tab && router.pathname === '/product',
+    });
+  };
 
   React.useEffect(() => {
     //set active tab, when user comes exactly from address line
@@ -29,57 +46,32 @@ const HeadNavigation: React.FC = (): JSX.Element => {
         <span className="logo__text">E-Comm</span>
       </a>
       <nav className="/hnav__items">
-        <Link href={'/'}>
-          <a
-            onClick={(): void => setActiveTabFromUrl('')}
-            className={classNames('hnav__item', {
-              'hnav__item-active': router.pathname === '/',
-            })}
-          >
+        <Link href={{ pathname: '/' }}>
+          <a onClick={(): void => setActiveTabFromUrl('')} className={generateCls('/', true)}>
             home
           </a>
         </Link>
 
         <Link href={{ pathname: '/product', query: { type: 'bags' } }}>
-          <a
-            onClick={(): void => setActiveTabFromUrl('bags')}
-            className={classNames('hnav__item', {
-              'hnav__item-active': activeTabFromUrl === 'bags' && router.pathname === '/product',
-            })}
-          >
+          <a onClick={(): void => setActiveTabFromUrl('bags')} className={generateCls('bags')}>
             bags
           </a>
         </Link>
 
         <Link href={{ pathname: '/product', query: { type: 'sneakers' } }}>
-          <a
-            onClick={(): void => setActiveTabFromUrl('sneakers')}
-            className={classNames('hnav__item', {
-              'hnav__item-active': activeTabFromUrl === 'sneakers' && router.pathname === '/product',
-            })}
-          >
+          <a onClick={(): void => setActiveTabFromUrl('sneakers')} className={generateCls('sneakers')}>
             sneakers
           </a>
         </Link>
 
         <Link href={{ pathname: '/product', query: { type: 'belts' } }}>
-          <a
-            onClick={(): void => setActiveTabFromUrl('belts')}
-            className={classNames('hnav__item', {
-              'hnav__item-active': activeTabFromUrl === 'belts' && router.pathname === '/product',
-            })}
-          >
+          <a onClick={(): void => setActiveTabFromUrl('belts')} className={generateCls('belts')}>
             belts
           </a>
         </Link>
 
         <Link href={{ pathname: '/contacts' }}>
-          <a
-            onClick={(): void => setActiveTabFromUrl('')}
-            className={classNames('hnav__item', {
-              'hnav__item-active': router.pathname === '/contacts',
-            })}
-          >
+          <a onClick={(): void => setActiveTabFromUrl('')} className={generateCls('/contacts', true)}>
             contacts
           </a>
         </Link>

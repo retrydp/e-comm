@@ -25,13 +25,18 @@ export const ProductList: React.FC = (): JSX.Element => {
     minValue: 0,
     maxValue: 1500,
   });
-
+  /**
+   * Switch between grid and extended layouts
+   * @param style Desirable display method
+   */
   const visibilityHandler = (style: TemplateType): void => {
     setTemplate({
       value: style,
     });
   };
-
+  /**
+   * Delaying user`s entries for a range-type input & setting it to state
+   */
   const sliderHandler = debounce((values: number[]): void => {
     setRange({
       minValue: values[0],
