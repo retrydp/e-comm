@@ -5,13 +5,10 @@ import { Header, HeadNavigation, Home, Footer, ProductList, Product, Cart } from
 const Index = (): JSX.Element => {
   return (
     <>
-      <Header />
-      <HeadNavigation />
       <Home />
       <ProductList />
       <Product />
       <Cart />
-      <Footer />
     </>
   );
 };
