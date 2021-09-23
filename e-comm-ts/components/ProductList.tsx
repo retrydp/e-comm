@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import shoe from '../assets/img/shoe.png';
+import shoe from '../public/assets/img/shoe.png';
 import { ProductCart, Slider, ProductCartLine } from './';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
