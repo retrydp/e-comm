@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Header, HeadNavigation, Home, Footer, ProductList, Product, Cart } from '../components';
+import { Home } from '../components';
 
 const Index: React.FC = (): JSX.Element => {
   return (

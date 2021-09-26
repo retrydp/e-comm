@@ -25,6 +25,7 @@ export const ProductList: React.FC = (): JSX.Element => {
     minValue: 0,
     maxValue: 1500,
   });
+
   /**
    * Switch between grid and extended layouts
    * @param style Desirable display method
@@ -34,6 +35,7 @@ export const ProductList: React.FC = (): JSX.Element => {
       value: style,
     });
   };
+
   /**
    * Delaying user`s entries for a range-type input & setting it to state
    */

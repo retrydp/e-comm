@@ -2,34 +2,32 @@ import React from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
+import { GetServerSideProps, GetStaticPropsResult } from 'next';
 
-const HeadNavigation: React.FC = (): JSX.Element => {
+interface HeadNavigationProps {
+  routerQueryType: string;
+}
+
+const HeadNavigation: React.FC<HeadNavigationProps> = ({ routerQueryType }): JSX.Element => {
   const router = useRouter();
-  const [activeTabFromUrl, setActiveTabFromUrl] = React.useState<string>('');
+  const [activeTabFromUrl, setActiveTabFromUrl] = React.useState<string>(routerQueryType);
+
   /**
    * Provide classnames for a navigation tab according to URL params, triggers activation if needed
    * @param tab Value which we compare with URL params (type/pathname)
    * @param requirePath Flag to compare pathname instead of type
-   * @returns classes for active element
+   * @returns Classes for active element
    */
   const generateCls = (tab: string, requirePath?: boolean): string => {
-    if (requirePath) {
+    if (requirePath)
       return classNames('hnav__item', {
         'hnav__item-active': router.pathname === tab,
       });
-    }
 
     return classNames('hnav__item', {
       'hnav__item-active': activeTabFromUrl === tab && router.pathname === '/product',
     });
   };
-
-  React.useEffect(() => {
-    //set active tab, when user comes exactly from address line
-    if (router.isReady) {
-      setActiveTabFromUrl(router.query.type as string);
-    }
-  }, [router.isReady]);
 
   return (
     <div className="hnav">
@@ -52,13 +50,27 @@ const HeadNavigation: React.FC = (): JSX.Element => {
           </a>
         </Link>
 
-        <Link href={{ pathname: '/product', query: { type: 'bags' } }}>
+        <Link
+          href={{
+            pathname: '/product',
+            query: {
+              type: 'bags',
+            },
+          }}
+        >
           <a onClick={(): void => setActiveTabFromUrl('bags')} className={generateCls('bags')}>
             bags
           </a>
         </Link>
 
-        <Link href={{ pathname: '/product', query: { type: 'sneakers' } }}>
+        <Link
+          href={{
+            pathname: '/product',
+            query: {
+              type: 'sneakers',
+            },
+          }}
+        >
           <a onClick={(): void => setActiveTabFromUrl('sneakers')} className={generateCls('sneakers')}>
             sneakers
           </a>
@@ -78,6 +90,14 @@ const HeadNavigation: React.FC = (): JSX.Element => {
       </nav>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context): Promise<GetStaticPropsResult<HeadNavigationProps>> => {
+  const { type } = context.query;
+
+  return {
+    props: { routerQueryType: type as string },
+  };
 };
 
 export default HeadNavigation;
