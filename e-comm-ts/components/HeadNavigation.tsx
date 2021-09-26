@@ -2,21 +2,17 @@ import React from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import { GetServerSideProps, GetStaticPropsResult } from 'next';
 
-interface HeadNavigationProps {
-  routerQueryType: string;
-}
-
-const HeadNavigation: React.FC<HeadNavigationProps> = ({ routerQueryType }): JSX.Element => {
+const HeadNavigation: React.FC = (): JSX.Element => {
   const router = useRouter();
-  const [activeTabFromUrl, setActiveTabFromUrl] = React.useState<string>(routerQueryType);
+  const [activeTabFromUrl, setActiveTabFromUrl] = React.useState<string>('');
 
   /**
    * Provide classnames for a navigation tab according to URL params, triggers activation if needed
    * @param tab Value which we compare with URL params (type/pathname)
    * @param requirePath Flag to compare pathname instead of type
    * @returns Classes for active element
+   *
    */
   const generateCls = (tab: string, requirePath?: boolean): string => {
     if (requirePath)
@@ -28,6 +24,13 @@ const HeadNavigation: React.FC<HeadNavigationProps> = ({ routerQueryType }): JSX
       'hnav__item-active': activeTabFromUrl === tab && router.pathname === '/product',
     });
   };
+
+  React.useEffect(() => {
+    //set active tab, when user comes exactly from address line
+    if (router.isReady) {
+      setActiveTabFromUrl(router.query.type as string);
+    }
+  }, [router.isReady]);
 
   return (
     <div className="hnav">
@@ -90,14 +93,6 @@ const HeadNavigation: React.FC<HeadNavigationProps> = ({ routerQueryType }): JSX
       </nav>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context): Promise<GetStaticPropsResult<HeadNavigationProps>> => {
-  const { type } = context.query;
-
-  return {
-    props: { routerQueryType: type as string },
-  };
 };
 
 export default HeadNavigation;

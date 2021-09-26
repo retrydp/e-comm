@@ -1,0 +1,155 @@
+@import '../variables';
+
+.admin-pannel {
+  display: flex;
+  height: 100vh;
+}
+
+@include desktop {
+  .menu__header-text,
+  .menu__link {
+    display: none;
+  }
+}
+
+.menu {
+  flex-basis: 15%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 15%;
+  background-color: $sidebar-bg;
+  position: fixed;
+
+  &__header {
+    @include fontset($proxima, 19px, 600, $neutral-grey);
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 40px 10px;
+    white-space: nowrap;
+  }
+
+  &__icon {
+    min-width: 45px;
+    min-height: 45px;
+  }
+
+  &__navigation {
+    margin-top: 64px;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 10% 30px;
+    & svg > * {
+      fill: $neutral-grey;
+    }
+    &_active {
+      background-color: $sidebar-active-link;
+      & .menu__link {
+        color: $alt-grey;
+      }
+
+      & svg > * {
+        fill: $alt-grey;
+      }
+    }
+  }
+
+  &__logo {
+    min-width: 16px;
+    min-height: 16px;
+  }
+
+  &__link {
+    @include reset-a;
+    @include fontset($proxima, 16px, 600, $neutral-grey);
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0 30px 0 calc(15% + 30px);
+
+  &__title {
+    @include fontset($proxima, 24px, 600, inherit);
+
+    margin-top: 36px;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    border: 1px solid $form-grey;
+    margin-top: 64px;
+    padding: 32px;
+    gap: 32px;
+  }
+
+  &__subheader {
+    @include fontset($proxima, 24px, 600, inherit);
+  }
+
+  &__action-choose {
+    @include fontset($proxima, 15px, 400, $neutral-grey);
+
+    width: 25%;
+    flex-shrink: 1;
+    border: 1px solid $form-grey;
+    border-color: $form-grey;
+    background-color: transparent;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  &__input {
+    @include fontset($proxima, 15px, 400, inherit);
+
+    width: 50%;
+    border-radius: 8px;
+    padding: 5px;
+    border: 1px solid $form-grey;
+  }
+
+  &__input-label {
+    @include fontset($proxima, 15px, 400, $neutral-grey);
+
+    text-transform: uppercase;
+  }
+
+  &__submit {
+    @include reset-button;
+    @include fontset($poppins, 15px, 400, white);
+
+    display: flex;
+    width: 25%;
+    justify-content: center;
+    align-items: center;
+    background-color: $primary-blue;
+    border-radius: 8px;
+    padding: 15px 24px;
+    &:active {
+      padding-top: 17px;
+      padding-bottom: 13px;
+    }
+  }
+}
