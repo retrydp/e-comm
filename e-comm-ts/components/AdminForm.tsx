@@ -79,16 +79,14 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
         }, 400);
       }}
     >
-      {({ errors, touched }) => {
-        return (
-          <Form className="body__wrapper">
-            {inputs.map(({ name, labelName, formType }) => formItem(name, labelName, errors, touched, formType))}
-            <button type="submit" className="body__submit">
-              Send
-            </button>
-          </Form>
-        );
-      }}
+      {({ errors, touched }) => (
+        <Form className="body__wrapper">
+          {inputs.map(({ name, labelName, formType }) => formItem(name, labelName, errors, touched, formType))}
+          <button type="submit" className="body__submit">
+            Send
+          </button>
+        </Form>
+      )}
     </Formik>
   );
 };

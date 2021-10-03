@@ -1,9 +1,6 @@
 import { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
-
-interface SliderProps {
-  handler: (value: number[]) => void;
-}
+import { SliderProps } from '../types';
 
 const Slider: React.FC<SliderProps> = ({ handler }): JSX.Element => (
   <>

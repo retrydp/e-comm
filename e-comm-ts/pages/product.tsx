@@ -3,12 +3,7 @@ import { ProductList } from '../components';
 import { useRouter, NextRouter } from 'next/router';
 import Head from 'next/head';
 import { GetServerSideProps, GetStaticPropsResult } from 'next';
-
-type Products = string[];
-
-interface ProductProps {
-  routerQueryType: string;
-}
+import { Products, ProductProps } from '../types';
 
 const ProductWrapper: React.FC<ProductProps> = ({ routerQueryType }): JSX.Element => {
   const router: NextRouter = useRouter();

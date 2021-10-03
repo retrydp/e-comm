@@ -4,17 +4,7 @@ import shoe from '../public/assets/img/shoe.png';
 import { ProductCart, Slider, ProductCartLine } from './';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
-
-type TemplateType = 'extended' | 'grid';
-
-interface SliderValues {
-  minValue: number;
-  maxValue: number;
-}
-
-interface Template {
-  value: TemplateType;
-}
+import { TemplateType, Template, SliderValues } from '../types';
 
 export const ProductList: React.FC = (): JSX.Element => {
   const [template, setTemplate] = useState<Template>({
