@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage, FormikErrors, FormikTouched } from 'formik';
 import * as Yup from 'yup';
-import { FormValues, AdminFormProps, Forms } from '../types';
+import { FormValues, AdminFormProps, Forms, FormikFeatures } from '../types';
 import classNames from 'classnames';
 
 const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
@@ -33,7 +33,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
     { name: 'productName', labelName: 'Products' },
     { name: 'brand', labelName: 'Brand' },
     { name: 'category', labelName: 'Category' },
-    { name: 'availableColors', labelName: 'Available colors', formType: 'textarea' },
+    { name: 'availableColors', labelName: 'Available colors', formType: 'textarea', extendable: true },
     { name: 'availableSizes', labelName: 'Available sizes' },
     { name: 'description', labelName: 'Description', formType: 'textarea' },
     { name: 'price', labelName: 'Price' },
@@ -45,12 +45,11 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
    * Generates form item to render
    * @param name Form name
    * @param labelName Form description to display
-   * @param errors FormikErrors
-   * @param touched FormikTouched
+   * @param formikFeatures Special formik methods
    * @param formType Specific form type e.g. "textarea", "range" etc.
    * @returns Pregenerated form item
    */
-  const formItem = (name: keyof FormValues, labelName: string, errors: FormikErrors<FormValues>, touched: FormikTouched<FormValues>, formType?: string | undefined): JSX.Element => (
+  const formItem = ({ name, labelName, formType, extendable }: Forms, { errors, touched }: FormikFeatures): JSX.Element => (
     <div className="body__row" key={name}>
       <label htmlFor={name} className="body__input-label">
         {labelName}
@@ -60,7 +59,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
         as={(formType ??= 'input')}
         type="text"
         className={classNames('body__input', {
-          body__input_warning: Object.keys(errors).includes(name) && Object.keys(touched).includes(name),
+          body__input_warning: errors[name] && touched[name],
           'body__input-textarea': formType === 'textarea',
         })}
       />
@@ -79,9 +78,9 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
         }, 400);
       }}
     >
-      {({ errors, touched }) => (
+      {(formikFeatures) => (
         <Form className="body__wrapper">
-          {inputs.map(({ name, labelName, formType }) => formItem(name, labelName, errors, touched, formType))}
+          {inputs.map((element) => formItem({ ...element }, { ...formikFeatures }))}
           <button type="submit" className="body__submit">
             Send
           </button>

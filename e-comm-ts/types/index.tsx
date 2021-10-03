@@ -1,3 +1,4 @@
+import { Formik, Field, Form, ErrorMessage, FormikErrors, FormikTouched } from 'formik';
 export interface FormValues {
   productName: string;
   brand: string;
@@ -14,10 +15,16 @@ export interface AdminFormProps {
   getFormData: (values: FormValues) => void;
 }
 
+export interface FormikFeatures {
+  errors: FormikErrors<FormValues>;
+  touched: FormikTouched<FormValues>;
+}
+
 export interface Forms {
   name: keyof FormValues;
   labelName: string;
   formType?: string | undefined;
+  extendable?: boolean | undefined;
 }
 
 export type TemplateType = 'extended' | 'grid';
