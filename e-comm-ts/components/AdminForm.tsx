@@ -5,7 +5,7 @@ import { FormValues, AdminFormProps, Forms, FormikFeatures } from '../types';
 import classNames from 'classnames';
 
 const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
-  const initialValues: FormValues = {
+  const initialValues: FormValues<string> = {
     productName: '',
     brand: '',
     category: '',

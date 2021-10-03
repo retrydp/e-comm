@@ -1,33 +1,34 @@
 import { Formik, Field, Form, ErrorMessage, FormikErrors, FormikTouched } from 'formik';
-export interface FormValues {
-  productName: string;
-  brand: string;
-  category: string;
-  availableColors: AvailableColors[];
-  availableSizes: string;
-  description: string;
-  price: string;
-  oldPrice: string;
-  shipping: string;
+
+export interface FormValues<T> {
+  productName: T;
+  brand: T;
+  category: T;
+  availableColors: AvailableColors<T>[];
+  availableSizes: T;
+  description: T;
+  price: T;
+  oldPrice: T;
+  shipping: T;
 }
 
-export interface AvailableColors {
-  color: string;
-  value: string;
+export interface AvailableColors<T> {
+  color: T;
+  value: T;
 }
 
 export interface AdminFormProps {
-  getFormData: (values: FormValues) => void;
+  getFormData: (values: FormValues<string>) => void;
 }
 
 export interface FormikFeatures {
-  errors: FormikErrors<FormValues>;
-  touched: FormikTouched<FormValues>;
-  values: FormValues;
+  errors: FormikErrors<FormValues<string>>;
+  touched: FormikTouched<FormValues<string>>;
+  values: FormValues<string>;
 }
 
 export interface Forms {
-  name: keyof FormValues;
+  name: keyof FormValues<string>;
   labelName: string;
   formType?: string | undefined;
   isExtendable?: boolean | undefined;
@@ -35,9 +36,9 @@ export interface Forms {
 
 export type TemplateType = 'extended' | 'grid';
 
-export interface SliderValues {
-  minValue: number;
-  maxValue: number;
+export interface SliderValues<T> {
+  minValue: T;
+  maxValue: T;
 }
 
 export interface Template {
