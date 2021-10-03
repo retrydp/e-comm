@@ -3,12 +3,17 @@ export interface FormValues {
   productName: string;
   brand: string;
   category: string;
-  availableColors: string;
+  availableColors: AvailableColors[];
   availableSizes: string;
   description: string;
   price: string;
   oldPrice: string;
   shipping: string;
+}
+
+export interface AvailableColors {
+  color: string;
+  value: string;
 }
 
 export interface AdminFormProps {
@@ -18,13 +23,14 @@ export interface AdminFormProps {
 export interface FormikFeatures {
   errors: FormikErrors<FormValues>;
   touched: FormikTouched<FormValues>;
+  values: FormValues;
 }
 
 export interface Forms {
   name: keyof FormValues;
   labelName: string;
   formType?: string | undefined;
-  extendable?: boolean | undefined;
+  isExtendable?: boolean | undefined;
 }
 
 export type TemplateType = 'extended' | 'grid';

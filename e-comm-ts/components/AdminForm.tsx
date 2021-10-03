@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage, FormikErrors, FormikTouched } from 'formik';
+import { Formik, Field, Form, ErrorMessage, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { FormValues, AdminFormProps, Forms, FormikFeatures } from '../types';
 import classNames from 'classnames';
@@ -9,7 +9,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
     productName: '',
     brand: '',
     category: '',
-    availableColors: '',
+    availableColors: [{ color: '', value: '' }],
     availableSizes: '',
     description: '',
     price: '',
@@ -21,7 +21,14 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
     productName: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
     brand: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
     category: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-    availableColors: Yup.string().max(50, 'Must be 50 characters or less').required('Required'),
+    availableColors: Yup.array()
+      .of(
+        Yup.object().shape({
+          color: Yup.string().required('Required'),
+          value: Yup.string().required('Required'),
+        })
+      )
+      .min(1, 'Atleast one color is needed'),
     availableSizes: Yup.string().max(100, 'Must be 100 characters or less').required('Required'),
     description: Yup.string().max(1500, 'Must be 1500 characters or less').required('Required'),
     price: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
@@ -33,7 +40,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
     { name: 'productName', labelName: 'Products' },
     { name: 'brand', labelName: 'Brand' },
     { name: 'category', labelName: 'Category' },
-    { name: 'availableColors', labelName: 'Available colors', formType: 'textarea', extendable: true },
+    { name: 'availableColors', labelName: 'Available colors', formType: 'textarea', isExtendable: true },
     { name: 'availableSizes', labelName: 'Available sizes' },
     { name: 'description', labelName: 'Description', formType: 'textarea' },
     { name: 'price', labelName: 'Price' },
@@ -47,25 +54,82 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
    * @param labelName Form description to display
    * @param formikFeatures Special formik methods
    * @param formType Specific form type e.g. "textarea", "range" etc.
+   * @param isExtendable Additional values can be added.
    * @returns Pregenerated form item
    */
-  const formItem = ({ name, labelName, formType, extendable }: Forms, { errors, touched }: FormikFeatures): JSX.Element => (
-    <div className="body__row" key={name}>
-      <label htmlFor={name} className="body__input-label">
-        {labelName}
-      </label>
-      <Field
-        name={name}
-        as={(formType ??= 'input')}
-        type="text"
-        className={classNames('body__input', {
-          body__input_warning: errors[name] && touched[name],
-          'body__input-textarea': formType === 'textarea',
-        })}
-      />
-      <ErrorMessage name={name}>{(msg) => <div className="body__input-error">{msg}</div>}</ErrorMessage>
-    </div>
-  );
+  const formItem = ({ name, labelName, formType, isExtendable }: Forms, { errors, touched, values }: FormikFeatures): JSX.Element => {
+    if (isExtendable) {
+      console.log(errors[name]);
+      return (
+        <FieldArray name={name} key={name}>
+          {({ remove, push }) => (
+            <div>
+              {values[name].length > 0 &&
+                (values[name] as []).map((_, index: number) => (
+                  <div className="body__wrapper body__wrapper-sub" key={index}>
+                    <div className="body__row">
+                      <label htmlFor={`${name}.${index}.color`} className="body__input-label">
+                        Color
+                      </label>
+                      <Field
+                        name={`${name}.${index}.color`}
+                        type="text"
+                        className={classNames('body__input', {
+                          body__input_warning: errors?.[name]?.[index]?.['color'] && touched?.[name]?.[index]?.['color'],
+                        })}
+                      />
+                      <ErrorMessage name={`${name}.${index}.color`}>{(msg) => <div className="body__input-error">{msg}</div>}</ErrorMessage>
+                    </div>
+
+                    <div className="body__row">
+                      <label htmlFor={`${name}.${index}.value`} className="body__input-label">
+                        Images
+                      </label>
+                      <Field
+                        name={`${name}.${index}.value`}
+                        as="textarea"
+                        className={classNames('body__input', {
+                          body__input_warning: errors?.[name]?.[index]?.['value'] && touched?.[name]?.[index]?.['value'],
+                          'body__input-textarea': formType === 'textarea',
+                        })}
+                      />
+                      <ErrorMessage name={`${name}.${index}.value`}>{(msg) => <div className="body__input-error">{msg}</div>}</ErrorMessage>
+                    </div>
+
+                    <div className="body__row">
+                      <button type="button" className="body__submit" onClick={() => remove(index)}>
+                        Delete block
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              <button type="button" className="body__submit" onClick={() => push({ color: '', value: '' })}>
+                Add color
+              </button>
+              {typeof errors[name] === 'string' ? <div className="body__input-error">{errors[name]}</div> : null}
+            </div>
+          )}
+        </FieldArray>
+      );
+    }
+    return (
+      <div className="body__row" key={name}>
+        <label htmlFor={name} className="body__input-label">
+          {labelName}
+        </label>
+        <Field
+          name={name}
+          as={(formType ??= 'input')}
+          type="text"
+          className={classNames('body__input', {
+            body__input_warning: errors[name] && touched[name],
+            'body__input-textarea': formType === 'textarea',
+          })}
+        />
+        <ErrorMessage name={name}>{(msg) => <div className="body__input-error">{msg}</div>}</ErrorMessage>
+      </div>
+    );
+  };
 
   return (
     <Formik
@@ -74,6 +138,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           props.getFormData(values);
+
           setSubmitting(false);
         }, 400);
       }}
