@@ -131,6 +131,15 @@
     padding: 5px;
     border: 1px solid $form-grey;
 
+    &_warning {
+      border: 1px solid red;
+    }
+
+    &-textarea {
+      height: 5em;
+      resize: vertical;
+    }
+
     &-label {
       @include fontset($proxima, 15px, 400, $neutral-grey);
 

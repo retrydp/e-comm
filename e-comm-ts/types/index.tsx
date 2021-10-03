@@ -13,3 +13,9 @@ export interface FormValues {
 export interface AdminFormProps {
   getFormData: (values: FormValues) => void;
 }
+
+export interface Forms {
+  name: keyof FormValues;
+  labelName: string;
+  formType?: string | undefined;
+}
