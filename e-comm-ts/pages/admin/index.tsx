@@ -1,49 +1,15 @@
 import React from 'react';
 import Head from 'next/head';
+import AdminForm from '../../components/AdminForm';
+import { FormValues } from '../../types';
 
 const AdminPannel: React.FC = (): JSX.Element => {
-  const [secondaryInput, setSecondaryInput] = React.useState<JSX.Element[]>();
-  /**
-   * Create new inputs for addition colors
-   * @param input  Available colors element with comma separated values
-   */
-  const additionalColors = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const arrayFromValues: string[] = event.target.value.split(',').filter(Boolean);
-    const inputs: JSX.Element[] = arrayFromValues.map((value: string) => {
-      const formatted: string = value.trim().toLowerCase();
-
-      return (
-        <div className="body__row">
-          <label
-            htmlFor={formatted}
-            className="body__input-label"
-            style={{
-              color: formatted,
-              backgroundColor: formatted === 'white' ? '#9098b1' : 'transparent',
-            }}
-          >
-            {formatted}
-          </label>
-          <textarea
-            id={formatted}
-            rows={4}
-            className="body__input"
-            placeholder="Images for color (comma separated)"
-            style={{
-              resize: 'vertical',
-            }}
-            required
-          />
-        </div>
-      );
-    });
-
-    setSecondaryInput(inputs);
-  };
-
   // fetch('http://localhost:3000/api?sample=1&node=1', { method: 'POST' })
   //   .then((responce) => responce.json())
   //   .then((result) => console.log(result));
+  const getFormData = (values: FormValues): void => {
+    console.log(JSON.stringify(values, null, 2));
+  };
 
   return (
     <>
@@ -88,87 +54,7 @@ const AdminPannel: React.FC = (): JSX.Element => {
         </aside>
         <main className="body">
           <h2 className="body__title">Overview</h2>
-          <form className="body__wrapper">
-            <h3 className="body__subheader">Add items</h3>
-            <select name="collection" id="collection" className="body__action-choose">
-              <option value="value1">Add product</option>
-            </select>
-            <div className="body__row">
-              <label htmlFor="productName" className="body__input-label">
-                Product name:
-              </label>
-              <input id="productName" type="text" className="body__input" placeholder="Product name" required />
-            </div>
-
-            <div className="body__row">
-              <label htmlFor="productName" className="body__input-label">
-                Brand:
-              </label>
-              <input id="brand" type="text" className="body__input" placeholder="Brand" required />
-            </div>
-
-            <div className="body__row">
-              <label htmlFor="category" className="body__input-label">
-                Category:
-              </label>
-              <input id="category" type="text" className="body__input" placeholder="Category" required />
-            </div>
-
-            <div className="body__row">
-              <label htmlFor="availableColors" className="body__input-label">
-                Available colors:
-              </label>
-              <input id="availableColors" type="text" className="body__input" placeholder="Available colors (comma separated)" required onChange={additionalColors} />
-            </div>
-
-            {secondaryInput}
-
-            <div className="body__row">
-              <label htmlFor="availablesizes" className="body__input-label">
-                Available sizes:
-              </label>
-              <input id="availablesizes" type="text" className="body__input" placeholder="Available sizes" required />
-            </div>
-
-            <div className="body__row">
-              <label htmlFor="description" className="body__input-label">
-                Description:
-              </label>
-              <textarea
-                id="description"
-                rows={4}
-                className="body__input"
-                placeholder="Description"
-                style={{
-                  resize: 'vertical',
-                }}
-              />
-            </div>
-
-            <div className="body__row">
-              <label htmlFor="price" className="body__input-label">
-                Price:
-              </label>
-              <input id="price" type="text" className="body__input" placeholder="Price" required />
-            </div>
-
-            <div className="body__row">
-              <label htmlFor="oldprice" className="body__input-label">
-                Old price:
-              </label>
-              <input id="oldprice" type="text" className="body__input" placeholder="Old price" required />
-            </div>
-
-            <div className="body__row">
-              <label htmlFor="shipping" className="body__input-label">
-                Shipping:
-              </label>
-              <input id="shiping" type="text" className="body__input" placeholder="Shiping" required />
-            </div>
-            <button type="submit" className="body__submit">
-              Send
-            </button>
-          </form>
+          <AdminForm getFormData={getFormData} />
         </main>
       </div>
     </>

@@ -130,12 +130,16 @@
     border-radius: 8px;
     padding: 5px;
     border: 1px solid $form-grey;
-  }
 
-  &__input-label {
-    @include fontset($proxima, 15px, 400, $neutral-grey);
+    &-label {
+      @include fontset($proxima, 15px, 400, $neutral-grey);
 
-    text-transform: uppercase;
+      text-transform: uppercase;
+    }
+
+    &-error {
+      @include fontset($proxima, 15px, 400, red);
+    }
   }
 
   &__submit {
@@ -149,6 +153,7 @@
     background-color: $primary-blue;
     border-radius: 8px;
     padding: 15px 24px;
+
     &:active {
       padding-top: 17px;
       padding-bottom: 13px;

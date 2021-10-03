@@ -40,9 +40,11 @@ export const ProductList: React.FC = (): JSX.Element => {
    * Delaying user`s entries for a range-type input & setting it to state
    */
   const sliderHandler = debounce((values: number[]): void => {
+    const [minValue, maxValue] = values;
+
     setRange({
-      minValue: values[0],
-      maxValue: values[1],
+      minValue,
+      maxValue,
     });
   }, 200);
 
