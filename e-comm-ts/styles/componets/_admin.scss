@@ -53,9 +53,11 @@
     align-items: center;
     gap: 24px;
     padding: 10% 30px;
+
     & svg > * {
       fill: $neutral-grey;
     }
+
     &_active {
       background-color: $sidebar-active-link;
 
@@ -100,7 +102,9 @@
     margin-top: 64px;
     padding: 32px;
     gap: 32px;
+
     &-sub {
+      margin-top: 0px;
       margin-bottom: 30px;
     }
   }

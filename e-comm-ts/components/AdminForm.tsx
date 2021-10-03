@@ -59,13 +59,12 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
    */
   const formItem = ({ name, labelName, formType, isExtendable }: Forms, { errors, touched, values }: FormikFeatures): JSX.Element => {
     if (isExtendable) {
-      console.log(errors[name]);
       return (
         <FieldArray name={name} key={name}>
           {({ remove, push }) => (
             <div>
               {values[name].length > 0 &&
-                (values[name] as []).map((_, index: number) => (
+                (values[name] as []).map((_, index) => (
                   <div className="body__wrapper body__wrapper-sub" key={index}>
                     <div className="body__row">
                       <label htmlFor={`${name}.${index}.color`} className="body__input-label">
@@ -106,6 +105,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
               <button type="button" className="body__submit" onClick={() => push({ color: '', value: '' })}>
                 Add color
               </button>
+              {/* Error display */}
               {typeof errors[name] === 'string' ? <div className="body__input-error">{errors[name]}</div> : null}
             </div>
           )}
@@ -138,7 +138,6 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           props.getFormData(values);
-
           setSubmitting(false);
         }, 400);
       }}
