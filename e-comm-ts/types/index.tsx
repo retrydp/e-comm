@@ -1,34 +1,53 @@
-import { Formik, Field, Form, ErrorMessage, FormikErrors, FormikTouched } from 'formik';
+import { FormikErrors, FormikTouched } from 'formik';
 
-export interface FormValues<T> {
-  productName: T;
-  brand: T;
-  category: T;
-  availableColors: AvailableColors<T>[];
-  availableSizes: T;
-  description: T;
-  price: T;
-  oldPrice: T;
-  shipping: T;
+export interface FormValues {
+  productName: string;
+  brand: string;
+  category: string;
+  availableColors: AvailableColors<string>[];
+  availableSizes: string;
+  description: string;
+  price: string;
+  oldPrice: string;
+  shipping: string;
 }
 
 export interface AvailableColors<T> {
   color: T;
-  value: T;
+  images: T;
+}
+
+export interface FormattedFormColor {
+  color: string;
+  images: string[];
+}
+
+export type FomatedFormSize = string[];
+
+export interface FormattedFormData {
+  availableColors: FormattedFormColor[];
+  availableSizes: FomatedFormSize;
+  productName: string;
+  brand: string;
+  category: string;
+  description: string;
+  price: string;
+  oldPrice: string;
+  shipping: string;
 }
 
 export interface AdminFormProps {
-  getFormData: (values: FormValues<string>) => void;
+  getFormData: (values: FormValues) => void;
 }
 
 export interface FormikFeatures {
-  errors: FormikErrors<FormValues<string>>;
-  touched: FormikTouched<FormValues<string>>;
-  values: FormValues<string>;
+  errors: FormikErrors<FormValues>;
+  touched: FormikTouched<FormValues>;
+  values: FormValues;
 }
 
 export interface Forms {
-  name: keyof FormValues<string>;
+  name: keyof FormValues;
   labelName: string;
   formType?: string | undefined;
   isExtendable?: boolean | undefined;

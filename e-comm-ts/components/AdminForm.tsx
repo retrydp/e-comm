@@ -5,11 +5,11 @@ import { FormValues, AdminFormProps, Forms, FormikFeatures } from '../types';
 import classNames from 'classnames';
 
 const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
-  const initialValues: FormValues<string> = {
+  const initialValues: FormValues = {
     productName: '',
     brand: '',
     category: '',
-    availableColors: [{ color: '', value: '' }],
+    availableColors: [{ color: '', images: '' }],
     availableSizes: '',
     description: '',
     price: '',
@@ -25,15 +25,23 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
       .of(
         Yup.object().shape({
           color: Yup.string().required('Required'),
-          value: Yup.string().required('Required'),
+          images: Yup.string().required('Required'),
         })
       )
       .min(1, 'Atleast one color is needed'),
-    availableSizes: Yup.string().max(100, 'Must be 100 characters or less').required('Required'),
+    availableSizes: Yup.string()
+      .matches(/^(\d|[a-zA-Z])+(?:, ?(\d|[a-zA-Z])+)*$/, 'Comma-separated list')
+      .max(100, 'Must be 100 characters or less')
+      .required('Required'),
     description: Yup.string().max(1500, 'Must be 1500 characters or less').required('Required'),
-    price: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
+    price: Yup.string()
+      .matches(/[0-9]+/, 'Must be a number')
+      .max(15, 'Must be 15 characters or less')
+      .required('Required'),
     shipping: Yup.string().max(50, 'Must be 50 characters or less').required('Required'),
-    oldPrice: Yup.string().max(15, 'Must be 15 characters or less'),
+    oldPrice: Yup.string()
+      .matches(/[0-9]+/, 'Must be a number')
+      .max(15, 'Must be 15 characters or less'),
   });
 
   const inputs: Forms[] = [
@@ -81,18 +89,18 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
                     </div>
 
                     <div className="body__row">
-                      <label htmlFor={`${name}.${index}.value`} className="body__input-label">
+                      <label htmlFor={`${name}.${index}.images`} className="body__input-label">
                         Images
                       </label>
                       <Field
-                        name={`${name}.${index}.value`}
+                        name={`${name}.${index}.images`}
                         as="textarea"
                         className={classNames('body__input', {
-                          body__input_warning: errors?.[name]?.[index]?.['value'] && touched?.[name]?.[index]?.['value'],
+                          body__input_warning: errors?.[name]?.[index]?.['images'] && touched?.[name]?.[index]?.['images'],
                           'body__input-textarea': formType === 'textarea',
                         })}
                       />
-                      <ErrorMessage name={`${name}.${index}.value`}>{(msg) => <div className="body__input-error">{msg}</div>}</ErrorMessage>
+                      <ErrorMessage name={`${name}.${index}.images`}>{(msg) => <div className="body__input-error">{msg}</div>}</ErrorMessage>
                     </div>
 
                     <div className="body__row">
@@ -102,7 +110,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
                     </div>
                   </div>
                 ))}
-              <button type="button" className="body__submit" onClick={() => push({ color: '', value: '' })}>
+              <button type="button" className="body__submit" onClick={() => push({ color: '', images: '' })}>
                 Add color
               </button>
               {/* Error display */}
@@ -112,6 +120,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
         </FieldArray>
       );
     }
+
     return (
       <div className="body__row" key={name}>
         <label htmlFor={name} className="body__input-label">

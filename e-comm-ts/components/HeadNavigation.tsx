@@ -53,27 +53,13 @@ const HeadNavigation: React.FC = (): JSX.Element => {
           </a>
         </Link>
 
-        <Link
-          href={{
-            pathname: '/product',
-            query: {
-              type: 'bags',
-            },
-          }}
-        >
+        <Link href={{ pathname: '/product', query: { type: 'bags' } }}>
           <a onClick={(): void => setActiveTabFromUrl('bags')} className={generateCls('bags')}>
             bags
           </a>
         </Link>
 
-        <Link
-          href={{
-            pathname: '/product',
-            query: {
-              type: 'sneakers',
-            },
-          }}
-        >
+        <Link href={{ pathname: '/product', query: { type: 'sneakers' } }}>
           <a onClick={(): void => setActiveTabFromUrl('sneakers')} className={generateCls('sneakers')}>
             sneakers
           </a>

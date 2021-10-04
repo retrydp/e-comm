@@ -1,14 +1,22 @@
 import React from 'react';
 import Head from 'next/head';
 import AdminForm from '../../components/AdminForm';
-import { FormValues } from '../../types';
+import { FormattedFormColor, FormattedFormData, FomatedFormSize, FormValues } from '../../types';
 
 const AdminPannel: React.FC = (): JSX.Element => {
   // fetch('http://localhost:3000/api?sample=1&node=1', { method: 'POST' })
   //   .then((responce) => responce.json())
   //   .then((result) => console.log(result));
-  const getFormData = (values: FormValues<string>): void => {
-    console.log(JSON.stringify(values, null, 2));
+  const getFormData = (values: FormValues): void => {
+    const colorFormated: FormattedFormColor[] = values.availableColors.map(({ images, color }) => ({ color, images: images.split(',') }));
+    const sizeFormatted: FomatedFormSize = values.availableSizes.split(',');
+    const valuesFormatted: FormattedFormData = {
+      ...values,
+      availableColors: colorFormated,
+      availableSizes: sizeFormatted,
+    };
+
+    console.log(JSON.stringify(valuesFormatted, null, 2));
   };
 
   return (
