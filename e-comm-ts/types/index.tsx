@@ -4,7 +4,7 @@ export interface FormValues {
   productName: string;
   brand: string;
   category: string;
-  availableColors: AvailableColors<string>[];
+  availableColors: AvailableColors<string, string>[];
   availableSizes: string;
   description: string;
   price: string;
@@ -12,28 +12,16 @@ export interface FormValues {
   shipping: string;
 }
 
-export interface AvailableColors<T> {
+export interface AvailableColors<T, S> {
   color: T;
-  images: T;
+  images: S;
 }
 
-export interface FormattedFormColor {
-  color: string;
-  images: string[];
-}
-
-export type FomatedFormSize = string[];
-
-export interface FormattedFormData {
-  availableColors: FormattedFormColor[];
-  availableSizes: FomatedFormSize;
-  productName: string;
-  brand: string;
-  category: string;
-  description: string;
-  price: string;
-  oldPrice: string;
-  shipping: string;
+export interface FormattedFormData extends Omit<FormValues, 'availableColors' | 'availableSizes' | 'price' | 'oldPrice'> {
+  availableColors: AvailableColors<string, string[]>[];
+  availableSizes: string[];
+  price: number;
+  oldPrice: number;
 }
 
 export interface AdminFormProps {
@@ -49,15 +37,15 @@ export interface FormikFeatures {
 export interface Forms {
   name: keyof FormValues;
   labelName: string;
-  formType?: string | undefined;
-  isExtendable?: boolean | undefined;
+  formType?: string;
+  isExtendable?: boolean;
 }
 
 export type TemplateType = 'extended' | 'grid';
 
-export interface SliderValues<T> {
-  minValue: T;
-  maxValue: T;
+export interface SliderValues {
+  minValue: number;
+  maxValue: number;
 }
 
 export interface Template {

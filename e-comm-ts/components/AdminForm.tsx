@@ -35,12 +35,12 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
       .required('Required'),
     description: Yup.string().max(1500, 'Must be 1500 characters or less').required('Required'),
     price: Yup.string()
-      .matches(/[0-9]+/, 'Must be a number')
+      .matches(/^[0-9]+$/, 'Must be a number')
       .max(15, 'Must be 15 characters or less')
       .required('Required'),
     shipping: Yup.string().max(50, 'Must be 50 characters or less').required('Required'),
     oldPrice: Yup.string()
-      .matches(/[0-9]+/, 'Must be a number')
+      .matches(/^[0-9]+$/, 'Must be a number')
       .max(15, 'Must be 15 characters or less'),
   });
 

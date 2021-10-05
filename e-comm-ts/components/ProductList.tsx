@@ -11,7 +11,7 @@ export const ProductList: React.FC = (): JSX.Element => {
     value: 'grid',
   });
 
-  const [range, setRange] = useState<SliderValues<number>>({
+  const [range, setRange] = useState<SliderValues>({
     minValue: 0,
     maxValue: 1500,
   });
