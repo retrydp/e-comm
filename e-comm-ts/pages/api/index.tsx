@@ -1,13 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'GET') {
-    res.redirect('/');
-  } else {
-    const query = req.query;
+import { connectToDatabase } from '../../utils/database';
 
-    res.json({ lo: query });
-  }
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const { db } = await connectToDatabase();
+
+  const data = await db.collection('products').find({}).toArray();
+  res.json({ success: true, data, length: data.length });
 };
 
 export default handler;

@@ -4,9 +4,9 @@ import AdminForm from '../../components/AdminForm';
 import { AvailableColors, FormattedFormData, FormValues } from '../../types';
 
 const AdminPannel: React.FC = (): JSX.Element => {
-  // fetch('http://localhost:3000/api?sample=1&node=1', { method: 'POST' })
-  //   .then((responce) => responce.json())
-  //   .then((result) => console.log(result));
+  fetch('http://localhost:3000/api?sample=1&node=1', { method: 'POST' })
+    .then((responce) => responce.json())
+    .then((result) => console.log(result));
   const getFormData = (values: FormValues): void => {
     // const colorFormated: AvailableColors<string, string[]>[] = ;
     // const sizeFormatted: string[] = ;
