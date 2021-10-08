@@ -1,24 +1,22 @@
 import React from 'react';
 import Head from 'next/head';
 import AdminForm from '../../components/AdminForm';
-import { AvailableColors, FormattedFormData, FormValues } from '../../types';
+import { FormattedFormData, FormValues } from '../../types';
+import { ADD_NEW_PRODUCT } from '../../constants/apiVars';
+import axios from 'axios';
 
 const AdminPannel: React.FC = (): JSX.Element => {
-  fetch('http://localhost:3000/api?sample=1&node=1', { method: 'POST' })
-    .then((responce) => responce.json())
-    .then((result) => console.log(result));
-  const getFormData = (values: FormValues): void => {
-    // const colorFormated: AvailableColors<string, string[]>[] = ;
-    // const sizeFormatted: string[] = ;
-    const valuesFormatted: FormattedFormData = {
-      ...values,
-      availableColors: values.availableColors.map(({ images, color }) => ({ color, images: images.split(',') })),
-      availableSizes: values.availableSizes.split(','),
-      price: Number(values.price),
-      oldPrice: Number(values.oldPrice),
-    };
+  // fetch('http://localhost:3000/api?sample=1&node=1', { method: 'POST' })
+  //   .then((responce) => responce.json())
+  //   .then((result) => console.log(result));
 
-    console.log(JSON.stringify(valuesFormatted, null, 2));
+  const getFormData = async (values: FormValues) => {
+    try {
+      await axios.post('http://localhost:3000/api', { action: ADD_NEW_PRODUCT, values }).then((responce) => console.log(responce.data));
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log(JSON.stringify(valuesFormatted, null, 2));
   };
 
   return (

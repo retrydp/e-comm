@@ -17,11 +17,29 @@ export interface AvailableColors<T, S> {
   images: S;
 }
 
-export interface FormattedFormData extends Omit<FormValues, 'availableColors' | 'availableSizes' | 'price' | 'oldPrice'> {
+type ValueDifference = 'availableColors' | 'availableSizes' | 'price' | 'oldPrice';
+
+interface Comments {
+  userId: string;
+  rating: number;
+  text: string;
+  date: Date;
+}
+
+export interface FormattedFormData extends Omit<FormValues, ValueDifference> {
   availableColors: AvailableColors<string, string[]>[];
   availableSizes: string[];
   price: number;
   oldPrice: number;
+  lastModified?: Date;
+  salesCount?: number;
+  rating?: number;
+  itemsInStock?: number;
+  comments?: Comments[];
+}
+
+export interface FormattedFormDataStrict extends Required<Omit<FormattedFormData, 'comments'>> {
+  comments?: [] | Comments[];
 }
 
 export interface AdminFormProps {
