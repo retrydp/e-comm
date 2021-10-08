@@ -9,12 +9,18 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
     productName: '',
     brand: '',
     category: '',
-    availableColors: [{ color: '', images: '' }],
+    availableColors: [
+      {
+        color: '',
+        images: '',
+      },
+    ],
     availableSizes: '',
     description: '',
     price: '',
     oldPrice: '',
     shipping: '',
+    itemsInStock: '',
   };
 
   const validationSchema = Yup.object({
@@ -34,6 +40,9 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
       .max(100, 'Must be 100 characters or less')
       .required('Required'),
     description: Yup.string().max(1500, 'Must be 1500 characters or less').required('Required'),
+    itemsInStock: Yup.string()
+      .matches(/^[0-9]+$/, 'Must be a number')
+      .required('Required'),
     price: Yup.string()
       .matches(/^[0-9]+$/, 'Must be a number')
       .max(15, 'Must be 15 characters or less')
@@ -45,15 +54,49 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
   });
 
   const inputs: Forms[] = [
-    { name: 'productName', labelName: 'Products' },
-    { name: 'brand', labelName: 'Brand' },
-    { name: 'category', labelName: 'Category' },
-    { name: 'availableColors', labelName: 'Available colors', formType: 'textarea', isExtendable: true },
-    { name: 'availableSizes', labelName: 'Available sizes' },
-    { name: 'description', labelName: 'Description', formType: 'textarea' },
-    { name: 'price', labelName: 'Price' },
-    { name: 'oldPrice', labelName: 'Old price' },
-    { name: 'shipping', labelName: 'Shipping' },
+    {
+      name: 'productName',
+      labelName: 'Products',
+    },
+    {
+      name: 'brand',
+      labelName: 'Brand',
+    },
+    {
+      name: 'category',
+      labelName: 'Category',
+    },
+    {
+      name: 'availableColors',
+      labelName: 'Available colors',
+      formType: 'textarea',
+      isExtendable: true,
+    },
+    {
+      name: 'availableSizes',
+      labelName: 'Available sizes',
+    },
+    {
+      name: 'description',
+      labelName: 'Description',
+      formType: 'textarea',
+    },
+    {
+      name: 'price',
+      labelName: 'Price',
+    },
+    {
+      name: 'oldPrice',
+      labelName: 'Old price',
+    },
+    {
+      name: 'shipping',
+      labelName: 'Shipping',
+    },
+    {
+      name: 'itemsInStock',
+      labelName: 'Items in stock',
+    },
   ];
 
   /**

@@ -1,5 +1,10 @@
 import { FormikErrors, FormikTouched } from 'formik';
 
+export interface AvailableColors<T, S> {
+  color: T;
+  images: S;
+}
+
 export interface FormValues {
   productName: string;
   brand: string;
@@ -10,14 +15,10 @@ export interface FormValues {
   price: string;
   oldPrice: string;
   shipping: string;
+  itemsInStock: string;
 }
 
-export interface AvailableColors<T, S> {
-  color: T;
-  images: S;
-}
-
-type ValueDifference = 'availableColors' | 'availableSizes' | 'price' | 'oldPrice';
+type ValueDifference = 'availableColors' | 'availableSizes' | 'price' | 'oldPrice' | 'itemsInStock';
 
 interface Comments {
   userId: string;
@@ -31,11 +32,12 @@ export interface FormattedFormData extends Omit<FormValues, ValueDifference> {
   availableSizes: string[];
   price: number;
   oldPrice: number;
+  itemsInStock: number;
   lastModified?: Date;
   salesCount?: number;
   rating?: number;
-  itemsInStock?: number;
   comments?: Comments[];
+  createdAt?: Date;
 }
 
 export interface FormattedFormDataStrict extends Required<Omit<FormattedFormData, 'comments'>> {
@@ -44,6 +46,10 @@ export interface FormattedFormDataStrict extends Required<Omit<FormattedFormData
 
 export interface AdminFormProps {
   getFormData: (values: FormValues) => void;
+}
+
+export interface SliderProps {
+  handler: (value: number[]) => void;
 }
 
 export interface FormikFeatures {
@@ -59,19 +65,15 @@ export interface Forms {
   isExtendable?: boolean;
 }
 
-export type TemplateType = 'extended' | 'grid';
-
 export interface SliderValues {
   minValue: number;
   maxValue: number;
 }
 
+export type TemplateType = 'extended' | 'grid';
+
 export interface Template {
   value: TemplateType;
-}
-
-export interface SliderProps {
-  handler: (value: number[]) => void;
 }
 
 export type Products = string[];
