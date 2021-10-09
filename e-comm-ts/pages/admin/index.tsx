@@ -4,8 +4,21 @@ import AdminForm from '../../components/AdminForm';
 import { FormValues } from '../../types';
 import { ADD_NEW_PRODUCT } from '../../constants/apiVars';
 import axios from 'axios';
+import Modal from '../../components/Modal';
+
+interface ModalOptions {
+  modalVisible: boolean;
+  success: boolean;
+  payload: string | string[];
+}
 
 const AdminPannel: React.FC = (): JSX.Element => {
+  const [modalOptions, setModalOptions] = React.useState<ModalOptions>({
+    modalVisible: false,
+    success: false,
+    payload: '',
+  });
+
   const getFormData = async (values: FormValues) => {
     const fakeValues = {
       productName: 'dsa',
@@ -26,9 +39,23 @@ const AdminPannel: React.FC = (): JSX.Element => {
     };
 
     await axios
-      .post('http://localhost:3000/api', { action: ADD_NEW_PRODUCT, fakeValues })
-      .then((responce) => console.log(responce.data))
-      .catch((error) => console.log(error));
+      .post('http://localhost:3000/api', { action: ADD_NEW_PRODUCT, values })
+      .then((responce) =>
+        setModalOptions((prev) => ({
+          ...prev,
+          modalVisible: true,
+          success: responce.data['success'],
+          payload: responce.data['payload'],
+        }))
+      )
+      .catch(() =>
+        setModalOptions((prev) => ({
+          ...prev,
+          modalVisible: true,
+          success: false,
+          payload: 'Service is temporary unavailable',
+        }))
+      );
   };
 
   return (
@@ -37,6 +64,7 @@ const AdminPannel: React.FC = (): JSX.Element => {
         <title>Admin pannel</title>
       </Head>
       <div className="admin-pannel">
+        {modalOptions.modalVisible && <Modal {...modalOptions} />}
         <aside className="menu">
           <div className="menu__header">
             <svg className="menu__icon" width="44" height="45" viewBox="0 0 44 45" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,6 +102,7 @@ const AdminPannel: React.FC = (): JSX.Element => {
         </aside>
         <main className="body">
           <h2 className="body__title">Overview</h2>
+
           <AdminForm getFormData={getFormData} />
         </main>
       </div>

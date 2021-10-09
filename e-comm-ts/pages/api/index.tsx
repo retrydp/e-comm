@@ -3,7 +3,6 @@ import { ADD_NEW_PRODUCT, NO_ACTION, PRODUCT_ADDED_SUCCESS, DATABASE_ERROR, VALI
 import { connectToDatabase } from '../../utils/database';
 import { FormattedFormData, FormValues, FormattedFormDataStrict } from '../../types';
 import * as Yup from 'yup';
-import { error } from 'console';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
