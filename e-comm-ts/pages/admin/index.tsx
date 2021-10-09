@@ -1,22 +1,34 @@
 import React from 'react';
 import Head from 'next/head';
 import AdminForm from '../../components/AdminForm';
-import { FormattedFormData, FormValues } from '../../types';
+import { FormValues } from '../../types';
 import { ADD_NEW_PRODUCT } from '../../constants/apiVars';
 import axios from 'axios';
 
 const AdminPannel: React.FC = (): JSX.Element => {
-  // fetch('http://localhost:3000/api?sample=1&node=1', { method: 'POST' })
-  //   .then((responce) => responce.json())
-  //   .then((result) => console.log(result));
-
   const getFormData = async (values: FormValues) => {
-    try {
-      await axios.post('http://localhost:3000/api', { action: ADD_NEW_PRODUCT, values }).then((responce) => console.log(responce.data));
-    } catch (error) {
-      console.log(error);
-    }
-    // console.log(JSON.stringify(valuesFormatted, null, 2));
+    const fakeValues = {
+      productName: 'dsa',
+      brand: 'dsa',
+      category: 'dsa',
+      availableColors: [
+        {
+          color: 'dsa',
+          images: '',
+        },
+      ],
+      availableSizes: 'dsa',
+      description: 'dsa',
+      price: 'dsa',
+      oldPrice: '432',
+      shipping: 'dsa',
+      itemsInStock: '',
+    };
+
+    await axios
+      .post('http://localhost:3000/api', { action: ADD_NEW_PRODUCT, fakeValues })
+      .then((responce) => console.log(responce.data))
+      .catch((error) => console.log(error));
   };
 
   return (
