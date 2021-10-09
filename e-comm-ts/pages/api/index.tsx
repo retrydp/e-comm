@@ -4,7 +4,13 @@ import { connectToDatabase } from '../../utils/database';
 import { FormattedFormData, FormValues, FormattedFormDataStrict } from '../../types';
 import * as Yup from 'yup';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+interface Responce {
+  success: boolean;
+  error?: string;
+  payload: string;
+}
+
+const handler = async (req: NextApiRequest, res: NextApiResponse<Responce>) => {
   const {
     body: { action, values },
   } = req;
@@ -44,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
       const userFormData: FormValues = values;
 
-      validationSchema
+      await validationSchema
         .validate(userFormData, { abortEarly: false })
         .then(async () => {
           const valuesFormatted: FormattedFormData = {
@@ -70,7 +76,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
             res.json({
               success: true,
-              status: PRODUCT_ADDED_SUCCESS,
               payload: PRODUCT_ADDED_SUCCESS_TEXT,
             });
           } catch (error) {

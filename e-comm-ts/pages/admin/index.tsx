@@ -10,14 +10,19 @@ interface ModalOptions {
   modalVisible: boolean;
   success: boolean;
   payload: string | string[];
+  onClose: () => void;
 }
 
 const AdminPannel: React.FC = (): JSX.Element => {
-  const [modalOptions, setModalOptions] = React.useState<ModalOptions>({
+  const [modalOptions, setModalOptions] = React.useState<Omit<ModalOptions, 'onClose'>>({
     modalVisible: false,
     success: false,
     payload: '',
   });
+
+  const onClose = (): void => {
+    setModalOptions((prev) => ({ ...prev, modalVisible: false }));
+  };
 
   const getFormData = async (values: FormValues) => {
     const fakeValues = {
@@ -64,7 +69,7 @@ const AdminPannel: React.FC = (): JSX.Element => {
         <title>Admin pannel</title>
       </Head>
       <div className="admin-pannel">
-        {modalOptions.modalVisible && <Modal {...modalOptions} />}
+        {modalOptions.modalVisible && <Modal {...{ ...modalOptions, onClose }} />}
         <aside className="menu">
           <div className="menu__header">
             <svg className="menu__icon" width="44" height="45" viewBox="0 0 44 45" fill="none" xmlns="http://www.w3.org/2000/svg">
