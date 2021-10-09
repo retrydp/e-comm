@@ -1,17 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
 import AdminForm from '../../components/AdminForm';
-import { FormValues } from '../../types';
+import { FormValues, ModalOptions } from '../../types';
 import { ADD_NEW_PRODUCT } from '../../constants/apiVars';
 import axios from 'axios';
 import Modal from '../../components/Modal';
-
-interface ModalOptions {
-  modalVisible: boolean;
-  success: boolean;
-  payload: string | string[];
-  onClose: () => void;
-}
 
 const AdminPannel: React.FC = (): JSX.Element => {
   const [modalOptions, setModalOptions] = React.useState<Omit<ModalOptions, 'onClose'>>({
@@ -25,23 +18,23 @@ const AdminPannel: React.FC = (): JSX.Element => {
   };
 
   const getFormData = async (values: FormValues) => {
-    const fakeValues = {
-      productName: 'dsa',
-      brand: 'dsa',
-      category: 'dsa',
-      availableColors: [
-        {
-          color: 'dsa',
-          images: '',
-        },
-      ],
-      availableSizes: 'dsa',
-      description: 'dsa',
-      price: 'dsa',
-      oldPrice: '432',
-      shipping: 'dsa',
-      itemsInStock: '',
-    };
+    // const fakeValues = {
+    //   productName: 'dsa',
+    //   brand: 'dsa',
+    //   category: 'dsa',
+    //   availableColors: [
+    //     {
+    //       color: 'dsa',
+    //       images: '',
+    //     },
+    //   ],
+    //   availableSizes: 'dsa',
+    //   description: 'dsa',
+    //   price: 'dsa',
+    //   oldPrice: '432',
+    //   shipping: 'dsa',
+    //   itemsInStock: '',
+    // };
 
     await axios
       .post('http://localhost:3000/api', { action: ADD_NEW_PRODUCT, values })

@@ -1,21 +1,23 @@
 import React from 'react';
 import classNames from 'classnames';
-
-interface ModalProps {
-  success: boolean;
-  payload: string | string[];
-  onClose: () => void;
-}
+import { ModalProps } from '../types';
 
 const Modal: React.FC<ModalProps> = ({ success, payload, onClose }): JSX.Element => {
   const wrapper = React.createRef<HTMLDivElement>();
+
+  /**
+   * Close modal window, according to click out of modal window, or pressing "close" button.
+   * @param {MouseEvent} event
+   */
   const closeHandler = (event: MouseEvent) => {
     ![...event['path']].includes(wrapper.current) && onClose();
   };
+
   React.useEffect(() => {
     document.body.addEventListener('click', closeHandler);
     return () => document.body.removeEventListener('click', closeHandler);
   }, []);
+
   return (
     <div className="modal">
       <div className="modal__wrapper" ref={wrapper}>

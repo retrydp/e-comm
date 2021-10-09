@@ -43,6 +43,16 @@ export interface FormattedFormData extends Omit<FormValues, ValueDifference> {
 export interface FormattedFormDataStrict extends Required<Omit<FormattedFormData, 'comments'>> {
   comments?: [] | Comments[];
 }
+//props block
+export interface ProductProps {
+  routerQueryType: string;
+}
+
+export interface ModalProps {
+  success: boolean;
+  payload: string | string[];
+  onClose: () => void;
+}
 
 export interface AdminFormProps {
   getFormData: (values: FormValues) => void;
@@ -51,7 +61,13 @@ export interface AdminFormProps {
 export interface SliderProps {
   handler: (value: number[]) => void;
 }
-
+//props block end
+export interface ModalOptions {
+  modalVisible: boolean;
+  success: boolean;
+  payload: string | string[];
+  onClose: () => void;
+}
 export interface FormikFeatures {
   errors: FormikErrors<FormValues>;
   touched: FormikTouched<FormValues>;
@@ -70,6 +86,12 @@ export interface SliderValues {
   maxValue: number;
 }
 
+export interface Responce {
+  success: boolean;
+  error?: string;
+  payload: string;
+}
+
 export type TemplateType = 'extended' | 'grid';
 
 export interface Template {
@@ -77,7 +99,3 @@ export interface Template {
 }
 
 export type Products = string[];
-
-export interface ProductProps {
-  routerQueryType: string;
-}
