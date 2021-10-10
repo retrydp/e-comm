@@ -1,9 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
 import AdminForm from '../../components/AdminForm';
-import { FormValues, ModalOptions } from '../../types';
+import { AddItemRequest, AddItemResponse, FormValues, ModalOptions } from '../../types';
 import { ADD_NEW_PRODUCT } from '../../constants/apiVars';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import Modal from '../../components/Modal';
 
 const AdminPannel: React.FC = (): JSX.Element => {
@@ -45,16 +45,17 @@ const AdminPannel: React.FC = (): JSX.Element => {
       itemsInStock: '',
     };
 
+    // interface AxiosRequest
     await axios
-      .post('http://localhost:3000/api', { action: ADD_NEW_PRODUCT, values })
-      .then((responce) =>
+      .post<AddItemRequest, AddItemResponse>('http://localhost:3000/api', { action: ADD_NEW_PRODUCT, values })
+      .then(({ data: { success, payload } }) => {
         setModalOptions((prev) => ({
           ...prev,
           modalVisible: true,
-          success: responce.data['success'],
-          payload: responce.data['payload'],
-        }))
-      )
+          success,
+          payload,
+        }));
+      })
       .catch(() =>
         setModalOptions((prev) => ({
           ...prev,

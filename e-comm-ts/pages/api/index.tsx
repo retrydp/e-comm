@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ADD_NEW_PRODUCT, NO_ACTION, DATABASE_ERROR, VALIDATION_ERROR, PRODUCT_ADDED_SUCCESS_TEXT, DATABASE_ERROR_TEXT, NO_ACTION_TEXT } from '../../constants/apiVars';
 import { connectToDatabase } from '../../utils/database';
-import { FormattedFormData, FormValues, FormattedFormDataStrict, Responce } from '../../types';
+import { FormattedFormData, FormValues, FormattedFormDataStrict, ResponceAPI } from '../../types';
 import * as Yup from 'yup';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Responce>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<ResponceAPI>) => {
   const {
     body: { action, values },
   } = req;

@@ -1,8 +1,18 @@
 import { FormikErrors, FormikTouched } from 'formik';
+import { AxiosResponse } from 'axios';
 
 export interface AvailableColors<T, S> {
   color: T;
   images: S;
+}
+
+export interface AddItemRequest {
+  action: string;
+  values: FormValues;
+}
+
+export interface AddItemResponse extends Omit<AxiosResponse, 'data'> {
+  data: { [key in keyof ResponceAPI]: ResponceAPI[key] };
 }
 
 export interface FormValues {
@@ -88,7 +98,7 @@ export interface SliderValues {
   maxValue: number;
 }
 
-export interface Responce {
+export interface ResponceAPI {
   success: boolean;
   error?: string;
   payload: string;
