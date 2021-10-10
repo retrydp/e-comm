@@ -13,11 +13,19 @@ const AdminPannel: React.FC = (): JSX.Element => {
     payload: '',
   });
 
+  /**
+   * Close modal window /w state option "modalVisible".
+   */
+
   const onClose = (): void => {
     setModalOptions((prev) => ({ ...prev, modalVisible: false }));
   };
 
-  const getFormData = async (values: FormValues) => {
+  /**
+   * Fetch function with api calls, changes modal window props before render.
+   * @param {FormValues} Values taken from forms.
+   */
+  const getFormData = async (values: FormValues): Promise<void> => {
     //TODO:delete after
     const fakeValues = {
       productName: 'dsa',

@@ -43,6 +43,7 @@ export interface FormattedFormData extends Omit<FormValues, ValueDifference> {
 export interface FormattedFormDataStrict extends Required<Omit<FormattedFormData, 'comments'>> {
   comments?: [] | Comments[];
 }
+
 //props block
 export interface ProductProps {
   routerQueryType: string;
@@ -62,6 +63,7 @@ export interface SliderProps {
   handler: (value: number[]) => void;
 }
 //props block end
+
 export interface ModalOptions {
   modalVisible: boolean;
   success: boolean;

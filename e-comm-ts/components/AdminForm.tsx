@@ -100,13 +100,13 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
   ];
 
   /**
-   * Generates form item to render
-   * @param name Form name
-   * @param labelName Form description to display
-   * @param formikFeatures Special formik methods
+   * Generates form item to render.
+   * @param name Form name.
+   * @param labelName Form description to display.
+   * @param formikFeatures Special formik methods.
    * @param formType Specific form type e.g. "textarea", "range" etc.
    * @param isExtendable Additional values can be added.
-   * @returns Pregenerated form item
+   * @returns Pregenerated form item.
    */
   const formItem = ({ name, labelName, formType, isExtendable }: Forms, { errors, touched, values }: FormikFeatures): JSX.Element => {
     if (isExtendable) {

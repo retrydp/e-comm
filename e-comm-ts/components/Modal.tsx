@@ -9,7 +9,7 @@ const Modal: React.FC<ModalProps> = ({ success, payload, onClose }): JSX.Element
    * Close modal window, according to click out of modal window, or pressing "close" button.
    * @param {MouseEvent} event
    */
-  const closeHandler = (event: MouseEvent) => {
+  const closeHandler = (event: MouseEvent): void => {
     ![...event['path']].includes(wrapper.current) && onClose();
   };
 
@@ -31,8 +31,8 @@ const Modal: React.FC<ModalProps> = ({ success, payload, onClose }): JSX.Element
         <div className="modal__text">
           {Array.isArray(payload) ? (
             <ul className="modal__list">
-              {payload.map((el) => (
-                <li key={el}>{el}</li>
+              {payload.map((errorItem) => (
+                <li key={errorItem}>{errorItem}</li>
               ))}
             </ul>
           ) : (

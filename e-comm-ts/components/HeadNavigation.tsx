@@ -8,10 +8,10 @@ const HeadNavigation: React.FC = (): JSX.Element => {
   const [activeTabFromUrl, setActiveTabFromUrl] = React.useState<string>('');
 
   /**
-   * Provide classnames for a navigation tab according to URL params, triggers activation if needed
-   * @param tab Value which we compare with URL params (type/pathname)
-   * @param requirePath Flag to compare pathname instead of type
-   * @returns Classes for active element
+   * Provide classnames for a navigation tab according to URL params, triggers activation if needed.
+   * @param tab Value which we compare with URL params (type/pathname).
+   * @param requirePath Flag to compare pathname instead of type.
+   * @returns Classes for active element.
    *
    */
   const generateCls = (tab: string, requirePath?: boolean): string => {

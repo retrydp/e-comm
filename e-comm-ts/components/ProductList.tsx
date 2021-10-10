@@ -17,8 +17,8 @@ export const ProductList: React.FC = (): JSX.Element => {
   });
 
   /**
-   * Switch between grid and extended layouts
-   * @param style Desirable display method
+   * Switch between grid and extended layouts.
+   * @param style Desirable display method.
    */
   const visibilityHandler = (style: TemplateType): void => {
     setTemplate({
@@ -27,7 +27,7 @@ export const ProductList: React.FC = (): JSX.Element => {
   };
 
   /**
-   * Delaying user`s entries for a range-type input & setting it to state
+   * Delaying user`s entries for a range-type input & setting it to state.
    */
   const sliderHandler = debounce((values: number[]): void => {
     const [minValue, maxValue] = values;
