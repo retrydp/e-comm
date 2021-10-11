@@ -16,7 +16,6 @@ const AdminPannel: React.FC = (): JSX.Element => {
   /**
    * Close modal window /w state option "modalVisible".
    */
-
   const onClose = (): void => {
     setModalOptions((prev) => ({ ...prev, modalVisible: false }));
   };

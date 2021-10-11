@@ -12,7 +12,7 @@ export interface AddItemRequest {
 }
 
 export interface AddItemResponse extends Omit<AxiosResponse, 'data'> {
-  data: { [key in keyof ResponceAPI]: ResponceAPI[key] };
+  data: ResponceAPI;
 }
 
 export interface FormValues {
