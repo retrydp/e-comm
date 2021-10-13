@@ -4,29 +4,30 @@ import { useRouter, NextRouter } from 'next/router';
 import Head from 'next/head';
 import { GetServerSideProps, GetStaticPropsResult } from 'next';
 import { Products, ProductProps } from '../types';
+import { string } from 'yup';
 
 const ProductWrapper: React.FC<ProductProps> = ({ routerQueryType }): JSX.Element => {
   const router: NextRouter = useRouter();
   const availableProducts: Products = ['bags', 'sneakers', 'belts'];
 
   React.useEffect(() => {
-    if (!availableProducts.includes(routerQueryType) && router.isReady) router.push('/');
-  }, [router.isReady]);
+    if (!availableProducts.includes(routerQueryType as string) && router.isReady) router.push('/');
+  }, [router]);
 
   return (
     <>
       <Head>
-        <title>{routerQueryType.toUpperCase()}</title>
+        <title>{(routerQueryType as string).toUpperCase()}</title>
       </Head>
       <ProductList />
     </>
   );
 };
-export const getServerSideProps: GetServerSideProps = async (context): Promise<GetStaticPropsResult<ProductProps>> => {
-  const { type } = context.query;
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
-    props: { routerQueryType: type as string },
+    props: { routerQueryType: context.query },
   };
 };
+
 export default ProductWrapper;

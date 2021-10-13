@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 const HeadNavigation: React.FC = (): JSX.Element => {
   const router = useRouter();
-  const [activeTabFromUrl, setActiveTabFromUrl] = React.useState<string>('');
+  const [activeTabFromUrl, setActiveTabFromUrl] = React.useState<string | string[]>('');
 
   /**
    * Provide classnames for a navigation tab according to URL params, triggers activation if needed.
@@ -28,9 +28,9 @@ const HeadNavigation: React.FC = (): JSX.Element => {
   React.useEffect(() => {
     //set active tab, when user comes exactly from address line
     if (router.isReady) {
-      setActiveTabFromUrl(router.query.type as string);
+      setActiveTabFromUrl(router.query.type);
     }
-  }, [router.isReady]);
+  }, [router]);
 
   return (
     <div className="hnav">
