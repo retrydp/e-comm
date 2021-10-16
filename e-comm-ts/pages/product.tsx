@@ -4,7 +4,6 @@ import { useRouter, NextRouter } from 'next/router';
 import Head from 'next/head';
 import { GetServerSideProps, GetStaticPropsResult } from 'next';
 import { Products, ProductProps } from '../types';
-import { string } from 'yup';
 
 const ProductWrapper: React.FC<ProductProps> = ({ routerQueryType }): JSX.Element => {
   const router: NextRouter = useRouter();
@@ -17,16 +16,17 @@ const ProductWrapper: React.FC<ProductProps> = ({ routerQueryType }): JSX.Elemen
   return (
     <>
       <Head>
-        <title>{(routerQueryType as string).toUpperCase()}</title>
+        <title>{routerQueryType.toUpperCase()}</title>
       </Head>
       <ProductList />
     </>
   );
 };
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { type } = context.query;
+
   return {
-    props: { routerQueryType: context.query },
+    props: { routerQueryType: type as string },
   };
 };
 
