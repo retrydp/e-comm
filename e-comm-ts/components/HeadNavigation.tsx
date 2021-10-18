@@ -27,10 +27,9 @@ const HeadNavigation: React.FC = (): JSX.Element => {
 
   React.useEffect(() => {
     //set active tab, when user comes exactly from address line
-    if (router.isReady) {
-      setActiveTabFromUrl(router.query.type);
-    }
-  }, [router]);
+
+    setActiveTabFromUrl(router.query.type);
+  }, []);
   1;
   return (
     <div className="hnav">
