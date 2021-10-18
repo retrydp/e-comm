@@ -11,7 +11,7 @@ const ProductWrapper: React.FC<ProductProps> = ({ routerQueryType }): JSX.Elemen
 
   React.useEffect(() => {
     if (!availableProducts.includes(routerQueryType as string) && router.isReady) router.push('/');
-  }, [router]);
+  }, []);
 
   return (
     <>
