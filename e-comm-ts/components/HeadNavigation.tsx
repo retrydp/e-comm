@@ -31,7 +31,7 @@ const HeadNavigation: React.FC = (): JSX.Element => {
       setActiveTabFromUrl(router.query.type);
     }
   }, [router]);
-
+  1;
   return (
     <div className="hnav">
       <a className="hnav__logo logo" href="/">
