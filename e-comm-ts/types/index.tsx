@@ -56,7 +56,7 @@ export interface FormattedFormDataStrict extends Required<Omit<FormattedFormData
 
 //props block
 export interface ProductProps {
-  routerQueryType: string;
+  routerQueryType: string | null;
 }
 
 export interface ModalProps {

@@ -10,7 +10,7 @@ const HeadNavigation: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const { activeTab } = useAppSelector((store) => store);
-
+  console.log(activeTab);
   /**
    * Provide classnames for a navigation tab according to URL params, triggers activation if needed.
    * @param tab Value which we compare with URL params (type/pathname).
@@ -24,9 +24,10 @@ const HeadNavigation: React.FC = (): JSX.Element => {
 
   React.useEffect(() => {
     //set active tab, when user comes exactly from address line
-
-    if (router.query.type) dispatch(change(router.query.type));
-    else if (router.pathname) dispatch(change(router.pathname));
+    if (router.isReady) {
+      if (router.query.type) dispatch(change(router.query.type));
+      else if (router.pathname) dispatch(change(router.pathname));
+    }
   }, [router]);
 
   return (

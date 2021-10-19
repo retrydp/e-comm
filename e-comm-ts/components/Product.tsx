@@ -1,6 +1,6 @@
 import React from 'react';
 import nike from '../public/assets/img/nike.png'; //temp
-
+//TODO rename it to search
 const Product: React.FC = (): JSX.Element => {
   return (
     <div className="product">
