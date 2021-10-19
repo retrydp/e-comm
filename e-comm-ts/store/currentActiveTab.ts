@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export interface CurrentActiveTab {
   activeTab: string;
 }
+
 const initialState: CurrentActiveTab = {
   activeTab: '',
 };
