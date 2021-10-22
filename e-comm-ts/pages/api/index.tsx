@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<ResponceAPI>) =
   switch (action) {
     case ADD_NEW_PRODUCT:
       const validationSchema = Yup.object({
-        productName: Yup.string().max(15, 'Must be 15 characters or less').required('Product name is required'),
+        productName: Yup.string().max(50, 'Must be 50 characters or less').required('Product name is required'),
         brand: Yup.string().max(20, 'Brand must be 20 characters or less').required('Brand is required'),
         category: Yup.string().max(20, 'Must be 20 characters or less').required('Category is required'),
         availableColors: Yup.array()
@@ -26,7 +26,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<ResponceAPI>) =
           )
           .min(1, 'Atleast one color is needed in available colors'),
         availableSizes: Yup.string()
-          .matches(/^(\d|[a-zA-Z])+(?:, ?(\d|[a-zA-Z])+)*$/, 'Available sizes must be a comma-separated list')
+          .matches(/^(\d.?|[a-zA-Z])+(?:, ?(\d.?|[a-zA-Z])+)*$/, 'Available sizes must be a comma-separated list')
+
           .max(100, 'Available sizes must be 100 characters or less')
           .required('Available sizes is required'),
         description: Yup.string().max(1500, 'Must be 1500 characters or less').required('Description is required'),
@@ -34,12 +35,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<ResponceAPI>) =
           .matches(/^[0-9]+$/, 'Items in stock must be a number')
           .required('Items in stock is required'),
         price: Yup.string()
-          .matches(/^[0-9]+$/, 'Price must be a number')
+          .matches(/^\d+(\.\d+)?$/, 'Price must be a number')
           .max(15, 'Price must be 15 characters or less')
           .required('Price is required'),
         shipping: Yup.string().max(50, 'Shipping must be 50 characters or less').required('Shipping is required'),
         oldPrice: Yup.string()
-          .matches(/^[0-9]+$/, 'Old price must be a number')
+          .matches(/^\d+(\.\d+)?$/, 'Old price must be a number')
           .max(15, 'Old price must be 15 characters or less'),
       });
       const userFormData: FormValues = values;
@@ -66,7 +67,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<ResponceAPI>) =
           };
 
           try {
-            const data = await db.collection('products').insertOne(addQuery);
+            await db.collection('products').insertOne(addQuery);
 
             res.json({
               success: true,
