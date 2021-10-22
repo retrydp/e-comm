@@ -53,6 +53,10 @@
     border-bottom: 2px solid $hr-color;
     padding-bottom: 20px;
 
+    &-value {
+      text-transform: capitalize;
+    }
+
     &-value_picker .color-picker__wrapper {
       display: flex;
       margin-top: 0;

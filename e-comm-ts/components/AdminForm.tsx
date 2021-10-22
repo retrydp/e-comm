@@ -24,7 +24,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
   };
 
   const validationSchema = Yup.object({
-    productName: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
+    productName: Yup.string().max(50, 'Must be 50 characters or less').required('Required'),
     brand: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
     category: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
     availableColors: Yup.array()
@@ -36,7 +36,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
       )
       .min(1, 'Atleast one color is needed'),
     availableSizes: Yup.string()
-      .matches(/^(\d|[a-zA-Z])+(?:, ?(\d|[a-zA-Z])+)*$/, 'Comma-separated list')
+      .matches(/^(\d.?|[a-zA-Z])+(?:, ?(\d.?|[a-zA-Z])+)*$/, 'Comma-separated list')
       .max(100, 'Must be 100 characters or less')
       .required('Required'),
     description: Yup.string().max(1500, 'Must be 1500 characters or less').required('Required'),
@@ -44,12 +44,12 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
       .matches(/^[0-9]+$/, 'Must be a number')
       .required('Required'),
     price: Yup.string()
-      .matches(/^[0-9]+$/, 'Must be a number')
+      .matches(/^\d+(\.\d+)?$/, 'Must be a number')
       .max(15, 'Must be 15 characters or less')
       .required('Required'),
     shipping: Yup.string().max(50, 'Must be 50 characters or less').required('Required'),
     oldPrice: Yup.string()
-      .matches(/^[0-9]+$/, 'Must be a number')
+      .matches(/^\d+(\.\d+)?$/, 'Must be a number')
       .max(15, 'Must be 15 characters or less'),
   });
 

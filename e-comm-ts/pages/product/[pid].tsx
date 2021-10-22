@@ -1,24 +1,25 @@
 import React from 'react';
-import { FormattedFormDataStrict } from '../types';
+import { GetServerSideProps } from 'next';
+import { connectToDatabase } from '../../utils/database';
+import { ObjectId } from 'bson';
+import { FormattedFormDataStrict } from '../../types';
 
 import classNames from 'classnames';
 
-interface ProductProps extends Omit<FormattedFormDataStrict, 'brand' | 'lastModified' | 'createdAt'> {}
+interface ProductRenderProps {
+  product: ProductProps;
+}
 
-const Product: React.FC<ProductProps> = ({
-  productName,
-  description,
-  availableColors,
-  price,
-  oldPrice,
-  availableSizes,
-  category,
-  itemsInStock,
-  shipping,
-  comments,
-  rating,
-  salesCount,
-}): JSX.Element => {
+interface ProductProps extends Omit<FormattedFormDataStrict, 'brand' | 'lastModified' | 'createdAt'> {
+  _id: string;
+}
+
+const ProductRender: React.FC<ProductRenderProps> = ({ product }) => {
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
+  const { salesCount, availableColors, productName, rating, comments, price, oldPrice, itemsInStock, category, shipping, availableSizes, description }: ProductProps = product;
   const [activeImg, setActiveImg] = React.useState<string>(availableColors[0].images[0]);
 
   return (
@@ -148,4 +149,18 @@ const Product: React.FC<ProductProps> = ({
   );
 };
 
-export default Product;
+export default ProductRender;
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  try {
+    const { db } = await connectToDatabase();
+
+    const resp = await db.collection('products').findOne({ _id: new ObjectId(query.pid.toString()) });
+
+    return {
+      props: { product: JSON.parse(JSON.stringify(resp)) },
+    };
+  } catch (error) {
+    return { props: {} };
+  }
+};

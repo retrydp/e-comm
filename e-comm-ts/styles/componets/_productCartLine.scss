@@ -25,7 +25,8 @@
   }
 
   &__img {
-    object-position: center;
+    height: 300px;
+    width: 300px;
     max-height: 300px;
   }
 
@@ -97,5 +98,6 @@
 
   &__percent {
     @include fontset($poppins, 14px, bold, $primary-red);
+    margin-left: 12px;
   }
 }
