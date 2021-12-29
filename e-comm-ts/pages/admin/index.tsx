@@ -44,9 +44,15 @@ const AdminPannel: React.FC = (): JSX.Element => {
       itemsInStock: '',
     };
 
+    const formData = new FormData();
+    formData.append('action', ADD_NEW_PRODUCT);
+    Object.keys(values).forEach((key) => {
+      formData.append(key, values[key]);
+    });
+
     // interface AxiosRequest
     await axios
-      .post<AddItemRequest, AddItemResponse>('http://localhost:3000/api', { action: ADD_NEW_PRODUCT, values })
+      .post<AddItemRequest, AddItemResponse>('http://localhost:3000/api', formData)
       .then(({ data: { success, payload } }) => {
         setModalOptions((prev) => ({
           ...prev,
