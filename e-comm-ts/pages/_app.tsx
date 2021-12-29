@@ -1,4 +1,3 @@
-// import '../styles/index.scss';
 // import { Header, HeadNavigation, Footer } from '../components';
 // import { useRouter } from 'next/router';
 import store from '../store';

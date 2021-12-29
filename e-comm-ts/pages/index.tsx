@@ -1,8 +1,18 @@
 import React from 'react';
-// import { Home } from '../components';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 
+import { Header } from '../components';
+import { Container, CssBaseline } from '@mui/material';
 const Index: React.FC = (): JSX.Element => {
-  return <>1</>;
+  return (
+    <>
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <Header />
+      </Container>
+    </>
+  );
 };
 
 export default Index;
