@@ -11,6 +11,7 @@ import {
   SelectChangeEvent,
   Link,
   Box,
+  Tooltip,
 } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {
@@ -37,52 +38,43 @@ const Header: React.FC = (): JSX.Element => {
   return (
     <>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Grid container spacing={1}>
-          <Grid item>
-            <FormControl fullWidth sx={classes.navSelect}>
-              <InputLabel id="language-changer">Language</InputLabel>
-              <Select
-                labelId="language-changer-label"
-                id="language-changer"
-                value={language}
-                label="Language"
-                onChange={handleLanguageChange}
-              >
-                <MenuItem value="EN">EN</MenuItem>
-                <MenuItem value="UA">UA</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item>
-            <FormControl fullWidth sx={classes.navSelect}>
-              <InputLabel id="currency-changer">Currency</InputLabel>
-              <Select
-                labelId="currency-changer-label"
-                id="currency-changer"
-                value={currency}
-                label="Currency"
-                onChange={handleCurrencyChange}
-              >
-                <MenuItem value="USD">USD</MenuItem>
-                <MenuItem value="GRN">GRN</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
         <Box sx={classes.grow}></Box>
         <Box sx={classes.userActions}>
-          <Button component="div" sx={classes.navLink}>
-            <PermIdentityOutlined />
-          </Button>
-
-          <Button component="a" href="/" sx={classes.navLink}>
-            <ShoppingCartOutlined />
-          </Button>
-          {sm && <Typography sx={classes.navPrice}>{`$${'0.00'}`}</Typography>}
-
-          <Button component="a" href="/" sx={classes.navLink}>
-            <Search />
-          </Button>
+          <Tooltip title="Profile" arrow>
+            <Button
+              component="a"
+              href="/"
+              sx={classes.navLink}
+              aria-label="User Profile"
+            >
+              <PermIdentityOutlined />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Cart" arrow>
+            <Button
+              component="a"
+              href="/"
+              sx={classes.navLink}
+              aria-label="User Cart"
+            >
+              <ShoppingCartOutlined />
+            </Button>
+          </Tooltip>
+          {sm && (
+            <Tooltip title="Total price" arrow>
+              <Typography sx={classes.navPrice}>{`$${'0.00'}`}</Typography>
+            </Tooltip>
+          )}
+          <Tooltip title="Search" arrow>
+            <Button
+              component="a"
+              href="/"
+              sx={classes.navLink}
+              aria-label="Search"
+            >
+              <Search />
+            </Button>
+          </Tooltip>
         </Box>
       </Toolbar>
     </>

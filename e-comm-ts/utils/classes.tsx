@@ -1,5 +1,6 @@
-const black = '#000';
+const black = '#262626';
 const primaryGrey = '#C1C8CE';
+const primaryBlue = '#40BFFF';
 
 const classes = {
   grow: {
@@ -17,6 +18,9 @@ const classes = {
     borderRadius: '50%',
     padding: '8px',
     minWidth: '20px',
+    '&:hover': {
+      color: primaryBlue,
+    },
   },
   userActions: {
     display: 'flex',
