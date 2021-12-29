@@ -7,14 +7,13 @@ const classes = {
   },
   navSelect: {
     m: 1,
-    minWidth: 100,
+    minWidth: 80,
   },
   navLink: {
+    display: 'flex',
     fontSize: '20px',
     textDecoration: 'none',
     color: black,
-  },
-  navButton: {
     borderRadius: '50%',
     padding: '8px',
     minWidth: '20px',

@@ -12,7 +12,7 @@ import {
   Link,
   Box,
 } from '@mui/material';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
 import {
   ShoppingCartOutlined,
   PermIdentityOutlined,
@@ -26,11 +26,13 @@ const Header: React.FC = (): JSX.Element => {
   const [language, setLanguage] = React.useState<string>('EN');
   const [currency, setCurrency] = React.useState<string>('USD');
 
+  const sm = useMediaQuery('(min-width:600px)');
+
   const handleLanguageChange = (event: SelectChangeEvent) =>
-    setLanguage((event.target.value as string) || 'EN');
+    setLanguage(event.target.value as string);
 
   const handleCurrencyChange = (event: SelectChangeEvent) =>
-    setCurrency((event.target.value as string) || 'USD');
+    setCurrency(event.target.value as string);
 
   return (
     <>
@@ -69,23 +71,16 @@ const Header: React.FC = (): JSX.Element => {
         </Grid>
         <Box sx={classes.grow}></Box>
         <Box sx={classes.userActions}>
-          <PermIdentityOutlined />
-          <Link component="a" href="/" sx={classes.navLink}>
-            <Typography noWrap>My profile</Typography>
-          </Link>
-          <Button
-            component="a"
-            href="/"
-            sx={{ ...classes.navLink, ...classes.navButton }}
-          >
+          <Button component="div" sx={classes.navLink}>
+            <PermIdentityOutlined />
+          </Button>
+
+          <Button component="a" href="/" sx={classes.navLink}>
             <ShoppingCartOutlined />
           </Button>
-          <Typography sx={classes.navPrice}>{`$${'0.00'}`}</Typography>
-          <Button
-            component="a"
-            href="/"
-            sx={{ ...classes.navLink, ...classes.navButton }}
-          >
+          {sm && <Typography sx={classes.navPrice}>{`$${'0.00'}`}</Typography>}
+
+          <Button component="a" href="/" sx={classes.navLink}>
             <Search />
           </Button>
         </Box>
