@@ -3,8 +3,16 @@ import { ADD_NEW_PRODUCT, NO_ACTION, DATABASE_ERROR, VALIDATION_ERROR, PRODUCT_A
 import { connectToDatabase } from '../../utils/database';
 import { FormattedFormData, FormValues, FormattedFormDataStrict, ResponceAPI } from '../../types';
 import * as Yup from 'yup';
+import formidable from 'formidable';
+import fs from 'fs';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<ResponceAPI>) => {
+export const config = {
+  api: {
+    bodyParse: false,
+  },
+};
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const {
     body: { action, values },
   } = req;

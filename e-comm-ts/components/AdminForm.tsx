@@ -1,7 +1,7 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage, FieldArray } from 'formik';
+import { Formik, Field, Form, ErrorMessage, FieldArray, FormikProps } from 'formik';
 import * as Yup from 'yup';
-import { FormValues, AdminFormProps, Forms, FormikFeatures } from '../types';
+import { FormValues, AdminFormProps, Forms } from '../types';
 import classNames from 'classnames';
 
 const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
@@ -108,7 +108,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
    * @param isExtendable Additional values can be added.
    * @returns Pregenerated form item.
    */
-  const formItem = ({ name, labelName, formType, isExtendable }: Forms, { errors, touched, values }: FormikFeatures): JSX.Element => {
+  const formItem = ({ name, labelName, formType, isExtendable }: Forms, { errors, touched, values, setFieldValue }: FormikProps<FormValues>): JSX.Element => {
     if (isExtendable) {
       return (
         <FieldArray name={name} key={name}>
@@ -137,7 +137,9 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
                       </label>
                       <Field
                         name={`${name}.${index}.images`}
-                        as="textarea"
+                        type="file"
+                        value={undefined}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setFieldValue(`${name}.${index}.images`, event.target.files)}
                         className={classNames('body__input', {
                           body__input_warning: errors?.[name]?.[index]?.['images'] && touched?.[name]?.[index]?.['images'],
                           'body__input-textarea': formType === 'textarea',
@@ -153,6 +155,7 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
                     </div>
                   </div>
                 ))}
+
               <button type="button" className="body__submit" onClick={() => push({ color: '', images: '' })}>
                 Add color
               </button>
@@ -190,13 +193,14 @@ const AdminForm: React.FC<AdminFormProps> = (props): JSX.Element => {
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           props.getFormData(values);
+
           setSubmitting(false);
         }, 400);
       }}
     >
-      {(formikFeatures) => (
+      {(formikProps) => (
         <Form className="body__wrapper">
-          {inputs.map((element) => formItem({ ...element }, { ...formikFeatures }))}
+          {inputs.map((element) => formItem({ ...element }, { ...formikProps }))}
           <button type="submit" className="body__submit">
             Send
           </button>
