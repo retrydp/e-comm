@@ -18,6 +18,7 @@ import {
   ShoppingCartOutlined,
   PermIdentityOutlined,
   Search,
+  Menu,
 } from '@mui/icons-material';
 
 import React from 'react';
@@ -29,25 +30,24 @@ const Header: React.FC = (): JSX.Element => {
 
   const sm = useMediaQuery('(min-width:600px)');
 
-  const handleLanguageChange = (event: SelectChangeEvent) =>
-    setLanguage(event.target.value as string);
-
-  const handleCurrencyChange = (event: SelectChangeEvent) =>
-    setCurrency(event.target.value as string);
-
   return (
     <>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tooltip title="Menu" arrow>
+          <Button component="a" href="/" sx={classes.navLink} aria-label="Menu">
+            <Menu />
+          </Button>
+        </Tooltip>
         <Box sx={classes.grow}></Box>
         <Box sx={classes.userActions}>
-          <Tooltip title="Profile" arrow>
+          <Tooltip title="Search" arrow>
             <Button
               component="a"
               href="/"
               sx={classes.navLink}
-              aria-label="User Profile"
+              aria-label="Search"
             >
-              <PermIdentityOutlined />
+              <Search />
             </Button>
           </Tooltip>
           <Tooltip title="Cart" arrow>
@@ -65,14 +65,15 @@ const Header: React.FC = (): JSX.Element => {
               <Typography sx={classes.navPrice}>{`$${'0.00'}`}</Typography>
             </Tooltip>
           )}
-          <Tooltip title="Search" arrow>
+
+          <Tooltip title="Profile" arrow>
             <Button
               component="a"
               href="/"
               sx={classes.navLink}
-              aria-label="Search"
+              aria-label="User Profile"
             >
-              <Search />
+              <PermIdentityOutlined />
             </Button>
           </Tooltip>
         </Box>
