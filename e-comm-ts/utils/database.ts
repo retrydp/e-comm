@@ -1,4 +1,5 @@
 import { MongoClient, Db, MongoClientOptions } from 'mongodb';
+import { array } from 'yup/lib/locale';
 
 const { MONGODB_URI, MONGODB_DB } = process.env;
 
@@ -33,7 +34,10 @@ async function connectToDatabase() {
       useUnifiedTopology: true,
     };
 
-    cached.promise = MongoClient.connect(MONGODB_URI as string, opts as MongoClientOptions).then((client) => {
+    cached.promise = MongoClient.connect(
+      MONGODB_URI as string,
+      opts as MongoClientOptions
+    ).then((client) => {
       return {
         client,
         db: client.db(MONGODB_DB),

@@ -18,6 +18,7 @@ const ProductWrapper: React.FC<ProductProps> = ({ routerQueryType }): JSX.Elemen
       <Head>
         <title>{routerQueryType?.toUpperCase()}</title>
       </Head>
+      
       <ProductList />
     </>
   );

@@ -24,10 +24,7 @@ import {
 import React from 'react';
 import classes from '../utils/classes';
 
-const Header: React.FC = (): JSX.Element => {
-  const [language, setLanguage] = React.useState<string>('EN');
-  const [currency, setCurrency] = React.useState<string>('USD');
-
+const Header: React.FC = () => {
   const sm = useMediaQuery('(min-width:600px)');
 
   return (
