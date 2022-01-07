@@ -1,13 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Grid,
-  Link,
-  Tab,
-  Tabs,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { AppBar, Box, Link, Toolbar, Typography } from '@mui/material';
 import React from 'react';
 import Image from 'next/image';
 import NextLink from 'next/link';
@@ -46,6 +37,7 @@ const NavigationBar: React.FC<NaviationBarProps> = ({ currentTab }) => {
                 width={44}
                 height={44}
                 src="/../public/assets/img/logo.svg"
+                alt="Site logo"
               ></Image>
               {sm && <Typography sx={classes.logoText}>E-comm</Typography>}
             </Box>

@@ -8,6 +8,7 @@ import {
 import useMediaQuery from '@mui/material/useMediaQuery';
 import React from 'react';
 import classes from '../utils/classes';
+import NextLink from 'next/link';
 
 const Header: React.FC = () => {
   const sm = useMediaQuery('(min-width:600px)');
@@ -16,31 +17,27 @@ const Header: React.FC = () => {
     <>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tooltip title="Menu" arrow>
-          <Button component="a" href="/" sx={classes.navLink} aria-label="Menu">
-            <Menu />
-          </Button>
+          <NextLink href="/" passHref>
+            <Button component="a" sx={classes.navLink} aria-label="Menu">
+              <Menu />
+            </Button>
+          </NextLink>
         </Tooltip>
         <Box sx={classes.grow}></Box>
         <Box sx={classes.userActions}>
           <Tooltip title="Search" arrow>
-            <Button
-              component="a"
-              href="/"
-              sx={classes.navLink}
-              aria-label="Search"
-            >
-              <Search />
-            </Button>
+            <NextLink href="/" passHref>
+              <Button component="a" sx={classes.navLink} aria-label="Search">
+                <Search />
+              </Button>
+            </NextLink>
           </Tooltip>
           <Tooltip title="Cart" arrow>
-            <Button
-              component="a"
-              href="/"
-              sx={classes.navLink}
-              aria-label="User Cart"
-            >
-              <ShoppingCartOutlined />
-            </Button>
+            <NextLink href="/" passHref>
+              <Button component="a" sx={classes.navLink} aria-label="User Cart">
+                <ShoppingCartOutlined />
+              </Button>
+            </NextLink>
           </Tooltip>
           {sm && (
             <Tooltip title="Total price" arrow>
@@ -48,14 +45,15 @@ const Header: React.FC = () => {
             </Tooltip>
           )}
           <Tooltip title="Profile" arrow>
-            <Button
-              component="a"
-              href="/"
-              sx={classes.navLink}
-              aria-label="User Profile"
-            >
-              <PermIdentityOutlined />
-            </Button>
+            <NextLink href="/" passHref>
+              <Button
+                component="a"
+                sx={classes.navLink}
+                aria-label="User Profile"
+              >
+                <PermIdentityOutlined />
+              </Button>
+            </NextLink>
           </Tooltip>
         </Box>
       </Toolbar>

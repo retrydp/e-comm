@@ -37,8 +37,8 @@ const classes = {
     backgroundColor: 'transparent',
   },
   toolBar: {
-    backgroundColor: '#fff',
-    color: '#000',
+    backgroundColor: 'transparent',
+    color: black,
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
