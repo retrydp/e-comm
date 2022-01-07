@@ -33,7 +33,7 @@ const classes = {
   },
   appBar: {
     boxShadow: 'none',
-    padding: '26px 0',
+    padding: '10px 0',
     backgroundColor: 'transparent',
   },
   toolBar: {
@@ -42,6 +42,7 @@ const classes = {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    padding: '0',
   },
   navLogo: {
     display: 'flex',
@@ -73,10 +74,17 @@ const classes = {
   activeTabLink: { color: primaryBlue },
   navContainer: {
     display: 'flex',
-    flexDirection: 'row',
-    gap: '5px 98px',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-end',
+    gap: '80px',
+    whiteSpace: 'nowrap',
+    overflowX: 'scroll',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    ['@media (max-width:600px)']: {
+      gap: '15px',
+    },
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   },
 } as const;
 
