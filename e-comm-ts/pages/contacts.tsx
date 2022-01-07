@@ -1,15 +1,12 @@
 import React from 'react';
-import Head from 'next/head';
+import { Layout } from '../components';
 
-const contacts: React.FC = (): JSX.Element => {
+const Contacts: React.FC = (): JSX.Element => {
   return (
     <>
-      <Head>
-        <title>Contacts</title>
-      </Head>
-      contacts
+      <Layout title="Contacts">contacts</Layout>
     </>
   );
 };
 
-export default contacts;
+export default Contacts;

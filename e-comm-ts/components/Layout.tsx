@@ -1,19 +1,27 @@
 import { Container, CssBaseline } from '@mui/material';
 import Head from 'next/head';
 import React from 'react';
-import { Header } from '.';
+import { Header, NavigationBar } from '.';
 
 interface LayoutProps {
-  title?: string;
+  description?: string;
+  title?: 'Home' | 'Bags' | 'Sneakers' | 'Belts' | 'Contacts';
+  children?: React.ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ title }) => {
+const Layout: React.FC<LayoutProps> = ({ title, children, description }) => {
   return (
     <>
+      <CssBaseline />
       <Head>
-        <title>{title || 'sample'}</title>
+        {description && <meta name="description" content={description} />}
+        <title>{title || 'E-Comm'}</title>
       </Head>
-      <Header />
+      <Container maxWidth="lg">
+        <Header />
+        <NavigationBar currentTab={title || 'Home'} />
+      </Container>
+      {children}
     </>
   );
 };

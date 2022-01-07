@@ -1,26 +1,11 @@
-import {
-  Button,
-  FormControl,
-  Grid,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  Toolbar,
-  Typography,
-  SelectChangeEvent,
-  Link,
-  Box,
-  Tooltip,
-} from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { Button, Toolbar, Typography, Box, Tooltip } from '@mui/material';
 import {
   ShoppingCartOutlined,
   PermIdentityOutlined,
   Search,
   Menu,
 } from '@mui/icons-material';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
 import React from 'react';
 import classes from '../utils/classes';
 
@@ -62,7 +47,6 @@ const Header: React.FC = () => {
               <Typography sx={classes.navPrice}>{`$${'0.00'}`}</Typography>
             </Tooltip>
           )}
-
           <Tooltip title="Profile" arrow>
             <Button
               component="a"
