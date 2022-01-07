@@ -1,8 +1,13 @@
 import React from 'react';
-// import { Home } from '../components';
+
+import { Layout } from '../components';
 
 const Index: React.FC = (): JSX.Element => {
-  return <>1</>;
+  return (
+    <>
+      <Layout title="Home">Home Page</Layout>
+    </>
+  );
 };
 
 export default Index;

@@ -12,3 +12,5 @@ export { default as Cart } from './Cart';
 export { default as CartItem } from './CartItem';
 export { default as GridItem } from './GridItem';
 export { default as ExtendedItem } from './ExtendedItem';
+export { default as Layout } from './Layout';
+export { default as NavigationBar } from './NavigationBar';

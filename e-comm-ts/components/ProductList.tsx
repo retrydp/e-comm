@@ -63,7 +63,8 @@ export const ProductList: React.FC = (): JSX.Element => {
           <div className="price-picker__ranger">
             <span>Ranger:</span>
             <div className="price-picker__available-prices">
-              $<div className="price-picker__min">{range.minValue}</div> - <div className="price-picker__max">{range.maxValue}</div>
+              $<div className="price-picker__min">{range.minValue}</div> -{' '}
+              <div className="price-picker__max">{range.maxValue}</div>
             </div>
           </div>
           <Slider handler={sliderHandler} />
@@ -72,23 +73,84 @@ export const ProductList: React.FC = (): JSX.Element => {
         <div className="color-picker">
           <div className="color-picker__text">color</div>
           <div className="color-picker__wrapper">
-            <input className="color-picker__input" type="radio" id="colorpick2" name="colorpick" value="red" defaultChecked />
-            <label htmlFor="colorpick2" className="color-picker__actual" style={{ backgroundColor: 'red' }}></label>
+            <input
+              className="color-picker__input"
+              type="radio"
+              id="colorpick2"
+              name="colorpick"
+              value="red"
+              defaultChecked
+            />
+            <label
+              htmlFor="colorpick2"
+              className="color-picker__actual"
+              style={{ backgroundColor: 'red' }}
+            ></label>
 
-            <input className="color-picker__input" type="radio" id="colorpick1" name="colorpick" value="blue" />
-            <label htmlFor="colorpick1" className="color-picker__actual" style={{ backgroundColor: 'blue' }}></label>
+            <input
+              className="color-picker__input"
+              type="radio"
+              id="colorpick1"
+              name="colorpick"
+              value="blue"
+            />
+            <label
+              htmlFor="colorpick1"
+              className="color-picker__actual"
+              style={{ backgroundColor: 'blue' }}
+            ></label>
 
-            <input className="color-picker__input" type="radio" id="colorpick3" name="colorpick" value="black" />
-            <label htmlFor="colorpick3" className="color-picker__actual" style={{ backgroundColor: 'black' }}></label>
+            <input
+              className="color-picker__input"
+              type="radio"
+              id="colorpick3"
+              name="colorpick"
+              value="black"
+            />
+            <label
+              htmlFor="colorpick3"
+              className="color-picker__actual"
+              style={{ backgroundColor: 'black' }}
+            ></label>
 
-            <input className="color-picker__input" type="radio" id="colorpick4" name="colorpick" value="yellow" />
-            <label htmlFor="colorpick4" className="color-picker__actual" style={{ backgroundColor: 'yellow' }}></label>
+            <input
+              className="color-picker__input"
+              type="radio"
+              id="colorpick4"
+              name="colorpick"
+              value="yellow"
+            />
+            <label
+              htmlFor="colorpick4"
+              className="color-picker__actual"
+              style={{ backgroundColor: 'yellow' }}
+            ></label>
 
-            <input className="color-picker__input" type="radio" id="colorpick5" name="colorpick" value="purple" />
-            <label htmlFor="colorpick5" className="color-picker__actual" style={{ backgroundColor: 'purple' }}></label>
+            <input
+              className="color-picker__input"
+              type="radio"
+              id="colorpick5"
+              name="colorpick"
+              value="purple"
+            />
+            <label
+              htmlFor="colorpick5"
+              className="color-picker__actual"
+              style={{ backgroundColor: 'purple' }}
+            ></label>
 
-            <input className="color-picker__input" type="radio" id="colorpick6" name="colorpick" value="grey" />
-            <label htmlFor="colorpick6" className="color-picker__actual" style={{ backgroundColor: 'grey' }}></label>
+            <input
+              className="color-picker__input"
+              type="radio"
+              id="colorpick6"
+              name="colorpick"
+              value="grey"
+            />
+            <label
+              htmlFor="colorpick6"
+              className="color-picker__actual"
+              style={{ backgroundColor: 'grey' }}
+            ></label>
           </div>
         </div>
         {/* Color picker element styles */}
@@ -98,7 +160,9 @@ export const ProductList: React.FC = (): JSX.Element => {
         <div className="shopbanner shopbanner_inner adapted-banner">
           <div className="shopbanner__wrapper shopbanner__wrapper_inner">
             <h2 className="shopbanner__header">Adidas Men Running Sneakers</h2>
-            <p className="shopbanner__text">Performance and design. Taken right to the edge.</p>
+            <p className="shopbanner__text">
+              Performance and design. Taken right to the edge.
+            </p>
             <button className="shopbanner__btn">shop now</button>
           </div>
           <img src={shoe.src} alt="" className="shopbanner__img" />
@@ -122,34 +186,90 @@ export const ProductList: React.FC = (): JSX.Element => {
           </div>
           <div className="view-change">
             <button
-              className={classNames('view-change__btn', 'view-change__btn_grid', {
-                'view-change__btn_active': template.value === 'grid',
-              })}
+              className={classNames(
+                'view-change__btn',
+                'view-change__btn_grid',
+                {
+                  'view-change__btn_active': template.value === 'grid',
+                }
+              )}
               onClick={() => visibilityHandler('grid')}
             >
-              <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.29894 0.83374H0.87793V4.83374H5.29894V0.83374Z" fill="#C1C8CE" />
-                <path d="M5.29894 8.83374H0.87793V12.8337H5.29894V8.83374Z" fill="#C1C8CE" />
-                <path d="M5.29894 16.8337H0.87793V20.8337H5.29894V16.8337Z" fill="#C1C8CE" />
-                <path d="M14.1417 0.83374H9.7207V4.83374H14.1417V0.83374Z" fill="#C1C8CE" />
-                <path d="M14.1417 8.83374H9.7207V12.8337H14.1417V8.83374Z" fill="#C1C8CE" />
-                <path d="M9.7207 16.8337H14.1417V20.8337H9.7207V16.8337Z" fill="#C1C8CE" />
-                <path d="M22.9835 0.83374H18.5625V4.83374H22.9835V0.83374Z" fill="#C1C8CE" />
-                <path d="M22.9835 8.83374H18.5625V12.8337H22.9835V8.83374Z" fill="#C1C8CE" />
-                <path d="M22.9835 16.8337H18.5625V20.8337H22.9835V16.8337Z" fill="#C1C8CE" />
+              <svg
+                width="23"
+                height="21"
+                viewBox="0 0 23 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5.29894 0.83374H0.87793V4.83374H5.29894V0.83374Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M5.29894 8.83374H0.87793V12.8337H5.29894V8.83374Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M5.29894 16.8337H0.87793V20.8337H5.29894V16.8337Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M14.1417 0.83374H9.7207V4.83374H14.1417V0.83374Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M14.1417 8.83374H9.7207V12.8337H14.1417V8.83374Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M9.7207 16.8337H14.1417V20.8337H9.7207V16.8337Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M22.9835 0.83374H18.5625V4.83374H22.9835V0.83374Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M22.9835 8.83374H18.5625V12.8337H22.9835V8.83374Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M22.9835 16.8337H18.5625V20.8337H22.9835V16.8337Z"
+                  fill="#C1C8CE"
+                />
               </svg>
             </button>
 
             <button
-              className={classNames('view-change__btn', 'view-change__btn_line', {
-                'view-change__btn_active': template.value === 'extended',
-              })}
+              className={classNames(
+                'view-change__btn',
+                'view-change__btn_line',
+                {
+                  'view-change__btn_active': template.value === 'extended',
+                }
+              )}
               onClick={() => visibilityHandler('extended')}
             >
-              <svg width="21" height="17" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20.0357 0.83374H0.141113V2.83374H20.0357V0.83374Z" fill="#C1C8CE" />
-                <path d="M20.0357 7.83374H0.141113V9.83374H20.0357V7.83374Z" fill="#C1C8CE" />
-                <path d="M20.0357 14.8337H0.141113V16.8337H20.0357V14.8337Z" fill="#C1C8CE" />
+              <svg
+                width="21"
+                height="17"
+                viewBox="0 0 21 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20.0357 0.83374H0.141113V2.83374H20.0357V0.83374Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M20.0357 7.83374H0.141113V9.83374H20.0357V7.83374Z"
+                  fill="#C1C8CE"
+                />
+                <path
+                  d="M20.0357 14.8337H0.141113V16.8337H20.0357V14.8337Z"
+                  fill="#C1C8CE"
+                />
               </svg>
             </button>
           </div>
