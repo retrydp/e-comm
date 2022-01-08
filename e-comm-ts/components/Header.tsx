@@ -16,36 +16,38 @@ const Header: React.FC = () => {
   return (
     <>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tooltip title="Menu" arrow>
-          <NextLink href="/" passHref>
+        <NextLink href="/" passHref>
+          <Tooltip title="Menu" arrow>
             <Button component="a" sx={classes.navLink} aria-label="Menu">
               <Menu />
             </Button>
-          </NextLink>
-        </Tooltip>
+          </Tooltip>
+        </NextLink>
         <Box sx={classes.grow}></Box>
         <Box sx={classes.userActions}>
-          <Tooltip title="Search" arrow>
-            <NextLink href="/" passHref>
+          <NextLink href="/" passHref>
+            <Tooltip title="Search" arrow>
               <Button component="a" sx={classes.navLink} aria-label="Search">
                 <Search />
               </Button>
-            </NextLink>
-          </Tooltip>
-          <Tooltip title="Cart" arrow>
-            <NextLink href="/" passHref>
+            </Tooltip>
+          </NextLink>
+          <NextLink href="/" passHref>
+            <Tooltip title="Cart" arrow>
               <Button component="a" sx={classes.navLink} aria-label="User Cart">
                 <ShoppingCartOutlined />
               </Button>
-            </NextLink>
-          </Tooltip>
+            </Tooltip>
+          </NextLink>
+
           {sm && (
             <Tooltip title="Total price" arrow>
               <Typography sx={classes.navPrice}>{`$${'0.00'}`}</Typography>
             </Tooltip>
           )}
-          <Tooltip title="Profile" arrow>
-            <NextLink href="/" passHref>
+
+          <NextLink href="/" passHref>
+            <Tooltip title="Profile" arrow>
               <Button
                 component="a"
                 sx={classes.navLink}
@@ -53,8 +55,8 @@ const Header: React.FC = () => {
               >
                 <PermIdentityOutlined />
               </Button>
-            </NextLink>
-          </Tooltip>
+            </Tooltip>
+          </NextLink>
         </Box>
       </Toolbar>
     </>
