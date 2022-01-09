@@ -86,6 +86,7 @@ const styles = {
     gap: '80px',
     whiteSpace: 'nowrap',
     overflowX: 'scroll',
+    scrollbarWidth: 'none',
     justifyContent: 'flex-start',
     alignItems: 'center',
     ['@media (max-width:600px)']: {

@@ -56,7 +56,7 @@ const Index: React.FC = (): JSX.Element => {
           </Box>
         )}
         <Container maxWidth="lg">
-          <Grid container>
+          <Grid container rowSpacing={3}>
             <Grid item lg={4} md={4} sm={12} xs={12}>
               <NextLink href="/" passHref>
                 <Link sx={styles.plainAnchor}>
