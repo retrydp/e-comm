@@ -1,27 +1,70 @@
-import { Container, CssBaseline } from '@mui/material';
+import {
+  Box,
+  Container,
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
+} from '@mui/material';
 import Head from 'next/head';
 import React from 'react';
-import { Header, NavigationBar } from '.';
-
+import { Footer, Header, NavigationBar } from '.';
+import styles from '../utils/styles';
 interface LayoutProps {
   description?: string;
   title?: 'Home' | 'Bags' | 'Sneakers' | 'Belts' | 'Contacts';
   children?: React.ReactNode;
 }
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#BCDDFE',
+      main: '#40BFFF',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
+  typography: {
+    h2: {
+      fontFamily: 'Poppins',
+      fontSize: '64px',
+      fontWeight: '700',
+      color: 'white',
+    },
+    h3: {
+      fontFamily: 'Poppins',
+      fontSize: '35px',
+      fontWeight: '600',
+      color: '#262626',
+    },
+  },
+});
+
 const Layout: React.FC<LayoutProps> = ({ title, children, description }) => {
   return (
     <>
-      <CssBaseline />
       <Head>
         {description && <meta name="description" content={description} />}
         <title>{title || 'E-Comm'}</title>
       </Head>
-      <Container maxWidth="lg">
-        <Header />
-        <NavigationBar currentTab={title || 'Home'} />
-      </Container>
-      {children}
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <Box sx={styles.layoutWrapper}>
+          <Container maxWidth="lg">
+            <Header />
+            <NavigationBar currentTab={title || 'Home'} />
+          </Container>
+          {children}
+          <Box sx={styles.grow}></Box>
+          <Footer />
+        </Box>
+      </ThemeProvider>
     </>
   );
 };
