@@ -1,5 +1,3 @@
-// import { Header, HeadNavigation, Footer } from '../components';
-// import { useRouter } from 'next/router';
 import store from '../store';
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';

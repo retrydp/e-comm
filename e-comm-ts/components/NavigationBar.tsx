@@ -2,9 +2,9 @@ import { AppBar, Box, Link, Toolbar, Typography } from '@mui/material';
 import React from 'react';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import classes from '../utils/classes';
+import styles from '../utils/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-
+import logo from '../public/assets/img/logo.svg';
 type NavTitles = 'Home' | 'Bags' | 'Sneakers' | 'Belts' | 'Contacts';
 type NavPaths = '/' | '/bags' | '/sneakers' | '/belts' | '/contacts';
 
@@ -28,35 +28,30 @@ const NavigationBar: React.FC<NaviationBarProps> = ({ currentTab }) => {
   const sm = useMediaQuery('(min-width:600px)');
 
   return (
-    <AppBar position="static" sx={classes.appBar}>
-      <Toolbar sx={classes.toolBar}>
+    <AppBar position="static" sx={styles.appBar}>
+      <Toolbar sx={styles.toolBar}>
         <NextLink href="/" passHref>
-          <Link sx={classes.plainAnchor} aria-label="Site logo">
-            <Box sx={classes.navLogo}>
-              <Image
-                width={44}
-                height={44}
-                src="/../public/assets/img/logo.svg"
-                alt="Site logo"
-              ></Image>
-              {sm && <Typography sx={classes.logoText}>E-comm</Typography>}
+          <Link sx={styles.plainAnchor} aria-label="Site logo">
+            <Box sx={styles.navLogo}>
+              <Image width={44} height={44} src={logo} alt="Site logo"></Image>
+              {sm && <Typography sx={styles.logoText}>E-comm</Typography>}
             </Box>
           </Link>
         </NextLink>
-        <Box sx={classes.grow}></Box>
-        <Box sx={classes.navContainer}>
+        <Box sx={styles.grow}></Box>
+        <Box sx={styles.navContainer}>
           {menuItems.map(({ title, path }) => (
             <Box key={title}>
               <NextLink href={path} passHref>
-                <Link sx={classes.plainAnchor}>
+                <Link sx={styles.plainAnchor}>
                   <Typography
                     sx={
                       title === currentTab
                         ? {
-                            ...classes.tabLink,
-                            ...classes.activeTabLink,
+                            ...styles.tabLink,
+                            ...styles.activeTabLink,
                           }
-                        : classes.tabLink
+                        : styles.tabLink
                     }
                   >
                     {title}

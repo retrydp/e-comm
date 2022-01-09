@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import React from 'react';
-import classes from '../utils/classes';
+import styles from '../utils/styles';
 import NextLink from 'next/link';
 
 const Header: React.FC = () => {
@@ -18,23 +18,23 @@ const Header: React.FC = () => {
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <NextLink href="/" passHref>
           <Tooltip title="Menu" arrow>
-            <Button component="a" sx={classes.navLink} aria-label="Menu">
+            <Button component="a" sx={styles.navLink} aria-label="Menu">
               <Menu />
             </Button>
           </Tooltip>
         </NextLink>
-        <Box sx={classes.grow}></Box>
-        <Box sx={classes.userActions}>
+        <Box sx={styles.grow}></Box>
+        <Box sx={styles.userActions}>
           <NextLink href="/" passHref>
             <Tooltip title="Search" arrow>
-              <Button component="a" sx={classes.navLink} aria-label="Search">
+              <Button component="a" sx={styles.navLink} aria-label="Search">
                 <Search />
               </Button>
             </Tooltip>
           </NextLink>
           <NextLink href="/" passHref>
             <Tooltip title="Cart" arrow>
-              <Button component="a" sx={classes.navLink} aria-label="User Cart">
+              <Button component="a" sx={styles.navLink} aria-label="User Cart">
                 <ShoppingCartOutlined />
               </Button>
             </Tooltip>
@@ -42,7 +42,7 @@ const Header: React.FC = () => {
 
           {sm && (
             <Tooltip title="Total price" arrow>
-              <Typography sx={classes.navPrice}>{`$${'0.00'}`}</Typography>
+              <Typography sx={styles.navPrice}>{`$${'0.00'}`}</Typography>
             </Tooltip>
           )}
 
@@ -50,7 +50,7 @@ const Header: React.FC = () => {
             <Tooltip title="Profile" arrow>
               <Button
                 component="a"
-                sx={classes.navLink}
+                sx={styles.navLink}
                 aria-label="User Profile"
               >
                 <PermIdentityOutlined />
