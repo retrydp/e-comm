@@ -7,7 +7,7 @@ import {
   FormValues,
   ModalOptions,
 } from '../../types';
-import { ADD_NEW_PRODUCT } from '../../constants/apiVars';
+
 import axios, { AxiosResponse } from 'axios';
 import Modal from '../../components/Modal';
 
@@ -51,11 +51,11 @@ const AdminPannel: React.FC = (): JSX.Element => {
       itemsInStock: '',
     };
 
-    const formData = new FormData();
-    formData.append('action', ADD_NEW_PRODUCT);
-    Object.keys(values).forEach((key) => {
-      formData.append(key, values[key]);
-    });
+    // const formData = new FormData();
+    // formData.append('action', ADD_NEW_PRODUCT);
+    // Object.keys(values).forEach((key) => {
+    //   formData.append(key, values[key]);
+    // });
 
     // interface AxiosRequest
     // await axios
