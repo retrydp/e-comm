@@ -1,6 +1,7 @@
 import banner from '../public/assets/img/banner.png';
 const black = '#262626';
 const primaryGrey = '#C1C8CE';
+const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
 const primaryRed = '#FB7181';
 const neutralBlue = '#BCDDFE';
@@ -177,6 +178,23 @@ const styles = {
     color: black,
     textTransform: 'capitalize',
     m: '0 36px',
+  },
+  sideMenuItem: {
+    display: 'flex',
+    flexDirection: 'column',
+    p: '20px',
+    backgroundColor: secondaryGrey,
+    gap: '10px',
+  },
+  sideLinksText: {
+    color: black,
+    textDecoration: 'none',
+    display: 'flex',
+    justifyContent: 'space-between',
+    fontSize: '18px',
+    '&:hover': {
+      color: primaryBlue,
+    },
   },
 } as const;
 

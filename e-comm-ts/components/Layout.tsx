@@ -43,6 +43,12 @@ const theme = createTheme({
       fontWeight: '600',
       color: '#262626',
     },
+    h4: {
+      fontFamily: 'Poppins',
+      fontSize: '18px',
+      fontWeight: '500',
+      color: '#262626',
+    },
   },
 });
 

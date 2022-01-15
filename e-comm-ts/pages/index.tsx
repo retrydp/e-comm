@@ -98,7 +98,7 @@ const Index: React.FC = (): JSX.Element => {
                       component="img"
                       height="180"
                       image={shoeLogo.src}
-                      alt="green iguana"
+                      alt="FS - QUILTED MAXI CROSS BAG"
                     />
                     <CardContent sx={styles.cardContentWrapper}>
                       <Box sx={styles.promo}>
@@ -148,7 +148,7 @@ const Index: React.FC = (): JSX.Element => {
             <Tabs
               value={value}
               onChange={handleTabChange}
-              aria-label="secondary tabs example"
+              aria-label="secondary tabs"
               variant="scrollable"
             >
               {tabItems.map(({ name }) => (
