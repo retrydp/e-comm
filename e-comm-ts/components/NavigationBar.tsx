@@ -41,9 +41,7 @@ const NavigationBar: React.FC<NaviationBarProps> = ({ currentTab }) => {
     { title: 'Belts', path: '/belts' },
     { title: 'Contacts', path: '/contacts' },
   ];
-
   const sm = useMediaQuery('(min-width:600px)');
-  const [value, setValue] = React.useState(0);
 
   const LinkTab = (props: LinkTabProps) => {
     return (
@@ -51,10 +49,6 @@ const NavigationBar: React.FC<NaviationBarProps> = ({ currentTab }) => {
         <Tab component="a" {...props} />
       </NextLink>
     );
-  };
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
   };
 
   return (
@@ -72,8 +66,7 @@ const NavigationBar: React.FC<NaviationBarProps> = ({ currentTab }) => {
         <Box sx={styles.navContainer}>
           <Tabs
             value={menuItems.findIndex(({ title }) => title === currentTab)}
-            onChange={handleChange}
-            aria-label="nav tabs example"
+            aria-label="navigation links"
             variant="scrollable"
             sx={{
               '& .MuiTabs-indicator': {
@@ -97,26 +90,6 @@ const NavigationBar: React.FC<NaviationBarProps> = ({ currentTab }) => {
               />
             ))}
           </Tabs>
-          {/* {menuItems.map(({ title, path }) => (
-            <Box key={title}>
-              <NextLink href={path} passHref>
-                <Link sx={styles.plainAnchor}>
-                  <Typography
-                    sx={
-                      title === currentTab
-                        ? {
-                            ...styles.tabLink,
-                            ...styles.activeTabLink,
-                          }
-                        : styles.tabLink
-                    }
-                  >
-                    {title}
-                  </Typography>
-                </Link>
-              </NextLink>
-            </Box>
-          ))} */}
         </Box>
       </Toolbar>
     </AppBar>

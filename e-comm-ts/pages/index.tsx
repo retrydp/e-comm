@@ -31,7 +31,6 @@ interface TabItems {
 const Index: React.FC = (): JSX.Element => {
   const [value, setValue] = React.useState<TabItemNames>('all');
   const sm = useMediaQuery('(min-width:600px)');
-
   const tabItems: TabItems[] = [
     { name: 'all', value: '/' },
     { name: 'bags', value: '/bags' },
@@ -165,7 +164,7 @@ const Index: React.FC = (): JSX.Element => {
 
           <Grid container spacing={3}>
             {product.map(({ title, rating, oldPrice, actualPrice, image }) => (
-              <Grid item lg={3} md={4} sm={12} xs={12} key={title}>
+              <Grid item lg={3} md={4} sm={6} xs={12} key={title}>
                 <NextLink href="/" passHref>
                   <Link sx={styles.plainAnchor}>
                     <Card>
