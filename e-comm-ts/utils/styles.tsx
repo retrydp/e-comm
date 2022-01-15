@@ -121,11 +121,20 @@ const styles = {
     color: neuralDark,
     margin: '25px 0 25px 0',
   },
+  cartHeaderTextPos: {
+    textAlign: 'center',
+    m: 0,
+  },
   cardContentWrapper: {
     display: 'flex',
     justifyContent: 'space-between',
     marginTop: '30px',
     alignItems: 'center',
+  },
+  cardContentWrapperGrid: {
+    m: 0,
+    justifyContent: 'space-between',
+    width: '100%',
   },
   promo: {
     display: 'flex',

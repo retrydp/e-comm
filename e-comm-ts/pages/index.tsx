@@ -10,6 +10,7 @@ import {
   Tab,
   Tabs,
   Typography,
+  Rating,
 } from '@mui/material';
 import React from 'react';
 import styles from '../utils/styles';
@@ -17,6 +18,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Layout } from '../components';
 import shoeLogo from '../public/assets/img/columbia.jpg';
 import NextLink from 'next/link';
+
+import product from './product.json';
 
 type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
 
@@ -159,6 +162,64 @@ const Index: React.FC = (): JSX.Element => {
               ))}
             </Tabs>
           </Box>
+
+          <Grid container spacing={3}>
+            {product.map(({ title, rating, oldPrice, actualPrice, image }) => (
+              <Grid item lg={3} md={4} sm={12} xs={12} key={title}>
+                <NextLink href="/" passHref>
+                  <Link sx={styles.plainAnchor}>
+                    <Card>
+                      <CardMedia
+                        component="img"
+                        height="280"
+                        image={image}
+                        alt={title}
+                      />
+                      <CardHeader
+                        title={title}
+                        titleTypographyProps={{
+                          ...styles.cardHeaderText,
+                          ...styles.cartHeaderTextPos,
+                        }}
+                      ></CardHeader>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <Rating
+                          name="half-rating-read"
+                          defaultValue={rating}
+                          precision={0.5}
+                          readOnly
+                        />
+                        <CardContent
+                          sx={{
+                            ...styles.cardContentWrapper,
+                            ...styles.cardContentWrapperGrid,
+                          }}
+                        >
+                          <Box sx={styles.promo}>
+                            <Typography sx={styles.oldPrice}>
+                              ${oldPrice}
+                            </Typography>
+                            <Typography sx={styles.percent}>24% off</Typography>
+                          </Box>
+                          <Box>
+                            <Typography sx={styles.actualPrice}>
+                              ${actualPrice}
+                            </Typography>
+                          </Box>
+                        </CardContent>
+                      </Box>
+                    </Card>
+                  </Link>
+                </NextLink>
+              </Grid>
+            ))}
+          </Grid>
         </Container>
       </Layout>
     </>
