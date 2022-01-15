@@ -205,7 +205,12 @@ const Index: React.FC = (): JSX.Element => {
                             <Typography sx={styles.oldPrice}>
                               ${oldPrice}
                             </Typography>
-                            <Typography sx={styles.percent}>24% off</Typography>
+                            <Typography sx={styles.percent}>
+                              {Math.round(
+                                (oldPrice - actualPrice) / (oldPrice / 100)
+                              )}
+                              % off
+                            </Typography>
                           </Box>
                           <Box>
                             <Typography sx={styles.actualPrice}>
