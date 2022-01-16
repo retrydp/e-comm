@@ -1,15 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
+import nc from 'next-connect';
 import { connectToDatabase } from '../../utils/database';
-import {
-  FormattedFormData,
-  FormValues,
-  FormattedFormDataStrict,
-  ResponceAPI,
-} from '../../types';
-import * as Yup from 'yup';
-
-import fs from 'fs';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export const config = {
   api: {
@@ -17,12 +8,10 @@ export const config = {
   },
 };
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    body: { action, values },
-  } = req;
+const handler = nc();
 
-  const { db } = await connectToDatabase();
-};
+handler.get((req: NextApiRequest, res: NextApiResponse) => {
+  res.end(req.query);
+});
 
 export default handler;
