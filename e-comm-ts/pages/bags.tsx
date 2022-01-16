@@ -33,8 +33,8 @@ const Bags = () => {
       setExpanded(isExpanded ? panel : false);
     };
 
-  const sliderValueText = (value: number) => {
-    return `$${value}`;
+  const sliderValueText = () => {
+    return `Price range: $ ${sliderValue[0]} to $ ${sliderValue[1]}`;
   };
 
   return (
@@ -52,7 +52,9 @@ const Bags = () => {
                   aria-controls="filterSetingsbh-content"
                   id="filterSetingsbh-header"
                 >
-                  <Typography sx={{ flexShrink: 0 }}>Search filters</Typography>
+                  <Typography variant="h4" component="h4">
+                    Search filters
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Grid item container rowSpacing={2} direction="column">
@@ -85,7 +87,9 @@ const Bags = () => {
                             min={0}
                             max={331}
                             step={10}
-                            getAriaLabel={() => 'Price range'}
+                            getAriaLabel={(idx: number) =>
+                              idx ? `Maximum value` : `Minimum value`
+                            }
                             value={sliderValue}
                             onChange={sliderHandleChange}
                             //TODO API request according to folowing methods to prevent unnecessary calls
@@ -151,7 +155,9 @@ const Bags = () => {
                       min={0}
                       max={331}
                       step={10}
-                      getAriaLabel={() => 'Price range'}
+                      getAriaLabel={(idx: number) =>
+                        Boolean(idx) ? 'Maximum price' : 'Minimum price'
+                      }
                       value={sliderValue}
                       onChange={sliderHandleChange}
                       //TODO API request according to folowing methods to prevent unnecessary calls
