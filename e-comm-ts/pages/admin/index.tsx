@@ -9,7 +9,6 @@ import {
 } from '../../types';
 
 import axios, { AxiosResponse } from 'axios';
-import Modal from '../../components/Modal';
 
 const AdminPannel: React.FC = (): JSX.Element => {
   const [modalOptions, setModalOptions] = React.useState<
@@ -84,9 +83,10 @@ const AdminPannel: React.FC = (): JSX.Element => {
         <title>Admin pannel</title>
       </Head>
       <div className="admin-pannel">
-        {modalOptions.modalVisible && (
-          <Modal {...{ ...modalOptions, onClose }} />
-        )}
+        {modalOptions.modalVisible &&
+          1
+          // <Modal {...{ ...modalOptions, onClose }} />
+        }
         <aside className="menu">
           <div className="menu__header">
             <svg
