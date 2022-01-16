@@ -9,6 +9,7 @@ import Head from 'next/head';
 import React from 'react';
 import { Footer, Header, NavigationBar } from '.';
 import styles from '../utils/styles';
+
 interface LayoutProps {
   description?: string;
   title?: 'Home' | 'Bags' | 'Sneakers' | 'Belts' | 'Contacts';
