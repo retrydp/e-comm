@@ -1,5 +1,4 @@
 import { MongoClient, Db, MongoClientOptions } from 'mongodb';
-import { array } from 'yup/lib/locale';
 
 const { MONGODB_URI, MONGODB_DB } = process.env;
 
