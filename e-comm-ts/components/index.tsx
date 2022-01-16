@@ -1,12 +1,6 @@
 export { default as Header } from './Header';
 export { default as Footer } from './Footer';
-export { default as ProductList } from './ProductList';
 export { default as ProductCart } from './ProductCart';
-export { default as ProductCartLine } from './ProductCartLine';
 export { default as Product } from './Product';
-export { default as Cart } from './Cart';
-export { default as CartItem } from './CartItem';
-export { default as GridItem } from './GridItem';
-export { default as ExtendedItem } from './ExtendedItem';
 export { default as Layout } from './Layout';
 export { default as NavigationBar } from './NavigationBar';
