@@ -19,29 +19,25 @@ import NextLink from 'next/link';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import { SelectChangeEvent } from '@mui/material/Select';
+import { SliderSelector } from '../components/SliderSelector';
 
 type hdLinks = 'Nike' | 'Airmax' | 'Adidas' | 'Vans';
 
 const Bags: React.FC = () => {
   const hotDealsLinks: hdLinks[] = ['Nike', 'Airmax', 'Adidas', 'Vans'];
-  const [sliderValue, setSliderValue] = React.useState<number[]>([0, 331]);
+
   const [sort, setSort] = React.useState<string>('new');
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
   const md = useMediaQuery('(max-width:900px)');
-
-  const sliderHandleChange = (event: Event, newValue: number | number[]) => {
-    setSliderValue(newValue as number[]);
-  };
-
-  const sliderValueText = () => {
-    return `Price range: $ ${sliderValue[0]} to $ ${sliderValue[1]}`;
-  };
 
   const sortHandler = (event: SelectChangeEvent) => {
     setSort(event.target.value);
   };
   const drawerVisibleHandler = () => {
     setDrawerIsVisible(!drawerIsVisible);
+  };
+  const getSliderValues = (values: number[]) => {
+    console.log(values);
   };
 
   return (
@@ -147,28 +143,9 @@ const Bags: React.FC = () => {
                   <Typography variant="h4" sx={{ mb: '10px' }}>
                     Prices
                   </Typography>
-                  <Typography>
-                    Ranger: $ {sliderValue[0]} - $ {sliderValue[1]}
-                  </Typography>
-                  <Box sx={{ width: '100%' }}>
-                    <Slider
-                      min={0}
-                      max={331}
-                      step={10}
-                      getAriaLabel={(idx: number) =>
-                        Boolean(idx) ? 'Maximum price' : 'Minimum price'
-                      }
-                      value={sliderValue}
-                      onChange={sliderHandleChange}
-                      //TODO API request according to folowing methods to prevent unnecessary calls
-                      onMouseUp={(e) => console.log(sliderValue, e.type)}
-                      onTouchEnd={(e) => console.log(sliderValue, e.type)}
-                      valueLabelDisplay="off"
-                      getAriaValueText={sliderValueText}
-                    />
-                  </Box>
+                  <SliderSelector getSliderValues={getSliderValues} />
                 </Box>
-              </Grid>{' '}
+              </Grid>
               <Grid item sx={styles.grow}>
                 <Box sx={styles.sideMenuItem}>
                   <Typography variant="h4" sx={{ mb: '10px' }}>
