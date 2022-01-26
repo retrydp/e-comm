@@ -110,10 +110,6 @@ const styles = {
   bannerText: {
     margin: '280px 0px 140px 0px',
     maxWidth: '580px',
-    // fontFamily: 'Poppins',
-    // fontSize: '64px',
-    // fontWeight: '700',
-    // color: 'white',
   },
   cardHeaderText: {
     fontFamily: 'Poppins',
