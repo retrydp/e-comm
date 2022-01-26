@@ -19,7 +19,6 @@ import NextLink from 'next/link';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { createFalse } from 'typescript';
 
 type hdLinks = 'Nike' | 'Airmax' | 'Adidas' | 'Vans';
 
@@ -39,7 +38,6 @@ const Bags: React.FC = () => {
   };
 
   const sortHandler = (event: SelectChangeEvent) => {
-    console.log(event.target.value);
     setSort(event.target.value);
   };
   const drawerVisibleHandler = () => {
@@ -104,6 +102,7 @@ const Bags: React.FC = () => {
               container
               rowSpacing={2}
               direction="column"
+              sx={{ mb: 4 }}
             >
               {/* side bar menu */}
               <Grid item sx={styles.grow}>
@@ -169,9 +168,21 @@ const Bags: React.FC = () => {
                     />
                   </Box>
                 </Box>
-              </Grid>
+              </Grid>{' '}
               <Grid item sx={styles.grow}>
-                <Box sx={styles.sideMenuItem}>item bl0o9ck</Box>
+                <Box sx={styles.sideMenuItem}>
+                  <Typography variant="h4" sx={{ mb: '10px' }}>
+                    Colors
+                  </Typography>
+                  <Typography>Colors selection</Typography>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Button variant="contained">
+                  <Typography sx={styles.filterButton}>
+                    Apply filters
+                  </Typography>
+                </Button>
               </Grid>
             </Grid>
           )}
