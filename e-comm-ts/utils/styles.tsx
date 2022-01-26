@@ -196,6 +196,13 @@ const styles = {
       color: primaryBlue,
     },
   },
+  filterButton: {
+    fontFamily: 'Poppins',
+    fontSize: '16px',
+    fontWeight: '400',
+    color: '#fff',
+    textTransform: 'capitalize',
+  },
 } as const;
 
 export default styles;
