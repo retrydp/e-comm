@@ -15,7 +15,6 @@ import {
 import React from 'react';
 import { Layout } from '../components';
 import styles from '../utils/styles';
-import NextLink from 'next/link';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import { SelectChangeEvent } from '@mui/material/Select';
@@ -86,6 +85,115 @@ const Bags: React.FC = () => {
   const [colorChecked, setColorChecked] = React.useState<string[]>([]);
   const md = useMediaQuery('(max-width:900px)');
 
+  const sideMenuTemplate = (width: string, withSort: boolean) => {
+    return (
+      <Grid item sx={styles.grow}>
+        <Box sx={styles.sideMenuItem}>
+          <Grid item container spacing={2} direction="column">
+            <Grid item>
+              <FormControl sx={{ width: width }}>
+                <InputLabel id="brandSelect-label">Brand</InputLabel>
+                <Select
+                  labelId="brandSelect-label"
+                  id="brandSelect"
+                  value={brand}
+                  onChange={brandHandler}
+                  inputProps={{ 'aria-label': 'Brand selection' }}
+                  label="Brand"
+                >
+                  {hotDealsLinks.map((el) => (
+                    <MenuItem value={el} key={el}>
+                      {el && el[0].toUpperCase() + el.slice(1)}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            {withSort && (
+              <Grid item>
+                <FormControl sx={{ width: width }}>
+                  <InputLabel id="sortSelect-label">Sort by</InputLabel>
+                  <Select
+                    labelId="sortSelect-label"
+                    id="sortSelect"
+                    value={sort}
+                    onChange={sortHandler}
+                    inputProps={{ 'aria-label': 'Sorting selection' }}
+                    label="Sort by"
+                  >
+                    {filterValues.map(({ id, title }) => (
+                      <MenuItem value={id} key={id}>
+                        {title}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            )}
+            <Grid item>
+              <FormControl sx={{ width: width }}>
+                <InputLabel id="colorChange-label">Color</InputLabel>
+                <Select
+                  labelId="colorChange-label"
+                  id="colorChange"
+                  multiple
+                  value={colorChecked}
+                  onChange={colorsChangeHandler}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="Chip" />
+                  }
+                  renderValue={(selected) => (
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 0.5,
+                      }}
+                    >
+                      {selected.map((value) => (
+                        <Chip
+                          key={value}
+                          label={
+                            availableColorsList.find(
+                              ({ color }) => color === value
+                            )?.slug
+                          }
+                          sx={{
+                            color: availableColorsList.find(
+                              ({ color }) => color === value
+                            )?.bg,
+                            backgroundColor: 'primary',
+                          }}
+                        />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {availableColorsList.map(({ color, slug, bg }) => (
+                    <MenuItem key={color} value={color}>
+                      <Typography sx={{ color: bg === 'white' ? 'black' : bg }}>
+                        {slug}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Box>
+        <Grid item sx={styles.grow}>
+          <Box sx={styles.sideMenuItem}>
+            <Typography variant="h4" sx={{ mb: '10px' }}>
+              Price
+            </Typography>
+            <SliderSelector getSliderValues={getSliderValues} />
+          </Box>
+        </Grid>
+      </Grid>
+    );
+  };
+
   /**
    * Changes current selected sort order option.
    * @param {SelectChangeEvent} event
@@ -140,91 +248,7 @@ const Bags: React.FC = () => {
         open={drawerIsVisible}
         onClose={() => setDrawerIsVisible(false)}
       >
-        <Grid item sx={styles.grow}>
-          <Box sx={styles.sideMenuItem}>
-            <Grid item container spacing={2} direction="column">
-              <Grid item>
-                <FormControl sx={{ width: '60vw' }}>
-                  <InputLabel id="brandSelect-label">Brand</InputLabel>
-                  <Select
-                    labelId="brandSelect-label"
-                    id="brandSelect"
-                    value={brand}
-                    onChange={brandHandler}
-                    inputProps={{ 'aria-label': 'Brand selection' }}
-                    label="Brand"
-                  >
-                    {hotDealsLinks.map((el) => (
-                      <MenuItem value={el} key={el}>
-                        {el && el[0].toUpperCase() + el.slice(1)}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item>
-                <FormControl sx={{ width: '60vw' }}>
-                  <InputLabel id="colorChange-label">Color</InputLabel>
-                  <Select
-                    labelId="colorChange-label"
-                    id="colorChange"
-                    multiple
-                    value={colorChecked}
-                    onChange={colorsChangeHandler}
-                    input={
-                      <OutlinedInput id="select-multiple-chip" label="Chip" />
-                    }
-                    renderValue={(selected) => (
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexWrap: 'wrap',
-                          gap: 0.5,
-                        }}
-                      >
-                        {selected.map((value) => (
-                          <Chip
-                            key={value}
-                            label={
-                              availableColorsList.find(
-                                ({ color }) => color === value
-                              )?.slug
-                            }
-                            sx={{
-                              color: availableColorsList.find(
-                                ({ color }) => color === value
-                              )?.bg,
-                              backgroundColor: 'primary',
-                            }}
-                          />
-                        ))}
-                      </Box>
-                    )}
-                    MenuProps={MenuProps}
-                  >
-                    {availableColorsList.map(({ color, slug, bg }) => (
-                      <MenuItem key={color} value={color}>
-                        <Typography
-                          sx={{ color: bg === 'white' ? 'black' : bg }}
-                        >
-                          {slug}
-                        </Typography>
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item sx={styles.grow}>
-                <Box sx={styles.sideMenuItem}>
-                  <Typography variant="h4" sx={{ mb: '10px' }}>
-                    Price
-                  </Typography>
-                  <SliderSelector getSliderValues={getSliderValues} />
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </Grid>
+        {sideMenuTemplate('60vw', false)}
       </Drawer>
       <Container maxWidth="lg">
         <Grid container spacing={2}>
@@ -272,114 +296,7 @@ const Bags: React.FC = () => {
               direction="column"
               sx={{ mb: 4 }}
             >
-              {/* side bar menu */}
-              <Grid item sx={styles.grow}>
-                <Box sx={styles.sideMenuItem}>
-                  <Grid item container spacing={2} direction="column">
-                    <Grid item>
-                      <FormControl sx={{ width: '100%' }}>
-                        <InputLabel id="brandSelect-label">Brand</InputLabel>
-                        <Select
-                          labelId="brandSelect-label"
-                          id="brandSelect"
-                          value={brand}
-                          onChange={brandHandler}
-                          inputProps={{ 'aria-label': 'Brand selection' }}
-                          label="Brand"
-                        >
-                          {hotDealsLinks.map((el) => (
-                            <MenuItem value={el} key={el}>
-                              {el && el[0].toUpperCase() + el.slice(1)}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item>
-                      <FormControl sx={{ width: '100%' }}>
-                        <InputLabel id="sortSelect-label">Sort by</InputLabel>
-                        <Select
-                          labelId="sortSelect-label"
-                          id="sortSelect"
-                          value={sort}
-                          onChange={sortHandler}
-                          inputProps={{ 'aria-label': 'Sorting selection' }}
-                          label="Sort by"
-                        >
-                          {filterValues.map(({ id, title }) => (
-                            <MenuItem value={id} key={id}>
-                              {title}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                    <Grid item>
-                      <FormControl sx={{ width: '100%' }}>
-                        <InputLabel id="colorChange-label">Color</InputLabel>
-                        <Select
-                          labelId="colorChange-label"
-                          id="colorChange"
-                          multiple
-                          value={colorChecked}
-                          onChange={colorsChangeHandler}
-                          input={
-                            <OutlinedInput
-                              id="select-multiple-chip"
-                              label="Chip"
-                            />
-                          }
-                          renderValue={(selected) => (
-                            <Box
-                              sx={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                gap: 0.5,
-                              }}
-                            >
-                              {selected.map((value) => (
-                                <Chip
-                                  key={value}
-                                  label={
-                                    availableColorsList.find(
-                                      ({ color }) => color === value
-                                    )?.slug
-                                  }
-                                  sx={{
-                                    color: availableColorsList.find(
-                                      ({ color }) => color === value
-                                    )?.bg,
-                                    backgroundColor: 'primary',
-                                  }}
-                                />
-                              ))}
-                            </Box>
-                          )}
-                          MenuProps={MenuProps}
-                        >
-                          {availableColorsList.map(({ color, slug, bg }) => (
-                            <MenuItem key={color} value={color}>
-                              <Typography
-                                sx={{ color: bg === 'white' ? 'black' : bg }}
-                              >
-                                {slug}
-                              </Typography>
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-              <Grid item sx={styles.grow}>
-                <Box sx={styles.sideMenuItem}>
-                  <Typography variant="h4" sx={{ mb: '10px' }}>
-                    Price
-                  </Typography>
-                  <SliderSelector getSliderValues={getSliderValues} />
-                </Box>
-              </Grid>
+              {sideMenuTemplate('100%', true)}
             </Grid>
           )}
           <Grid item sx={styles.grow} xl={9} lg={9} md={9}>
