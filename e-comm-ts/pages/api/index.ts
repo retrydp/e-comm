@@ -1,5 +1,5 @@
 import nc from 'next-connect';
-import { connectToDatabase } from '../../utils/database';
+
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export const config = {
