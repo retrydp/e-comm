@@ -55,11 +55,12 @@ interface AvailableColorsList {
 
 interface GoodsProps {
   goods: ProductSchema[];
+  errors?: string;
 }
 
 type View = 'module' | 'list';
 
-const Bags: React.FC<GoodsProps> = ({ goods }) => {
+const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -398,13 +399,18 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
 export default Bags;
 
 export async function getServerSideProps() {
-  await db.connect();
-  const productDocs = await Product.find({
-    category: 'bags',
-  }).lean();
-  await db.disconnect();
-
-  return {
-    props: { goods: productDocs.map(db.convertDocToObj) },
-  };
+  try {
+    await db.connect();
+    const productDocs = await Product.find({
+      category: 'bags',
+    }).lean();
+    await db.disconnect();
+    return {
+      props: { goods: productDocs.map(db.convertDocToObj) },
+    };
+  } catch (error: any) {
+    return {
+      props: { goods: [], errors: (error as {}).toString() },
+    };
+  }
 }
