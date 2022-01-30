@@ -116,7 +116,7 @@ const styles = {
     fontSize: '20px',
     fontWeight: '700',
     color: neuralDark,
-    margin: '25px 0 25px 0',
+    margin: '25px 0',
   },
   cartHeaderTextPos: {
     textAlign: 'center',
@@ -130,7 +130,6 @@ const styles = {
   },
   cardContentWrapperGrid: {
     m: 0,
-    justifyContent: 'space-between',
     width: '100%',
   },
   promo: {
@@ -198,6 +197,47 @@ const styles = {
     fontWeight: '400',
     color: '#fff',
     textTransform: 'capitalize',
+  },
+  sortToolbar: {
+    backgroundColor: secondaryGrey,
+    padding: '10px',
+    flexWrap: 'wrap',
+    gap: '8px',
+    marginBottom: '15px',
+  },
+  goodsWrapper: {
+    padding: 0,
+  },
+  productWrapper: {
+    display: 'flex',
+    flexGrow: 1,
+    border: '1px solid red',
+  },
+  reviewsText: {
+    color: primaryGrey,
+    whiteSpace: 'nowrap',
+  },
+  cardHeaderTextSecondary: {
+    fontFamily: 'Poppins',
+    fontSize: '20px',
+    fontWeight: '700',
+    color: neuralDark,
+  },
+  cardContentWrapperSecondary: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    marginTop: '30px',
+    alignItems: 'flex-start',
+    gap: '12px',
+  },
+  ratingBar: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '0 16px',
+    gap: '10px',
+    flexWrap: 'wrap',
+    borderBottom: `1px solid ${secondaryGrey}`,
   },
 } as const;
 

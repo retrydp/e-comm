@@ -10,15 +10,21 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
+  ToggleButton,
+  ToggleButtonGroup,
+  Toolbar,
   Typography,
 } from '@mui/material';
 import React from 'react';
 import { Layout } from '../components';
 import styles from '../utils/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
+import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { SliderSelector } from '../components/SliderSelector';
+import { SliderSelector, Module, List } from '../components';
+import Product, { ProductSchema } from '../models/Product';
+
+import db from '../utils/database';
 
 type Brands = 'nike' | 'airmax' | 'adidas' | 'vans' | 'all';
 type SortParams = 'popular' | 'new' | 'asc' | 'desc';
@@ -47,7 +53,13 @@ interface AvailableColorsList {
   slug: string;
 }
 
-const Bags: React.FC = () => {
+interface GoodsProps {
+  goods: ProductSchema[];
+}
+
+type View = 'module' | 'list';
+
+const Bags: React.FC<GoodsProps> = ({ goods }) => {
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -82,8 +94,11 @@ const Bags: React.FC = () => {
   const [brand, setBrand] = React.useState<Brands>('all');
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
   const [priceRange, setPriceRange] = React.useState<number[]>([0, 331]);
+  const [quantity, setQuantity] = React.useState<number>(12);
   const [colorChecked, setColorChecked] = React.useState<string[]>([]);
+  const [view, setView] = React.useState<View>('module');
   const md = useMediaQuery('(max-width:900px)');
+  const sm = useMediaQuery('(min-width:600px)');
 
   const sideMenuTemplate = (width: string, withSort: boolean) => {
     return (
@@ -240,7 +255,16 @@ const Bags: React.FC = () => {
       typeof value === 'string' ? value.split(',') : value
     );
   };
+  const quantityHandler = (event: SelectChangeEvent) => {
+    setQuantity(parseInt(event.target.value, 10));
+  };
 
+  const viewChangeHandler = (
+    event: React.MouseEvent<HTMLElement>,
+    nextView: View
+  ) => {
+    setView(nextView);
+  };
   return (
     <Layout title="Bags">
       <Drawer
@@ -260,7 +284,7 @@ const Bags: React.FC = () => {
                   fullWidth
                   onClick={drawerVisibleHandler}
                 >
-                  <FilterAltRoundedIcon sx={{ mr: '10px' }} />
+                  <FilterAltRounded sx={{ mr: '10px' }} />
                   <Typography sx={styles.filterButton}>Filters</Typography>
                 </Button>
               </Grid>
@@ -299,10 +323,71 @@ const Bags: React.FC = () => {
               {sideMenuTemplate('100%', true)}
             </Grid>
           )}
-          <Grid item sx={styles.grow} xl={9} lg={9} md={9}>
+          <Grid
+            item
+            sx={{ ...styles.grow, ...styles.goodsWrapper }}
+            xl={9}
+            lg={9}
+            md={9}
+          >
+            <Toolbar sx={styles.sortToolbar} disableGutters>
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: '60px',
+                  alignItems: 'center',
+                }}
+              >
+                {sm && (
+                  <Typography
+                    sx={{
+                      fontSize: '16px',
+                      paddingLeft: '20px',
+                    }}
+                  >
+                    Items: {12}
+                  </Typography>
+                )}
+                <FormControl sx={{ minWidth: 150 }}>
+                  <InputLabel id="quantity-label">Quantity</InputLabel>
+                  <Select
+                    labelId="quantity-label"
+                    id="quantity"
+                    value={quantity.toString()}
+                    onChange={quantityHandler}
+                    inputProps={{ 'aria-label': 'Quantity selection' }}
+                    label="Quantity"
+                    size="small"
+                  >
+                    {[12, 16, 20, 24].map((el) => (
+                      <MenuItem value={el} key={el}>
+                        {el}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box sx={styles.grow}></Box>
+              <ToggleButtonGroup
+                color="primary"
+                value={view}
+                exclusive
+                onChange={viewChangeHandler}
+              >
+                <ToggleButton value="module" aria-label="module">
+                  <ViewModule />
+                </ToggleButton>
+                <ToggleButton value="list" aria-label="list">
+                  <ViewList />
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Toolbar>
+            {view === 'module' && <Module products={goods} />}
+            {view === 'list' && <List products={goods} />}
             CONTENT PLACEHOLDER [Properties selected: Sort: {sort} | Brand:{' '}
             {brand} | Price range: {priceRange.join('-')} | Colors Checked:{' '}
-            {colorChecked.join(',')}]
+            {colorChecked.join(',')} | Quantity: {quantity.toString()} | View:{' '}
+            {view}]
           </Grid>
         </Grid>
       </Container>
@@ -311,3 +396,16 @@ const Bags: React.FC = () => {
 };
 
 export default Bags;
+
+export async function getServerSideProps() {
+  db.connect();
+  const productDocs = await Product.find({
+    category: 'bags',
+  }).lean();
+  console.log(productDocs.map(db.convertDocToObj));
+  db.disconnect();
+
+  return {
+    props: { goods: productDocs.map(db.convertDocToObj) },
+  };
+}

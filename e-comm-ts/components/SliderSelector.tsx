@@ -6,7 +6,7 @@ interface SliderProps {
   getSliderValues: (values: number[]) => void;
 }
 
-export const SliderSelector: React.FC<SliderProps> = ({ getSliderValues }) => {
+const SliderSelector: React.FC<SliderProps> = ({ getSliderValues }) => {
   const [sliderValue, setSliderValue] = React.useState<number[]>([0, 331]);
 
   const sliderHandleChange = (event: Event, newValue: number | number[]) => {
@@ -43,3 +43,4 @@ export const SliderSelector: React.FC<SliderProps> = ({ getSliderValues }) => {
     </>
   );
 };
+export default SliderSelector;

@@ -5,14 +5,14 @@ interface Images {
   imgList: string[];
 }
 
-export interface Product {
+export interface ProductSchema {
   slug: string;
   name: string;
   description: string;
   category: string;
   brand: string;
   price: number;
-  oldPrice?: number;
+  oldPrice: number;
   images: Images[];
   rating: number;
   salesCount?: number;
@@ -41,7 +41,10 @@ const reviewSchema = new mongoose.Schema<Reviews, mongoose.Model<Reviews>>(
   }
 );
 
-const ProductSchema = new mongoose.Schema<Product, mongoose.Model<Product>>(
+const ProductSchema = new mongoose.Schema<
+  ProductSchema,
+  mongoose.Model<ProductSchema>
+>(
   {
     slug: {
       type: String,
@@ -83,6 +86,8 @@ const ProductSchema = new mongoose.Schema<Product, mongoose.Model<Product>>(
             type: [{ type: String }],
             required: [true, 'Atleast one image in list'],
           },
+          _id: false,
+          id: false,
         },
       ],
       required: [true, 'Images are not provided'],
@@ -92,7 +97,7 @@ const ProductSchema = new mongoose.Schema<Product, mongoose.Model<Product>>(
       type: Number,
       required: [true, 'Please set a rating'],
       min: [1, 'Rating must be at least 1'],
-      max: [10, 'Rating must can not be more than 10'],
+      max: [5, 'Rating must can not be more than 5'],
       default: 0,
     },
     salesCount: {
