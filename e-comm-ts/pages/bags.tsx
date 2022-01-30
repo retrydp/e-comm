@@ -399,7 +399,7 @@ const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
 
 export default Bags;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // try {
   //   await db.connect();
   //   const productDocs = await Product.find({
