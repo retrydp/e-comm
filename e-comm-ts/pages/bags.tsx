@@ -345,7 +345,7 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
                       paddingLeft: '20px',
                     }}
                   >
-                    Items: {12}
+                    Items: {goods.length || 0}
                   </Typography>
                 )}
                 <FormControl sx={{ minWidth: 150 }}>
@@ -398,12 +398,11 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
 export default Bags;
 
 export async function getServerSideProps() {
-  db.connect();
+  await db.connect();
   const productDocs = await Product.find({
     category: 'bags',
   }).lean();
-  console.log(productDocs.map(db.convertDocToObj));
-  db.disconnect();
+  await db.disconnect();
 
   return {
     props: { goods: productDocs.map(db.convertDocToObj) },
