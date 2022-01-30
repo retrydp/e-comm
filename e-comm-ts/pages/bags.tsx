@@ -23,6 +23,7 @@ import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { SliderSelector, Module, List } from '../components';
 import Product, { ProductSchema } from '../models/Product';
+import data from '../utils/data';
 
 import db from '../utils/database';
 
@@ -100,7 +101,7 @@ const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
   const [view, setView] = React.useState<View>('module');
   const md = useMediaQuery('(max-width:900px)');
   const sm = useMediaQuery('(min-width:600px)');
-
+  console.log(errors);
   const sideMenuTemplate = (width: string, withSort: boolean) => {
     return (
       <Grid item sx={styles.grow}>
@@ -399,18 +400,17 @@ const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
 export default Bags;
 
 export async function getServerSideProps() {
-  try {
-    await db.connect();
-    const productDocs = await Product.find({
-      category: 'bags',
-    }).lean();
-    await db.disconnect();
-    return {
-      props: { goods: productDocs.map(db.convertDocToObj) },
-    };
-  } catch (error: any) {
-    return {
-      props: { goods: [], errors: (error as {}).toString() },
-    };
-  }
+  // try {
+  //   await db.connect();
+  //   const productDocs = await Product.find({
+  //     category: 'bags',
+  //   }).lean();
+  //   await db.disconnect();
+  //   return {
+  //     props: { goods: productDocs.map(db.convertDocToObj) },
+  //   };
+  // } catch (error: any) {
+  return {
+    props: { goods: data.products },
+  };
 }
