@@ -400,7 +400,7 @@ const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
 export default Bags;
 
 export async function getStaticProps() {
-   try {
+   
     await db.connect();
     const productDocs = await Product.find({
      category: 'bags',
@@ -409,8 +409,11 @@ export async function getStaticProps() {
     return {
      props: { goods: productDocs.map(db.convertDocToObj) },
     };
-  } catch (error: any) {
-  return {
-    props: { goods: data.products },
-  };
+  } 
+
+
+
+
+
+
 }
