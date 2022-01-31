@@ -23,8 +23,6 @@ import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { SliderSelector, Module, List } from '../components';
 import Product, { ProductSchema } from '../models/Product';
-import data from '../utils/data';
-
 import db from '../utils/database';
 
 type Brands = 'nike' | 'airmax' | 'adidas' | 'vans' | 'all';
@@ -56,12 +54,11 @@ interface AvailableColorsList {
 
 interface GoodsProps {
   goods: ProductSchema[];
-  errors?: string;
 }
 
 type View = 'module' | 'list';
 
-const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
+const Bags: React.FC<GoodsProps> = ({ goods }) => {
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -101,7 +98,7 @@ const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
   const [view, setView] = React.useState<View>('module');
   const md = useMediaQuery('(max-width:900px)');
   const sm = useMediaQuery('(min-width:600px)');
-  console.log(errors);
+
   const sideMenuTemplate = (width: string, withSort: boolean) => {
     return (
       <Grid item sx={styles.grow}>
@@ -257,6 +254,7 @@ const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
       typeof value === 'string' ? value.split(',') : value
     );
   };
+
   const quantityHandler = (event: SelectChangeEvent) => {
     setQuantity(parseInt(event.target.value, 10));
   };
@@ -265,8 +263,11 @@ const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
     event: React.MouseEvent<HTMLElement>,
     nextView: View
   ) => {
-    setView(nextView);
+    if (nextView !== null) {
+      setView(nextView);
+    }
   };
+
   return (
     <Layout title="Bags">
       <Drawer
@@ -400,20 +401,12 @@ const Bags: React.FC<GoodsProps> = ({ goods, errors }) => {
 export default Bags;
 
 export async function getStaticProps() {
-   
-    await db.connect();
-    const productDocs = await Product.find({
-     category: 'bags',
-   }).lean();
-     await db.disconnect();
-    return {
-     props: { goods: productDocs.map(db.convertDocToObj) },
-    };
-  } 
-
-
-
-
-
-
-
+  await db.connect();
+  const productDocs = await Product.find({
+    category: 'bags',
+  }).lean();
+  await db.disconnect();
+  return {
+    props: { goods: productDocs.map(db.convertDocToObj) },
+  };
+}
