@@ -13,6 +13,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Toolbar,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -377,11 +378,16 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
                 exclusive
                 onChange={viewChangeHandler}
               >
-                <ToggleButton value="module" aria-label="module">
-                  <ViewModule />
+                <ToggleButton value="module" aria-label="Simple list">
+                  <Tooltip title="Simple list" arrow>
+                    <ViewModule />
+                  </Tooltip>
                 </ToggleButton>
-                <ToggleButton value="list" aria-label="list">
-                  <ViewList />
+
+                <ToggleButton value="list" aria-label="Extended list">
+                  <Tooltip title="Extended list" arrow>
+                    <ViewList />
+                  </Tooltip>
                 </ToggleButton>
               </ToggleButtonGroup>
             </Toolbar>
