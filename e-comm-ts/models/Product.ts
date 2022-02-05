@@ -41,7 +41,7 @@ const reviewSchema = new mongoose.Schema<Reviews, mongoose.Model<Reviews>>(
   }
 );
 
-const ProductSchema = new mongoose.Schema<
+const Products = new mongoose.Schema<
   ProductSchema,
   mongoose.Model<ProductSchema>
 >(
@@ -122,7 +122,6 @@ const ProductSchema = new mongoose.Schema<
   }
 );
 
-const Product =
-  mongoose.models.Product || mongoose.model('Product', ProductSchema);
+const Product = mongoose.models.Product || mongoose.model('Product', Products);
 
 export default Product;
