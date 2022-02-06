@@ -31,7 +31,7 @@ interface AvailableColorsList {
 }
 
 interface SideMenuTemplateProps {
-  width: string;
+  width: '60vw' | '100%';
   withSort: boolean;
 }
 
@@ -134,7 +134,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
           </Grid>
           {withSort && (
             <Grid item>
-              <FormControl sx={{ width: width }}>
+              <FormControl sx={{ width }}>
                 <InputLabel id="sortSelect-label">Sort by</InputLabel>
                 <Select
                   labelId="sortSelect-label"
