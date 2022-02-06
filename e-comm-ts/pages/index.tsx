@@ -18,7 +18,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Layout } from '../components';
 import shoeLogo from '../public/assets/img/columbia.jpg';
 import NextLink from 'next/link';
-import { useAppSelector, useAppDispatch } from '../store';
 
 import product from './product.json';
 
@@ -38,7 +37,7 @@ const Index: React.FC = (): JSX.Element => {
     { name: 'sneakers', value: '/sneakers' },
     { name: 'belts', value: '/belts' },
   ];
-  const dispatch = useAppDispatch();
+
 
   const handleTabChange = (
     event: React.SyntheticEvent,

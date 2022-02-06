@@ -1,14 +1,12 @@
 import {
   Box,
   Button,
-  Chip,
   Container,
   Drawer,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Select,
   ToggleButton,
   ToggleButtonGroup,
@@ -22,75 +20,41 @@ import styles from '../utils/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { SliderSelector, Module, List } from '../components';
+import { SideMenuTemplate, Module, List } from '../components';
 import { useAppSelector, useAppDispatch } from '../store';
 import {
-  setBrand,
   setSort,
-  setColor,
-  setSliderValue,
   setView,
   setQuantity,
-  AvailableColors,
   SortParams,
-  Brands,
   View,
 } from '../store/displayInterface';
 import Product, { ProductSchema } from '../models/Product';
 import db from '../utils/database';
 
-interface FilterValues {
+export interface FilterValues {
   id: SortParams;
   title: string;
-}
-
-interface AvailableColorsList {
-  color: AvailableColors;
-  bg: string;
-  slug: string;
 }
 
 interface GoodsProps {
   goods: ProductSchema[];
 }
 
-const Bags: React.FC<GoodsProps> = ({ goods }) => {
-  const dispatch = useAppDispatch();
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      },
-    },
-  };
-  const hotDealsLinks: Brands[] = ['all', 'nike', 'airmax', 'adidas', 'vans'];
-  const availableColorsList: AvailableColorsList[] = [
-    { color: 'black', bg: 'black', slug: 'Black' },
-    { color: 'blue', bg: 'blue', slug: 'Blue' },
-    { color: 'brown', bg: 'brown', slug: 'Brown' },
-    { color: 'green', bg: 'green', slug: 'Green' },
-    { color: 'grey', bg: 'grey', slug: 'Grey' },
-    { color: 'multicolour', bg: 'grey', slug: 'Multi-Colour' },
-    { color: 'orange', bg: 'orange', slug: 'Orange' },
-    { color: 'pink', bg: 'pink', slug: 'Pink' },
-    { color: 'purple', bg: 'purple', slug: 'Purple' },
-    { color: 'red', bg: 'red', slug: 'Red' },
-    { color: 'white', bg: 'white', slug: 'White' },
-    { color: 'yellow', bg: 'yellow', slug: 'Yellow' },
-  ];
-  const filterValues: FilterValues[] = [
-    { id: 'popular', title: 'Popular' },
-    { id: 'new', title: 'New' },
-    { id: 'asc', title: 'Price ascending' },
-    { id: 'desc', title: 'Price descending' },
-  ];
+export const filterValues: FilterValues[] = [
+  { id: 'popular', title: 'Popular' },
+  { id: 'new', title: 'New' },
+  { id: 'asc', title: 'Price ascending' },
+  { id: 'desc', title: 'Price descending' },
+];
 
+const Bags: React.FC<GoodsProps> = ({ goods }) => {
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
+
   const md = useMediaQuery('(max-width:900px)');
   const sm = useMediaQuery('(min-width:600px)');
 
+  const dispatch = useAppDispatch();
   const {
     brand,
     sort,
@@ -99,115 +63,6 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
     view,
     quantity,
   } = useAppSelector((store) => store);
-
-  const sideMenuTemplate = (width: string, withSort: boolean) => {
-    return (
-      <Grid item sx={styles.grow}>
-        <Box sx={styles.sideMenuItem}>
-          <Grid item container spacing={2} direction="column">
-            <Grid item>
-              <FormControl sx={{ width: width }}>
-                <InputLabel id="brandSelect-label">Brand</InputLabel>
-                <Select
-                  labelId="brandSelect-label"
-                  id="brandSelect"
-                  value={brand}
-                  onChange={brandHandler}
-                  inputProps={{ 'aria-label': 'Brand selection' }}
-                  label="Brand"
-                >
-                  {hotDealsLinks.map((el) => (
-                    <MenuItem value={el} key={el}>
-                      {el && el[0].toUpperCase() + el.slice(1)}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            {withSort && (
-              <Grid item>
-                <FormControl sx={{ width: width }}>
-                  <InputLabel id="sortSelect-label">Sort by</InputLabel>
-                  <Select
-                    labelId="sortSelect-label"
-                    id="sortSelect"
-                    value={sort}
-                    onChange={sortHandler}
-                    inputProps={{ 'aria-label': 'Sorting selection' }}
-                    label="Sort by"
-                  >
-                    {filterValues.map(({ id, title }) => (
-                      <MenuItem value={id} key={id}>
-                        {title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-            )}
-            <Grid item>
-              <FormControl sx={{ width: width }}>
-                <InputLabel id="colorChange-label">Color</InputLabel>
-                <Select
-                  labelId="colorChange-label"
-                  id="colorChange"
-                  multiple
-                  value={colorChecked}
-                  onChange={colorsChangeHandler}
-                  input={
-                    <OutlinedInput id="select-multiple-chip" label="Chip" />
-                  }
-                  renderValue={(selected) => (
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: 0.5,
-                      }}
-                    >
-                      {selected.map((value) => (
-                        <Chip
-                          key={value}
-                          label={
-                            availableColorsList.find(
-                              ({ color }) => color === value
-                            )?.slug
-                          }
-                          sx={{
-                            color: availableColorsList.find(
-                              ({ color }) => color === value
-                            )?.bg,
-                            backgroundColor: 'primary',
-                          }}
-                        />
-                      ))}
-                    </Box>
-                  )}
-                  MenuProps={MenuProps}
-                >
-                  {availableColorsList.map(({ color, slug, bg }) => (
-                    <MenuItem key={color} value={color}>
-                      <Typography sx={{ color: bg === 'white' ? 'black' : bg }}>
-                        {slug}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Box>
-        <Grid item sx={styles.grow}>
-          <Box sx={styles.sideMenuItem}>
-            <Typography variant="h4" sx={{ mb: '10px' }}>
-              Price
-            </Typography>
-            <SliderSelector getSliderValues={getSliderValues} />
-          </Box>
-        </Grid>
-      </Grid>
-    );
-  };
 
   /**
    * Changes current selected sort order option.
@@ -218,44 +73,10 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
   };
 
   /**
-   * Changes current selected brand option.
-   * @param {SelectChangeEvent} event
-   */
-  const brandHandler = (event: SelectChangeEvent) => {
-    dispatch(setBrand(event.target.value));
-  };
-
-  /**
    * Filter sidebar visibility trigger.
    */
   const drawerVisibleHandler = () => {
     setDrawerIsVisible(!drawerIsVisible);
-  };
-
-  /**
-   * Obtain values from the slider.
-   * @param {number[]} values - values from the slider component as array [min, max]
-   */
-  const getSliderValues = (values: number[]) => {
-    dispatch(setSliderValue(values));
-  };
-
-  /**
-   *Changes state due to selected colors.
-   * @param {SelectChangeEvent<typeof colorChecked>} event
-   */
-  const colorsChangeHandler = (
-    event: SelectChangeEvent<typeof colorChecked>
-  ) => {
-    const {
-      target: { value },
-    } = event;
-    dispatch(
-      setColor(
-        // On autofill we get a stringified value.
-        typeof value === 'string' ? value.split(',') : value
-      )
-    );
   };
 
   const quantityHandler = (event: SelectChangeEvent) => {
@@ -278,7 +99,7 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
         open={drawerIsVisible}
         onClose={() => setDrawerIsVisible(false)}
       >
-        {sideMenuTemplate('60vw', false)}
+        <SideMenuTemplate width="60vw" withSort={false} />
       </Drawer>
       <Container maxWidth="lg">
         <Grid container spacing={2}>
@@ -326,7 +147,7 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
               direction="column"
               sx={{ mb: 4 }}
             >
-              {sideMenuTemplate('100%', true)}
+              <SideMenuTemplate width="100%" withSort={true} />
             </Grid>
           )}
           <Grid
@@ -395,10 +216,9 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
             </Toolbar>
             {view === 'module' && <Module products={goods} />}
             {view === 'list' && <List products={goods} />}
-            CONTENT PLACEHOLDER [Properties selected: Sort: {sort} | Brand:{' '}
-            {brand} | Price range: {priceRange.join('-')} | Colors Checked:{' '}
-            {colorChecked.join(',')} | Quantity: {quantity.toString()} | View:{' '}
-            {view}]
+            [Properties selected: Sort: {sort} | Brand: {brand} | Price range:{' '}
+            {priceRange.join('-')} | Colors Checked: {colorChecked.join(',')} |
+            Quantity: {quantity.toString()} | View: {view}]
           </Grid>
         </Grid>
       </Container>
