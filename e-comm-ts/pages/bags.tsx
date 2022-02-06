@@ -23,24 +23,21 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { SliderSelector, Module, List } from '../components';
+import { useAppSelector, useAppDispatch } from '../store';
+import {
+  setBrand,
+  setSort,
+  setColor,
+  setSliderValue,
+  setView,
+  setQuantity,
+  AvailableColors,
+  SortParams,
+  Brands,
+  View,
+} from '../store/displayInterface';
 import Product, { ProductSchema } from '../models/Product';
 import db from '../utils/database';
-
-type Brands = 'nike' | 'airmax' | 'adidas' | 'vans' | 'all';
-type SortParams = 'popular' | 'new' | 'asc' | 'desc';
-type AvailableColors =
-  | 'black'
-  | 'blue'
-  | 'brown'
-  | 'green'
-  | 'grey'
-  | 'multicolour'
-  | 'orange'
-  | 'pink'
-  | 'purple'
-  | 'red'
-  | 'white'
-  | 'yellow';
 
 interface FilterValues {
   id: SortParams;
@@ -57,9 +54,8 @@ interface GoodsProps {
   goods: ProductSchema[];
 }
 
-type View = 'module' | 'list';
-
 const Bags: React.FC<GoodsProps> = ({ goods }) => {
+  const dispatch = useAppDispatch();
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -90,15 +86,19 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
     { id: 'asc', title: 'Price ascending' },
     { id: 'desc', title: 'Price descending' },
   ];
-  const [sort, setSort] = React.useState<SortParams>('new');
-  const [brand, setBrand] = React.useState<Brands>('all');
+
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
-  const [priceRange, setPriceRange] = React.useState<number[]>([0, 331]);
-  const [quantity, setQuantity] = React.useState<number>(12);
-  const [colorChecked, setColorChecked] = React.useState<string[]>([]);
-  const [view, setView] = React.useState<View>('module');
   const md = useMediaQuery('(max-width:900px)');
   const sm = useMediaQuery('(min-width:600px)');
+
+  const {
+    brand,
+    sort,
+    color: colorChecked,
+    sliderValue: priceRange,
+    view,
+    quantity,
+  } = useAppSelector((store) => store);
 
   const sideMenuTemplate = (width: string, withSort: boolean) => {
     return (
@@ -214,7 +214,7 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
    * @param {SelectChangeEvent} event
    */
   const sortHandler = (event: SelectChangeEvent) => {
-    setSort(event.target.value as SortParams);
+    dispatch(setSort(event.target.value));
   };
 
   /**
@@ -222,7 +222,7 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
    * @param {SelectChangeEvent} event
    */
   const brandHandler = (event: SelectChangeEvent) => {
-    setBrand(event.target.value as Brands);
+    dispatch(setBrand(event.target.value));
   };
 
   /**
@@ -237,7 +237,7 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
    * @param {number[]} values - values from the slider component as array [min, max]
    */
   const getSliderValues = (values: number[]) => {
-    setPriceRange(values);
+    dispatch(setSliderValue(values));
   };
 
   /**
@@ -250,14 +250,16 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
     const {
       target: { value },
     } = event;
-    setColorChecked(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value
+    dispatch(
+      setColor(
+        // On autofill we get a stringified value.
+        typeof value === 'string' ? value.split(',') : value
+      )
     );
   };
 
   const quantityHandler = (event: SelectChangeEvent) => {
-    setQuantity(parseInt(event.target.value, 10));
+    dispatch(setQuantity(parseInt(event.target.value, 10)));
   };
 
   const viewChangeHandler = (
@@ -265,7 +267,7 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
     nextView: View
   ) => {
     if (nextView !== null) {
-      setView(nextView);
+      dispatch(setView(nextView));
     }
   };
 
