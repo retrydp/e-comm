@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { SliderSelector } from '.';
-import { filterValues } from '../pages/bags';
+import { filterValues } from './GoodsWrapper';
 import { useAppDispatch, useAppSelector } from '../store';
 import {
   AvailableColors,
