@@ -41,7 +41,7 @@ const List: React.FC<ListProps> = ({ products }) => {
                 <CardMedia
                   sx={{ width: sm ? '100%' : '280px', height: '100%' }}
                   component="img"
-                  image={images[0].imgList[0]}
+                  image={images[0]}
                   alt={name}
                 />
               </Box>

@@ -13,6 +13,7 @@ import styles from '../utils/styles';
 interface LayoutProps {
   description?: string;
   title?: 'Home' | 'Bags' | 'Sneakers' | 'Belts' | 'Contacts';
+  customTitle?: string;
   children?: React.ReactNode;
 }
 
@@ -53,12 +54,17 @@ const theme = createTheme({
   },
 });
 
-const Layout: React.FC<LayoutProps> = ({ title, children, description }) => {
+const Layout: React.FC<LayoutProps> = ({
+  title,
+  children,
+  description,
+  customTitle,
+}) => {
   return (
     <>
       <Head>
         {description && <meta name="description" content={description} />}
-        <title>{title || 'E-Comm'}</title>
+        <title>{customTitle || title || 'E-comm'}</title>
       </Head>
       <CssBaseline />
       <ThemeProvider theme={theme}>

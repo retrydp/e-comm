@@ -1,10 +1,5 @@
 import mongoose from 'mongoose';
 
-interface Images {
-  color: string;
-  imgList: string[];
-}
-
 export interface ProductSchema {
   slug: string;
   name: string;
@@ -13,7 +8,8 @@ export interface ProductSchema {
   brand: string;
   price: number;
   oldPrice: number;
-  images: Images[];
+  color: string;
+  images: string[];
   rating: number;
   salesCount?: number;
   itemsInStock: number;
@@ -78,18 +74,9 @@ const Products = new mongoose.Schema<
     oldPrice: {
       type: Number,
     },
+    color: { type: String, required: true },
     images: {
-      type: [
-        {
-          color: { type: String },
-          imgList: {
-            type: [{ type: String }],
-            required: [true, 'Atleast one image in list'],
-          },
-          _id: false,
-          id: false,
-        },
-      ],
+      type: [String],
       required: [true, 'Images are not provided'],
     },
 

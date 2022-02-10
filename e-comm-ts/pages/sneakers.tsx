@@ -3,8 +3,7 @@ import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';
-import { GetServerSideProps } from 'next';
-import data from '../utils/data';
+import { GetStaticProps } from 'next';
 
 const Sneakers: React.FC<GoodsProps> = ({ goods }) => {
   return (
@@ -16,18 +15,15 @@ const Sneakers: React.FC<GoodsProps> = ({ goods }) => {
 
 export default Sneakers;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  // await db.connect();
-  // const productDocs = await Product.find({
-  //   category: 'shoes',
-  // }).lean();
-  // await db.disconnect();
+export const getStaticProps: GetStaticProps = async () => {
+  await db.connect();
+  const productDocs = await Product.find({
+    category: 'sneakers',
+  }).lean();
+  await db.disconnect();
 
-  // const products = productDocs.map(db.convertDocToObj);
-  // return {
-  //   props: { goods: products },
-  // };
+  const products = productDocs.map(db.convertDocToObj);
   return {
-    props: { goods: data.products },
+    props: { goods: products },
   };
 };

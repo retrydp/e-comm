@@ -21,15 +21,15 @@ interface ModuleProps {
 const Module: React.FC<ModuleProps> = ({ products }) => {
   return (
     <Grid container spacing={3} sx={{ padding: '15px 0' }}>
-      {products.map(({ name, rating, oldPrice, price, images }) => (
+      {products.map(({ name, rating, oldPrice, price, images, slug }) => (
         <Grid item lg={4} md={4} sm={4} xs={12} key={name}>
-          <NextLink href="/" passHref>
+          <NextLink href={`product/${slug}`} passHref>
             <Link sx={styles.plainAnchor}>
               <Card>
                 <CardMedia
                   component="img"
                   height="280"
-                  image={images[0].imgList[0]}
+                  image={images[0]}
                   alt={name}
                 />
                 <CardHeader
