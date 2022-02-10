@@ -1,8 +1,0 @@
-{
-          "scripts": {
-        "heroku-prebuild": "cd e-comm-ts",
-        "dev": "next",
-        "build": "next build",
-        "start": "next start -p $PORT"
-      }
-  }
