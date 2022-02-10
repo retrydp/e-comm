@@ -1,6 +1,6 @@
 {"scripts": {
-    "heroku-prebuild": "cd e-comm-ts && npm install && npm run build && npm run start",
+    "heroku-prebuild": "cd e-comm-ts && npm install && npm run build",
     "dev": "cd next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "npm run start"
   }}
