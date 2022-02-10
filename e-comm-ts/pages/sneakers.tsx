@@ -21,11 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     category: 'shoes',
   }).lean();
   await db.disconnect();
-  if (Object(productDocs).keys.length === 0) {
-    return {
-      notFound: true,
-    };
-  }
+
   const products = productDocs.map(db.convertDocToObj);
   return {
     props: { goods: products },

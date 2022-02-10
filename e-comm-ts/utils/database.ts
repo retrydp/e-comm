@@ -1,5 +1,4 @@
 import mongoose, { ConnectOptions, ObjectId, Date } from 'mongoose';
-import { ProductSchema } from '../models/Product';
 
 interface Connection {
   isConnected?: boolean | number;
@@ -26,6 +25,7 @@ async function connect() {
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     } as ConnectOptions
   );
   console.log('new connection');
