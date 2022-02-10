@@ -26,7 +26,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       notFound: true,
     };
   }
+  const products = productDocs.map(db.convertDocToObj);
   return {
-    props: { goods: productDocs.map(db.convertDocToObj) },
+    props: { goods: products },
   };
 };
