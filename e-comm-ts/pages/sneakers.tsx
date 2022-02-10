@@ -20,6 +20,11 @@ export async function getServerSideProps() {
     category: 'shoes',
   }).lean();
   await db.disconnect();
+  if (Object(productDocs).keys.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: { goods: productDocs.map(db.convertDocToObj) },
   };
