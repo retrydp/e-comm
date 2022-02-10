@@ -1,3 +1,4 @@
-{"scripts": {
+{
+    "scripts": {
     "start": "cd ./e-comm-ts && npm run build && npm run start"
   }}
