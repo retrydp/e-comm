@@ -1,4 +1,0 @@
-{
-    "scripts": {
-    "start": "cd ./e-comm-ts && next build && next start"
-  }}
