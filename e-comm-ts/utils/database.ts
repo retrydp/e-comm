@@ -1,4 +1,4 @@
-import mongoose, { ConnectOptions, ObjectId, Date } from 'mongoose';
+import mongoose from 'mongoose';
 
 interface Connection {
   isConnected?: boolean | number;
@@ -20,14 +20,7 @@ async function connect() {
     await mongoose.disconnect();
   }
 
-  const db = await mongoose.connect(
-    process.env.MONGODB_URI as string,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    } as ConnectOptions
-  );
+  const db = await mongoose.connect(process.env.MONGODB_URI as string);
   console.log('new connection');
   connection.isConnected = db.connections[0].readyState;
 }
