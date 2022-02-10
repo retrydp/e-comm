@@ -6,21 +6,22 @@ import { ProductSchema } from '../../models/Product';
 import { Layout } from '../../components';
 
 interface ProductScreenProps {
-  product: ProductSchema;
+  product?: ProductSchema;
 }
 type AlowedCategories = 'Bags' | 'Sneakers' | 'Belts';
 
 const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
-  console.log(product.category[0].toUpperCase() + product.category.slice(1));
   return (
     <Layout
-      customTitle={product.name}
+      customTitle={product?.name || 'Product not found'}
       title={
-        (product.category[0].toUpperCase() +
-          product.category.slice(1)) as AlowedCategories
+        product
+          ? ((product.category[0].toUpperCase() +
+              product.category.slice(1)) as AlowedCategories)
+          : 'Home'
       }
     >
-      {JSON.stringify(product)}
+      {JSON.stringify(product) || 'Product not found'}
     </Layout>
   );
 };
@@ -34,9 +35,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     slug,
   }).lean();
   await db.disconnect();
-
-  const product = db.convertDocToObj(productDoc);
+  if (productDoc) {
+    const product = db.convertDocToObj(productDoc);
+    return {
+      props: { product },
+    };
+  }
   return {
-    props: { product },
+    props: {},
   };
 };
