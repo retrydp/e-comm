@@ -3,7 +3,7 @@ import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 
 const Bags: React.FC<GoodsProps> = ({ goods }) => {
   return (
@@ -15,7 +15,7 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
 
 export default Bags;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   await db.connect();
   const productDocs = await Product.find({
     category: 'bags',
