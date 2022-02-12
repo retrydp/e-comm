@@ -81,6 +81,33 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                   </Button>
                 </Box>
                 <Divider />
+                <Box sx={styles.promo}>
+                  {product.oldPrice > 0 && (
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '9px',
+                      }}
+                    >
+                      <Typography sx={styles.oldPrice}>
+                        ${product.oldPrice}
+                      </Typography>
+                      <Typography sx={styles.percent}>
+                        {Math.round(
+                          (product.oldPrice - product.price) /
+                            (product.oldPrice / 100)
+                        )}
+                        % off
+                      </Typography>
+                    </Box>
+                  )}
+                  <Box>
+                    <Typography sx={styles.actualPrice}>
+                      ${product.price}
+                    </Typography>
+                  </Box>
+                </Box>
                 <Typography sx={styles.productInfo}>
                   Avalaibility:{' '}
                   {product.itemsInStock > 0 ? 'Available' : 'Unavailable'}
