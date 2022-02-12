@@ -48,7 +48,12 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
               xs={12}
               sx={{ display: 'flex', height: '100%', justifyContent: 'center' }}
             >
-              <Image width={493} height={493} src={product.images[0]} />
+              <Image
+                width={493}
+                height={493}
+                alt={product.name}
+                src={product.images[0]}
+              />
             </Grid>
             <Grid item lg={8} md={8} sm={12} xs={12}>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -93,7 +98,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                   >
                     Add to cart
                   </Button>
-                  <Button>
+                  <Button aria-label="add to favorites">
                     <FavoriteBorder />
                   </Button>
                 </Box>
