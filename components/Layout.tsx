@@ -12,7 +12,7 @@ import styles from '../utils/styles';
 
 interface LayoutProps {
   description?: string;
-  title?: 'Home' | 'Bags' | 'Sneakers' | 'Belts' | 'Contacts';
+  title?: 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
   customTitle?: string;
   children?: React.ReactNode;
 }
@@ -71,7 +71,7 @@ const Layout: React.FC<LayoutProps> = ({
         <Box sx={styles.layoutWrapper}>
           <Container maxWidth="lg">
             <Header />
-            <NavigationBar currentTab={title || 'Home'} />
+            <NavigationBar currentTab={title || 'home'} />
           </Container>
           {children}
           <Box sx={styles.grow}></Box>

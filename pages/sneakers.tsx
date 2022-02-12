@@ -7,7 +7,7 @@ import { GetServerSideProps } from 'next';
 
 const Sneakers: React.FC<GoodsProps> = ({ goods }) => {
   return (
-    <Layout title="Sneakers">
+    <Layout title="sneakers">
       <GoodsWrapper goods={goods} />
     </Layout>
   );

@@ -38,7 +38,6 @@ const Index: React.FC = (): JSX.Element => {
     { name: 'belts', value: '/belts' },
   ];
 
-
   const handleTabChange = (
     event: React.SyntheticEvent,
     newValue: TabItemNames
@@ -48,7 +47,7 @@ const Index: React.FC = (): JSX.Element => {
 
   return (
     <>
-      <Layout title="Home">
+      <Layout title="home">
         {sm && (
           <Box sx={styles.banner}>
             <Container maxWidth="lg">

@@ -15,7 +15,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import logo from '../public/assets/img/logo.svg';
 import { SxProps } from '@mui/material/styles';
 
-type NavTitles = 'Home' | 'Bags' | 'Sneakers' | 'Belts' | 'Contacts';
+type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
 type NavPaths = '/' | '/bags' | '/sneakers' | '/belts' | '/contacts';
 
 interface NavItems {
@@ -35,14 +35,14 @@ interface LinkTabProps {
 
 const NavigationBar: React.FC<NaviationBarProps> = ({ currentTab }) => {
   const menuItems: NavItems[] = [
-    { title: 'Home', path: '/' },
-    { title: 'Bags', path: '/bags' },
-    { title: 'Sneakers', path: '/sneakers' },
-    { title: 'Belts', path: '/belts' },
-    { title: 'Contacts', path: '/contacts' },
+    { title: 'home', path: '/' },
+    { title: 'bags', path: '/bags' },
+    { title: 'sneakers', path: '/sneakers' },
+    { title: 'belts', path: '/belts' },
+    { title: 'contacts', path: '/contacts' },
   ];
   const sm = useMediaQuery('(min-width:600px)');
-
+  console.log(currentTab);
   const LinkTab = (props: LinkTabProps) => {
     return (
       <NextLink href={props.href || '/'} passHref>

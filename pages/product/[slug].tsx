@@ -8,18 +8,14 @@ import { Layout } from '../../components';
 interface ProductScreenProps {
   product?: ProductSchema;
 }
-type AlowedCategories = 'Bags' | 'Sneakers' | 'Belts';
+
+type AlowedCategories = 'bags' | 'sneakers' | 'belts';
 
 const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
   return (
     <Layout
       customTitle={product?.name || 'Product not found'}
-      title={
-        product
-          ? ((product.category[0].toUpperCase() +
-              product.category.slice(1)) as AlowedCategories)
-          : 'Home'
-      }
+      title={product?.category as AlowedCategories}
     >
       {JSON.stringify(product) || 'Product not found'}
     </Layout>
