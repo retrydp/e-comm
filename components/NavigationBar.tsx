@@ -42,7 +42,7 @@ const NavigationBar: React.FC<NaviationBarProps> = ({ currentTab }) => {
     { title: 'contacts', path: '/contacts' },
   ];
   const sm = useMediaQuery('(min-width:600px)');
-  console.log(currentTab);
+
   const LinkTab = (props: LinkTabProps) => {
     return (
       <NextLink href={props.href || '/'} passHref>

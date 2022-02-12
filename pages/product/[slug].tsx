@@ -4,6 +4,20 @@ import db from '../../utils/database';
 import Product from '../../models/Product';
 import { ProductSchema } from '../../models/Product';
 import { Layout } from '../../components';
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Rating,
+  Tab,
+  Typography,
+} from '@mui/material';
+import { FavoriteBorder, ShoppingCartOutlined } from '@mui/icons-material';
+import Image from 'next/image';
+import styles from '../../utils/styles';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 
 interface ProductScreenProps {
   product?: ProductSchema;
@@ -12,12 +26,118 @@ interface ProductScreenProps {
 type AlowedCategories = 'bags' | 'sneakers' | 'belts';
 
 const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
+  const [value, setValue] = React.useState('1');
+
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
   return (
     <Layout
-      customTitle={product?.name || 'Product not found'}
+      customTitle={product?.name || 'Product not available'}
       title={product?.category as AlowedCategories}
     >
-      {JSON.stringify(product) || 'Product not found'}
+      <Container maxWidth="lg">
+        {product ? (
+          <Grid container spacing={3}>
+            <Grid
+              item
+              lg={4}
+              md={4}
+              sm={12}
+              xs={12}
+              sx={{ display: 'flex', height: '100%', justifyContent: 'center' }}
+            >
+              <Image width={493} height={493} src={product.images[0]} />
+            </Grid>
+            <Grid item lg={8} md={8} sm={12} xs={12}>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography sx={styles.cardHeaderTextSecondary}>
+                  {product.name}
+                </Typography>
+                <Box sx={styles.customRatingBar}>
+                  <Rating
+                    name="half-rating-read"
+                    defaultValue={product.rating}
+                    precision={0.5}
+                    readOnly
+                    size="small"
+                  />
+
+                  <Typography sx={styles.reviewsText}>
+                    {product.reviews?.length || 0} reviews
+                  </Typography>
+                  <Button>
+                    <Typography
+                      sx={{ fontSize: '14px', textTransform: 'none' }}
+                    >
+                      Submit a review
+                    </Typography>
+                  </Button>
+                </Box>
+                <Divider />
+                <Typography sx={styles.productInfo}>
+                  Avalaibility:{' '}
+                  {product.itemsInStock > 0 ? 'Available' : 'Unavailable'}
+                </Typography>
+                <Typography sx={styles.productInfo}>
+                  Category: {product.category}
+                </Typography>
+                <Typography sx={styles.productInfo}>Free shipping</Typography>
+                <Divider />
+                <Box sx={{ display: 'flex', margin: '20px 0' }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<ShoppingCartOutlined />}
+                  >
+                    Add to cart
+                  </Button>
+                  <Button>
+                    <FavoriteBorder />
+                  </Button>
+                </Box>
+              </Box>
+            </Grid>
+            <Box sx={{ width: '100%', mt: '15px' }}>
+              <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <TabList
+                    onChange={handleChangeTab}
+                    aria-label="product information and reviews"
+                    variant="scrollable"
+                  >
+                    <Tab
+                      label="Product information"
+                      value="1"
+                      sx={{ typography: 'h4' }}
+                    />
+                    <Tab
+                      label="Reviews (0)"
+                      value="2"
+                      sx={{ typography: 'h4' }}
+                    />
+                  </TabList>
+                </Box>
+                <TabPanel value="1">{product.description}</TabPanel>
+                <TabPanel value="2">
+                  Rewies are not currently not available
+                </TabPanel>
+              </TabContext>
+            </Box>
+          </Grid>
+        ) : (
+          <Typography
+            sx={{
+              typography: 'h4',
+              textAlign: 'center',
+              textTransform: 'uppercase',
+            }}
+          >
+            Product not available.
+          </Typography>
+        )}
+      </Container>
     </Layout>
   );
 };

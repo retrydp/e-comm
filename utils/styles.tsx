@@ -239,6 +239,14 @@ const styles = {
     flexWrap: 'wrap',
     borderBottom: `1px solid ${secondaryGrey}`,
   },
+  customRatingBar: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '15px 0',
+    gap: '20px',
+    flexWrap: 'wrap',
+  },
+  productInfo: { margin: '10px 0' },
 } as const;
 
 export default styles;

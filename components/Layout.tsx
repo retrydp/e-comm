@@ -50,6 +50,7 @@ const theme = createTheme({
       fontSize: '18px',
       fontWeight: '500',
       color: '#262626',
+      textTransform: 'none',
     },
   },
 });
@@ -64,7 +65,7 @@ const Layout: React.FC<LayoutProps> = ({
     <>
       <Head>
         {description && <meta name="description" content={description} />}
-        <title>{customTitle || title || 'E-comm'}</title>
+        <title>{customTitle || title?.toUpperCase() || 'E-comm'}</title>
       </Head>
       <CssBaseline />
       <ThemeProvider theme={theme}>
