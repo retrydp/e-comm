@@ -23,7 +23,7 @@ interface ProductScreenProps {
   product?: ProductSchema;
 }
 
-type AlowedCategories = 'bags' | 'sneakers' | 'belts';
+type AllowedCategories = 'bags' | 'sneakers' | 'belts';
 
 const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
   const [value, setValue] = React.useState('1');
@@ -35,7 +35,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
   return (
     <Layout
       customTitle={product?.name || 'Product not available'}
-      title={product?.category as AlowedCategories}
+      title={product?.category as AllowedCategories}
     >
       <Container maxWidth="lg">
         {product ? (
@@ -109,8 +109,8 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                   </Box>
                 </Box>
                 <Typography sx={styles.productInfo}>
-                  Avalaibility:{' '}
-                  {product.itemsInStock > 0 ? 'Available' : 'Unavailable'}
+                  Availability:{' '}
+                  {product.itemsInStock > 0 ? 'In stock' : 'Unavailable'}
                 </Typography>
                 <Typography sx={styles.productInfo}>
                   Category: {product.category}
@@ -153,7 +153,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                 </Box>
                 <TabPanel value="1">{product.description}</TabPanel>
                 <TabPanel value="2">
-                  Rewies are not currently not available
+                  Reviews are not currently not available
                 </TabPanel>
               </TabContext>
             </Box>

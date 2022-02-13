@@ -6,6 +6,7 @@ const primaryBlue = '#40BFFF';
 const primaryRed = '#FB7181';
 const neutralBlue = '#BCDDFE';
 const neuralDark = '#223263';
+const neuralGrey = '#9098B1';
 
 const styles = {
   grow: {
@@ -237,7 +238,6 @@ const styles = {
     margin: '0 16px',
     gap: '10px',
     flexWrap: 'wrap',
-    borderBottom: `1px solid ${secondaryGrey}`,
   },
   customRatingBar: {
     display: 'flex',
@@ -246,7 +246,28 @@ const styles = {
     gap: '20px',
     flexWrap: 'wrap',
   },
+
   productInfo: { margin: '10px 0' },
+  regContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  regHeader: {
+    fontFamily: 'Poppins',
+    fontSize: '20px',
+    fontWeight: '700',
+    color: neuralDark,
+    mt: '10px',
+  },
+  regText: {
+    fontFamily: 'Poppins',
+    fontSize: '14px',
+    fontWeight: '400',
+    color: neuralGrey,
+    mt: '10px',
+    mb: '50px',
+  },
 } as const;
 
 export default styles;

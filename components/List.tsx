@@ -12,6 +12,7 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
+  Divider,
   Grid,
   Link,
   Rating,
@@ -29,7 +30,16 @@ const List: React.FC<ListProps> = ({ products }) => {
   return (
     <Grid container spacing={2}>
       {products.map(
-        ({ name, rating, oldPrice, price, images, reviews, description }) => (
+        ({
+          name,
+          rating,
+          oldPrice,
+          price,
+          images,
+          reviews,
+          description,
+          slug,
+        }) => (
           <Grid item lg={12} md={12} sm={12} xs={12} key={name}>
             <Card
               sx={{
@@ -37,14 +47,16 @@ const List: React.FC<ListProps> = ({ products }) => {
                 flexWrap: 'wrap',
               }}
             >
-              <Box>
-                <CardMedia
-                  sx={{ width: sm ? '100%' : '280px', height: '100%' }}
-                  component="img"
-                  image={images[0]}
-                  alt={name}
-                />
-              </Box>
+              <NextLink href={`product/${slug}`} passHref>
+                <Link sx={styles.plainAnchor}>
+                  <CardMedia
+                    sx={{ width: sm ? '100%' : '280px', height: '100%' }}
+                    component="img"
+                    image={images[0]}
+                    alt={name}
+                  />
+                </Link>
+              </NextLink>
               <Box
                 sx={{
                   display: 'flex',
@@ -52,11 +64,15 @@ const List: React.FC<ListProps> = ({ products }) => {
                   width: sm ? '100%' : '55%',
                 }}
               >
-                <CardHeader
-                  title={name}
-                  sx={{ maxWidth: '300px' }}
-                  titleTypographyProps={styles.cardHeaderTextSecondary}
-                ></CardHeader>
+                <NextLink href={`product/${slug}`} passHref>
+                  <Link sx={styles.plainAnchor}>
+                    <CardHeader
+                      title={name}
+                      sx={{ maxWidth: '300px' }}
+                      titleTypographyProps={styles.cardHeaderTextSecondary}
+                    ></CardHeader>
+                  </Link>
+                </NextLink>
                 <Box
                   sx={{
                     display: 'flex',
@@ -83,7 +99,7 @@ const List: React.FC<ListProps> = ({ products }) => {
                       </Typography>
                     </Button>
                   </Box>
-
+                  <Divider sx={{ ml: '15px' }} />
                   <CardContent
                     sx={{
                       ...styles.cardContentWrapperSecondary,

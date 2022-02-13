@@ -23,7 +23,7 @@ interface NavItems {
   path: NavPaths;
 }
 
-interface NaviationBarProps {
+interface NavigationBarProps {
   currentTab: NavTitles;
 }
 
@@ -33,7 +33,7 @@ interface LinkTabProps {
   sx?: SxProps;
 }
 
-const NavigationBar: React.FC<NaviationBarProps> = ({ currentTab }) => {
+const NavigationBar: React.FC<NavigationBarProps> = ({ currentTab }) => {
   const menuItems: NavItems[] = [
     { title: 'home', path: '/' },
     { title: 'bags', path: '/bags' },
