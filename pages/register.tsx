@@ -16,30 +16,31 @@ import {
 } from '@mui/material';
 import {
   PersonOutline,
-  SvgIconComponent,
   MailOutline,
   PasswordOutlined,
 } from '@mui/icons-material';
 import Image from 'next/image';
 import logo from '../public/assets/img/logo.svg';
 import styles from '../utils/styles';
-import { Controller, useForm, ValidationRule } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
 
 interface Inputs {
   name: string;
   icon: React.ReactNode;
   label: string;
   rules: {
-    required?: ValidationRule<boolean>;
-    pattern?: ValidationRule<RegExp>;
-    minLength?: ValidationRule<number>;
+    required?: boolean;
+    pattern?: RegExp;
+    minLength?: number;
   };
   helperText: React.ReactNode;
 }
 
 const Register = () => {
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const { redirect } = router.query;
   const {
     handleSubmit,
@@ -49,17 +50,17 @@ const Register = () => {
 
   const inputs: Inputs[] = [
     {
-      name: 'login',
-      label: 'Login',
+      name: 'name',
+      label: 'Name',
       icon: <PersonOutline />,
       rules: {
         required: true,
         minLength: 2,
       },
-      helperText: errors.login
-        ? errors.login.type === 'minLength'
-          ? 'Login is to short'
-          : 'Login is required'
+      helperText: errors.name
+        ? errors.name.type === 'minLength'
+          ? 'Name is to short'
+          : 'Name is required'
         : '',
     },
     {
@@ -101,7 +102,7 @@ const Register = () => {
       helperText: errors.confirmPassword
         ? errors.confirmPassword.type === 'minLength'
           ? 'Confirm Password is too short'
-          : 'Password is required'
+          : 'Confirm Password is required'
         : '',
     },
   ];
@@ -112,10 +113,10 @@ const Register = () => {
     name,
     confirmPassword,
   }: {
-    [key: string]: string;
+    [key: string]: any;
   }) => {
     if (password !== confirmPassword) {
-      console.log('Passwords don`t match');
+      enqueueSnackbar('Passwords don`t match', { variant: 'error' });
       return;
     }
     try {
@@ -124,12 +125,21 @@ const Register = () => {
         email,
         password,
       });
+      console.log(data);
       // dispatch({ type: 'USER_LOGIN', payload: data });
       // Cookies.set('userInfo', JSON.stringify(data));
       // router.push(redirect || '/');
     } catch (error) {
-      //enqueueSnackbar(getError(error), { variant: 'error' });
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        const responseError = error?.response?.data?.['message'];
+        if (responseError) {
+          enqueueSnackbar(responseError, {
+            variant: 'error',
+          });
+        }
+      } else {
+        throw new Error('Bcrypt error.');
+      }
     }
   };
 
