@@ -5,12 +5,18 @@ import db from '../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import { MongoError } from 'mongodb';
-import jwt from 'jsonwebtoken';
-const handler = nc();
+import { signUser } from '../../../utils/auth';
 
-handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
+const handler = nc<NextApiRequest, NextApiResponse>();
+
+handler.post(async (req, res) => {
   try {
+    if (!req.body.password)
+      return res.status(400).json({
+        success: false,
+        message: 'Password is not set.',
+      });
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     await db.connect();
     const newUser = new User({
       name: req.body.name,
@@ -20,17 +26,8 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
     });
     const user = await newUser.save();
     await db.disconnect();
-    const accessToken = jwt.sign(
-      {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-      },
-      process.env.JWT_TOKEN_SECRET as string
-    );
     res.send({
-      token: accessToken,
+      token: signUser(user),
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -39,6 +36,7 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (error) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
+
       return res.status(400).json({
         success: false,
         message: messages.join(', '),
