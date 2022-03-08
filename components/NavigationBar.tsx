@@ -15,7 +15,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import logo from '../public/assets/img/logo.svg';
 import { SxProps } from '@mui/material/styles';
 
-type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
+export type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
 type NavPaths =
   | '/'
   | '/loading?category=bags'
