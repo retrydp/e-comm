@@ -16,7 +16,12 @@ import logo from '../public/assets/img/logo.svg';
 import { SxProps } from '@mui/material/styles';
 
 type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
-type NavPaths = '/' | '/bags' | '/sneakers' | '/belts' | '/contacts';
+type NavPaths =
+  | '/'
+  | '/loading?category=bags'
+  | '/loading?category=sneakers'
+  | '/loading?category=belts'
+  | '/contacts';
 
 interface NavItems {
   title: NavTitles;
@@ -36,9 +41,9 @@ interface LinkTabProps {
 const NavigationBar: React.FC<NavigationBarProps> = ({ currentTab }) => {
   const menuItems: NavItems[] = [
     { title: 'home', path: '/' },
-    { title: 'bags', path: '/bags' },
-    { title: 'sneakers', path: '/sneakers' },
-    { title: 'belts', path: '/belts' },
+    { title: 'bags', path: '/loading?category=bags' },
+    { title: 'sneakers', path: '/loading?category=sneakers' },
+    { title: 'belts', path: '/loading?category=belts' },
     { title: 'contacts', path: '/contacts' },
   ];
   const sm = useMediaQuery('(min-width:600px)');

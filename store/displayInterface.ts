@@ -17,7 +17,7 @@ export type AvailableColors =
   | 'white'
   | 'yellow';
 
-export interface DisplayInteface {
+export interface DisplayInterface {
   brand: Brands;
   sort: SortParams;
   color: AvailableColors[] | [];
@@ -26,7 +26,7 @@ export interface DisplayInteface {
   quantity: number;
 }
 
-const initialState: DisplayInteface = {
+const initialState: DisplayInterface = {
   brand: 'all',
   sort: 'new',
   color: [],
@@ -36,7 +36,7 @@ const initialState: DisplayInteface = {
 };
 
 const displayInterface = createSlice({
-  name: 'currentTab',
+  name: 'displayInterface',
   initialState,
   reducers: {
     setBrand: (state, action) => {
