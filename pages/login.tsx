@@ -1,5 +1,5 @@
 import React from 'react';
-import { Inputs } from './register';
+import { Inputs } from '../utils/types';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import logo from '../public/assets/img/logo.svg';

@@ -25,18 +25,7 @@ import styles from '../utils/styles';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-
-interface Inputs {
-  name: string;
-  icon: React.ReactNode;
-  label: string;
-  rules: {
-    required?: boolean;
-    pattern?: RegExp;
-    minLength?: number;
-  };
-  helperText: React.ReactNode;
-}
+import { Inputs } from '../utils/types';
 
 const Register = () => {
   const router = useRouter();
@@ -156,7 +145,7 @@ const Register = () => {
         <Typography variant="h2" sx={styles.regHeader}>
           Let’s Get Started
         </Typography>
-        <Typography sx={styles.regText}>Create an new account</Typography>
+        <Typography sx={styles.regText}>Create a new account</Typography>
         <form onSubmit={handleSubmit(submitHandler)} style={{ width: '100%' }}>
           <List>
             {inputs.map(({ name, label, icon, rules, helperText }) => (
