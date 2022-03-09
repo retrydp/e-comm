@@ -1,8 +1,6 @@
 // import React from 'react';
 // import { FormattedFormDataStrict } from '../types';
 
-// import classNames from 'classnames';
-
 // interface ProductProps extends Omit<FormattedFormDataStrict, 'brand' | 'lastModified' | 'createdAt'> {}
 
 // const Product: React.FC<ProductProps> = ({
