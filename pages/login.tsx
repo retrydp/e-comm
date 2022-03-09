@@ -15,11 +15,7 @@ import {
   Link,
   InputAdornment,
 } from '@mui/material';
-import {
-  PersonOutline,
-  MailOutline,
-  PasswordOutlined,
-} from '@mui/icons-material';
+import { MailOutline, PasswordOutlined } from '@mui/icons-material';
 import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
