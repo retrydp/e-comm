@@ -65,7 +65,9 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   ];
 
   const dispatch = useAppDispatch();
-  const { brand, sort, color: colorChecked } = useAppSelector((store) => store);
+  const {
+    display: { brand, sort, color: colorChecked },
+  } = useAppSelector((store) => store);
 
   /**
    * Changes current selected brand option.

@@ -50,12 +50,14 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
 
   const dispatch = useAppDispatch();
   const {
-    brand,
-    sort,
-    color: colorChecked,
-    sliderValue: priceRange,
-    view,
-    quantity,
+    display: {
+      brand,
+      sort,
+      color: colorChecked,
+      sliderValue: priceRange,
+      view,
+      quantity,
+    },
   } = useAppSelector((store) => store);
 
   /**
