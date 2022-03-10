@@ -33,7 +33,7 @@ handler.post(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
     });
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
 
@@ -49,7 +49,7 @@ handler.post(async (req, res) => {
     }
     res.status(500).json({
       success: false,
-      message: error,
+      message: error.toString(),
     });
   }
 });
