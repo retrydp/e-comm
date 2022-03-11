@@ -11,7 +11,7 @@ interface User {
 interface AuthRequest extends NextApiRequest {
   user?: string | jwt.JwtPayload;
 }
-export const signUser = (user: User) => {
+const signUser = (user: User) => {
   return jwt.sign(
     {
       _id: user._id,
@@ -47,3 +47,5 @@ const isAuth = async (
     res.status(401).send({ message: 'Token is not supplied' });
   }
 };
+
+export { signUser, isAuth };

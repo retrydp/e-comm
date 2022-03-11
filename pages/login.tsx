@@ -18,7 +18,7 @@ import {
 import { MailOutline, PasswordOutlined } from '@mui/icons-material';
 import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
-import axios from 'axios';
+import axios, { Axios } from 'axios';
 import { useSnackbar } from 'notistack';
 import Head from 'next/head';
 import styles from '../utils/styles';
