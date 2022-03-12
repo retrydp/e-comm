@@ -26,8 +26,12 @@ import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { Inputs } from '../utils/types';
+import Cookies from 'js-cookie';
+import { useAppDispatch } from '../store';
+import { userLogin } from '../store/authStore';
 
 const Register = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { redirect } = router.query;
@@ -114,10 +118,9 @@ const Register = () => {
         email,
         password,
       });
-      console.log(data);
-      // dispatch({ type: 'USER_LOGIN', payload: data });
-      // Cookies.set('userInfo', JSON.stringify(data));
-      // router.push(redirect || '/');
+      dispatch(userLogin(data));
+      Cookies.set('userInfo', JSON.stringify(data));
+      router.push((redirect as string) || '/');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const responseError = error?.response?.data?.['message'];

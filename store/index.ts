@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import displayInterface from './displayInterface';
+import authStore from './authStore';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers } from 'redux';
 const store = configureStore({
-  reducer: { display: displayInterface },
+  reducer: { display: displayInterface, authStore },
 });
 
 export default store;

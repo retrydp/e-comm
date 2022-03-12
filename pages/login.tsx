@@ -1,4 +1,5 @@
 import React from 'react';
+import Cookies from 'js-cookie';
 import { Inputs } from '../utils/types';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -22,11 +23,14 @@ import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import Head from 'next/head';
 import styles from '../utils/styles';
+import { useAppSelector, useAppDispatch } from '../store';
+import { userLogin } from '../store/authStore';
 
 const Login = () => {
   const router = useRouter();
   const { redirect } = router.query;
   const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useAppDispatch();
   const {
     handleSubmit,
     control,
@@ -68,10 +72,9 @@ const Login = () => {
         email,
         password,
       });
-      console.log(data);
-      // dispatch({ type: 'USER_LOGIN', payload: data });
-      // Cookies.set('userInfo', JSON.stringify(data));
-      // router.push(redirect || '/');
+      dispatch(userLogin(data));
+      Cookies.set('userInfo', JSON.stringify(data));
+      router.push((redirect as string) || '/');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const responseError = error?.response?.data?.['message'];
