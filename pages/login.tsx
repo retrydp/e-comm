@@ -66,6 +66,7 @@ const Login = () => {
         : '',
     },
   ];
+
   const submitHandler = async ({ email, password }: { [key: string]: any }) => {
     try {
       const { data } = await axios.post('/api/users/login', {
@@ -88,6 +89,7 @@ const Login = () => {
       }
     }
   };
+
   return (
     <>
       <Head>
