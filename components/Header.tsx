@@ -7,6 +7,7 @@ import {
   Menu,
   MenuItem,
   NoSsr,
+  Link,
 } from '@mui/material';
 import {
   ShoppingCartOutlined,
@@ -43,7 +44,7 @@ const Header: React.FC = () => {
     dispatch(userLogout());
     router.push('/');
   };
-  const handleMenuClose = () => {
+  const handleMenuClose = (event: React.MouseEvent<HTMLLIElement>) => {
     setAnchorEl(null);
   };
 
@@ -83,13 +84,16 @@ const Header: React.FC = () => {
           {userInfo ? (
             <NoSsr>
               <Button
+                sx={styles.navLink}
                 id="user-menu-button"
                 aria-controls={open ? 'user-menu-button' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleMenuClick}
               >
-                <PermIdentityOutlined />
+                <Tooltip title={userInfo.email} arrow>
+                  <PermIdentityOutlined />
+                </Tooltip>
               </Button>
               <Menu
                 id="basic-menu"
@@ -100,16 +104,47 @@ const Header: React.FC = () => {
                   'aria-labelledby': 'basic-button',
                 }}
               >
-                <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-                <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-                <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
+                <MenuItem onClick={handleMenuClose}>
+                  <NextLink href="/profile" passHref>
+                    <Link sx={{ textDecoration: 'none', color: 'black' }}>
+                      Profile
+                    </Link>
+                  </NextLink>
+                </MenuItem>
+                {userInfo.isAdmin && (
+                  <MenuItem onClick={handleMenuClose}>
+                    <NextLink href="/dashboard" passHref>
+                      <Link sx={{ textDecoration: 'none', color: 'black' }}>
+                        Admin Dashboard
+                      </Link>
+                    </NextLink>
+                  </MenuItem>
+                )}
+
+                <MenuItem onClick={logoutClickHandler}>
+                  <Link
+                    component="button"
+                    sx={{
+                      textDecoration: 'none',
+                      color: 'black',
+                      fontSize: '1rem',
+                      padding: '2px 0',
+                    }}
+                  >
+                    Log out
+                  </Link>
+                </MenuItem>
               </Menu>
             </NoSsr>
           ) : (
             <NoSsr>
               <NextLink href="/login" passHref>
-                <Tooltip title="Profile" arrow>
-                  <Button component="a" aria-label="User Profile">
+                <Tooltip title="Log In" arrow>
+                  <Button
+                    component="a"
+                    aria-label="User Profile"
+                    variant="contained"
+                  >
                     Log In
                   </Button>
                 </Tooltip>
