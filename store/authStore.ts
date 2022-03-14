@@ -7,7 +7,7 @@ interface AuthInitialState {
     name: string;
     email: string;
     isAdmin: boolean;
-  };
+  } | null;
 }
 
 const initialState: AuthInitialState = {
@@ -23,9 +23,12 @@ const authStore = createSlice({
     userLogin: (state, action) => {
       state.userInfo = action.payload;
     },
+    userLogout: (state) => {
+      state.userInfo = null;
+    },
   },
 });
 
-export const { userLogin } = authStore.actions;
+export const { userLogin, userLogout } = authStore.actions;
 
 export default authStore.reducer;
