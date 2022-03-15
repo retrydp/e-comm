@@ -52,6 +52,13 @@ const theme = createTheme({
       color: '#262626',
       textTransform: 'none',
     },
+    h5: {
+      fontFamily: 'Poppins',
+      fontSize: '10px',
+      fontWeight: '500',
+      color: '#262626',
+      textTransform: 'none',
+    },
   },
 });
 

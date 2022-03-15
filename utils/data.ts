@@ -158,7 +158,7 @@ const data = {
       slug: slug('Nike Brasilia'),
       name: 'Nike Brasilia',
       description:
-        'Rep the Swoosh wave from class to your next adventure with the Nike Brasilia Backpack. The roomy inside has pockets to organise your essentials, and pouches on each side give easy access to your water bottle and other quick-grab items. Functional, awesome and stylish? Check.',
+        'Rep the Swoosh wave from class to your next adventure with the Nike Brasilia Backpack. The roomy inside has pockets to organize your essentials, and pouches on each side give easy access to your water bottle and other quick-grab items. Functional, awesome and stylish? Check.',
       category: 'bags',
       brand: 'nike',
       price: '27.95',

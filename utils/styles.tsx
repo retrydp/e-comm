@@ -246,7 +246,6 @@ const styles = {
     gap: '20px',
     flexWrap: 'wrap',
   },
-
   productInfo: { margin: '10px 0' },
   regContainer: {
     display: 'flex',
@@ -267,6 +266,11 @@ const styles = {
     color: neuralGrey,
     mt: '10px',
     mb: '50px',
+  },
+  adminSidebar: {
+    display: 'flex',
+    height: '100vh',
+    borderRight: '1px solid #E0E0E0',
   },
 } as const;
 

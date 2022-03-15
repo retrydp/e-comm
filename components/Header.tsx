@@ -30,7 +30,6 @@ const Header: React.FC = () => {
     authStore: { userInfo },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,6 +43,7 @@ const Header: React.FC = () => {
     dispatch(userLogout());
     router.push('/');
   };
+
   const handleMenuClose = (event: React.MouseEvent<HTMLLIElement>) => {
     setAnchorEl(null);
   };
@@ -113,7 +113,7 @@ const Header: React.FC = () => {
                 </MenuItem>
                 {userInfo.isAdmin && (
                   <MenuItem onClick={handleMenuClose}>
-                    <NextLink href="/dashboard" passHref>
+                    <NextLink href="/admin/dashboard" passHref>
                       <Link sx={{ textDecoration: 'none', color: 'black' }}>
                         Admin Dashboard
                       </Link>
@@ -124,6 +124,7 @@ const Header: React.FC = () => {
                 <MenuItem onClick={logoutClickHandler}>
                   <Link
                     component="button"
+                    aria-label="Log out"
                     sx={{
                       textDecoration: 'none',
                       color: 'black',
@@ -140,11 +141,7 @@ const Header: React.FC = () => {
             <NoSsr>
               <NextLink href="/login" passHref>
                 <Tooltip title="Log In" arrow>
-                  <Button
-                    component="a"
-                    aria-label="User Profile"
-                    variant="contained"
-                  >
+                  <Button component="a" aria-label="Log in" variant="contained">
                     Log In
                   </Button>
                 </Tooltip>
