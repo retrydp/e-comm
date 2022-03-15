@@ -11,7 +11,12 @@ interface User {
 interface AuthRequest extends NextApiRequest {
   user?: string | jwt.JwtPayload;
 }
-const signUser = (user: User) => {
+
+interface AuthAdmin extends NextApiRequest {
+  user: User;
+}
+
+const signToken = (user: User) => {
   return jwt.sign(
     {
       _id: user._id,
@@ -19,7 +24,6 @@ const signUser = (user: User) => {
       email: user.email,
       isAdmin: user.isAdmin,
     },
-
     process.env.JWT_TOKEN_SECRET as string,
     {
       expiresIn: '30d',
@@ -33,6 +37,7 @@ const isAuth = async (
   next: NextHandler
 ) => {
   const { authorization } = req.headers;
+
   if (authorization) {
     const token = authorization.slice(7, authorization.length);
     jwt.verify(token, process.env.JWT_TOKEN_SECRET as string, (err, decode) => {
@@ -40,6 +45,7 @@ const isAuth = async (
         res.status(401).send({ message: 'Token is not valid' });
       } else {
         req.user = decode;
+
         next();
       }
     });
@@ -47,5 +53,15 @@ const isAuth = async (
     res.status(401).send({ message: 'Token is not supplied' });
   }
 };
-
-export { signUser, isAuth };
+const isAdmin = async (
+  req: AuthAdmin,
+  res: NextApiResponse,
+  next: NextHandler
+) => {
+  if (req.user?.isAdmin) {
+    next();
+  } else {
+    res.status(401).send({ message: 'User is not admin' });
+  }
+};
+export { signToken, isAuth, isAdmin };

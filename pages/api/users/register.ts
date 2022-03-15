@@ -5,7 +5,7 @@ import db from '../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import { MongoError } from 'mongodb';
-import { signUser } from '../../../utils/auth';
+import { signToken } from '../../../utils/auth';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
@@ -27,7 +27,7 @@ handler.post(async (req, res) => {
     const user = await newUser.save();
     await db.disconnect();
     res.send({
-      token: signUser(user),
+      token: signToken(user),
       _id: user._id,
       name: user.name,
       email: user.email,
