@@ -5,6 +5,7 @@ import Product from '../../../models/Product';
 import { isAdmin, isAuth } from '../../../utils/auth';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
+
 handler.use(isAuth).use(isAdmin);
 
 handler.get(async (req, res) => {

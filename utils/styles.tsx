@@ -269,7 +269,7 @@ const styles = {
   },
   adminSidebar: {
     display: 'flex',
-    height: '100vh',
+    height: '100%',
     borderRight: '1px solid #E0E0E0',
   },
 } as const;

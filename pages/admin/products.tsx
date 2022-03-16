@@ -3,24 +3,17 @@ import { useAppSelector, useAppDispatch } from '../../store';
 import { useRouter } from 'next/router';
 import { Box, Button, CssBaseline, Grid, Typography } from '@mui/material';
 import styles from '../../utils/styles';
-import { ShoppingCart, People, Add } from '@mui/icons-material';
+import { Add } from '@mui/icons-material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import db from '../../utils/data';
 import AdminSidebar from '../../components/AdminSidebar';
 import axios from 'axios';
-
-interface Items {
-  title: 'products' | 'users';
-  icon: JSX.Element;
-  selected: boolean;
-}
 
 const AdminProducts: React.FC = () => {
   const router = useRouter();
   const {
     authStore: { userInfo },
   } = useAppSelector((store) => store);
-
   const columns: GridColDef[] = [
     { field: 'slug', headerName: 'Slug', width: 200 },
     { field: 'name', headerName: 'Name', width: 200 },
@@ -37,9 +30,8 @@ const AdminProducts: React.FC = () => {
 
   React.useEffect(() => {
     if (!userInfo?.isAdmin) {
-      router.push('/login');
+      router.push('/');
     }
-
     axios
       .get(`/api/admin/products`, {
         headers: { authorization: `Bearer ${userInfo?.token}` },
@@ -53,12 +45,12 @@ const AdminProducts: React.FC = () => {
       <CssBaseline />
       <Grid container spacing={2}>
         <AdminSidebar activeTab="products" />
-        <Grid item xl={9}>
+        <Grid item xl={9} lg={9} md={9} sm={12} xs={12}>
           <Box
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
-              margin: '15px 0px',
+              margin: '15px 5px',
               gap: '5px',
               alignItems: 'center',
             }}

@@ -14,7 +14,6 @@ handler.post(async (req, res) => {
         success: false,
         message: 'Password is not set.',
       });
-
     await db.connect();
     const user = await User.findOne({ email: req.body.email });
     await db.disconnect();

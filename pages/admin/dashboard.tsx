@@ -14,7 +14,7 @@ const AdminDashboard: React.FC = () => {
 
   React.useEffect(() => {
     if (!userInfo?.isAdmin) {
-      router.push('/login');
+      router.push('/');
     }
   });
 

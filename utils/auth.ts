@@ -39,7 +39,7 @@ const isAuth = async (
   const { authorization } = req.headers;
 
   if (authorization) {
-    const token = authorization.slice(7, authorization.length);
+    const token = authorization.split(' ')[1];
     jwt.verify(token, process.env.JWT_TOKEN_SECRET as string, (err, decode) => {
       if (err) {
         res.status(401).send({ message: 'Token is not valid' });
@@ -53,6 +53,7 @@ const isAuth = async (
     res.status(401).send({ message: 'Token is not supplied' });
   }
 };
+
 const isAdmin = async (
   req: AuthAdmin,
   res: NextApiResponse,
@@ -64,4 +65,5 @@ const isAdmin = async (
     res.status(401).send({ message: 'User is not admin' });
   }
 };
+
 export { signToken, isAuth, isAdmin };

@@ -1,4 +1,5 @@
 import {
+  Box,
   Divider,
   Grid,
   List,
@@ -11,9 +12,15 @@ import {
 import Image from 'next/image';
 import React from 'react';
 import logo from '../public/assets/img/logo.svg';
-import { ShoppingCart, People, Dashboard } from '@mui/icons-material';
+import {
+  ShoppingCart,
+  People,
+  Dashboard,
+  ArrowBack,
+} from '@mui/icons-material';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
+
 interface Items {
   title: 'products' | 'users' | 'dashboard';
   icon: JSX.Element;
@@ -31,7 +38,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
   ];
 
   return (
-    <Grid item sx={styles.adminSidebar} xl={2}>
+    <Grid item sx={styles.adminSidebar} xl={2} lg={2} md={3} sm={12} xs={12}>
       <List sx={{ width: '100%' }} disablePadding>
         <ListItem>
           <ListItemIcon>
@@ -39,7 +46,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
           </ListItemIcon>
           <ListItemText
             primary={
-              <Typography sx={{ fontSize: '20px' }}>
+              <Typography sx={{ fontSize: '16px' }}>
                 E-comm Dashboard
               </Typography>
             }
@@ -48,7 +55,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
         </ListItem>
         <Divider />
         {menuItemsSettings.map(({ title, icon }) => (
-          <ListItem key={title} selected={activeTab === title} disablePadding>
+          <ListItem
+            key={title}
+            selected={activeTab === title}
+            disablePadding
+            divider
+          >
             <NextLink href={`/admin/${title}`} passHref>
               <ListItemButton component="a">
                 <ListItemIcon>{icon}</ListItemIcon>
@@ -60,6 +72,20 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
             </NextLink>
           </ListItem>
         ))}
+
+        <ListItem disablePadding divider>
+          <NextLink href="/" passHref>
+            <ListItemButton component="a">
+              <ListItemIcon>
+                <ArrowBack />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography>Home</Typography>}
+                sx={{ textTransform: 'capitalize' }}
+              />
+            </ListItemButton>
+          </NextLink>
+        </ListItem>
       </List>
     </Grid>
   );
