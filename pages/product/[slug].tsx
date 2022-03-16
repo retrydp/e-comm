@@ -2,7 +2,7 @@ import React from 'react';
 import { GetServerSideProps } from 'next';
 import db from '../../utils/database';
 import Product from '../../models/Product';
-import { ProductSchema } from '../../models/Product';
+import { ProductSchema } from '../../utils/types';
 import { Layout } from '../../components';
 import {
   Box,
