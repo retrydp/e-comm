@@ -21,7 +21,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import AdminSidebar from '../../components/AdminSidebar';
 import axios from 'axios';
 
-const AdminProducts: React.FC = () => {
+const AdminUsers: React.FC = () => {
   const router = useRouter();
   const {
     authStore: { userInfo },
@@ -29,17 +29,9 @@ const AdminProducts: React.FC = () => {
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const columns: GridColDef[] = [
-    { field: 'slug', headerName: 'Slug', width: 200 },
     { field: 'name', headerName: 'Name', width: 200 },
-    { field: 'description', headerName: 'Description', width: 130 },
-    { field: 'category', headerName: 'Category', type: 'number', width: 90 },
-    { field: 'brand', headerName: 'Brand', width: 100 },
-    { field: 'price', headerName: 'Price', width: 100 },
-    { field: 'oldPrice', headerName: 'Old Price', width: 100 },
-    { field: 'color', headerName: 'Color', width: 100 },
-    { field: 'rating', headerName: 'Rating', width: 100 },
-    { field: 'salesCount', headerName: 'Sales Count', width: 100 },
-    { field: 'itemsInStock', headerName: 'In Stock', width: 100 },
+    { field: 'email', headerName: 'E-mail', width: 200 },
+    { field: 'isAdmin', headerName: 'Is admin', width: 130 },
   ];
 
   React.useEffect(() => {
@@ -49,7 +41,7 @@ const AdminProducts: React.FC = () => {
     const fetchHandler = async () => {
       try {
         dispatch(fetchRequest());
-        const { data } = await axios.get('/api/admin/products', {
+        const { data } = await axios.get('/api/admin/users', {
           headers: { authorization: `Bearer ${userInfo?.token}` },
         });
         dispatch(fetchSuccess(data));
@@ -64,7 +56,7 @@ const AdminProducts: React.FC = () => {
     <>
       <CssBaseline />
       <Grid container spacing={2}>
-        <AdminSidebar activeTab="products" />
+        <AdminSidebar activeTab="users" />
         <Grid item xl={9} lg={9} md={9} sm={12} xs={12}>
           <Box
             sx={{
@@ -75,10 +67,7 @@ const AdminProducts: React.FC = () => {
               alignItems: 'center',
             }}
           >
-            <Typography sx={{ fontSize: '20px' }}>Products</Typography>
-            <Button variant="contained" startIcon={<Add />}>
-              Add product
-            </Button>
+            <Typography sx={{ fontSize: '20px' }}>Users</Typography>
           </Box>
           <Box sx={{ height: 800, width: '100%' }}>
             {loading ? (
@@ -103,4 +92,4 @@ const AdminProducts: React.FC = () => {
   );
 };
 
-export default AdminProducts;
+export default AdminUsers;

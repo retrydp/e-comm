@@ -1,29 +1,5 @@
 import mongoose from 'mongoose';
-
-export interface ProductSchema {
-  slug: string;
-  name: string;
-  description: string;
-  category: string;
-  brand: string;
-  price: number;
-  oldPrice: number;
-  color: string;
-  images: string[];
-  rating: number;
-  salesCount?: number;
-  itemsInStock: number;
-  deliveryMethods?: string;
-  reviews?: mongoose.Model<Reviews>;
-  numReviews: number;
-}
-
-interface Reviews {
-  user: mongoose.Schema.Types.ObjectId;
-  name: string;
-  rating: number;
-  comment: string;
-}
+import { ProductSchema, Reviews } from '../utils/types';
 
 const reviewSchema = new mongoose.Schema<Reviews, mongoose.Model<Reviews>>(
   {

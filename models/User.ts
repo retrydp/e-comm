@@ -1,11 +1,5 @@
 import mongoose from 'mongoose';
-
-interface UserSchema {
-  name: string;
-  email: string;
-  password: string;
-  isAdmin: boolean;
-}
+import { UserSchema } from '../utils/types';
 
 const Users = new mongoose.Schema<UserSchema, mongoose.Model<UserSchema>>(
   {
