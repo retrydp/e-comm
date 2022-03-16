@@ -10,7 +10,7 @@ import {
   Box,
 } from '@mui/material';
 import React from 'react';
-import { ProductSchema } from '../models/Product';
+import { ProductSchema } from '../utils/types';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
 
