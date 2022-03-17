@@ -17,7 +17,7 @@ import {
 import styles from '../../utils/styles';
 import { Add } from '@mui/icons-material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-
+import NextLink from 'next/link';
 import AdminSidebar from '../../components/AdminSidebar';
 import axios from 'axios';
 
@@ -76,9 +76,11 @@ const AdminProducts: React.FC = () => {
             }}
           >
             <Typography sx={{ fontSize: '20px' }}>Products</Typography>
-            <Button variant="contained" startIcon={<Add />}>
-              Add product
-            </Button>
+            <NextLink href="/admin/createProduct" passHref>
+              <Button variant="contained" component="a" startIcon={<Add />}>
+                Add product
+              </Button>
+            </NextLink>
           </Box>
           <Box sx={{ height: 800, width: '100%' }}>
             {loading ? (

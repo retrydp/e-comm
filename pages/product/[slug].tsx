@@ -152,9 +152,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                   </TabList>
                 </Box>
                 <TabPanel value="1">{product.description}</TabPanel>
-                <TabPanel value="2">
-                  Reviews are not currently not available
-                </TabPanel>
+                <TabPanel value="2">Reviews currently not available</TabPanel>
               </TabContext>
             </Box>
           </Grid>

@@ -6,12 +6,14 @@ export interface Reviews {
   rating: number;
   comment: string;
 }
+
 export interface UserSchema {
   name: string;
   email: string;
   password: string;
   isAdmin: boolean;
 }
+
 export interface ProductSchema {
   slug: string;
   name: string;
@@ -22,7 +24,7 @@ export interface ProductSchema {
   oldPrice: number;
   color: string;
   images: string[];
-  rating: number;
+  rating?: number;
   salesCount?: number;
   itemsInStock: number;
   deliveryMethods?: string;
