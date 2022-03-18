@@ -1,10 +1,5 @@
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../store';
-import {
-  fetchRequest,
-  fetchSuccess,
-  fetchError,
-} from '../../store/adminPanelStore';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -21,24 +16,36 @@ import styles from '../../utils/styles';
 import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
 import AdminSidebar from '../../components/AdminSidebar';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { Inputs } from '../../utils/types';
+import {
+  uploadRequest,
+  uploadSuccess,
+  uploadError,
+} from '../../store/adminProduct';
+import Image from 'next/image';
 
 interface ProductForm extends Omit<Inputs, 'icon'> {
   inputType: string;
 }
 
+interface Response
+  extends AxiosResponse<{ payload: string; success: boolean }> {}
+
 const CreateProduct: React.FC = () => {
+  const [preview, setPreview] = React.useState<string>();
   const router = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
   const { redirect } = router.query;
   const {
     authStore: { userInfo },
+    adminProduct: { loading },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const {
     handleSubmit,
+    setValue,
     control,
     formState: { errors },
   } = useForm();
@@ -141,6 +148,21 @@ const CreateProduct: React.FC = () => {
           : 'Color is required'
         : '',
     },
+
+    {
+      name: 'itemsInStock',
+      label: 'Items In Stock',
+      rules: {
+        required: true,
+        minLength: 2,
+      },
+      inputType: 'number',
+      helperText: errors.itemsInStock
+        ? errors.itemsInStock.type === 'minLength'
+          ? 'Items In Stock is to short'
+          : 'Items In Stock is required'
+        : '',
+    },
     {
       name: 'images',
       label: 'Images',
@@ -153,20 +175,6 @@ const CreateProduct: React.FC = () => {
         ? errors.images.type === 'minLength'
           ? 'Images is to short'
           : 'Images is required'
-        : '',
-    },
-    {
-      name: 'itemsInStock',
-      label: 'Items In Stock',
-      rules: {
-        required: true,
-        minLength: 2,
-      },
-      inputType: 'text',
-      helperText: errors.itemsInStock
-        ? errors.itemsInStock.type === 'minLength'
-          ? 'Items In Stock is to short'
-          : 'Items In Stock is required'
         : '',
     },
   ];
@@ -204,6 +212,42 @@ const CreateProduct: React.FC = () => {
       }
     }
   };
+
+  const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files[0];
+    if (!file) {
+      enqueueSnackbar('Can not get file.', { variant: 'error' });
+      return;
+    }
+    const bodyFormData = new FormData();
+    bodyFormData.append('file', file);
+    try {
+      dispatch(uploadRequest());
+      const { data } = await axios.post<FormData, Response>(
+        '/api/admin/upload',
+        bodyFormData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      dispatch(uploadSuccess());
+      setValue('images', data.payload);
+      setPreview(data.payload);
+      enqueueSnackbar('File uploaded successfully', { variant: 'success' });
+    } catch (error: any) {
+      const errorText = error.response.data.message || error.toString();
+      dispatch(uploadError(error.toString()));
+      setPreview('');
+      enqueueSnackbar(errorText, { variant: 'error' });
+    }
+  };
+
+  React.useEffect(() => {
+    if (!userInfo.isAdmin) router.push('/');
+  }, []);
 
   return (
     <>
@@ -243,7 +287,7 @@ const CreateProduct: React.FC = () => {
                         inputProps={{
                           type: inputType === 'textarea' ? 'text' : inputType,
                         }}
-                        multiline
+                        multiline={inputType === 'textarea'}
                         rows={inputType === 'textarea' ? 4 : 1}
                         error={Boolean(errors[name])}
                         helperText={helperText}
@@ -253,6 +297,44 @@ const CreateProduct: React.FC = () => {
                   />
                 </ListItem>
               ))}
+              <ListItem>
+                <Button
+                  variant="contained"
+                  component="label"
+                  sx={{ backgroundColor: '#40BFFF' }}
+                >
+                  Upload Image
+                  <input
+                    type="file"
+                    onChange={uploadHandler}
+                    hidden
+                    accept="image/*"
+                  />
+                </Button>
+                {loading && <CircularProgress />}
+              </ListItem>
+              {preview && (
+                <ListItem
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    gap: '5px',
+                  }}
+                >
+                  <Typography>Preview:</Typography>
+                  <Box sx={{ width: '100%', maxWidth: '500px' }}>
+                    {/* TODO  this in other cases */}
+                    <Image
+                      width="100%"
+                      height="100%"
+                      layout="responsive"
+                      objectFit="contain"
+                      src={preview}
+                    ></Image>
+                  </Box>
+                </ListItem>
+              )}
               <ListItem>
                 <Button
                   variant="contained"

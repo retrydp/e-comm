@@ -77,7 +77,12 @@ const AdminProducts: React.FC = () => {
           >
             <Typography sx={{ fontSize: '20px' }}>Products</Typography>
             <NextLink href="/admin/createProduct" passHref>
-              <Button variant="contained" component="a" startIcon={<Add />}>
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: '#40BFFF' }}
+                component="a"
+                startIcon={<Add />}
+              >
                 Add product
               </Button>
             </NextLink>

@@ -2,10 +2,16 @@ import { configureStore } from '@reduxjs/toolkit';
 import displayInterface from './displayInterface';
 import authStore from './authStore';
 import adminPanelStore from './adminPanelStore';
+import adminProduct from './adminProduct';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const store = configureStore({
-  reducer: { display: displayInterface, authStore, adminPanelStore },
+  reducer: {
+    display: displayInterface,
+    authStore,
+    adminPanelStore,
+    adminProduct,
+  },
 });
 
 export default store;

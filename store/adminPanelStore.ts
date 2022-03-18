@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie';
+
 import { ProductSchema, UserSchema } from '../utils/types';
 
 interface AuthInitialState {
