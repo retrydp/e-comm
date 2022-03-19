@@ -15,7 +15,7 @@ import {
 import styles from '../../utils/styles';
 import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
-import AdminSidebar from '../../components/AdminSidebar';
+import { AdminSidebar } from '../../components';
 import axios, { AxiosResponse } from 'axios';
 import { Inputs } from '../../utils/types';
 import {
@@ -29,8 +29,7 @@ interface ProductForm extends Omit<Inputs, 'icon'> {
   inputType: string;
 }
 
-interface Response
-  extends AxiosResponse<{ payload: string; success: boolean }> {}
+interface Response extends AxiosResponse<{ payload: string }> {}
 
 const CreateProduct: React.FC = () => {
   const [preview, setPreview] = React.useState<string>();
@@ -246,7 +245,7 @@ const CreateProduct: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (!userInfo.isAdmin) router.push('/');
+    if (!userInfo?.isAdmin) router.push('/');
   }, []);
 
   return (

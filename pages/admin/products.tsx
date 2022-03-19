@@ -18,7 +18,7 @@ import styles from '../../utils/styles';
 import { Add } from '@mui/icons-material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import NextLink from 'next/link';
-import AdminSidebar from '../../components/AdminSidebar';
+import { AdminSidebar } from '../../components';
 import axios from 'axios';
 
 const AdminProducts: React.FC = () => {
@@ -91,7 +91,7 @@ const AdminProducts: React.FC = () => {
             {loading ? (
               <CircularProgress />
             ) : error ? (
-              <Typography>{error}</Typography>
+              <Typography sx={{ color: 'red' }}>{error}</Typography>
             ) : (
               <DataGrid
                 getRowId={(row) => row._id}

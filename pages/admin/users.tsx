@@ -17,8 +17,7 @@ import {
 import styles from '../../utils/styles';
 import { Add } from '@mui/icons-material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-
-import AdminSidebar from '../../components/AdminSidebar';
+import { AdminSidebar } from '../../components';
 import axios from 'axios';
 
 const AdminUsers: React.FC = () => {
@@ -73,7 +72,7 @@ const AdminUsers: React.FC = () => {
             {loading ? (
               <CircularProgress />
             ) : error ? (
-              <Typography>{error}</Typography>
+              <Typography sx={{ color: 'red' }}>{error}</Typography>
             ) : (
               <DataGrid
                 getRowId={(row) => row._id}

@@ -1,7 +1,9 @@
 import nc from 'next-connect';
 import { NextApiRequest, NextApiResponse } from 'next';
 import multer from 'multer';
+import { v2 as cloudinary } from 'cloudinary';
 import { isAdmin, isAuth } from '../../../utils/auth';
+import streamifier from 'streamifier';
 
 interface FileRequest extends NextApiRequest {
   file: Express.Multer.File;
@@ -10,9 +12,15 @@ interface FileRequest extends NextApiRequest {
 const onError = async (err: any, req: NextApiRequest, res: NextApiResponse) => {
   res.status(500).send({
     success: false,
-    message: err.toString(),
+    message: err.message.toString() || err.toString(),
   });
 };
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const handler = nc<FileRequest, NextApiResponse>({ onError });
 
@@ -22,47 +30,27 @@ export const config = {
   },
 };
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/assets/img/productsImg');
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, `${uniqueSuffix}-${file.originalname}`);
-  },
-});
-
-const upload = multer({
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    if (
-      file.mimetype == 'image/png' ||
-      file.mimetype == 'image/jpg' ||
-      file.mimetype == 'image/jpeg'
-    ) {
-      cb(null, true);
-    } else {
-      cb(null, false);
-      return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
-    }
-  },
-});
+const upload = multer();
 
 handler.use(isAuth).use(isAdmin).use(upload.single('file'));
 
 handler.post(async (req, res) => {
-  try {
-    console.log(req.file);
-    res.json({
-      success: true,
-      payload: req.file.destination.slice(8) + '/' + req.file.filename,
+  const streamUpload = (req: FileRequest) => {
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream((error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      });
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
     });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error?.toString(),
-    });
-  }
+  };
+
+  const result: any = await streamUpload(req);
+
+  res.send({ success: true, payload: result.secure_url });
 });
 
 export default handler;

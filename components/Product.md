@@ -134,7 +134,7 @@
 // </div>
 // <div className="info-block">
 // <div className="info-block__header">
-// <div className="info-block__tab info-block__tab_active">Product Infomation</div>
+// <div className="info-block__tab info-block__tab_active">Product Information</div>
 // <div className="info-block__tab">
 // Reviews <span>{comments?.length || 0}</span>
 // </div>

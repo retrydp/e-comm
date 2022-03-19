@@ -111,7 +111,7 @@ const Header: React.FC = () => {
                     </Link>
                   </NextLink>
                 </MenuItem>
-                {userInfo.isAdmin && (
+                {userInfo?.isAdmin && (
                   <MenuItem onClick={handleMenuClose}>
                     <NextLink href="/admin/dashboard" passHref>
                       <Link sx={{ textDecoration: 'none', color: 'black' }}>
