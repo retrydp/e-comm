@@ -22,6 +22,9 @@ import {
   uploadRequest,
   uploadSuccess,
   uploadError,
+  addError,
+  addRequest,
+  addSuccess,
 } from '../../store/adminProduct';
 import Image from 'next/image';
 
@@ -39,7 +42,7 @@ const CreateProduct: React.FC = () => {
   const { redirect } = router.query;
   const {
     authStore: { userInfo },
-    adminProduct: { loading },
+    adminProduct: { loading, loadingAdd },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const {
@@ -110,7 +113,7 @@ const CreateProduct: React.FC = () => {
       label: 'Price',
       rules: {
         required: true,
-        minLength: 2,
+        minLength: 1,
       },
       inputType: 'number',
       helperText: errors.price
@@ -124,7 +127,7 @@ const CreateProduct: React.FC = () => {
       label: 'Old Price',
       rules: {
         required: true,
-        minLength: 2,
+        minLength: 1,
       },
       inputType: 'number',
       helperText: errors.oldPrice
@@ -153,7 +156,7 @@ const CreateProduct: React.FC = () => {
       label: 'Items In Stock',
       rules: {
         required: true,
-        minLength: 2,
+        minLength: 1,
       },
       inputType: 'number',
       helperText: errors.itemsInStock
@@ -179,36 +182,46 @@ const CreateProduct: React.FC = () => {
   ];
 
   const submitHandler = async ({
-    email,
-    password,
     name,
-    confirmPassword,
+    description,
+    category,
+    brand,
+    price,
+    oldPrice,
+    color,
+    itemsInStock,
+    images,
   }: {
     [key: string]: any;
   }) => {
-    if (password !== confirmPassword) {
-      enqueueSnackbar('Passwords don`t match', { variant: 'error' });
-      return;
-    }
     try {
-      const { data } = await axios.post('/api/users/register', {
-        name,
-        email,
-        password,
-      });
-
-      //   router.push((redirect as string) || '/');
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const responseError = error?.response?.data?.['message'];
-        if (responseError) {
-          enqueueSnackbar(responseError, {
-            variant: 'error',
-          });
+      dispatch(addRequest());
+      const { data } = await axios.post(
+        '/api/admin/addProduct',
+        {
+          name,
+          description,
+          category,
+          brand,
+          price,
+          oldPrice,
+          color,
+          itemsInStock,
+          images,
+        },
+        {
+          headers: { authorization: `Bearer ${userInfo?.token}` },
         }
-      } else {
-        throw new Error('Bcrypt error.');
-      }
+      );
+      enqueueSnackbar(`Product ${data.name} uploaded successfully`, {
+        variant: 'success',
+      });
+      dispatch(addSuccess());
+      //   router.push((redirect as string) || '/');
+    } catch (error: any) {
+      const errorText = error.response.data.message || error.toString();
+      dispatch(addError(error.toString()));
+      enqueueSnackbar(errorText, { variant: 'error' });
     }
   };
 
@@ -240,6 +253,7 @@ const CreateProduct: React.FC = () => {
       const errorText = error.response.data.message || error.toString();
       dispatch(uploadError(error.toString()));
       setPreview('');
+      setValue('images', '');
       enqueueSnackbar(errorText, { variant: 'error' });
     }
   };
@@ -265,86 +279,90 @@ const CreateProduct: React.FC = () => {
           >
             <Typography sx={{ fontSize: '20px' }}>Add Product</Typography>
           </Box>
-          <form
-            onSubmit={handleSubmit(submitHandler)}
-            style={{ width: '100%' }}
-          >
-            <List>
-              {inputs.map(({ name, label, rules, helperText, inputType }) => (
-                <ListItem key={name}>
-                  <Controller
-                    name={name}
-                    control={control}
-                    defaultValue=""
-                    rules={rules}
-                    render={({ field }) => (
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        id={name}
-                        label={label}
-                        inputProps={{
-                          type: inputType === 'textarea' ? 'text' : inputType,
-                        }}
-                        multiline={inputType === 'textarea'}
-                        rows={inputType === 'textarea' ? 4 : 1}
-                        error={Boolean(errors[name])}
-                        helperText={helperText}
-                        {...field}
-                      ></TextField>
-                    )}
-                  />
+          {loadingAdd ? (
+            <CircularProgress />
+          ) : (
+            <form
+              onSubmit={handleSubmit(submitHandler)}
+              style={{ width: '100%' }}
+            >
+              <List>
+                {inputs.map(({ name, label, rules, helperText, inputType }) => (
+                  <ListItem key={name}>
+                    <Controller
+                      name={name}
+                      control={control}
+                      defaultValue=""
+                      rules={rules}
+                      render={({ field }) => (
+                        <TextField
+                          variant="outlined"
+                          fullWidth
+                          id={name}
+                          label={label}
+                          inputProps={{
+                            type: inputType === 'textarea' ? 'text' : inputType,
+                          }}
+                          multiline={inputType === 'textarea'}
+                          rows={inputType === 'textarea' ? 4 : 1}
+                          error={Boolean(errors[name])}
+                          helperText={helperText}
+                          {...field}
+                        ></TextField>
+                      )}
+                    />
+                  </ListItem>
+                ))}
+                <ListItem>
+                  <Button
+                    variant="contained"
+                    component="label"
+                    sx={{ backgroundColor: '#40BFFF' }}
+                  >
+                    Upload Image
+                    <input
+                      type="file"
+                      onChange={uploadHandler}
+                      hidden
+                      accept="image/*"
+                    />
+                  </Button>
+                  {loading && <CircularProgress />}
                 </ListItem>
-              ))}
-              <ListItem>
-                <Button
-                  variant="contained"
-                  component="label"
-                  sx={{ backgroundColor: '#40BFFF' }}
-                >
-                  Upload Image
-                  <input
-                    type="file"
-                    onChange={uploadHandler}
-                    hidden
-                    accept="image/*"
-                  />
-                </Button>
-                {loading && <CircularProgress />}
-              </ListItem>
-              {preview && (
-                <ListItem
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    gap: '5px',
-                  }}
-                >
-                  <Typography>Preview:</Typography>
-                  <Box sx={{ width: '100%', maxWidth: '500px' }}>
-                    {/* TODO  this in other cases */}
-                    <Image
-                      width="100%"
-                      height="100%"
-                      layout="responsive"
-                      objectFit="contain"
-                      src={preview}
-                    ></Image>
-                  </Box>
+                {preview && (
+                  <ListItem
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      gap: '5px',
+                    }}
+                  >
+                    <Typography>Preview:</Typography>
+                    <Box sx={{ width: '100%', maxWidth: '500px' }}>
+                      {/* TODO  this in other cases */}
+                      <Image
+                        width="100%"
+                        height="100%"
+                        layout="responsive"
+                        objectFit="contain"
+                        src={preview}
+                      ></Image>
+                    </Box>
+                  </ListItem>
+                )}
+                <ListItem>
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{ backgroundColor: '#40BFFF' }}
+                  >
+                    Add product
+                  </Button>
                 </ListItem>
-              )}
-              <ListItem>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  sx={{ backgroundColor: '#40BFFF' }}
-                >
-                  Add product
-                </Button>
-              </ListItem>
-            </List>
-          </form>
+              </List>
+            </form>
+          )}
         </Grid>
       </Grid>
     </>
