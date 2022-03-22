@@ -11,6 +11,11 @@ import {
   List,
   ListItem,
   TextField,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  FormControl,
 } from '@mui/material';
 import styles from '../../utils/styles';
 import { useSnackbar } from 'notistack';
@@ -30,11 +35,14 @@ import Image from 'next/image';
 
 interface ProductForm extends Omit<Inputs, 'icon'> {
   inputType: string;
+  altContent?: string[];
 }
 
 interface Response extends AxiosResponse<{ payload: string }> {}
 
 const CreateProduct: React.FC = () => {
+  const [categoryValue, setCategoryValue] = React.useState<string>('bags');
+  const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
   const router = useRouter();
 
@@ -88,6 +96,7 @@ const CreateProduct: React.FC = () => {
         minLength: 2,
       },
       inputType: 'text',
+      altContent: ['sneakers', 'belts', 'bags'],
       helperText: errors.category
         ? errors.category.type === 'minLength'
           ? 'Category is to short'
@@ -102,6 +111,7 @@ const CreateProduct: React.FC = () => {
         minLength: 2,
       },
       inputType: 'text',
+      altContent: ['nike', 'adidas', 'airmax'],
       helperText: errors.brand
         ? errors.brand.type === 'minLength'
           ? 'Brand is to short'
@@ -181,6 +191,17 @@ const CreateProduct: React.FC = () => {
     },
   ];
 
+  const selectTypeItems = {
+    category: {
+      value: categoryValue,
+      stateSetter: setCategoryValue,
+    },
+    brand: {
+      value: brandValue,
+      stateSetter: setBrandValue,
+    },
+  };
+
   const submitHandler = async ({
     name,
     description,
@@ -258,7 +279,17 @@ const CreateProduct: React.FC = () => {
     }
   };
 
+  const selectHandleChange = (
+    event: SelectChangeEvent<string>,
+    name: string
+  ) => {
+    selectTypeItems[name].stateSetter(event.target.value as string);
+    setValue(name, event.target.value);
+  };
+
   React.useEffect(() => {
+    setValue('category', categoryValue);
+    setValue('brand', brandValue);
     if (!userInfo?.isAdmin) router.push('/');
   }, []);
 
@@ -287,32 +318,73 @@ const CreateProduct: React.FC = () => {
               style={{ width: '100%' }}
             >
               <List>
-                {inputs.map(({ name, label, rules, helperText, inputType }) => (
-                  <ListItem key={name}>
-                    <Controller
-                      name={name}
-                      control={control}
-                      defaultValue=""
-                      rules={rules}
-                      render={({ field }) => (
-                        <TextField
-                          variant="outlined"
-                          fullWidth
-                          id={name}
-                          label={label}
-                          inputProps={{
-                            type: inputType === 'textarea' ? 'text' : inputType,
-                          }}
-                          multiline={inputType === 'textarea'}
-                          rows={inputType === 'textarea' ? 4 : 1}
-                          error={Boolean(errors[name])}
-                          helperText={helperText}
-                          {...field}
-                        ></TextField>
-                      )}
-                    />
-                  </ListItem>
-                ))}
+                {inputs.map(
+                  ({
+                    name,
+                    label,
+                    rules,
+                    helperText,
+                    inputType,
+                    altContent,
+                  }) => (
+                    <ListItem key={name}>
+                      <Controller
+                        name={name}
+                        control={control}
+                        defaultValue=""
+                        rules={rules}
+                        render={({ field }) =>
+                          altContent ? (
+                            <FormControl fullWidth>
+                              <InputLabel id={`${name}-select-label`}>
+                                <Typography
+                                  sx={{ textTransform: 'capitalize' }}
+                                >
+                                  {name}
+                                </Typography>
+                              </InputLabel>
+                              <Select
+                                labelId={`${name}-select-label`}
+                                id={`${name}-select`}
+                                value={selectTypeItems[name].value}
+                                label={name}
+                                onChange={(event) =>
+                                  selectHandleChange(event, name)
+                                }
+                              >
+                                {altContent.map((item) => (
+                                  <MenuItem value={item} key={item}>
+                                    <Typography
+                                      sx={{ textTransform: 'capitalize' }}
+                                    >
+                                      {item}
+                                    </Typography>
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          ) : (
+                            <TextField
+                              variant="outlined"
+                              fullWidth
+                              id={name}
+                              label={label}
+                              inputProps={{
+                                type:
+                                  inputType === 'textarea' ? 'text' : inputType,
+                              }}
+                              multiline={inputType === 'textarea'}
+                              rows={inputType === 'textarea' ? 4 : 1}
+                              error={Boolean(errors[name])}
+                              helperText={helperText}
+                              {...field}
+                            ></TextField>
+                          )
+                        }
+                      />
+                    </ListItem>
+                  )
+                )}
                 <ListItem>
                   <Button
                     variant="contained"

@@ -13,7 +13,10 @@ import {
   Grid,
   Typography,
   CircularProgress,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 import styles from '../../utils/styles';
 import { Add } from '@mui/icons-material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
@@ -29,6 +32,25 @@ const AdminProducts: React.FC = () => {
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const columns: GridColDef[] = [
+    {
+      field: 'action',
+      headerName: 'Action',
+      renderCell: (params) => (
+        <Box>
+          <Tooltip title="Edit" arrow>
+            <IconButton aria-label="edit" color="primary">
+              <Edit />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete" arrow>
+            <IconButton aria-label="delete" color="error">
+              <Delete />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      ), //params.row.slug
+      width: 100,
+    },
     { field: 'slug', headerName: 'Slug', width: 200 },
     { field: 'name', headerName: 'Name', width: 200 },
     { field: 'description', headerName: 'Description', width: 130 },
