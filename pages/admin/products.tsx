@@ -4,6 +4,9 @@ import {
   fetchRequest,
   fetchSuccess,
   fetchError,
+  deleteRequest,
+  deleteSuccess,
+  deleteError,
 } from '../../store/adminPanelStore';
 import { useRouter } from 'next/router';
 import {
@@ -15,6 +18,7 @@ import {
   CircularProgress,
   IconButton,
   Tooltip,
+  Modal,
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import styles from '../../utils/styles';
@@ -23,14 +27,46 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import NextLink from 'next/link';
 import { AdminSidebar } from '../../components';
 import axios from 'axios';
+import { ProductSchema } from '../../utils/types';
+import { useSnackbar } from 'notistack';
 
 const AdminProducts: React.FC = () => {
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const {
     authStore: { userInfo },
     adminPanelStore: { data, error, loading },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
+
+  const handleDeleteProduct = async (productSlug: string) => {
+    if (confirm(`Do you want to delete ${productSlug}`)) {
+      dispatch(deleteRequest());
+      setModalOpen(true);
+      try {
+        await axios.delete('/api/admin/products', {
+          headers: { authorization: `Bearer ${userInfo?.token}` },
+          data: productSlug,
+        });
+        dispatch(
+          deleteSuccess(
+            (data as ProductSchema[]).filter(({ slug }) => slug !== productSlug)
+          )
+        );
+        setModalOpen(false);
+        enqueueSnackbar(`${productSlug} deleted successfully`, {
+          variant: 'success',
+        });
+      } catch (error: any) {
+        const errorText = error.response.data.message || error.toString();
+        setModalOpen(false);
+        dispatch(deleteError(error.toString()));
+        enqueueSnackbar(errorText, { variant: 'error' });
+      }
+    }
+  };
+
   const columns: GridColDef[] = [
     {
       field: 'action',
@@ -43,7 +79,11 @@ const AdminProducts: React.FC = () => {
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete" arrow>
-            <IconButton aria-label="delete" color="error">
+            <IconButton
+              aria-label="delete"
+              color="error"
+              onClick={() => handleDeleteProduct(params.row.slug)}
+            >
               <Delete />
             </IconButton>
           </Tooltip>
@@ -59,8 +99,8 @@ const AdminProducts: React.FC = () => {
     { field: 'price', headerName: 'Price', width: 100 },
     { field: 'oldPrice', headerName: 'Old Price', width: 100 },
     { field: 'color', headerName: 'Color', width: 100 },
-    { field: 'rating', headerName: 'Rating', width: 100 },
-    { field: 'salesCount', headerName: 'Sales Count', width: 100 },
+    { field: 'rating', headerName: 'Rating', width: 80 },
+    { field: 'salesCount', headerName: 'Sales Count', width: 80 },
     { field: 'itemsInStock', headerName: 'In Stock', width: 100 },
   ];
 
@@ -85,6 +125,21 @@ const AdminProducts: React.FC = () => {
   return (
     <>
       <CssBaseline />
+      <Modal
+        open={modalOpen}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={styles.adminModalAddProgress}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Deleting product.
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            This may take some time.
+          </Typography>
+          <CircularProgress />
+        </Box>
+      </Modal>
       <Grid container spacing={2}>
         <AdminSidebar activeTab="products" />
         <Grid item xl={9} lg={9} md={9} sm={12} xs={12}>
@@ -119,8 +174,7 @@ const AdminProducts: React.FC = () => {
                 getRowId={(row) => row._id}
                 rows={data}
                 columns={columns}
-                pageSize={30}
-                onCellClick={({ id }) => console.log(id)}
+                pageSize={50}
                 rowsPerPageOptions={[50]}
                 checkboxSelection={false}
               />

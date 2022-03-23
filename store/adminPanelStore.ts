@@ -6,12 +6,18 @@ interface AuthInitialState {
   data: ProductSchema[] | UserSchema[] | [];
   loading: boolean;
   error: string;
+  loadingDelete: boolean;
+  errorDelete: boolean;
+  deleteErrorText: string;
 }
 
 const initialState: AuthInitialState = {
   data: [],
   loading: true,
   error: '',
+  loadingDelete: false,
+  errorDelete: false,
+  deleteErrorText: '',
 };
 
 const adminPanelStore = createSlice({
@@ -29,12 +35,29 @@ const adminPanelStore = createSlice({
     },
     fetchError: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+    },
+    deleteRequest: (state) => {
+      state.loadingDelete = true;
+    },
+    deleteSuccess: (state, action) => {
+      state.loadingDelete = false;
+      state.deleteErrorText = '';
+      state.data = action.payload;
+    },
+    deleteError: (state, action) => {
+      state.loadingDelete = false;
+      state.deleteErrorText = action.payload;
     },
   },
 });
 
-export const { fetchRequest, fetchSuccess, fetchError } =
-  adminPanelStore.actions;
+export const {
+  fetchRequest,
+  fetchSuccess,
+  fetchError,
+  deleteRequest,
+  deleteSuccess,
+  deleteError,
+} = adminPanelStore.actions;
 
 export default adminPanelStore.reducer;

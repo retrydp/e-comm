@@ -35,7 +35,7 @@ import Image from 'next/image';
 
 interface ProductForm extends Omit<Inputs, 'icon'> {
   inputType: string;
-  altContent?: string[];
+  selectTypeContent?: string[];
 }
 
 interface Response extends AxiosResponse<{ payload: string }> {}
@@ -96,7 +96,7 @@ const CreateProduct: React.FC = () => {
         minLength: 2,
       },
       inputType: 'text',
-      altContent: ['sneakers', 'belts', 'bags'],
+      selectTypeContent: ['sneakers', 'belts', 'bags'],
       helperText: errors.category
         ? errors.category.type === 'minLength'
           ? 'Category is to short'
@@ -111,7 +111,7 @@ const CreateProduct: React.FC = () => {
         minLength: 2,
       },
       inputType: 'text',
-      altContent: ['nike', 'adidas', 'airmax'],
+      selectTypeContent: ['nike', 'adidas', 'airmax'],
       helperText: errors.brand
         ? errors.brand.type === 'minLength'
           ? 'Brand is to short'
@@ -217,7 +217,7 @@ const CreateProduct: React.FC = () => {
   }) => {
     try {
       dispatch(addRequest());
-      const { data } = await axios.post(
+      const { data } = await axios.put(
         '/api/admin/addProduct',
         {
           name,
@@ -325,7 +325,7 @@ const CreateProduct: React.FC = () => {
                     rules,
                     helperText,
                     inputType,
-                    altContent,
+                    selectTypeContent,
                   }) => (
                     <ListItem key={name}>
                       <Controller
@@ -334,7 +334,7 @@ const CreateProduct: React.FC = () => {
                         defaultValue=""
                         rules={rules}
                         render={({ field }) =>
-                          altContent ? (
+                          selectTypeContent ? (
                             <FormControl fullWidth>
                               <InputLabel id={`${name}-select-label`}>
                                 <Typography
@@ -352,7 +352,7 @@ const CreateProduct: React.FC = () => {
                                   selectHandleChange(event, name)
                                 }
                               >
-                                {altContent.map((item) => (
+                                {selectTypeContent.map((item) => (
                                   <MenuItem value={item} key={item}>
                                     <Typography
                                       sx={{ textTransform: 'capitalize' }}

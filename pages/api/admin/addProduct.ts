@@ -20,7 +20,7 @@ const slug = (str: string) =>
 
 handler.use(isAuth).use(isAdmin);
 
-handler.post(async (req, res) => {
+handler.put(async (req, res) => {
   try {
     await db.connect();
     const newProduct = new Product({
@@ -38,7 +38,7 @@ handler.post(async (req, res) => {
     });
     const product = await newProduct.save();
     await db.disconnect();
-    res.send(product);
+    res.status(201).send(product);
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
