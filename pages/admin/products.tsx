@@ -27,7 +27,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import NextLink from 'next/link';
 import { AdminSidebar } from '../../components';
 import axios from 'axios';
-import { ProductSchema } from '../../utils/types';
+import { ProductResponse, ProductSchema } from '../../utils/types';
 import { useSnackbar } from 'notistack';
 
 const AdminProducts: React.FC = () => {
@@ -45,7 +45,7 @@ const AdminProducts: React.FC = () => {
       dispatch(deleteRequest());
       setModalOpen(true);
       try {
-        await axios.delete('/api/admin/products', {
+        await axios.delete<{}, ProductResponse>('/api/admin/products', {
           headers: { authorization: `Bearer ${userInfo?.token}` },
           data: productSlug,
         });
@@ -73,11 +73,13 @@ const AdminProducts: React.FC = () => {
       headerName: 'Action',
       renderCell: (params) => (
         <Box>
-          <Tooltip title="Edit" arrow>
-            <IconButton aria-label="edit" color="primary">
-              <Edit />
-            </IconButton>
-          </Tooltip>
+          <NextLink href={`/admin/product/${params.row.slug}`} passHref>
+            <Tooltip title="Edit" arrow>
+              <IconButton aria-label="edit" color="primary">
+                <Edit />
+              </IconButton>
+            </Tooltip>
+          </NextLink>
           <Tooltip title="Delete" arrow>
             <IconButton
               aria-label="delete"
@@ -111,10 +113,13 @@ const AdminProducts: React.FC = () => {
     const fetchHandler = async () => {
       try {
         dispatch(fetchRequest());
-        const { data } = await axios.get('/api/admin/products', {
-          headers: { authorization: `Bearer ${userInfo?.token}` },
-        });
-        dispatch(fetchSuccess(data));
+        const { data } = await axios.get<{}, ProductResponse>(
+          '/api/admin/products',
+          {
+            headers: { authorization: `Bearer ${userInfo?.token}` },
+          }
+        );
+        dispatch(fetchSuccess(data.payload));
       } catch (error: any) {
         dispatch(fetchError(error.toString()));
       }
@@ -153,7 +158,7 @@ const AdminProducts: React.FC = () => {
             }}
           >
             <Typography sx={{ fontSize: '20px' }}>Products</Typography>
-            <NextLink href="/admin/createProduct" passHref>
+            <NextLink href="/admin/product/create" passHref>
               <Button
                 variant="contained"
                 sx={{ backgroundColor: '#40BFFF' }}

@@ -14,7 +14,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
     await Product.deleteMany();
     await Product.insertMany(data.products);
     await db.disconnect();
-    res.send({ message: 'seeded successfully' });
+    res.json({ message: 'seeded successfully' });
   } catch (error) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);

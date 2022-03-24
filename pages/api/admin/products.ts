@@ -13,7 +13,7 @@ handler.get(async (req, res) => {
     await db.connect();
     const products = await Product.find({});
     await db.disconnect();
-    res.json(products);
+    res.json({ success: true, payload: products });
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -21,6 +21,7 @@ handler.get(async (req, res) => {
     });
   }
 });
+
 handler.delete(async (req, res) => {
   try {
     await db.connect();

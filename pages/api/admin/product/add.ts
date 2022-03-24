@@ -1,11 +1,11 @@
 import nc from 'next-connect';
-import Product from '../../../models/Product';
+import Product from '../../../../models/Product';
 import { Error } from 'mongoose';
-import db from '../../../utils/database';
+import db from '../../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import slugify from 'slugify';
 import { MongoError } from 'mongodb';
-import { isAdmin, isAuth } from '../../../utils/auth';
+import { isAdmin, isAuth } from '../../../../utils/auth';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
@@ -38,7 +38,7 @@ handler.put(async (req, res) => {
     });
     const product = await newProduct.save();
     await db.disconnect();
-    res.status(201).send(product);
+    res.status(201).json({ success: true, payload: product });
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);

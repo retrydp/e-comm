@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 interface ApInitialState {
   loading: boolean;
   loadingAdd: boolean;
-  error: string;
+  errorText: string;
   errorAdd: string;
 }
 
 const initialState: ApInitialState = {
   loading: false,
   loadingAdd: false,
-  error: '',
+  errorText: '',
   errorAdd: '',
 };
 
@@ -20,15 +20,16 @@ const adminProduct = createSlice({
   reducers: {
     uploadRequest: (state) => {
       state.loading = true;
-      state.error = '';
+      state.errorText = '';
     },
     uploadSuccess: (state) => {
       state.loading = false;
-      state.error = '';
+      state.errorText = '';
     },
+
     uploadError: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.errorText = action.payload;
     },
     addRequest: (state) => {
       state.loadingAdd = true;

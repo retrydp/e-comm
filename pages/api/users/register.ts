@@ -26,12 +26,15 @@ handler.post(async (req, res) => {
     });
     const user = await newUser.save();
     await db.disconnect();
-    res.send({
-      token: signToken(user),
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
+    res.json({
+      success: true,
+      payload: {
+        token: signToken(user),
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
     });
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {

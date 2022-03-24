@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import mongoose from 'mongoose';
 
 export interface Reviews {
@@ -13,6 +14,8 @@ export interface UserSchema {
   password: string;
   isAdmin: boolean;
 }
+
+export interface UserResponse extends AxiosResponse<{ payload: UserSchema }> {}
 
 export interface ProductSchema {
   slug: string;
@@ -47,3 +50,18 @@ export interface Inputs {
   };
   helperText: React.ReactNode;
 }
+
+export interface ProductRequest {
+  name: string;
+  description: string;
+  category: string;
+  brand: string;
+  price: string;
+  oldPrice: string;
+  color: string;
+  itemsInStock: string;
+  images: string[];
+}
+
+export interface ProductResponse
+  extends AxiosResponse<{ payload: ProductSchema }> {}

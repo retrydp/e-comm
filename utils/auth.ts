@@ -42,7 +42,7 @@ const isAuth = async (
     const token = authorization.split(' ')[1];
     jwt.verify(token, process.env.JWT_TOKEN_SECRET as string, (err, decode) => {
       if (err) {
-        res.status(401).send({ message: 'Token is not valid' });
+        res.status(401).json({ message: 'Token is not valid' });
       } else {
         req.user = decode;
 
@@ -50,7 +50,7 @@ const isAuth = async (
       }
     });
   } else {
-    res.status(401).send({ message: 'Token is not supplied' });
+    res.status(401).json({ message: 'Token is not supplied' });
   }
 };
 
@@ -62,7 +62,7 @@ const isAdmin = async (
   if (req.user?.isAdmin) {
     next();
   } else {
-    res.status(401).send({ message: 'User is not admin' });
+    res.status(401).json({ message: 'User is not admin' });
   }
 };
 

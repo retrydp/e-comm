@@ -25,7 +25,7 @@ import styles from '../utils/styles';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { Inputs } from '../utils/types';
+import { Inputs, UserResponse } from '../utils/types';
 import Cookies from 'js-cookie';
 import { useAppDispatch } from '../store';
 import { userLogin } from '../store/authStore';
@@ -113,13 +113,16 @@ const Register = () => {
       return;
     }
     try {
-      const { data } = await axios.post('/api/users/register', {
+      const { data } = await axios.post<
+        { name: string; email: string; password: string },
+        UserResponse
+      >('/api/users/register', {
         name,
         email,
         password,
       });
-      dispatch(userLogin(data));
-      Cookies.set('userInfo', JSON.stringify(data));
+      dispatch(userLogin(data.payload));
+      Cookies.set('userInfo', JSON.stringify(data.payload));
       router.push((redirect as string) || '/');
     } catch (error) {
       if (axios.isAxiosError(error)) {

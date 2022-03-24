@@ -13,7 +13,7 @@ interface AuthInitialState {
 
 const initialState: AuthInitialState = {
   data: [],
-  loading: true,
+  loading: false,
   error: '',
   loadingDelete: false,
   errorDelete: false,

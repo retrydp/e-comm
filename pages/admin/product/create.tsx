@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store';
+import { useAppSelector, useAppDispatch } from '../../../store';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -17,12 +17,12 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-import styles from '../../utils/styles';
+import styles from '../../../utils/styles';
 import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
-import { AdminSidebar } from '../../components';
+import { AdminSidebar } from '../../../components';
 import axios, { AxiosResponse } from 'axios';
-import { Inputs } from '../../utils/types';
+import { Inputs, ProductRequest, ProductResponse } from '../../../utils/types';
 import {
   uploadRequest,
   uploadSuccess,
@@ -30,7 +30,7 @@ import {
   addError,
   addRequest,
   addSuccess,
-} from '../../store/adminProduct';
+} from '../../../store/adminProduct';
 import Image from 'next/image';
 
 interface ProductForm extends Omit<Inputs, 'icon'> {
@@ -45,7 +45,6 @@ const CreateProduct: React.FC = () => {
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
   const router = useRouter();
-
   const { enqueueSnackbar } = useSnackbar();
   const { redirect } = router.query;
   const {
@@ -217,8 +216,8 @@ const CreateProduct: React.FC = () => {
   }) => {
     try {
       dispatch(addRequest());
-      const { data } = await axios.put(
-        '/api/admin/addProduct',
+      const { data } = await axios.put<ProductRequest, ProductResponse>(
+        '/api/admin/product/add',
         {
           name,
           description,
@@ -234,7 +233,7 @@ const CreateProduct: React.FC = () => {
           headers: { authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      enqueueSnackbar(`Product ${data.name} uploaded successfully`, {
+      enqueueSnackbar(`Product ${data.payload.name} uploaded successfully`, {
         variant: 'success',
       });
       dispatch(addSuccess());
@@ -283,7 +282,7 @@ const CreateProduct: React.FC = () => {
     event: SelectChangeEvent<string>,
     name: string
   ) => {
-    selectTypeItems[name].stateSetter(event.target.value as string);
+    selectTypeItems[name].stateSetter(event.target.value);
     setValue(name, event.target.value);
   };
 

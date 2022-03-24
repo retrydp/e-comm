@@ -10,7 +10,7 @@ interface FileRequest extends NextApiRequest {
 }
 
 const onError = async (err: any, req: NextApiRequest, res: NextApiResponse) => {
-  res.status(500).send({
+  res.status(500).json({
     success: false,
     message: err.message.toString() || err.toString(),
   });
@@ -50,7 +50,7 @@ handler.post(async (req, res) => {
 
   const result: any = await streamUpload(req);
 
-  res.send({ success: true, payload: result.secure_url });
+  res.json({ success: true, payload: result.secure_url });
 });
 
 export default handler;

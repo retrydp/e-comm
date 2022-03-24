@@ -19,17 +19,20 @@ handler.post(async (req, res) => {
     await db.disconnect();
     if (user && bcrypt.compareSync(req.body.password, user.password)) {
       const token = signToken(user);
-      res.send({
-        token,
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
+      res.json({
+        success: true,
+        payload: {
+          token,
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          isAdmin: user.isAdmin,
+        },
       });
     } else {
       res
         .status(401)
-        .send({ success: false, message: 'Invalid email or password.' });
+        .json({ success: false, message: 'Invalid email or password.' });
     }
   } catch (error: any) {
     res.status(500).json({

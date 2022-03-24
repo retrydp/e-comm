@@ -19,6 +19,7 @@ import { Add } from '@mui/icons-material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { AdminSidebar } from '../../components';
 import axios from 'axios';
+import { ProductResponse } from '../../utils/types';
 
 const AdminUsers: React.FC = () => {
   const router = useRouter();
@@ -28,6 +29,7 @@ const AdminUsers: React.FC = () => {
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const columns: GridColDef[] = [
+    { field: '_id', headerName: 'ID', width: 200 },
     { field: 'name', headerName: 'Name', width: 200 },
     { field: 'email', headerName: 'E-mail', width: 200 },
     { field: 'isAdmin', headerName: 'Is admin', width: 130 },
@@ -40,10 +42,13 @@ const AdminUsers: React.FC = () => {
     const fetchHandler = async () => {
       try {
         dispatch(fetchRequest());
-        const { data } = await axios.get('/api/admin/users', {
-          headers: { authorization: `Bearer ${userInfo?.token}` },
-        });
-        dispatch(fetchSuccess(data));
+        const { data } = await axios.get<{}, ProductResponse>(
+          '/api/admin/users',
+          {
+            headers: { authorization: `Bearer ${userInfo?.token}` },
+          }
+        );
+        dispatch(fetchSuccess(data.payload));
       } catch (error: any) {
         dispatch(fetchError(error.toString()));
       }
