@@ -3,6 +3,7 @@ import displayInterface from './displayInterface';
 import authStore from './authStore';
 import adminPanelStore from './adminPanelStore';
 import adminProduct from './adminProduct';
+import adminUser from './adminUser';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const store = configureStore({
@@ -11,7 +12,9 @@ const store = configureStore({
     authStore,
     adminPanelStore,
     adminProduct,
+    adminUser,
   },
+  devTools: process.env.NODE_ENV === 'development',
 });
 
 export default store;

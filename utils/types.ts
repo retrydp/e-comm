@@ -9,9 +9,10 @@ export interface Reviews {
 }
 
 export interface UserSchema {
+  _id?: string;
   name: string;
   email: string;
-  password: string;
+  password?: string;
   isAdmin: boolean;
 }
 
@@ -49,6 +50,11 @@ export interface Inputs {
     minLength?: number;
   };
   helperText: React.ReactNode;
+}
+
+export interface InputsExtended extends Omit<Inputs, 'icon'> {
+  inputType: string;
+  selectTypeContent?: string[];
 }
 
 export interface ProductRequest {

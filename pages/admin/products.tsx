@@ -132,14 +132,14 @@ const AdminProducts: React.FC = () => {
       <CssBaseline />
       <Modal
         open={modalOpen}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
       >
         <Box sx={styles.adminModalAddProgress}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography id="modal-title" variant="h6" component="h2">
             Deleting product.
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          <Typography id="modal-description" sx={{ mt: 2 }}>
             This may take some time.
           </Typography>
           <CircularProgress />

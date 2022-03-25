@@ -104,6 +104,7 @@ const styles = {
     p: '50px',
   },
   banner: {
+    marginLeft: 'calc(100% - 100vw)',
     backgroundImage: `url(${banner.src})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',

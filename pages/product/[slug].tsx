@@ -49,6 +49,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
               sx={{ display: 'flex', height: '100%', justifyContent: 'center' }}
             >
               <Image
+                priority={true}
                 width={493}
                 height={493}
                 alt={product.name}

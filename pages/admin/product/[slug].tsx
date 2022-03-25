@@ -22,7 +22,11 @@ import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios, { AxiosResponse } from 'axios';
-import { Inputs, ProductRequest, ProductResponse } from '../../../utils/types';
+import {
+  InputsExtended,
+  ProductRequest,
+  ProductResponse,
+} from '../../../utils/types';
 import {
   uploadRequest,
   uploadSuccess,
@@ -33,12 +37,6 @@ import {
 } from '../../../store/adminProduct';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
-import { ProductSchema } from '../../../utils/types';
-
-interface ProductForm extends Omit<Inputs, 'icon'> {
-  inputType: string;
-  selectTypeContent?: string[];
-}
 
 interface Response extends AxiosResponse<{ payload: string }> {}
 
@@ -47,7 +45,6 @@ interface EditProductProps {
 }
 
 const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
-  console.log(slug);
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
@@ -65,7 +62,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     control,
     formState: { errors },
   } = useForm();
-  const inputs: ProductForm[] = [
+  const inputs: InputsExtended[] = [
     {
       name: 'name',
       label: 'Name',
@@ -268,7 +265,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            authorization: `Bearer ${userInfo.token}`,
+            authorization: `Bearer ${userInfo?.token}`,
           },
         }
       );
@@ -302,17 +299,14 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           {
             headers: {
               'Content-Type': 'multipart/form-data',
-              authorization: `Bearer ${userInfo.token}`,
+              authorization: `Bearer ${userInfo?.token}`,
             },
           }
         );
         dispatch(uploadSuccess());
-        const formNames = inputs.reduce(
-          (prev, { name }) => [...prev, name],
-          []
-        );
-        formNames.forEach((name) => {
-          setValue(name, data.payload[name]);
+        const formTitles = inputs.map(({ name }) => name);
+        formTitles.forEach((title) => {
+          setValue(title, data.payload[title]);
           setPreview(data.payload.images[0]);
         });
       } catch (error: any) {
@@ -446,6 +440,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                     <Box sx={{ width: '100%', maxWidth: '500px' }}>
                       {/* TODO  this in other cases */}
                       <Image
+                        priority={true}
                         width="100%"
                         height="100%"
                         layout="responsive"
@@ -461,7 +456,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                     type="submit"
                     sx={{ backgroundColor: '#40BFFF' }}
                   >
-                    Add product
+                    Update product
                   </Button>
                 </ListItem>
               </List>

@@ -1,37 +1,28 @@
 import nc from 'next-connect';
-import Product from '../../../../../models/Product';
 import { Error } from 'mongoose';
 import db from '../../../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
-import slugify from 'slugify';
 import { isAdmin, isAuth } from '../../../../../utils/auth';
+import User from '../../../../../models/User';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
-
-const slug = (str: string) =>
-  slugify(str, {
-    replacement: '-',
-    lower: true,
-    strict: true,
-    locale: 'vi', // language code of the locale to use
-    trim: true,
-  });
 
 handler.use(isAuth).use(isAdmin);
 
 handler.get(async (req, res) => {
   try {
     await db.connect();
-    const product = await Product.findOne({ slug: req.query.slug });
-    if (product) {
+    const user = await User.findOne({ _id: req.query.id });
+    if (user) {
+      user.password = null;
       res.json({
         success: true,
-        payload: product,
+        payload: user,
       });
     } else {
       res.status(404).json({
         success: false,
-        message: 'Product not found',
+        message: 'User not found',
       });
     }
   } catch (error) {
@@ -45,24 +36,18 @@ handler.get(async (req, res) => {
 handler.patch(async (req, res) => {
   try {
     await db.connect();
-    const editProduct = await Product.findOne({ slug: req.query.slug });
-    if (editProduct) {
-      editProduct.name = req.body.name;
-      editProduct.slug = slug(req.body.name);
-      editProduct.description = req.body.description;
-      editProduct.category = req.body.category;
-      editProduct.brand = req.body.brand;
-      editProduct.price = req.body.price;
-      editProduct.oldPrice = req.body.oldPrice;
-      editProduct.color = req.body.color;
-      editProduct.itemsInStock = req.body.itemsInStock;
-      editProduct.images = req.body.images;
-      await editProduct.save();
-      res.status(202).json({ success: true, payload: editProduct });
+    const editUser = await User.findOne({ _id: req.query.id });
+    if (editUser) {
+      editUser.name = req.body.name;
+      editUser.email = req.body.email;
+      editUser.isAdmin = req.body.isAdmin;
+      await editUser.save();
+      editUser.password = null;
+      res.status(202).json({ success: true, payload: editUser });
       await db.disconnect();
     } else {
       await db.disconnect();
-      res.status(404).json({ success: false, message: 'Product not found.' });
+      res.status(404).json({ success: false, message: 'User not found.' });
     }
   } catch (error: any) {
     await db.disconnect();

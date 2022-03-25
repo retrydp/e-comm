@@ -22,4 +22,31 @@ handler.get(async (req, res) => {
   }
 });
 
+handler.delete(async (req, res) => {
+  try {
+    await db.connect();
+    const user = await User.findOne({ _id: req.body });
+    if (user) {
+      await user.remove();
+      await db.disconnect();
+      res.status(202).json({
+        success: true,
+        payload: 'Deleted successfully',
+      });
+    } else {
+      await db.disconnect();
+      res.status(400).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+  } catch (error: any) {
+    await db.disconnect();
+    res.status(500).json({
+      success: false,
+      message: error?.toString(),
+    });
+  }
+});
+
 export default handler;

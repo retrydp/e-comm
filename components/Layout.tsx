@@ -18,6 +18,19 @@ interface LayoutProps {
 }
 
 const theme = createTheme({
+  components: {
+    //jumping scrollbar fix
+    MuiCssBaseline: {
+      styleOverrides: {
+        html: {
+          marginLeft: 'calc(100vw - 100%)',
+          ['@media (max-width:960px)']: {
+            marginLeft: 'calc(100vw - 100%)',
+          },
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       light: '#BCDDFE',
@@ -70,12 +83,12 @@ const Layout: React.FC<LayoutProps> = ({
 }) => {
   return (
     <>
-      <Head>
-        {description && <meta name="description" content={description} />}
-        <title>{customTitle || title?.toUpperCase() || 'E-comm'}</title>
-      </Head>
-      <CssBaseline />
       <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Head>
+          {description && <meta name="description" content={description} />}
+          <title>{customTitle || title?.toUpperCase() || 'E-comm'}</title>
+        </Head>
         <Box sx={styles.layoutWrapper}>
           <Container maxWidth="lg">
             <Header />

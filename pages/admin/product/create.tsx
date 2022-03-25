@@ -261,7 +261,7 @@ const CreateProduct: React.FC = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            authorization: `Bearer ${userInfo.token}`,
+            authorization: `Bearer ${userInfo?.token}`,
           },
         }
       );
@@ -413,6 +413,7 @@ const CreateProduct: React.FC = () => {
                     <Box sx={{ width: '100%', maxWidth: '500px' }}>
                       {/* TODO  this in other cases */}
                       <Image
+                        priority={true}
                         width="100%"
                         height="100%"
                         layout="responsive"
