@@ -177,11 +177,10 @@ export default ProductScreen;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { slug } = query;
-  await db.connect();
+  await db.dbConnect();
   const productDoc = await Product.findOne({
     slug,
   }).lean();
-  await db.disconnect();
   if (productDoc) {
     const product = db.convertDocToObj(productDoc);
     return {

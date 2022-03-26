@@ -17,7 +17,7 @@ handler.post(async (req, res) => {
         message: 'Password is not set.',
       });
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    await db.connect();
+    await db.dbConnect();
     const newUser = new User({
       name: req.body.name,
       email: req.body.email,
@@ -25,7 +25,6 @@ handler.post(async (req, res) => {
       isAdmin: false,
     });
     const user = await newUser.save();
-    await db.disconnect();
     res.json({
       success: true,
       payload: {
@@ -39,7 +38,6 @@ handler.post(async (req, res) => {
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
-
       return res.status(400).json({
         success: false,
         message: messages.join(', '),

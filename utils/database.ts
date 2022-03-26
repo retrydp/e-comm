@@ -1,39 +1,40 @@
 import mongoose from 'mongoose';
 
-interface Connection {
-  isConnected?: boolean | number;
+const MONGODB_URI: string = process.env.MONGODB_URI || '';
+
+if (!MONGODB_URI) {
+  throw new Error(
+    'Please define the MONGODB_URI environment variable inside .env.local'
+  );
 }
 
-const connection: Connection = {};
+/**
+ * Global is used here to maintain a cached connection across hot reloads
+ * in development. This prevents connections growing exponentially
+ * during API Route usage.
+ */
+let cached = global.mongoose;
 
-async function connect() {
-  if (connection.isConnected) {
-    console.log('Already connected');
-    return;
-  }
-  if (mongoose.connections.length > 0) {
-    connection.isConnected = mongoose.connections[0].readyState;
-    if (connection.isConnected === 1) {
-      console.log('Use prev connection');
-      return;
-    }
-    await mongoose.disconnect();
-  }
-
-  const db = await mongoose.connect(process.env.MONGODB_URI as string);
-  console.log('new connection');
-  connection.isConnected = db.connections[0].readyState;
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
-async function disconnect() {
-  if (connection.isConnected) {
-    if (process.env.NODE_ENV === 'production') {
-      await mongoose.disconnect();
-      connection.isConnected = false;
-    } else {
-      console.log('not disconnected');
-    }
+async function dbConnect() {
+  if (cached.conn) {
+    return cached.conn;
   }
+
+  if (!cached.promise) {
+    const opts = {
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      return mongoose;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
 
 function convertDocToObj(doc: any) {
@@ -46,6 +47,6 @@ function convertDocToObj(doc: any) {
 
   return newDoc;
 }
-const db = { connect, disconnect, convertDocToObj };
+const db = { dbConnect, convertDocToObj };
 
 export default db;

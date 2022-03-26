@@ -16,11 +16,10 @@ const Bags: React.FC<GoodsProps> = ({ goods }) => {
 export default Bags;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  await db.connect();
+  await db.dbConnect();
   const productDocs = await Product.find({
     category: 'bags',
   }).lean();
-  await db.disconnect();
 
   const products = productDocs.map(db.convertDocToObj);
   return {

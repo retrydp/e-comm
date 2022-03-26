@@ -11,7 +11,7 @@ handler.use(isAuth).use(isAdmin);
 
 handler.get(async (req, res) => {
   try {
-    await db.connect();
+    await db.dbConnect();
     const user = await User.findOne({ _id: req.query.id });
     if (user) {
       user.password = null;
@@ -35,7 +35,7 @@ handler.get(async (req, res) => {
 
 handler.patch(async (req, res) => {
   try {
-    await db.connect();
+    await db.dbConnect();
     const editUser = await User.findOne({ _id: req.query.id });
     if (editUser) {
       editUser.name = req.body.name;
@@ -44,13 +44,10 @@ handler.patch(async (req, res) => {
       await editUser.save();
       editUser.password = null;
       res.status(202).json({ success: true, payload: editUser });
-      await db.disconnect();
     } else {
-      await db.disconnect();
       res.status(404).json({ success: false, message: 'User not found.' });
     }
   } catch (error: any) {
-    await db.disconnect();
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
       return res.status(400).json({

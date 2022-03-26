@@ -10,10 +10,9 @@ const handler = nc();
 
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    await db.connect();
+    await db.dbConnect();
     await Product.deleteMany();
     await Product.insertMany(data.products);
-    await db.disconnect();
     res.json({ message: 'seeded successfully' });
   } catch (error) {
     if (error instanceof Error.ValidationError) {

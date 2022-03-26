@@ -14,9 +14,8 @@ handler.post(async (req, res) => {
         success: false,
         message: 'Password is not set.',
       });
-    await db.connect();
+    await db.dbConnect();
     const user = await User.findOne({ email: req.body.email });
-    await db.disconnect();
     if (user && bcrypt.compareSync(req.body.password, user.password)) {
       const token = signToken(user);
       res.json({

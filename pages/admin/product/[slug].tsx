@@ -307,8 +307,8 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
         const formTitles = inputs.map(({ name }) => name);
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
-          setPreview(data.payload.images[0]);
         });
+        setPreview(data.payload.images[0]);
       } catch (error: any) {
         dispatch(uploadError(error.toString()));
       }

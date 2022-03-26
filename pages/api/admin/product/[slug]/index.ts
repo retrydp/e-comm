@@ -21,7 +21,7 @@ handler.use(isAuth).use(isAdmin);
 
 handler.get(async (req, res) => {
   try {
-    await db.connect();
+    await db.dbConnect();
     const product = await Product.findOne({ slug: req.query.slug });
     if (product) {
       res.json({
@@ -44,7 +44,7 @@ handler.get(async (req, res) => {
 
 handler.patch(async (req, res) => {
   try {
-    await db.connect();
+    await db.dbConnect();
     const editProduct = await Product.findOne({ slug: req.query.slug });
     if (editProduct) {
       editProduct.name = req.body.name;
@@ -59,13 +59,10 @@ handler.patch(async (req, res) => {
       editProduct.images = req.body.images;
       await editProduct.save();
       res.status(202).json({ success: true, payload: editProduct });
-      await db.disconnect();
     } else {
-      await db.disconnect();
       res.status(404).json({ success: false, message: 'Product not found.' });
     }
   } catch (error: any) {
-    await db.disconnect();
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
       return res.status(400).json({

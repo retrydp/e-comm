@@ -22,7 +22,7 @@ handler.use(isAuth).use(isAdmin);
 
 handler.put(async (req, res) => {
   try {
-    await db.connect();
+    await db.dbConnect();
     const newProduct = new Product({
       name: req.body.name,
       slug: slug(req.body.name),
@@ -37,7 +37,6 @@ handler.put(async (req, res) => {
       rating: 1,
     });
     const product = await newProduct.save();
-    await db.disconnect();
     res.status(201).json({ success: true, payload: product });
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
