@@ -100,6 +100,7 @@ const Header: React.FC = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleMenuClose}
+                disableScrollLock={true}
                 MenuListProps={{
                   'aria-labelledby': 'basic-button',
                 }}
