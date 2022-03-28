@@ -22,7 +22,12 @@ import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios, { AxiosResponse } from 'axios';
-import { Inputs, ProductRequest, ProductResponse } from '../../../utils/types';
+import {
+  Inputs,
+  InputsExtended,
+  ProductRequest,
+  ProductResponse,
+} from '../../../utils/types';
 import {
   uploadRequest,
   uploadSuccess,
@@ -32,11 +37,6 @@ import {
   addSuccess,
 } from '../../../store/adminProduct';
 import Image from 'next/image';
-
-interface ProductForm extends Omit<Inputs, 'icon'> {
-  inputType: string;
-  selectTypeContent?: string[];
-}
 
 interface Response extends AxiosResponse<{ payload: string }> {}
 
@@ -58,7 +58,7 @@ const CreateProduct: React.FC = () => {
     control,
     formState: { errors },
   } = useForm();
-  const inputs: ProductForm[] = [
+  const inputs: InputsExtended[] = [
     {
       name: 'name',
       label: 'Name',
