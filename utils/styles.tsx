@@ -1,4 +1,5 @@
-import banner from '../public/assets/img/banner.png';const black = '#262626';
+import banner from '../public/assets/img/banner.png';
+const black = '#262626';
 const primaryGrey = '#C1C8CE';
 const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
@@ -101,6 +102,7 @@ const styles = {
     display: 'flex',
     backgroundColor: neutralBlue,
     p: '50px',
+    marginLeft: 'calc(100% - 100vw)',
   },
   banner: {
     marginLeft: 'calc(100% - 100vw)',

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -27,6 +26,7 @@ import {
   InputsExtended,
   ProductRequest,
   ProductResponse,
+  ProductSchema,
 } from '../../../utils/types';
 import {
   uploadRequest,
@@ -233,9 +233,12 @@ const CreateProduct: React.FC = () => {
           headers: { authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      enqueueSnackbar(`Product ${data.payload.name} uploaded successfully`, {
-        variant: 'success',
-      });
+      enqueueSnackbar(
+        `Product ${(data.payload as ProductSchema).name} uploaded successfully`,
+        {
+          variant: 'success',
+        }
+      );
       dispatch(addSuccess());
       //   router.push((redirect as string) || '/');
     } catch (error: any) {

@@ -77,12 +77,7 @@ const Index: React.FC = (): JSX.Element => {
           </Box>
         )}
         <Container maxWidth="lg">
-          {errorResponse ? (
-            <Typography sx={{ color: 'red' }}>{errorResponse}</Typography>
-          ) : (
-            <Presentation goods={presentationData} />
-          )}
-
+          {errorResponse ? null : <Presentation goods={presentationData} />}
           <Typography variant="h3" sx={styles.sectionHeader}>
             BEST SELLER
           </Typography>
