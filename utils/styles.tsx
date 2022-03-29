@@ -1,4 +1,5 @@
-import banner from '../public/assets/img/banner.png';const black = '#262626';
+import banner from '../public/assets/img/banner.png';
+const black = '#262626';
 const primaryGrey = '#C1C8CE';
 const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
@@ -121,7 +122,7 @@ const styles = {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: '85%',
+    width: '82%',
     padding: '10px',
   },
   cardHeaderText: {
