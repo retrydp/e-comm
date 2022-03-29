@@ -122,11 +122,8 @@ const styles = {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: '90%',
+    width: '80%',
     padding: '10px',
-    ['@media (max-width:600px)']: {
-      width: '75vw',
-    },
   },
   cardHeaderText: {
     fontFamily: 'Poppins',
