@@ -20,6 +20,13 @@ interface LayoutProps {
 const theme = createTheme({
   components: {
     //jumping scrollbar fix
+    MuiSelect: {
+      defaultProps: {
+        MenuProps: {
+          disableScrollLock: true,
+        },
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: {
         html: {
