@@ -1,5 +1,4 @@
-import banner from '../public/assets/img/banner.png';
-const black = '#262626';
+import banner from '../public/assets/img/banner.png';const black = '#262626';
 const primaryGrey = '#C1C8CE';
 const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
@@ -113,12 +112,25 @@ const styles = {
     margin: '280px 0px 140px 0px',
     maxWidth: '580px',
   },
+  cardHeaderTextPresentation: {
+    fontFamily: 'Poppins',
+    fontSize: '20px',
+    fontWeight: '700',
+    color: neuralDark,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    width: '90%',
+    padding: '10px',
+    ['@media (max-width:600px)']: {
+      width: '75vw',
+    },
+  },
   cardHeaderText: {
     fontFamily: 'Poppins',
     fontSize: '20px',
     fontWeight: '700',
     color: neuralDark,
-    margin: '25px 0',
   },
   cartHeaderTextPos: {
     textAlign: 'center',
@@ -127,7 +139,6 @@ const styles = {
   cardContentWrapper: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginTop: '30px',
     alignItems: 'center',
   },
   cardContentWrapperGrid: {

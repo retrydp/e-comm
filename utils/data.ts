@@ -1,3 +1,4 @@
+//https://www.sportchek.ca/services/sportchek/search-and-promote/products?x1=ast-id-level-3&q1=men%3A%3Aaccessories%3A%3Abelts&preselectedCategoriesNumber=3&preselectedBrandsNumber=0&page=1&count=24
 import slugify from 'slugify';
 
 const slug = (str: string) =>

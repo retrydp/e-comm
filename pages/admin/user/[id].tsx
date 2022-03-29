@@ -92,7 +92,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
         : '',
     },
   ];
-    const submitHandler = async ({
+  const submitHandler = async ({
     name,
     email,
     isAdmin,
@@ -271,6 +271,6 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
 export default EditUser;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const id = params.id;
+  const id = params?.id;
   return { props: { id } };
 };

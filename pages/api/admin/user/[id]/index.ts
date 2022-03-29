@@ -25,7 +25,7 @@ handler.get(async (req, res) => {
         message: 'User not found',
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
       message: error.toString(),

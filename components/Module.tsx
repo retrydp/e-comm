@@ -1,5 +1,4 @@
-import {
-  Card,
+import {  Card,
   CardContent,
   CardHeader,
   CardMedia,

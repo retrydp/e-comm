@@ -16,10 +16,11 @@ import React from 'react';
 import styles from '../utils/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Layout } from '../components';
-import shoeLogo from '../public/assets/img/columbia.jpg';
 import NextLink from 'next/link';
-
 import product from './product.json';
+import { Presentation } from '../components';
+import axios from 'axios';
+import { ProductRequest, ProductResponse, ProductSchema } from '../utils/types';
 
 type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
 
@@ -30,6 +31,10 @@ interface TabItems {
 
 const Index: React.FC = (): JSX.Element => {
   const [value, setValue] = React.useState<TabItemNames>('all');
+  const [errorResponse, setErrorResponse] = React.useState<string>('');
+  const [presentationData, setPresentationData] = React.useState<
+    ProductSchema[]
+  >([]);
   const sm = useMediaQuery('(min-width:600px)');
   const tabItems: TabItems[] = [
     { name: 'all', value: '/' },
@@ -45,6 +50,20 @@ const Index: React.FC = (): JSX.Element => {
     setValue(newValue);
   };
 
+  React.useEffect(() => {
+    const goodsRequest = async () => {
+      try {
+        const { data } = await axios.get<{}, ProductResponse>(
+          '/api/presentation'
+        );
+        setPresentationData(data.payload as ProductSchema[]);
+      } catch (error: any) {
+        setErrorResponse(error.message || error.toString());
+      }
+    };
+    goodsRequest();
+  }, []);
+
   return (
     <>
       <Layout title="home">
@@ -58,89 +77,12 @@ const Index: React.FC = (): JSX.Element => {
           </Box>
         )}
         <Container maxWidth="lg">
-          <Grid container rowSpacing={3}>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-              <NextLink href="/" passHref>
-                <Link sx={styles.plainAnchor}>
-                  <Card>
-                    <CardHeader
-                      title="FS - QUILTED MAXI CROSS BAG"
-                      titleTypographyProps={styles.cardHeaderText}
-                    ></CardHeader>
-                    <CardMedia
-                      component="img"
-                      height="180"
-                      image={shoeLogo.src}
-                      alt="green iguana"
-                    />
-                    <CardContent sx={styles.cardContentWrapper}>
-                      <Box sx={styles.promo}>
-                        <Typography sx={styles.oldPrice}>$534,33</Typography>
-                        <Typography sx={styles.percent}>24% Off</Typography>
-                      </Box>
-                      <Box>
-                        <Typography sx={styles.actualPrice}>$299,43</Typography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </NextLink>
-            </Grid>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-              <NextLink href="/" passHref>
-                <Link sx={styles.plainAnchor}>
-                  <Card>
-                    <CardHeader
-                      title="FS - QUILTED MAXI CROSS BAG"
-                      titleTypographyProps={styles.cardHeaderText}
-                    ></CardHeader>
-                    <CardMedia
-                      component="img"
-                      height="180"
-                      image={shoeLogo.src}
-                      alt="FS - QUILTED MAXI CROSS BAG"
-                    />
-                    <CardContent sx={styles.cardContentWrapper}>
-                      <Box sx={styles.promo}>
-                        <Typography sx={styles.oldPrice}>$534,33</Typography>
-                        <Typography sx={styles.percent}>24% Off</Typography>
-                      </Box>
-                      <Box>
-                        <Typography sx={styles.actualPrice}>$299,43</Typography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </NextLink>
-            </Grid>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-              <NextLink href="/" passHref>
-                <Link sx={styles.plainAnchor}>
-                  <Card>
-                    <CardHeader
-                      title="FS - QUILTED MAXI CROSS BAG"
-                      titleTypographyProps={styles.cardHeaderText}
-                    ></CardHeader>
-                    <CardMedia
-                      component="img"
-                      height="180"
-                      image={shoeLogo.src}
-                      alt="green iguana"
-                    />
-                    <CardContent sx={styles.cardContentWrapper}>
-                      <Box sx={styles.promo}>
-                        <Typography sx={styles.oldPrice}>$534,33</Typography>
-                        <Typography sx={styles.percent}>24% Off</Typography>
-                      </Box>
-                      <Box>
-                        <Typography sx={styles.actualPrice}>$299,43</Typography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </NextLink>
-            </Grid>
-          </Grid>
+          {errorResponse ? (
+            <Typography sx={{ color: 'red' }}>{errorResponse}</Typography>
+          ) : (
+            <Presentation goods={presentationData} />
+          )}
+
           <Typography variant="h3" sx={styles.sectionHeader}>
             BEST SELLER
           </Typography>

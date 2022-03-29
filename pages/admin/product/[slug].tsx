@@ -26,6 +26,7 @@ import {
   InputsExtended,
   ProductRequest,
   ProductResponse,
+  ProductSchema,
 } from '../../../utils/types';
 import {
   uploadRequest,
@@ -237,9 +238,12 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           headers: { authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      enqueueSnackbar(`Product ${data.payload.name} updated successfully`, {
-        variant: 'success',
-      });
+      enqueueSnackbar(
+        `Product ${(data.payload as ProductSchema).name} updated successfully`,
+        {
+          variant: 'success',
+        }
+      );
       dispatch(addSuccess());
       //   router.push((redirect as string) || '/');
     } catch (error: any) {
@@ -250,7 +254,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   };
 
   const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files[0];
+    const file = event.target!.files?.[0];
     if (!file) {
       enqueueSnackbar('Can not get file.', { variant: 'error' });
       return;
@@ -308,7 +312,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
-        setPreview(data.payload.images[0]);
+        setPreview((data.payload as ProductSchema).images[0]);
       } catch (error: any) {
         dispatch(uploadError(error.toString()));
       }
@@ -471,6 +475,6 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
 export default EditProduct;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const slug = params.slug;
+  const slug = params?.slug;
   return { props: { slug } };
 };

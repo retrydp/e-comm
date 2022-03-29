@@ -246,7 +246,7 @@ const CreateProduct: React.FC = () => {
   };
 
   const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files[0];
+    const file = event.target!.files?.[0];
     if (!file) {
       enqueueSnackbar('Can not get file.', { variant: 'error' });
       return;
