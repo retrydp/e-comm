@@ -1,6 +1,6 @@
 import React from 'react';
 import Cookies from 'js-cookie';
-import { Inputs, UserResponse } from '../utils/types';
+import { Inputs, AppResponse, UserSchema } from '../utils/types';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import logo from '../public/assets/img/logo.svg';
@@ -71,7 +71,7 @@ const Login = () => {
     try {
       const { data } = await axios.post<
         { email: string; password: string },
-        UserResponse
+        AppResponse<UserSchema>
       >('/api/users/login', {
         email,
         password,

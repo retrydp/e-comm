@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 import { ProductSchema, UserSchema } from '../utils/types';
 
-interface AuthInitialState {
-  data: ProductSchema[] | UserSchema[] | [];
+type DataSchemas = ProductSchema[] | UserSchema[] | [];
+
+interface AuthInitialState<T extends DataSchemas> {
+  data: T;
   loading: boolean;
   error: string;
   loadingDelete: boolean;
@@ -11,7 +12,7 @@ interface AuthInitialState {
   deleteErrorText: string;
 }
 
-const initialState: AuthInitialState = {
+const initialState: AuthInitialState<DataSchemas> = {
   data: [],
   loading: false,
   error: '',

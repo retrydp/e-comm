@@ -22,10 +22,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios, { AxiosResponse } from 'axios';
 import {
-  Inputs,
   InputsExtended,
   ProductRequest,
-  ProductResponse,
+  AppResponse,
   ProductSchema,
 } from '../../../utils/types';
 import {
@@ -37,8 +36,6 @@ import {
   addSuccess,
 } from '../../../store/adminProduct';
 import Image from 'next/image';
-
-interface Response extends AxiosResponse<{ payload: string }> {}
 
 const CreateProduct: React.FC = () => {
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
@@ -216,7 +213,10 @@ const CreateProduct: React.FC = () => {
   }) => {
     try {
       dispatch(addRequest());
-      const { data } = await axios.put<ProductRequest, ProductResponse>(
+      const { data } = await axios.put<
+        ProductRequest,
+        AppResponse<ProductSchema>
+      >(
         '/api/admin/product/add',
         {
           name,
@@ -233,12 +233,9 @@ const CreateProduct: React.FC = () => {
           headers: { authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      enqueueSnackbar(
-        `Product ${(data.payload as ProductSchema).name} uploaded successfully`,
-        {
-          variant: 'success',
-        }
-      );
+      enqueueSnackbar(`Product ${data.payload.name} uploaded successfully`, {
+        variant: 'success',
+      });
       dispatch(addSuccess());
       //   router.push((redirect as string) || '/');
     } catch (error: any) {
@@ -258,7 +255,7 @@ const CreateProduct: React.FC = () => {
     bodyFormData.append('file', file);
     try {
       dispatch(uploadRequest());
-      const { data } = await axios.post<FormData, Response>(
+      const { data } = await axios.post<FormData, AppResponse<string>>(
         '/api/admin/upload',
         bodyFormData,
         {

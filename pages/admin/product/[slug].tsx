@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -21,11 +20,11 @@ import styles from '../../../utils/styles';
 import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import {
   InputsExtended,
   ProductRequest,
-  ProductResponse,
+  AppResponse,
   ProductSchema,
 } from '../../../utils/types';
 import {
@@ -38,8 +37,6 @@ import {
 } from '../../../store/adminProduct';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
-
-interface Response extends AxiosResponse<{ payload: string }> {}
 
 interface EditProductProps {
   slug: string;
@@ -221,7 +218,10 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   }) => {
     try {
       dispatch(addRequest());
-      const { data } = await axios.patch<ProductRequest, ProductResponse>(
+      const { data } = await axios.patch<
+        ProductRequest,
+        AppResponse<ProductSchema>
+      >(
         `/api/admin/product/${slug}`,
         {
           name,
@@ -238,12 +238,9 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           headers: { authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      enqueueSnackbar(
-        `Product ${(data.payload as ProductSchema).name} updated successfully`,
-        {
-          variant: 'success',
-        }
-      );
+      enqueueSnackbar(`Product ${data.payload.name} updated successfully`, {
+        variant: 'success',
+      });
       dispatch(addSuccess());
       //   router.push((redirect as string) || '/');
     } catch (error: any) {
@@ -263,7 +260,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     bodyFormData.append('file', file);
     try {
       dispatch(uploadRequest());
-      const { data } = await axios.post<FormData, Response>(
+      const { data } = await axios.post<FormData, AppResponse<string>>(
         '/api/admin/upload',
         bodyFormData,
         {
@@ -298,7 +295,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     const fetchProducts = async () => {
       try {
         dispatch(uploadRequest());
-        const { data } = await axios.get<'', ProductResponse>(
+        const { data } = await axios.get<'', AppResponse<ProductSchema>>(
           `/api/admin/product/${slug}`,
           {
             headers: {
@@ -312,7 +309,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
-        setPreview((data.payload as ProductSchema).images[0]);
+        setPreview(data.payload.images[0]);
       } catch (error: any) {
         dispatch(uploadError(error.toString()));
       }

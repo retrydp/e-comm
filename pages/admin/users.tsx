@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../store';
 import {
   fetchRequest,
   fetchSuccess,
@@ -23,7 +22,7 @@ import styles from '../../utils/styles';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { AdminSidebar } from '../../components';
 import axios from 'axios';
-import { ProductResponse, UserResponse, UserSchema } from '../../utils/types';
+import { AppResponse, UserSchema } from '../../utils/types';
 import NextLink from 'next/link';
 import { Delete, Edit } from '@mui/icons-material';
 import { useSnackbar } from 'notistack';
@@ -43,7 +42,7 @@ const AdminUsers: React.FC = () => {
       dispatch(deleteRequest());
       setModalOpen(true);
       try {
-        await axios.delete<{}, UserResponse>('/api/admin/users', {
+        await axios.delete<{}, AppResponse<UserSchema[]>>('/api/admin/users', {
           headers: { authorization: `Bearer ${userInfo?.token}` },
           data: userId,
         });
@@ -104,7 +103,7 @@ const AdminUsers: React.FC = () => {
     const fetchHandler = async () => {
       try {
         dispatch(fetchRequest());
-        const { data } = await axios.get<{}, ProductResponse>(
+        const { data } = await axios.get<{}, AppResponse<UserSchema[]>>(
           '/api/admin/users',
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },

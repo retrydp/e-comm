@@ -19,6 +19,7 @@ import {
   IconButton,
   Tooltip,
   Modal,
+  Avatar,
 } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import styles from '../../utils/styles';
@@ -27,7 +28,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import NextLink from 'next/link';
 import { AdminSidebar } from '../../components';
 import axios from 'axios';
-import { ProductResponse, ProductSchema } from '../../utils/types';
+import { AppResponse, ProductSchema } from '../../utils/types';
 import { useSnackbar } from 'notistack';
 
 const AdminProducts: React.FC = () => {
@@ -45,10 +46,13 @@ const AdminProducts: React.FC = () => {
       dispatch(deleteRequest());
       setModalOpen(true);
       try {
-        await axios.delete<{}, ProductResponse>('/api/admin/products', {
-          headers: { authorization: `Bearer ${userInfo?.token}` },
-          data: productSlug,
-        });
+        await axios.delete<{}, AppResponse<ProductSchema[]>>(
+          '/api/admin/products',
+          {
+            headers: { authorization: `Bearer ${userInfo?.token}` },
+            data: productSlug,
+          }
+        );
         dispatch(
           deleteSuccess(
             (data as ProductSchema[]).filter(({ slug }) => slug !== productSlug)
@@ -93,7 +97,18 @@ const AdminProducts: React.FC = () => {
       ), //params.row.slug
       width: 100,
     },
-    { field: 'slug', headerName: 'Slug', width: 200 },
+    {
+      field: 'pic',
+      headerName: 'Image',
+      align: 'center',
+      renderCell: (params) => (
+        <Avatar
+          alt={params.row.name}
+          src={params.row.images[0]}
+          sx={{ width: 50, height: 50 }}
+        />
+      ),
+    },
     { field: 'name', headerName: 'Name', width: 200 },
     { field: 'description', headerName: 'Description', width: 130 },
     { field: 'category', headerName: 'Category', type: 'number', width: 90 },
@@ -113,7 +128,7 @@ const AdminProducts: React.FC = () => {
     const fetchHandler = async () => {
       try {
         dispatch(fetchRequest());
-        const { data } = await axios.get<{}, ProductResponse>(
+        const { data } = await axios.get<{}, AppResponse<ProductSchema>>(
           '/api/admin/products',
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },

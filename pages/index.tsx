@@ -1,25 +1,10 @@
-import {  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  Container,
-  Grid,
-  Link,
-  Tab,
-  Tabs,
-  Typography,
-  Rating,
-} from '@mui/material';
-import React from 'react';
+import { Box, Container, Tab, Tabs, Typography } from '@mui/material';import React from 'react';
 import styles from '../utils/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Layout, Module } from '../components';
-import NextLink from 'next/link';
-import product from './product.json';
 import { Presentation } from '../components';
 import axios, { AxiosResponse } from 'axios';
-import { ProductRequest, ProductResponse, ProductSchema } from '../utils/types';
+import { ProductSchema } from '../utils/types';
 
 type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
 
@@ -27,24 +12,24 @@ interface TabItems {
   name: TabItemNames;
 }
 
-interface InnerPayload {
-  productRandom: ProductSchema[];
-  bestOfAll: ProductSchema[];
-  bestOfBelts: ProductSchema[];
-  bestOfBags: ProductSchema[];
-  bestOfSneakers: ProductSchema[];
+interface InnerPayload<T> {
+  productRandom: T[];
+  bestOfAll: T[];
+  bestOfBelts: T[];
+  bestOfBags: T[];
+  bestOfSneakers: T[];
 }
 
 interface ProductPayload
   extends AxiosResponse<{
-    payload: InnerPayload;
+    payload: InnerPayload<ProductSchema>;
   }> {}
 
 const Index: React.FC = (): JSX.Element => {
   const [value, setValue] = React.useState<TabItemNames>('all');
   const [errorResponse, setErrorResponse] = React.useState<string>('');
   const [presentationData, setPresentationData] =
-    React.useState<InnerPayload>();
+    React.useState<InnerPayload<ProductSchema>>();
   const sm = useMediaQuery('(min-width:600px)');
   const tabItems: TabItems[] = [
     { name: 'all' },
@@ -93,34 +78,32 @@ const Index: React.FC = (): JSX.Element => {
             </Container>
           </Box>
         )}
-        <Container maxWidth="lg">
-          {errorResponse
-            ? null
-            : presentationData && (
-                <Presentation goods={presentationData.productRandom} />
-              )}
-          <Typography variant="h3" sx={styles.sectionHeader}>
-            BEST SELLER
-          </Typography>
-          <Box sx={styles.tabWrapper}>
-            <Tabs
-              value={value}
-              onChange={handleTabChange}
-              aria-label="secondary tabs"
-              variant="scrollable"
-            >
-              {tabItems.map(({ name }) => (
-                <Tab
-                  key={name}
-                  value={name}
-                  label={name}
-                  sx={styles.tabItem}
-                ></Tab>
-              ))}
-            </Tabs>
-          </Box>
-          {presentationData && <Module products={tabMap[value]} />}
-        </Container>
+        {presentationData && (
+          <Container maxWidth="lg">
+            <Presentation goods={presentationData.productRandom} />{' '}
+            <Typography variant="h3" sx={styles.sectionHeader}>
+              BEST SELLER
+            </Typography>
+            <Box sx={styles.tabWrapper}>
+              <Tabs
+                value={value}
+                onChange={handleTabChange}
+                aria-label="secondary tabs"
+                variant="scrollable"
+              >
+                {tabItems.map(({ name }) => (
+                  <Tab
+                    key={name}
+                    value={name}
+                    label={name}
+                    sx={styles.tabItem}
+                  ></Tab>
+                ))}
+              </Tabs>
+            </Box>
+            <Module products={tabMap[value]} />
+          </Container>
+        )}
       </Layout>
     </>
   );

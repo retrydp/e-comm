@@ -1,4 +1,5 @@
-import {  Card,
+import {
+  Card,
   CardContent,
   CardHeader,
   CardMedia,
@@ -9,7 +10,6 @@ import {  Card,
 import React from 'react';
 import NextLink from 'next/link';
 import styles from '../utils/styles';
-import shoeLogo from '../public/assets/img/columbia.jpg';
 import { Box } from '@mui/system';
 import { ProductSchema } from '../utils/types';
 

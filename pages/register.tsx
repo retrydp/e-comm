@@ -25,7 +25,7 @@ import styles from '../utils/styles';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { Inputs, UserResponse } from '../utils/types';
+import { Inputs, AppResponse, UserSchema } from '../utils/types';
 import Cookies from 'js-cookie';
 import { useAppDispatch } from '../store';
 import { userLogin } from '../store/authStore';
@@ -115,7 +115,7 @@ const Register = () => {
     try {
       const { data } = await axios.post<
         { name: string; email: string; password: string },
-        UserResponse
+        AppResponse<UserSchema>
       >('/api/users/register', {
         name,
         email,

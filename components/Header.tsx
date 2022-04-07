@@ -52,7 +52,7 @@ const Header: React.FC = () => {
     <>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <NextLink href="/" passHref>
-          <Tooltip title="Menu" arrow>
+          <Tooltip title="Menu" followCursor>
             <Button component="a" sx={styles.navLink} aria-label="Menu">
               <MenuIcon />
             </Button>
@@ -61,14 +61,14 @@ const Header: React.FC = () => {
         <Box sx={styles.grow}></Box>
         <Box sx={styles.userActions}>
           <NextLink href="/" passHref>
-            <Tooltip title="Search" arrow>
+            <Tooltip title="Search" followCursor>
               <Button component="a" sx={styles.navLink} aria-label="Search">
                 <Search />
               </Button>
             </Tooltip>
           </NextLink>
           <NextLink href="/" passHref>
-            <Tooltip title="Cart" arrow>
+            <Tooltip title="Cart" followCursor>
               <Button component="a" sx={styles.navLink} aria-label="User Cart">
                 <ShoppingCartOutlined />
               </Button>
@@ -76,25 +76,26 @@ const Header: React.FC = () => {
           </NextLink>
 
           {sm && (
-            <Tooltip title="Total price" arrow>
+            <Tooltip title="Total price" followCursor>
               <Typography sx={styles.navPrice}>{`$${'0.00'}`}</Typography>
             </Tooltip>
           )}
 
           {userInfo ? (
             <NoSsr>
-              <Button
-                sx={styles.navLink}
-                id="user-menu-button"
-                aria-controls={open ? 'user-menu-button' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleMenuClick}
-              >
-                <Tooltip title={userInfo.email} arrow>
+              <Tooltip title={userInfo.email} followCursor>
+                <Button
+                  sx={styles.navLink}
+                  id="user-menu-button"
+                  aria-controls={open ? 'user-menu-button' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                  onClick={handleMenuClick}
+                  aria-label="user menu"
+                >
                   <PermIdentityOutlined />
-                </Tooltip>
-              </Button>
+                </Button>
+              </Tooltip>
               <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
@@ -141,7 +142,7 @@ const Header: React.FC = () => {
           ) : (
             <NoSsr>
               <NextLink href="/login" passHref>
-                <Tooltip title="Log In" arrow>
+                <Tooltip title="Log In" followCursor>
                   <Button component="a" aria-label="Log in" variant="contained">
                     Log In
                   </Button>

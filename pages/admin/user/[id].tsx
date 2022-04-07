@@ -22,7 +22,7 @@ import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
-import { InputsExtended, UserResponse, UserSchema } from '../../../utils/types';
+import { AppResponse, InputsExtended, UserSchema } from '../../../utils/types';
 import { editError, editRequest, editSuccess } from '../../../store/adminUser';
 
 import { GetServerSideProps } from 'next';
@@ -101,7 +101,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
   }) => {
     try {
       dispatch(editRequest());
-      const { data } = await axios.patch<UserSchema, UserResponse>(
+      const { data } = await axios.patch<UserSchema, AppResponse<UserSchema>>(
         `/api/admin/user/${id}`,
         {
           name,
@@ -133,7 +133,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
     const fetchUsers = async () => {
       try {
         dispatch(editRequest());
-        const { data } = await axios.get<'', UserResponse>(
+        const { data } = await axios.get<'', AppResponse<UserSchema>>(
           `/api/admin/user/${id}`,
           {
             headers: {

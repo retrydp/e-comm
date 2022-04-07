@@ -1,9 +1,10 @@
-import nc from 'next-connect';
-import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../utils/database';
 import Product from '../../models/Product';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
+
+const SHOW_LIMIT: number = 3;
 
 handler.get(async (req, res) => {
   try {
@@ -11,13 +12,13 @@ handler.get(async (req, res) => {
     const productRandom = await Product.aggregate([{ $sample: { size: 3 } }]);
     const bestOfAll = await Product.find({}).limit(3).sort({ salesCount: -1 });
     const bestOfBelts = await Product.find({ category: 'belts' })
-      .limit(3)
+      .limit(SHOW_LIMIT)
       .sort({ salesCount: -1 });
     const bestOfBags = await Product.find({ category: 'bags' })
-      .limit(3)
+      .limit(SHOW_LIMIT)
       .sort({ salesCount: -1 });
     const bestOfSneakers = await Product.find({ category: 'sneakers' })
-      .limit(3)
+      .limit(SHOW_LIMIT)
       .sort({ salesCount: -1 });
 
     res.status(200).json({

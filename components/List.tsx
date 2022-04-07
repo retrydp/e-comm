@@ -2,7 +2,6 @@ import React from 'react';
 import { ProductSchema } from '../utils/types';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
-import Image from 'next/image';
 import { FavoriteBorder, ShoppingCartOutlined } from '@mui/icons-material';
 import {
   Box,
