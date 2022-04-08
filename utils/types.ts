@@ -67,4 +67,5 @@ export interface ProductRequest {
   images: string[];
 }
 
-export interface AppResponse<T> extends AxiosResponse<{ payload: T }> {}
+export interface AppResponse<T>
+  extends AxiosResponse<{ payload: T; success: boolean }> {}
