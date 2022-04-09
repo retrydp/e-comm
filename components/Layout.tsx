@@ -1,5 +1,4 @@
-import {
-  Box,
+import {  Box,
   Container,
   createTheme,
   CssBaseline,
@@ -18,26 +17,6 @@ interface LayoutProps {
 }
 
 const theme = createTheme({
-  components: {
-    //jumping scrollbar fix
-    MuiSelect: {
-      defaultProps: {
-        MenuProps: {
-          disableScrollLock: true,
-        },
-      },
-    },
-    MuiCssBaseline: {
-      styleOverrides: {
-        html: {
-          marginLeft: 'calc(100vw - 100%)',
-          ['@media (max-width:960px)']: {
-            marginLeft: 'calc(100vw - 100%)',
-          },
-        },
-      },
-    },
-  },
   palette: {
     primary: {
       light: '#BCDDFE',

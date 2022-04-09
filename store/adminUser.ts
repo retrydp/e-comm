@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 interface ApInitialState {
   loading: boolean;
   errorText: string;
@@ -11,7 +10,7 @@ const initialState: ApInitialState = {
 };
 
 const adminUser = createSlice({
-  name: 'authStore',
+  name: 'adminUser',
   initialState,
   reducers: {
     editRequest: (state) => {

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 export type Brands = 'nike' | 'airmax' | 'adidas' | 'vans' | 'all';
 export type SortParams = 'popular' | 'new' | 'asc' | 'desc';
 export type View = 'module' | 'list';

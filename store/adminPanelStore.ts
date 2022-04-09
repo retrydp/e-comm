@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { ProductSchema, UserSchema } from '../utils/types';
+import { createSlice } from '@reduxjs/toolkit';import { ProductSchema, UserSchema } from '../utils/types';
 
 type DataSchemas = ProductSchema[] | UserSchema[] | [];
 
@@ -22,7 +21,7 @@ const initialState: AuthInitialState<DataSchemas> = {
 };
 
 const adminPanelStore = createSlice({
-  name: 'authStore',
+  name: 'adminPanelStore',
   initialState,
   reducers: {
     fetchRequest: (state) => {

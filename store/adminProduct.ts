@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-
 interface ApInitialState {
   loading: boolean;
   loadingAdd: boolean;
@@ -15,7 +14,7 @@ const initialState: ApInitialState = {
 };
 
 const adminProduct = createSlice({
-  name: 'authStore',
+  name: 'adminProduct',
   initialState,
   reducers: {
     uploadRequest: (state) => {

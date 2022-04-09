@@ -102,10 +102,8 @@ const styles = {
     display: 'flex',
     backgroundColor: neutralBlue,
     p: '50px',
-    marginLeft: 'calc(100% - 100vw)',
   },
   banner: {
-    marginLeft: 'calc(100% - 100vw)',
     backgroundImage: `url(${banner.src})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
