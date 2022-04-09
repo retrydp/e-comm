@@ -6,16 +6,16 @@ import { SnackbarProvider } from 'notistack';
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }): JSX.Element => {
   return (
     <>
-      <SnackbarProvider
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-      >
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
-      </SnackbarProvider>
+      <Provider store={store}>
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Component {...pageProps} />{' '}
+        </SnackbarProvider>
+      </Provider>
     </>
   );
 };
