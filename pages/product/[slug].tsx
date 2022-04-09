@@ -69,7 +69,6 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                     readOnly
                     size="small"
                   />
-
                   <Typography sx={styles.reviewsText}>
                     {product.reviews?.length || 0} reviews
                   </Typography>

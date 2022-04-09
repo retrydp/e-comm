@@ -1,5 +1,4 @@
-import React from 'react';
-import Head from 'next/head';
+import React from 'react';import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -100,6 +99,9 @@ const Register = () => {
     },
   ];
 
+  /**
+   * @description This function is used to send the request to the server with the data from the forms.
+   */
   const submitHandler = async ({
     email,
     password,

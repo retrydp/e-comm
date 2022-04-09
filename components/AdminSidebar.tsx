@@ -1,5 +1,4 @@
-import {
-  Divider,
+import {  Divider,
   Grid,
   List,
   ListItem,
@@ -71,7 +70,6 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
             </NextLink>
           </ListItem>
         ))}
-
         <ListItem disablePadding divider>
           <NextLink href="/" passHref>
             <ListItemButton component="a">

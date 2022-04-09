@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios';
-import mongoose from 'mongoose';
+import { AxiosResponse } from 'axios';import mongoose from 'mongoose';
 
 export interface Reviews {
   user: mongoose.Schema.Types.ObjectId;
@@ -68,4 +67,7 @@ export interface ProductRequest {
 }
 
 export interface AppResponse<T>
-  extends AxiosResponse<{ payload: T; success: boolean }> {}
+  extends AxiosResponse<{
+    payload: T;
+    success: boolean;
+  }> {}

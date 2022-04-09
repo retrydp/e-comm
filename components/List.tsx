@@ -86,7 +86,6 @@ const List: React.FC<ListProps> = ({ products }) => {
                       readOnly
                       size="small"
                     />
-
                     <Typography sx={styles.reviewsText}>
                       {reviews?.length || 0} reviews
                     </Typography>

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../store';
 import {
   fetchRequest,
   fetchSuccess,
@@ -41,6 +40,10 @@ const AdminProducts: React.FC = () => {
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
 
+  /**
+   * @description Function to delete a product from the database.
+   * @param {string} productSlug value of the product.
+   */
   const handleDeleteProduct = async (productSlug: string) => {
     if (confirm(`Do you want to delete ${productSlug}`)) {
       dispatch(deleteRequest());

@@ -37,6 +37,10 @@ const AdminUsers: React.FC = () => {
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
 
+  /**
+   * @description Function to delete a user from the database.
+   * @param userId id of the user.
+   */
   const handleDeleteUser = async (userId: string) => {
     if (confirm(`Do you want to delete ${userId}`)) {
       dispatch(deleteRequest());

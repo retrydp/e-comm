@@ -8,10 +8,10 @@ import {
   MenuItem,
   NoSsr,
   Link,
+  Avatar,
 } from '@mui/material';
 import {
   ShoppingCartOutlined,
-  PermIdentityOutlined,
   Search,
   Menu as MenuIcon,
 } from '@mui/icons-material';
@@ -52,7 +52,7 @@ const Header: React.FC = () => {
     <>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <NextLink href="/" passHref>
-          <Tooltip title="Menu" followCursor>
+          <Tooltip title="Menu" arrow>
             <Button component="a" sx={styles.navLink} aria-label="Menu">
               <MenuIcon />
             </Button>
@@ -61,29 +61,27 @@ const Header: React.FC = () => {
         <Box sx={styles.grow}></Box>
         <Box sx={styles.userActions}>
           <NextLink href="/" passHref>
-            <Tooltip title="Search" followCursor>
+            <Tooltip title="Search" arrow>
               <Button component="a" sx={styles.navLink} aria-label="Search">
                 <Search />
               </Button>
             </Tooltip>
           </NextLink>
           <NextLink href="/" passHref>
-            <Tooltip title="Cart" followCursor>
+            <Tooltip title="Cart" arrow>
               <Button component="a" sx={styles.navLink} aria-label="User Cart">
                 <ShoppingCartOutlined />
               </Button>
             </Tooltip>
           </NextLink>
-
           {sm && (
-            <Tooltip title="Total price" followCursor>
+            <Tooltip title="Total price" arrow>
               <Typography sx={styles.navPrice}>{`$${'0.00'}`}</Typography>
             </Tooltip>
           )}
-
           {userInfo ? (
             <NoSsr>
-              <Tooltip title={userInfo.email} followCursor>
+              <Tooltip title={userInfo.email} arrow>
                 <Button
                   sx={styles.navLink}
                   id="user-menu-button"
@@ -93,7 +91,9 @@ const Header: React.FC = () => {
                   onClick={handleMenuClick}
                   aria-label="user menu"
                 >
-                  <PermIdentityOutlined />
+                  <Avatar sx={{ bgcolor: '#BCDDFE' }}>
+                    {userInfo.name[0]}
+                  </Avatar>
                 </Button>
               </Tooltip>
               <Menu
@@ -101,7 +101,6 @@ const Header: React.FC = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleMenuClose}
-                disableScrollLock={true}
                 MenuListProps={{
                   'aria-labelledby': 'basic-button',
                 }}
@@ -122,7 +121,6 @@ const Header: React.FC = () => {
                     </NextLink>
                   </MenuItem>
                 )}
-
                 <MenuItem onClick={logoutClickHandler}>
                   <Link
                     component="button"
@@ -142,7 +140,7 @@ const Header: React.FC = () => {
           ) : (
             <NoSsr>
               <NextLink href="/login" passHref>
-                <Tooltip title="Log In" followCursor>
+                <Tooltip title="Log In" arrow>
                   <Button component="a" aria-label="Log in" variant="contained">
                     Log In
                   </Button>

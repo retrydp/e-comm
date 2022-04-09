@@ -44,10 +44,8 @@ export const filterValues: FilterValues[] = [
 
 const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
-
   const md = useMediaQuery('(max-width:900px)');
   const sm = useMediaQuery('(min-width:600px)');
-
   const dispatch = useAppDispatch();
   const {
     display: {
@@ -61,7 +59,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
   } = useAppSelector((store) => store);
 
   /**
-   * Changes current selected sort order option.
+   * @description Changes current selected sort order option.
    * @param {SelectChangeEvent} event
    */
   const sortHandler = (event: SelectChangeEvent) => {
@@ -69,7 +67,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
   };
 
   /**
-   * Filter sidebar visibility trigger.
+   * @description Filter sidebar visibility trigger.
    */
   const drawerVisibleHandler = () => {
     setDrawerIsVisible(!drawerIsVisible);

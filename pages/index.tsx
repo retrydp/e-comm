@@ -2,7 +2,7 @@ import { Box, Container, Tab, Tabs, Typography } from '@mui/material';import Rea
 import styles from '../utils/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Layout, Module } from '../components';
-import { Presentation } from '../components';
+import { ModulePlaceholder } from '../components';
 import axios, { AxiosResponse } from 'axios';
 import { ProductSchema } from '../utils/types';
 
@@ -28,6 +28,7 @@ interface ProductPayload
 const Index: React.FC = (): JSX.Element => {
   const [value, setValue] = React.useState<TabItemNames>('all');
   const [errorResponse, setErrorResponse] = React.useState<string>('');
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [presentationData, setPresentationData] =
     React.useState<InnerPayload<ProductSchema>>();
   const sm = useMediaQuery('(min-width:600px)');
@@ -48,10 +49,12 @@ const Index: React.FC = (): JSX.Element => {
   React.useEffect(() => {
     const goodsRequest = async () => {
       try {
+        setLoading(true);
         const { data } = await axios.get<{}, ProductPayload>(
           '/api/presentation'
         );
         setPresentationData(data.payload);
+        setLoading(false);
       } catch (error: any) {
         setErrorResponse(error.message || error.toString());
       }
@@ -78,32 +81,41 @@ const Index: React.FC = (): JSX.Element => {
             </Container>
           </Box>
         )}
-        {presentationData && (
-          <Container maxWidth="lg">
-            <Presentation goods={presentationData.productRandom} />{' '}
-            <Typography variant="h3" sx={styles.sectionHeader}>
-              BEST SELLER
-            </Typography>
-            <Box sx={styles.tabWrapper}>
-              <Tabs
-                value={value}
-                onChange={handleTabChange}
-                aria-label="secondary tabs"
-                variant="scrollable"
-              >
-                {tabItems.map(({ name }) => (
-                  <Tab
-                    key={name}
-                    value={name}
-                    label={name}
-                    sx={styles.tabItem}
-                  ></Tab>
-                ))}
-              </Tabs>
-            </Box>
+
+        <Container maxWidth="lg">
+          {loading ? (
+            <ModulePlaceholder displayCount={3} />
+          ) : (
+            presentationData && (
+              <Module products={presentationData.productRandom} />
+            )
+          )}
+          <Typography variant="h3" sx={styles.sectionHeader}>
+            BEST SELLER
+          </Typography>
+          <Box sx={styles.tabWrapper}>
+            <Tabs
+              value={value}
+              onChange={handleTabChange}
+              aria-label="secondary tabs"
+              variant="scrollable"
+            >
+              {tabItems.map(({ name }) => (
+                <Tab
+                  key={name}
+                  value={name}
+                  label={name}
+                  sx={styles.tabItem}
+                ></Tab>
+              ))}
+            </Tabs>
+          </Box>
+          {loading ? (
+            <ModulePlaceholder displayCount={3} />
+          ) : (
             <Module products={tabMap[value]} />
-          </Container>
-        )}
+          )}
+        </Container>
       </Layout>
     </>
   );

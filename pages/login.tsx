@@ -1,5 +1,4 @@
-import React from 'react';
-import Cookies from 'js-cookie';
+import React from 'react';import Cookies from 'js-cookie';
 import { Inputs, AppResponse, UserSchema } from '../utils/types';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -67,6 +66,9 @@ const Login = () => {
     },
   ];
 
+  /**
+   * @description This function is used to send the request to the server with the data from the forms.
+   */
   const submitHandler = async ({ email, password }: { [key: string]: any }) => {
     try {
       const { data } = await axios.post<

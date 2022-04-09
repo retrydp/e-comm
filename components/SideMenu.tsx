@@ -1,5 +1,4 @@
-import React from 'react';
-import {
+import React from 'react';import {
   Box,
   Chip,
   FormControl,
@@ -66,14 +65,13 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
     { color: 'white', bg: 'white', slug: 'White' },
     { color: 'yellow', bg: 'yellow', slug: 'Yellow' },
   ];
-
   const dispatch = useAppDispatch();
   const {
     display: { brand, sort, color: colorChecked },
   } = useAppSelector((store) => store);
 
   /**
-   * Changes current selected brand option.
+   * @description Changes current selected brand option.
    * @param {SelectChangeEvent} event
    */
   const brandHandler = (event: SelectChangeEvent) => {
@@ -81,7 +79,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   };
 
   /**
-   * Changes current selected sort order option.
+   * @description Changes current selected sort order option.
    * @param {SelectChangeEvent} event
    */
   const sortHandler = (event: SelectChangeEvent) => {
@@ -89,7 +87,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   };
 
   /**
-   *Changes state due to selected colors.
+   * @description Changes state due to selected colors.
    * @param {SelectChangeEvent<typeof colorChecked>} event
    */
   const colorsChangeHandler = (
@@ -107,7 +105,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   };
 
   /**
-   * Obtain values from the slider.
+   * @description Obtain values from the slider.
    * @param {number[]} values - values from the slider component as array [min, max]
    */
   const getSliderValues = (values: number[]) => {

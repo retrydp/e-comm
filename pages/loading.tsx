@@ -1,6 +1,6 @@
-import React from 'react';import { Layout } from '../components';
+import React from 'react';import { Layout, ModulePlaceholder } from '../components';
 import { useRouter } from 'next/router';
-import { CircularProgress, Container, Grid, Skeleton } from '@mui/material';
+import { Container, Grid, Skeleton } from '@mui/material';
 import { NavTitles } from '../components/NavigationBar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import styles from '../utils/styles';
@@ -50,13 +50,7 @@ const LoadingPage = () => {
               height={68}
               sx={{ maxWidth: '100%', mb: '15px' }}
             />
-            <Grid container spacing={3} sx={{ padding: '15px 0' }}>
-              {Array.from({ length: 9 }).map((_, idx) => (
-                <Grid item lg={4} md={4} sm={4} xs={12} key={idx}>
-                  <Skeleton variant="rectangular" height={450} />
-                </Grid>
-              ))}
-            </Grid>
+            <ModulePlaceholder displayCount={9} />
           </Grid>
         </Grid>
       </Container>

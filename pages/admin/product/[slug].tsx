@@ -1,4 +1,5 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../../store';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -203,6 +204,9 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     },
   };
 
+  /**
+   * @description This function is used to send the request to the server with the data from the forms.
+   */
   const submitHandler = async ({
     name,
     description,
@@ -250,6 +254,9 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     }
   };
 
+  /**
+   * @description This function is used to upload the image to the server.
+   */
   const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target!.files?.[0];
     if (!file) {
@@ -283,6 +290,9 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     }
   };
 
+  /**
+   * @description Handler for the select type element, to set the value of the select type and renew the state.
+   */
   const selectHandleChange = (
     event: SelectChangeEvent<string>,
     name: string

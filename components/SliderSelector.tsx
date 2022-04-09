@@ -1,5 +1,4 @@
-import { Slider, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Slider, Typography } from '@mui/material';import { Box } from '@mui/system';
 import React from 'react';
 
 interface SliderProps {
@@ -9,6 +8,10 @@ interface SliderProps {
 const SliderSelector: React.FC<SliderProps> = ({ getSliderValues }) => {
   const [sliderValue, setSliderValue] = React.useState<number[]>([0, 331]);
 
+  /**
+   * @description Change the slider value.
+   * @param newValue
+   */
   const sliderHandleChange = (event: Event, newValue: number | number[]) => {
     setSliderValue(newValue as number[]);
   };

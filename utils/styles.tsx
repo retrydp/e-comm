@@ -1,5 +1,4 @@
-import banner from '../public/assets/img/banner.png';
-const black = '#262626';
+import banner from '../public/assets/img/banner.png';const black = '#262626';
 const primaryGrey = '#C1C8CE';
 const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
@@ -183,6 +182,9 @@ const styles = {
     color: black,
     textTransform: 'capitalize',
     m: '0 36px',
+    ['@media (max-width:600px)']: {
+      m: '0 15px',
+    },
   },
   sideMenuItem: {
     display: 'flex',

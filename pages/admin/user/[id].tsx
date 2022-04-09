@@ -92,6 +92,10 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
         : '',
     },
   ];
+
+  /**
+   * @description This function is used to send the request to the server with the data from the forms.
+   */
   const submitHandler = async ({
     name,
     email,
@@ -124,6 +128,9 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
     }
   };
 
+  /**
+   * @description Handler for the select type element, to set the value of the select type and renew the state.
+   */
   const selectHandleChange = (event: SelectChangeEvent<boolean>) => {
     setIsAdminValue(event.target.value === 'true');
     setValue('isAdmin', event.target.value === 'true');
