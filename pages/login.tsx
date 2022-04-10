@@ -106,11 +106,9 @@ const Login = () => {
           <Image src={logo.src} width="72" height="72" alt="E-comm logo" />
         </Box>
         <Typography variant="h2" sx={styles.regHeader}>
-          Login to E-Comm
+          Welcome to E-Comm
         </Typography>
-        <Typography sx={styles.regText}>
-          Enter your e-mail and password.
-        </Typography>
+        <Typography sx={styles.regText}>Sign in to continue</Typography>
         <form onSubmit={handleSubmit(submitHandler)} style={{ width: '100%' }}>
           <List>
             {inputs.map(({ name, label, icon, rules, helperText }) => (

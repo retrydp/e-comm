@@ -1,5 +1,4 @@
-import store from '../store';
-import { Provider } from 'react-redux';
+import store from '../store';import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
 import { SnackbarProvider } from 'notistack';
 
@@ -13,7 +12,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }): JSX.Element => {
             horizontal: 'center',
           }}
         >
-          <Component {...pageProps} />{' '}
+          <Component {...pageProps} />
         </SnackbarProvider>
       </Provider>
     </>

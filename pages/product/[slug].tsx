@@ -50,8 +50,8 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
             >
               <Image
                 priority={true}
-                width={493}
-                height={493}
+                width={420}
+                height={525}
                 alt={product.name}
                 src={product.images[0]}
               />
@@ -121,6 +121,9 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                   <Button
                     variant="contained"
                     color="primary"
+                    onClick={(event) => {
+                      console.log(event);
+                    }}
                     startIcon={<ShoppingCartOutlined />}
                   >
                     Add to cart
