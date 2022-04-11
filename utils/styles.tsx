@@ -1,4 +1,5 @@
-import banner from '../public/assets/img/banner.png';const black = '#262626';
+import banner from '../public/assets/img/banner.png';
+const black = '#262626';
 const primaryGrey = '#C1C8CE';
 const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';

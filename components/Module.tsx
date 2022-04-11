@@ -22,7 +22,7 @@ const Module: React.FC<ModuleProps> = ({ products }) => {
     <Grid container spacing={3} sx={{ padding: '15px 0' }}>
       {products.map(({ name, rating, oldPrice, price, images, slug }) => (
         <Grid item lg={4} md={4} sm={4} xs={12} key={name}>
-          <NextLink href={`product/${slug}`} passHref>
+          <NextLink href={`/product/${slug}`} passHref>
             <Link sx={styles.plainAnchor}>
               <Card>
                 <CardMedia

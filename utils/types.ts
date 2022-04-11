@@ -1,4 +1,5 @@
-import { AxiosResponse } from 'axios';import mongoose from 'mongoose';
+import { AxiosResponse } from 'axios';
+import mongoose from 'mongoose';
 
 export interface Reviews {
   user: mongoose.Schema.Types.ObjectId;
@@ -39,18 +40,15 @@ export interface GoodsProps {
 
 export interface Inputs {
   name: string;
-  icon: React.ReactNode;
+  icon: string;
   label: string;
   rules: {
     required?: boolean;
     pattern?: RegExp;
     minLength?: number;
   };
-  helperText: React.ReactNode;
-}
-
-export interface InputsExtended extends Omit<Inputs, 'icon'> {
-  inputType: string;
+  helperText: string;
+  inputType?: string;
   selectTypeContent?: string[];
 }
 

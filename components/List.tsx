@@ -1,5 +1,4 @@
-import React from 'react';
-import { ProductSchema } from '../utils/types';
+import React from 'react';import { ProductSchema } from '../utils/types';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
 import { FavoriteBorder, ShoppingCartOutlined } from '@mui/icons-material';
@@ -46,7 +45,7 @@ const List: React.FC<ListProps> = ({ products }) => {
                 flexWrap: 'wrap',
               }}
             >
-              <NextLink href={`product/${slug}`} passHref>
+              <NextLink href={`/product/${slug}`} passHref>
                 <Link sx={styles.plainAnchor}>
                   <CardMedia
                     sx={{ width: sm ? '100%' : '280px', height: '100%' }}
@@ -63,7 +62,7 @@ const List: React.FC<ListProps> = ({ products }) => {
                   width: sm ? '100%' : '55%',
                 }}
               >
-                <NextLink href={`product/${slug}`} passHref>
+                <NextLink href={`/product/${slug}`} passHref>
                   <Link sx={styles.plainAnchor}>
                     <CardHeader
                       title={name}

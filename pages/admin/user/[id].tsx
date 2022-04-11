@@ -22,10 +22,10 @@ import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
-import { AppResponse, InputsExtended, UserSchema } from '../../../utils/types';
+import { AppResponse, UserSchema } from '../../../utils/types';
 import { editError, editRequest, editSuccess } from '../../../store/adminUser';
-
 import { GetServerSideProps } from 'next';
+import formSettings from '../../../utils/formSettings';
 
 interface EditUserProps {
   id: string;
@@ -47,51 +47,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
     control,
     formState: { errors },
   } = useForm();
-  const inputs: InputsExtended[] = [
-    {
-      name: 'name',
-      label: 'Name',
-      rules: {
-        required: true,
-        minLength: 2,
-      },
-      inputType: 'text',
-      helperText: errors.name
-        ? errors.name.type === 'minLength'
-          ? 'Name is to short'
-          : 'Name is required'
-        : '',
-    },
-    {
-      name: 'email',
-      label: 'E-mail',
-      rules: {
-        required: true,
-        pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-      },
-      inputType: 'text',
-      helperText: errors.email
-        ? errors.email.type === 'pattern'
-          ? 'Email is not valid'
-          : 'Email is required'
-        : '',
-    },
-    {
-      name: 'isAdmin',
-      label: 'Is Admin',
-      rules: {
-        required: false,
-        minLength: 2,
-      },
-      inputType: 'text',
-      selectTypeContent: ['true', 'false'],
-      helperText: errors.brand
-        ? errors.brand.type === 'minLength'
-          ? 'Brand is to short'
-          : 'Brand is required'
-        : '',
-    },
-  ];
+  const { editUser } = formSettings(errors);
 
   /**
    * @description This function is used to send the request to the server with the data from the forms.
@@ -151,7 +107,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
         );
 
         dispatch(editSuccess());
-        const formTitles = inputs.map(({ name }) => name);
+        const formTitles = editUser.map(({ name }) => name);
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
@@ -191,7 +147,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
               style={{ width: '100%' }}
             >
               <List>
-                {inputs.map(
+                {editUser.map(
                   ({
                     name,
                     label,

@@ -24,12 +24,13 @@ import styles from '../utils/styles';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { Inputs, AppResponse, UserSchema } from '../utils/types';
+import { AppResponse, UserSchema } from '../utils/types';
 import Cookies from 'js-cookie';
 import { useAppDispatch } from '../store';
 import { userLogin } from '../store/authStore';
+import formSettings from '../utils/formSettings';
 
-const Register = () => {
+const Register: React.FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -39,65 +40,12 @@ const Register = () => {
     control,
     formState: { errors },
   } = useForm();
-
-  const inputs: Inputs[] = [
-    {
-      name: 'name',
-      label: 'Name',
-      icon: <PersonOutline />,
-      rules: {
-        required: true,
-        minLength: 2,
-      },
-      helperText: errors.name
-        ? errors.name.type === 'minLength'
-          ? 'Name is to short'
-          : 'Name is required'
-        : '',
-    },
-    {
-      name: 'email',
-      label: 'E-mail',
-      icon: <MailOutline />,
-      rules: {
-        required: true,
-        pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
-      },
-      helperText: errors.email
-        ? errors.email.type === 'pattern'
-          ? 'Email is not valid'
-          : 'Email is required'
-        : '',
-    },
-    {
-      name: 'password',
-      label: 'Password',
-      icon: <PasswordOutlined />,
-      rules: {
-        required: true,
-        minLength: 6,
-      },
-      helperText: errors.password
-        ? errors.password.type === 'minLength'
-          ? 'Password is too short'
-          : 'Password is required'
-        : '',
-    },
-    {
-      name: 'confirmPassword',
-      label: 'Confirm Password',
-      icon: <PasswordOutlined />,
-      rules: {
-        required: true,
-        minLength: 6,
-      },
-      helperText: errors.confirmPassword
-        ? errors.confirmPassword.type === 'minLength'
-          ? 'Confirm Password is too short'
-          : 'Confirm Password is required'
-        : '',
-    },
-  ];
+  const icons = {
+    person: PersonOutline,
+    mail: MailOutline,
+    password: PasswordOutlined,
+  };
+  const { register } = formSettings(errors);
 
   /**
    * @description This function is used to send the request to the server with the data from the forms.
@@ -156,37 +104,40 @@ const Register = () => {
         <Typography sx={styles.regText}>Create a new account</Typography>
         <form onSubmit={handleSubmit(submitHandler)} style={{ width: '100%' }}>
           <List>
-            {inputs.map(({ name, label, icon, rules, helperText }) => (
-              <ListItem key={name}>
-                <Controller
-                  name={name}
-                  control={control}
-                  defaultValue=""
-                  rules={rules}
-                  render={({ field }) => (
-                    <TextField
-                      variant="outlined"
-                      fullWidth
-                      id={name}
-                      label={label}
-                      inputProps={{
-                        type: name === 'confirmPassword' ? 'password' : name,
-                      }}
-                      error={Boolean(errors[name])}
-                      helperText={helperText}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            {icon}
-                          </InputAdornment>
-                        ),
-                      }}
-                      {...field}
-                    ></TextField>
-                  )}
-                />
-              </ListItem>
-            ))}
+            {register.map(({ name, label, icon, rules, helperText }) => {
+              const Icon = icons[icon];
+              return (
+                <ListItem key={name}>
+                  <Controller
+                    name={name}
+                    control={control}
+                    defaultValue=""
+                    rules={rules}
+                    render={({ field }) => (
+                      <TextField
+                        variant="outlined"
+                        fullWidth
+                        id={name}
+                        label={label}
+                        inputProps={{
+                          type: name === 'confirmPassword' ? 'password' : name,
+                        }}
+                        error={Boolean(errors[name])}
+                        helperText={helperText}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Icon />
+                            </InputAdornment>
+                          ),
+                        }}
+                        {...field}
+                      ></TextField>
+                    )}
+                  />
+                </ListItem>
+              );
+            })}
             <ListItem>
               <Button
                 variant="contained"

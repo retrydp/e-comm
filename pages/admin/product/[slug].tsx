@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -23,7 +22,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
 import {
-  InputsExtended,
   ProductRequest,
   AppResponse,
   ProductSchema,
@@ -38,6 +36,7 @@ import {
 } from '../../../store/adminProduct';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
+import formSettings from '../../../utils/formSettings';
 
 interface EditProductProps {
   slug: string;
@@ -61,138 +60,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     control,
     formState: { errors },
   } = useForm();
-  const inputs: InputsExtended[] = [
-    {
-      name: 'name',
-      label: 'Name',
-      rules: {
-        required: true,
-        minLength: 2,
-      },
-      inputType: 'text',
-      helperText: errors.name
-        ? errors.name.type === 'minLength'
-          ? 'Name is to short'
-          : 'Name is required'
-        : '',
-    },
-    {
-      name: 'description',
-      label: 'Description',
-      rules: {
-        required: true,
-        minLength: 2,
-      },
-      inputType: 'textarea',
-      helperText: errors.description
-        ? errors.description.type === 'minLength'
-          ? 'Description is to short'
-          : 'Description is required'
-        : '',
-    },
-    {
-      name: 'category',
-      label: 'Category',
-      rules: {
-        required: true,
-        minLength: 2,
-      },
-      inputType: 'text',
-      selectTypeContent: ['sneakers', 'belts', 'bags'],
-      helperText: errors.category
-        ? errors.category.type === 'minLength'
-          ? 'Category is to short'
-          : 'Category is required'
-        : '',
-    },
-    {
-      name: 'brand',
-      label: 'Brand',
-      rules: {
-        required: true,
-        minLength: 2,
-      },
-      inputType: 'text',
-      selectTypeContent: ['nike', 'adidas', 'airmax'],
-      helperText: errors.brand
-        ? errors.brand.type === 'minLength'
-          ? 'Brand is to short'
-          : 'Brand is required'
-        : '',
-    },
-    {
-      name: 'price',
-      label: 'Price',
-      rules: {
-        required: true,
-        minLength: 1,
-      },
-      inputType: 'number',
-      helperText: errors.price
-        ? errors.price.type === 'minLength'
-          ? 'Price is to short'
-          : 'Price is required'
-        : '',
-    },
-    {
-      name: 'oldPrice',
-      label: 'Old Price',
-      rules: {
-        required: true,
-        minLength: 1,
-      },
-      inputType: 'number',
-      helperText: errors.oldPrice
-        ? errors.oldPrice.type === 'minLength'
-          ? 'OldPrice is to short'
-          : 'OldPrice is required'
-        : '',
-    },
-    {
-      name: 'color',
-      label: 'Color',
-      rules: {
-        required: true,
-        minLength: 2,
-      },
-      inputType: 'text',
-      helperText: errors.color
-        ? errors.color.type === 'minLength'
-          ? 'Color is to short'
-          : 'Color is required'
-        : '',
-    },
-
-    {
-      name: 'itemsInStock',
-      label: 'Items In Stock',
-      rules: {
-        required: true,
-        minLength: 1,
-      },
-      inputType: 'number',
-      helperText: errors.itemsInStock
-        ? errors.itemsInStock.type === 'minLength'
-          ? 'Items In Stock is to short'
-          : 'Items In Stock is required'
-        : '',
-    },
-    {
-      name: 'images',
-      label: 'Images',
-      rules: {
-        required: true,
-        minLength: 2,
-      },
-      inputType: 'text',
-      helperText: errors.images
-        ? errors.images.type === 'minLength'
-          ? 'Images is to short'
-          : 'Images is required'
-        : '',
-    },
-  ];
-
+  const { edit } = formSettings(errors);
   const selectTypeItems = {
     category: {
       value: categoryValue,
@@ -315,7 +183,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           }
         );
         dispatch(uploadSuccess());
-        const formTitles = inputs.map(({ name }) => name);
+        const formTitles = edit.map(({ name }) => name);
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
@@ -355,7 +223,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
               style={{ width: '100%' }}
             >
               <List>
-                {inputs.map(
+                {edit.map(
                   ({
                     name,
                     label,
