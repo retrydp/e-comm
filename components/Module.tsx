@@ -1,4 +1,5 @@
-import {  Card,
+import {
+  Card,
   CardContent,
   CardHeader,
   CardMedia,
@@ -59,10 +60,10 @@ const Module: React.FC<ModuleProps> = ({ products }) => {
                   >
                     {oldPrice > 0 ? (
                       <Box sx={styles.promo}>
-                        <Typography sx={styles.oldPrice}>
+                        <Typography sx={styles.oldPrice} aria-label="old price">
                           ${oldPrice}
                         </Typography>
-                        <Typography sx={styles.percent}>
+                        <Typography sx={styles.percent} aria-label="discount">
                           {Math.round((oldPrice - price) / (oldPrice / 100))}%
                           off
                         </Typography>
@@ -71,7 +72,12 @@ const Module: React.FC<ModuleProps> = ({ products }) => {
                       <Box sx={styles.grow}></Box>
                     )}
                     <Box>
-                      <Typography sx={styles.actualPrice}>${price}</Typography>
+                      <Typography
+                        sx={styles.actualPrice}
+                        aria-label="actual price"
+                      >
+                        ${price}
+                      </Typography>
                     </Box>
                   </CardContent>
                 </Box>
