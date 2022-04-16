@@ -90,10 +90,10 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                         gap: '9px',
                       }}
                     >
-                      <Typography sx={styles.oldPrice}>
+                      <Typography sx={styles.oldPrice} aria-label="old price">
                         ${product.oldPrice}
                       </Typography>
-                      <Typography sx={styles.percent}>
+                      <Typography sx={styles.percent} aria-label="discount">
                         {Math.round(
                           (product.oldPrice - product.price) /
                             (product.oldPrice / 100)
@@ -103,7 +103,10 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                     </Box>
                   )}
                   <Box>
-                    <Typography sx={styles.actualPrice}>
+                    <Typography
+                      sx={styles.actualPrice}
+                      aria-label="actual price"
+                    >
                       ${product.price}
                     </Typography>
                   </Box>

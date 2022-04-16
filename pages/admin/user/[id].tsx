@@ -25,8 +25,8 @@ import axios from 'axios';
 import { AppResponse, UserSchema } from '../../../utils/types';
 import { editError, editRequest, editSuccess } from '../../../store/adminUser';
 import { GetServerSideProps } from 'next';
-import formSettings from '../../../utils/formSettings';
 
+import useFormSettings from '../../../utils/hooks/useFormSettings';
 interface EditUserProps {
   id: string;
 }
@@ -47,7 +47,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
     control,
     formState: { errors },
   } = useForm();
-  const { editUser } = formSettings(errors);
+  const { user } = useFormSettings();
 
   /**
    * @description This function is used to send the request to the server with the data from the forms.
@@ -107,7 +107,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
         );
 
         dispatch(editSuccess());
-        const formTitles = editUser.map(({ name }) => name);
+        const formTitles = user.map(({ name }) => name);
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
@@ -147,7 +147,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
               style={{ width: '100%' }}
             >
               <List>
-                {editUser.map(
+                {user.map(
                   ({
                     name,
                     label,

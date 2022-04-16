@@ -104,7 +104,7 @@ const List: React.FC<ListProps> = ({ products }) => {
                     }}
                   >
                     <Box sx={styles.promo}>
-                      {oldPrice > 0 && (
+                      {oldPrice - price > 0 && (
                         <Box
                           sx={{
                             display: 'flex',
@@ -112,17 +112,23 @@ const List: React.FC<ListProps> = ({ products }) => {
                             gap: '9px',
                           }}
                         >
-                          <Typography sx={styles.oldPrice}>
+                          <Typography
+                            sx={styles.oldPrice}
+                            aria-label="old price"
+                          >
                             ${oldPrice}
                           </Typography>
-                          <Typography sx={styles.percent}>
+                          <Typography sx={styles.percent} aria-label="discount">
                             {Math.round((oldPrice - price) / (oldPrice / 100))}%
                             off
                           </Typography>
                         </Box>
                       )}
                       <Box>
-                        <Typography sx={styles.actualPrice}>
+                        <Typography
+                          sx={styles.actualPrice}
+                          aria-label="actual price"
+                        >
                           ${price}
                         </Typography>
                       </Box>

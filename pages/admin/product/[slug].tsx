@@ -1,4 +1,5 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../../store';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -36,7 +37,7 @@ import {
 } from '../../../store/adminProduct';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
-import formSettings from '../../../utils/formSettings';
+import useFormSettings from '../../../utils/hooks/useFormSettings';
 
 interface EditProductProps {
   slug: string;
@@ -60,7 +61,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     control,
     formState: { errors },
   } = useForm();
-  const { edit } = formSettings(errors);
+  const { product } = useFormSettings();
   const selectTypeItems = {
     category: {
       value: categoryValue,
@@ -183,7 +184,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           }
         );
         dispatch(uploadSuccess());
-        const formTitles = edit.map(({ name }) => name);
+        const formTitles = product.map(({ name }) => name);
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
@@ -223,7 +224,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
               style={{ width: '100%' }}
             >
               <List>
-                {edit.map(
+                {product.map(
                   ({
                     name,
                     label,

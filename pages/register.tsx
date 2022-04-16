@@ -1,4 +1,5 @@
-import React from 'react';import Head from 'next/head';
+import React from 'react';
+import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -28,7 +29,7 @@ import { AppResponse, UserSchema } from '../utils/types';
 import Cookies from 'js-cookie';
 import { useAppDispatch } from '../store';
 import { userLogin } from '../store/authStore';
-import formSettings from '../utils/formSettings';
+import useFormSettings from '../utils/hooks/useFormSettings';
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,7 +46,7 @@ const Register: React.FC = () => {
     mail: MailOutline,
     password: PasswordOutlined,
   };
-  const { register } = formSettings(errors);
+  const { register } = useFormSettings();
 
   /**
    * @description This function is used to send the request to the server with the data from the forms.

@@ -1,4 +1,5 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../../store';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -35,7 +36,7 @@ import {
   addSuccess,
 } from '../../../store/adminProduct';
 import Image from 'next/image';
-import formSettings from '../../../utils/formSettings';
+import useFormSettings from '../../../utils/hooks/useFormSettings';
 
 const CreateProduct: React.FC = () => {
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
@@ -55,7 +56,7 @@ const CreateProduct: React.FC = () => {
     control,
     formState: { errors },
   } = useForm();
-  const { create } = formSettings(errors);
+  const { product } = useFormSettings();
   const selectTypeItems = {
     category: {
       value: categoryValue,
@@ -195,7 +196,7 @@ const CreateProduct: React.FC = () => {
               style={{ width: '100%' }}
             >
               <List>
-                {create.map(
+                {product.map(
                   ({
                     name,
                     label,

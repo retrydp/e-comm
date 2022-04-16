@@ -25,7 +25,7 @@ import Head from 'next/head';
 import styles from '../utils/styles';
 import { useAppDispatch } from '../store';
 import { userLogin } from '../store/authStore';
-import formSettings from '../utils/formSettings';
+import useFormSettings from '../utils/hooks/useFormSettings';
 
 const Login: React.FC = () => {
   const router = useRouter();
@@ -41,7 +41,7 @@ const Login: React.FC = () => {
     mail: MailOutline,
     password: PasswordOutlined,
   };
-  const { login } = formSettings(errors);
+  const { login } = useFormSettings();
 
   /**
    * @description This function is used to send the request to the server with the data from the forms.
