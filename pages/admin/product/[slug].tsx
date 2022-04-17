@@ -174,7 +174,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     const fetchProducts = async () => {
       try {
         dispatch(uploadRequest());
-        const { data } = await axios.get<'', AppResponse<ProductSchema>>(
+        const { data } = await axios.get<{}, AppResponse<ProductSchema>>(
           `/api/admin/product/${slug}`,
           {
             headers: {

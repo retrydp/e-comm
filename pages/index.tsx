@@ -4,26 +4,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Layout, Module } from '../components';
 import { ModulePlaceholder } from '../components';
 import axios, { AxiosResponse } from 'axios';
-import { ProductSchema } from '../utils/types';
+import { InnerPayload, ProductPayload, ProductSchema } from '../utils/types';
 
 type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
 
 interface TabItems {
   name: TabItemNames;
 }
-
-interface InnerPayload<T> {
-  productRandom: T[];
-  bestOfAll: T[];
-  bestOfBelts: T[];
-  bestOfBags: T[];
-  bestOfSneakers: T[];
-}
-
-interface ProductPayload
-  extends AxiosResponse<{
-    payload: InnerPayload<ProductSchema>;
-  }> {}
 
 const Index: React.FC = (): JSX.Element => {
   const [value, setValue] = React.useState<TabItemNames>('all');
@@ -81,7 +68,6 @@ const Index: React.FC = (): JSX.Element => {
             </Container>
           </Box>
         )}
-
         <Container maxWidth="lg">
           {loading ? (
             <ModulePlaceholder displayCount={3} />

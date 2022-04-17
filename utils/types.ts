@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios';
-import mongoose from 'mongoose';
+import { AxiosResponse } from 'axios';import mongoose from 'mongoose';
 
 export interface Reviews {
   user: mongoose.Schema.Types.ObjectId;
@@ -64,8 +63,28 @@ export interface ProductRequest {
   images: string[];
 }
 
-export interface AppResponse<T>
+export interface InnerPayload<T extends ProductSchema = ProductSchema> {
+  productRandom: T[];
+  bestOfAll: T[];
+  bestOfBelts: T[];
+  bestOfBags: T[];
+  bestOfSneakers: T[];
+}
+
+export interface ProductPayload
   extends AxiosResponse<{
+    payload: InnerPayload;
+  }> {}
+
+export interface AppResponse<
+  T extends
+    | UserSchema[]
+    | ProductSchema[]
+    | ProductSchema
+    | UserSchema
+    | string
+    | ProductPayload
+> extends AxiosResponse<{
     payload: T;
     success: boolean;
   }> {}

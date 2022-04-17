@@ -55,7 +55,6 @@ const Products = new mongoose.Schema<
       type: [String],
       required: [true, 'Images are not provided'],
     },
-
     rating: {
       type: Number,
       min: [1, 'Rating must be at least 1'],
@@ -66,7 +65,6 @@ const Products = new mongoose.Schema<
       type: Number,
       default: 0,
     },
-
     itemsInStock: {
       type: Number,
       required: [true, 'In items in stock was not set'],
