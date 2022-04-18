@@ -88,6 +88,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
       dispatch(setView(nextView));
     }
   };
+
   return (
     <>
       <Drawer

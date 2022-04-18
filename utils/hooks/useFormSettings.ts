@@ -1,4 +1,5 @@
-import { useForm } from 'react-hook-form';import { Inputs } from '../types';
+import { useForm } from 'react-hook-form';
+import { Inputs } from '../types';
 
 interface FormSettings<T extends Inputs[] = Inputs[]> {
   register: T;
