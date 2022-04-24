@@ -1,5 +1,4 @@
-import {
-  Button,
+import {  Button,
   Toolbar,
   Typography,
   Box,
@@ -67,7 +66,7 @@ const Header: React.FC = () => {
               </Button>
             </Tooltip>
           </NextLink>
-          <NextLink href="/" passHref>
+          <NextLink href="/cart" passHref>
             <Tooltip title="Cart" arrow>
               <Button component="a" sx={styles.navLink} aria-label="User Cart">
                 <ShoppingCartOutlined />

@@ -1,5 +1,4 @@
-import {
-  Box,
+import {  Box,
   Button,
   Container,
   Grid,
@@ -22,7 +21,7 @@ const Cart: React.FC = () => {
   const sm = useMediaQuery('(max-width:600px)');
   const [quantity, setQuantity] = React.useState<number>(1);
   return (
-    <Layout title="bags" customTitle="Cart">
+    <Layout title="home" customTitle="Cart">
       <Container maxWidth="lg" sx={{ mb: '15px' }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
