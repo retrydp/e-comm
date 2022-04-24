@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';import { ProductSchema, UserSchema } from '../utils/types';
+import { createSlice } from '@reduxjs/toolkit';
+import { ProductSchema, UserSchema } from '../utils/types';
 
 type DataSchemas = ProductSchema[] | UserSchema[] | [];
 

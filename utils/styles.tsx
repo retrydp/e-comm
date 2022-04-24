@@ -1,12 +1,11 @@
-import banner from '../public/assets/img/banner.png';
-const black = '#262626';
+import banner from '../public/assets/img/banner.png';const black = '#262626';
 const primaryGrey = '#C1C8CE';
 const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
 const primaryRed = '#FB7181';
 const neutralBlue = '#BCDDFE';
-const neuralDark = '#223263';
-const neuralGrey = '#9098B1';
+const neutralDark = '#223263';
+const neutralGrey = '#9098B1';
 
 const styles = {
   grow: {
@@ -116,7 +115,7 @@ const styles = {
     fontFamily: 'Poppins',
     fontSize: '20px',
     fontWeight: '700',
-    color: neuralDark,
+    color: neutralDark,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
@@ -127,7 +126,7 @@ const styles = {
     fontFamily: 'Poppins',
     fontSize: '20px',
     fontWeight: '700',
-    color: neuralDark,
+    color: neutralDark,
   },
   cartHeaderTextPos: {
     textAlign: 'center',
@@ -234,7 +233,7 @@ const styles = {
     fontFamily: 'Poppins',
     fontSize: '20px',
     fontWeight: '700',
-    color: neuralDark,
+    color: neutralDark,
   },
   cardContentWrapperSecondary: {
     display: 'flex',
@@ -268,14 +267,14 @@ const styles = {
     fontFamily: 'Poppins',
     fontSize: '20px',
     fontWeight: '700',
-    color: neuralDark,
+    color: neutralDark,
     mt: '10px',
   },
   regText: {
     fontFamily: 'Poppins',
     fontSize: '14px',
     fontWeight: '400',
-    color: neuralGrey,
+    color: neutralGrey,
     mt: '10px',
     mb: '50px',
   },
@@ -285,7 +284,7 @@ const styles = {
     borderRight: '1px solid #E0E0E0',
   },
   adminModalAddProgress: {
-    position: 'absolute' as 'absolute',
+    position: 'absolute', // as "absolute"
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -293,6 +292,35 @@ const styles = {
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
+  },
+  cartWrapper: {
+    border: `1px solid ${primaryGrey}`,
+    borderRadius: '5px',
+    display: 'flex',
+    padding: '15px',
+  },
+  cartItemText: {
+    fontSize: '12px',
+    fontWeight: '700',
+    color: neutralDark,
+    fontFamily: 'Poppins',
+    ['@media (min-width:600px)']: {
+      fontSize: '20px',
+    },
+  },
+  cartInnerWrapper: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-between',
+  },
+  cartItemPrice: {
+    fontSize: '12px',
+    fontWeight: '700',
+    color: primaryBlue,
+    fontFamily: 'Raleway',
+    ['@media (min-width:600px)']: {
+      fontSize: '30px',
+    },
   },
 } as const;
 
