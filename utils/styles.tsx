@@ -1,4 +1,5 @@
-import banner from '../public/assets/img/banner.png';const black = '#262626';
+import banner from '../public/assets/img/banner.png';
+const black = '#262626';
 const primaryGrey = '#C1C8CE';
 const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
@@ -321,6 +322,34 @@ const styles = {
     ['@media (min-width:600px)']: {
       fontSize: '30px',
     },
+  },
+  cartTotal: {
+    mt: '15px',
+    maxWidth: '350px',
+    border: `1px solid ${primaryGrey}`,
+    borderRadius: '5px',
+    width: '100%',
+  },
+  paymentName: {
+    fontSize: '12px',
+    fontWeight: '400',
+    color: primaryGrey,
+    ['@media (min-width:600px)']: {
+      fontSize: '1rem',
+    },
+  },
+  paymentValues: {
+    fontSize: '12px',
+    fontWeight: '400',
+    color: neutralDark,
+    fontFamily: 'Poppins',
+    ['@media (min-width:600px)']: {
+      fontSize: '1rem',
+    },
+  },
+  detailsWrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 } as const;
 

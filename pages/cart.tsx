@@ -1,4 +1,5 @@
-import {  Box,
+import {
+  Box,
   Button,
   Container,
   Grid,
@@ -135,6 +136,71 @@ const Cart: React.FC = () => {
             </Box>
           </Grid>
         </Grid>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+          }}
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              mt: '15px',
+              textAlign: 'left',
+              maxWidth: '350px',
+              width: '100%',
+            }}
+          >
+            Payment details:
+          </Typography>
+          <Box sx={styles.cartTotal}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                p: '15px',
+                width: '100%',
+                gap: '25px',
+              }}
+            >
+              <Box sx={styles.detailsWrapper}>
+                <Typography sx={styles.paymentName}>Items (3)</Typography>
+                <Typography sx={styles.paymentValues}>$598.86</Typography>
+              </Box>
+              <Box sx={styles.detailsWrapper}>
+                <Typography sx={styles.paymentName}>Shipping</Typography>
+                <Typography sx={styles.paymentValues}>$40</Typography>
+              </Box>
+              <Box sx={styles.detailsWrapper}>
+                <Typography sx={styles.paymentName}>Import charges</Typography>
+                <Typography sx={styles.paymentValues}>$128.00</Typography>
+              </Box>
+            </Box>
+          </Box>
+          <Typography
+            variant="h4"
+            sx={{
+              mt: '15px',
+              textAlign: 'left',
+              maxWidth: '350px',
+              width: '100%',
+            }}
+          >
+            Total: $128.00
+          </Typography>
+          <Box
+            sx={{
+              maxWidth: '350px',
+              width: '100%',
+              mt: '15px',
+            }}
+          >
+            <Button variant="contained" fullWidth>
+              Check out
+            </Button>
+          </Box>
+        </Box>
       </Container>
     </Layout>
   );
