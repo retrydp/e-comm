@@ -1,5 +1,4 @@
-import { useForm } from 'react-hook-form';
-import { Inputs } from '../types';
+import { useForm } from 'react-hook-form';import { Inputs } from '../types';
 
 interface FormSettings<T extends Inputs[] = Inputs[]> {
   register: T;
@@ -43,6 +42,20 @@ const useFormSettings = (): FormSettings => {
     },
   ];
   const register = [
+    {
+      name: 'name',
+      label: 'Name',
+      icon: 'person',
+      rules: {
+        required: true,
+        minLength: 2,
+      },
+      helperText: errors.name
+        ? errors.name.type === 'minLength'
+          ? 'Name is to short'
+          : 'Name is required'
+        : '',
+    },
     ...login,
     {
       name: 'confirmPassword',
