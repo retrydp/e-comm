@@ -1,4 +1,3 @@
-import banner from '../public/assets/img/banner.png';
 const black = '#262626';
 const primaryGrey = '#C1C8CE';
 const secondaryGrey = '#F6F7F8';
@@ -104,7 +103,8 @@ const styles = {
     p: '50px',
   },
   banner: {
-    backgroundImage: `url(${banner.src})`,
+    backgroundImage:
+      'url(https://res.cloudinary.com/retrydp/image/upload/v1651082495/xqnzeninrst1hyh4ege9.png)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   },
