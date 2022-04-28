@@ -1,5 +1,4 @@
-import {
-  Button,
+import {  Button,
   Toolbar,
   Typography,
   Box,
@@ -9,6 +8,7 @@ import {
   NoSsr,
   Link,
   Avatar,
+  Badge,
 } from '@mui/material';
 import {
   ShoppingCartOutlined,
@@ -27,6 +27,7 @@ import { userLogout } from '../store/authStore';
 const Header: React.FC = () => {
   const sm = useMediaQuery('(min-width:600px)');
   const {
+    cart: { products },
     authStore: { userInfo },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
@@ -36,6 +37,9 @@ const Header: React.FC = () => {
     setAnchorEl(event.currentTarget);
   };
   const router = useRouter();
+  const totalProductsInCart = products?.length
+    ? products.reduce((prev, { count }) => prev + count, 0)
+    : 0;
 
   const logoutClickHandler = () => {
     setAnchorEl(null);
@@ -70,7 +74,9 @@ const Header: React.FC = () => {
           <NextLink href="/cart" passHref>
             <Tooltip title="Cart" arrow>
               <Button component="a" sx={styles.navLink} aria-label="User Cart">
-                <ShoppingCartOutlined />
+                <Badge badgeContent={totalProductsInCart} color="primary">
+                  <ShoppingCartOutlined />
+                </Badge>
               </Button>
             </Tooltip>
           </NextLink>

@@ -4,6 +4,7 @@ import {
   Container,
   Grid,
   IconButton,
+  Link,
   Typography,
   useMediaQuery,
 } from '@mui/material';
@@ -17,191 +18,215 @@ import {
   AddBox,
   IndeterminateCheckBox,
 } from '@mui/icons-material';
+import { useAppDispatch, useAppSelector } from '../store';
+import { decrementCount, incrementCount, deleteProduct } from '../store/cart';
+import NextLink from 'next/link';
+
+const TAXES = 0.2;
+const SHIPPING_PRICE = 10;
 
 const Cart: React.FC = () => {
   const sm = useMediaQuery('(max-width:600px)');
-  const [quantity, setQuantity] = React.useState<number>(1);
+  const dispatch = useAppDispatch();
+  const {
+    cart: { products },
+  } = useAppSelector((store) => store);
+  const totalProductsInCart = products?.length
+    ? products.reduce((prev, { count }) => prev + count, 0)
+    : 0;
+  const totalSum = products?.length
+    ? products.reduce((prev, { price, count }) => prev + price * count, 0)
+    : 0;
+
   return (
     <Layout title="home" customTitle="Cart">
-      <Container maxWidth="lg" sx={{ mb: '15px' }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Box sx={styles.cartWrapper}>
-              <Box>
-                <Image
-                  priority={true}
-                  width={sm ? '120%' : '420'}
-                  height={sm ? '120%' : '525'}
-                  src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/fb149f6b-c850-4708-ac13-1c2cb4df89d5/metcon-7-flyease-training-sneakers-RKGv1m.png"
-                ></Image>
-              </Box>
-
-              <Box
-                sx={{
-                  ml: '15px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                }}
-              >
-                <Typography sx={styles.cartItemText}>
-                  Nike Air Zoom Pegasus 36 Miami dsa dsa das dsa dsaw12321 321
-                  sda
-                </Typography>
-                {!sm && (
-                  <Typography>
-                    Created for the hardwood but taken to the streets, the '80s
-                    basketball icon returns with classic details and throwback
-                    hoops flair. Its padded, low-cut collar and foam midsole let
-                    you take your game anywhere—in comfort.
-                  </Typography>
-                )}
-
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography sx={{ fontSize: sm ? '12px' : '20px' }}>
-                    Quantity:
-                  </Typography>
-                  <IconButton
-                    color="primary"
-                    aria-label="Add one item"
-                    component="span"
-                    onClick={() => setQuantity(quantity + 1)}
-                  >
-                    <AddBox
-                      sx={{
-                        height: sm ? '30px' : '45px',
-                        width: sm ? '30px' : '45px',
-                      }}
-                    />
-                  </IconButton>
-                  <Typography sx={{ fontSize: sm ? '12px' : '20px' }}>
-                    {quantity}
-                  </Typography>
-                  <IconButton
-                    color="primary"
-                    aria-label="Delete one item"
-                    component="span"
-                    onClick={() => {
-                      if (quantity > 1) {
-                        setQuantity(quantity - 1);
-                      }
+      {products.length > 0 ? (
+        <Container maxWidth="lg" sx={{ mb: '15px' }}>
+          <Grid container spacing={2}>
+            {products.map((product) => (
+              <Grid item xs={12}>
+                <Box sx={styles.cartWrapper}>
+                  <Box>
+                    <Image
+                      priority={true}
+                      width={sm ? '120%' : '420'}
+                      height={sm ? '120%' : '525'}
+                      src={product.images[0]}
+                    ></Image>
+                  </Box>
+                  <Box
+                    sx={{
+                      ml: '15px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      width: '100%',
                     }}
                   >
-                    <IndeterminateCheckBox
+                    <Typography sx={styles.cartItemText}>
+                      {product.name}
+                    </Typography>
+                    {!sm && <Typography>{product.description}</Typography>}
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Typography sx={{ fontSize: sm ? '12px' : '20px' }}>
+                        Quantity:
+                      </Typography>
+                      <IconButton
+                        color="primary"
+                        aria-label="Add one item"
+                        component="span"
+                        onClick={() => dispatch(incrementCount(product))}
+                      >
+                        <AddBox
+                          sx={{
+                            height: sm ? '30px' : '45px',
+                            width: sm ? '30px' : '45px',
+                          }}
+                        />
+                      </IconButton>
+                      <Typography sx={{ fontSize: sm ? '12px' : '20px' }}>
+                        {product.count}
+                      </Typography>
+                      <IconButton
+                        color="primary"
+                        aria-label="Delete one item"
+                        component="span"
+                        onClick={() => dispatch(decrementCount(product))}
+                      >
+                        <IndeterminateCheckBox
+                          sx={{
+                            height: sm ? '30px' : '45px',
+                            width: sm ? '30px' : '45px',
+                          }}
+                        />
+                      </IconButton>
+                    </Box>
+                    <Box
                       sx={{
-                        height: sm ? '30px' : '45px',
-                        width: sm ? '30px' : '45px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        flexWrap: 'wrap',
                       }}
-                    />
-                  </IconButton>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  <Typography sx={styles.cartItemPrice}>$299,43</Typography>
-                  <Box sx={{ display: 'flex' }}>
-                    <IconButton
-                      color="primary"
-                      aria-label="Favorite"
-                      component="span"
                     >
-                      <Favorite
-                        sx={{
-                          height: sm ? '25px' : '45px',
-                          width: sm ? '25px' : '45px',
-                        }}
-                      />
-                    </IconButton>
-                    <IconButton
-                      color="primary"
-                      aria-label="Delete"
-                      component="span"
-                    >
-                      <Delete
-                        sx={{
-                          height: sm ? '25px' : '45px',
-                          width: sm ? '25px' : '45px',
-                        }}
-                      />
-                    </IconButton>
+                      <Typography sx={styles.cartItemPrice}>
+                        {product.price}
+                      </Typography>
+                      <Box sx={{ display: 'flex' }}>
+                        <IconButton
+                          color="primary"
+                          aria-label="Favorite"
+                          component="span"
+                        >
+                          <Favorite
+                            sx={{
+                              height: sm ? '25px' : '45px',
+                              width: sm ? '25px' : '45px',
+                            }}
+                          />
+                        </IconButton>
+                        <IconButton
+                          color="primary"
+                          aria-label="Delete"
+                          component="span"
+                          onClick={() => dispatch(deleteProduct(product))}
+                        >
+                          <Delete
+                            sx={{
+                              height: sm ? '25px' : '45px',
+                              width: sm ? '25px' : '45px',
+                            }}
+                          />
+                        </IconButton>
+                      </Box>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            </Box>
+              </Grid>
+            ))}
           </Grid>
-        </Grid>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-          }}
-        >
-          <Typography
-            variant="h4"
-            sx={{
-              mt: '15px',
-              textAlign: 'left',
-              maxWidth: '350px',
-              width: '100%',
-            }}
-          >
-            Payment details:
-          </Typography>
-          <Box sx={styles.cartTotal}>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                p: '15px',
-                width: '100%',
-                gap: '25px',
-              }}
-            >
-              <Box sx={styles.detailsWrapper}>
-                <Typography sx={styles.paymentName}>Items (3)</Typography>
-                <Typography sx={styles.paymentValues}>$598.86</Typography>
-              </Box>
-              <Box sx={styles.detailsWrapper}>
-                <Typography sx={styles.paymentName}>Shipping</Typography>
-                <Typography sx={styles.paymentValues}>$40</Typography>
-              </Box>
-              <Box sx={styles.detailsWrapper}>
-                <Typography sx={styles.paymentName}>Import charges</Typography>
-                <Typography sx={styles.paymentValues}>$128.00</Typography>
-              </Box>
-            </Box>
-          </Box>
-          <Typography
-            variant="h4"
-            sx={{
-              mt: '15px',
-              textAlign: 'left',
-              maxWidth: '350px',
-              width: '100%',
-            }}
-          >
-            Total: $128.00
-          </Typography>
           <Box
             sx={{
-              maxWidth: '350px',
-              width: '100%',
-              mt: '15px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
             }}
           >
-            <Button variant="contained" fullWidth>
-              Check out
-            </Button>
+            <Typography
+              variant="h4"
+              sx={{
+                mt: '15px',
+                textAlign: 'left',
+                maxWidth: '350px',
+                width: '100%',
+              }}
+            >
+              Payment details:
+            </Typography>
+            <Box sx={styles.cartTotal}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  p: '15px',
+                  width: '100%',
+                  gap: '25px',
+                }}
+              >
+                <Box sx={styles.detailsWrapper}>
+                  <Typography sx={styles.paymentName}>
+                    Items ({totalProductsInCart})
+                  </Typography>
+                  <Typography sx={styles.paymentValues}>${totalSum}</Typography>
+                </Box>
+                <Box sx={styles.detailsWrapper}>
+                  <Typography sx={styles.paymentName}>Shipping</Typography>
+                  <Typography sx={styles.paymentValues}>
+                    ${SHIPPING_PRICE}
+                  </Typography>
+                </Box>
+                <Box sx={styles.detailsWrapper}>
+                  <Typography sx={styles.paymentName}>Tax</Typography>
+                  <Typography sx={styles.paymentValues}>
+                    ${totalSum * TAXES}
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+            <Typography
+              variant="h4"
+              sx={{
+                mt: '15px',
+                textAlign: 'left',
+                maxWidth: '350px',
+                width: '100%',
+              }}
+            >
+              Total: ${(totalSum * (1 + TAXES) + SHIPPING_PRICE).toFixed(2)}
+            </Typography>
+            <Box
+              sx={{
+                maxWidth: '350px',
+                width: '100%',
+                mt: '15px',
+              }}
+            >
+              <Button variant="contained" fullWidth>
+                Check out
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </Container>
+        </Container>
+      ) : (
+        <Container maxWidth="lg" sx={{ mb: '15px', display: 'flex' }}>
+          <Typography sx={{ textAlign: 'left' }}>
+            No items in cart&nbsp;
+          </Typography>
+          <NextLink href="/" passHref>
+            <Link sx={styles.plainAnchor}>go shopping.</Link>
+          </NextLink>
+        </Container>
+      )}
     </Layout>
   );
 };

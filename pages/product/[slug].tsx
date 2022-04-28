@@ -18,7 +18,8 @@ import { FavoriteBorder, ShoppingCartOutlined } from '@mui/icons-material';
 import Image from 'next/image';
 import styles from '../../utils/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-
+import { addProduct } from '../../store/cart';
+import { useAppDispatch } from '../../store';
 interface ProductScreenProps {
   product?: ProductSchema;
 }
@@ -27,6 +28,7 @@ type AllowedCategories = 'bags' | 'sneakers' | 'belts';
 
 const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
   const [value, setValue] = React.useState('1');
+  const dispatch = useAppDispatch();
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -124,9 +126,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={(event) => {
-                      console.log(event);
-                    }}
+                    onClick={() => dispatch(addProduct(product))}
                     startIcon={<ShoppingCartOutlined />}
                   >
                     Add to cart

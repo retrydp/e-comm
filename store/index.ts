@@ -1,10 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
-import displayInterface from './displayInterface';
+import { configureStore } from '@reduxjs/toolkit';import displayInterface from './displayInterface';
 import authStore from './authStore';
 import adminPanelStore from './adminPanelStore';
 import adminProduct from './adminProduct';
 import adminUser from './adminUser';
+import cart from './cart';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import Cookie from 'js-cookie';
+import throttle from 'lodash.throttle';
+
+const saveState = (nextState: any, key: string = 'cart') =>
+  Cookie.set(key, JSON.stringify(nextState));
 
 const store = configureStore({
   reducer: {
@@ -13,9 +18,14 @@ const store = configureStore({
     adminPanelStore,
     adminProduct,
     adminUser,
+    cart,
   },
   devTools: process.env.NODE_ENV === 'development',
 });
+
+store.subscribe(
+  throttle(() => saveState(store.getState().cart.products), 1000)
+);
 
 export default store;
 
