@@ -1,4 +1,5 @@
-import {  Button,
+import {
+  Button,
   Toolbar,
   Typography,
   Box,
@@ -25,6 +26,7 @@ import Cookies from 'js-cookie';
 import { userLogout } from '../store/authStore';
 
 const Header: React.FC = () => {
+  const [totalProducts, setTotalProducts] = React.useState<number>(0);
   const sm = useMediaQuery('(min-width:600px)');
   const {
     cart: { products },
@@ -37,9 +39,6 @@ const Header: React.FC = () => {
     setAnchorEl(event.currentTarget);
   };
   const router = useRouter();
-  const totalProductsInCart = products?.length
-    ? products.reduce((prev, { count }) => prev + count, 0)
-    : 0;
 
   const logoutClickHandler = () => {
     setAnchorEl(null);
@@ -51,6 +50,12 @@ const Header: React.FC = () => {
   const handleMenuClose = (event: React.MouseEvent<HTMLLIElement>) => {
     setAnchorEl(null);
   };
+  React.useEffect(() => {
+    const totalProductsInCart = products?.length
+      ? products.reduce((prev, { count }) => prev + count, 0)
+      : 0;
+    setTotalProducts(totalProductsInCart);
+  }, [products]);
 
   return (
     <>
@@ -74,7 +79,7 @@ const Header: React.FC = () => {
           <NextLink href="/cart" passHref>
             <Tooltip title="Cart" arrow>
               <Button component="a" sx={styles.navLink} aria-label="User Cart">
-                <Badge badgeContent={totalProductsInCart} color="primary">
+                <Badge badgeContent={totalProducts} color="primary">
                   <ShoppingCartOutlined />
                 </Badge>
               </Button>
