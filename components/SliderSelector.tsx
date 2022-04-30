@@ -1,4 +1,5 @@
-import { Slider, Typography } from '@mui/material';import { Box } from '@mui/system';
+import { Slider, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import React from 'react';
 
 interface SliderProps {

@@ -295,7 +295,7 @@ const styles = {
     p: 4,
   },
   cartWrapper: {
-    border: `1px solid ${primaryGrey}`,
+    //border: `1px solid ${primaryGrey}`,
     borderRadius: '5px',
     display: 'flex',
     padding: '15px',

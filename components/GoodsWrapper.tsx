@@ -162,6 +162,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
                       src="https://res.cloudinary.com/retrydp/image/upload/v1649574027/ul87ugvhgmn6z587n5r3.png"
                       width={860}
                       height={300}
+                      alt="Nike Air Max Plus"
                     />
                   </Box>
                 </Link>

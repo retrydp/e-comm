@@ -85,11 +85,6 @@ const Header: React.FC = () => {
               </Button>
             </Tooltip>
           </NextLink>
-          {sm && (
-            <Tooltip title="Total price" arrow>
-              <Typography sx={styles.navPrice}>{`$${'0.00'}`}</Typography>
-            </Tooltip>
-          )}
           {userInfo ? (
             <NoSsr>
               <Tooltip title={userInfo.email} arrow>

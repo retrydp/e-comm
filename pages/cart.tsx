@@ -1,5 +1,4 @@
-import {
-  Box,
+import {  Box,
   Button,
   Container,
   Grid,
@@ -146,80 +145,84 @@ const Cart: React.FC = () => {
                   </Box>
                 </Grid>
               ))}
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                  width: '100%',
-                }}
-              >
-                <Typography
-                  variant="h4"
-                  sx={{
-                    mt: '15px',
-                    textAlign: 'left',
-                    maxWidth: '350px',
-                    width: '100%',
-                  }}
-                >
-                  Payment details:
-                </Typography>
-                <Box sx={styles.cartTotal}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      p: '15px',
-                      width: '100%',
-                      gap: '25px',
-                    }}
-                  >
-                    <Box sx={styles.detailsWrapper}>
-                      <Typography sx={styles.paymentName}>
-                        Items ({totalProductsInCart})
-                      </Typography>
-                      <Typography sx={styles.paymentValues}>
-                        ${totalSum.toFixed(2)}
-                      </Typography>
-                    </Box>
-                    <Box sx={styles.detailsWrapper}>
-                      <Typography sx={styles.paymentName}>Shipping</Typography>
-                      <Typography sx={styles.paymentValues}>
-                        ${SHIPPING_PRICE}
-                      </Typography>
-                    </Box>
-                    <Box sx={styles.detailsWrapper}>
-                      <Typography sx={styles.paymentName}>Tax</Typography>
-                      <Typography sx={styles.paymentValues}>
-                        ${(totalSum * TAXES).toFixed(2)}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    mt: '15px',
-                    textAlign: 'left',
-                    maxWidth: '350px',
-                    width: '100%',
-                  }}
-                >
-                  Total: ${(totalSum * (1 + TAXES) + SHIPPING_PRICE).toFixed(2)}
-                </Typography>
+              <Grid item xs={12}>
                 <Box
                   sx={{
-                    maxWidth: '350px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
                     width: '100%',
-                    mt: '15px',
                   }}
                 >
-                  <Button variant="contained" fullWidth>
-                    Check out
-                  </Button>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      textAlign: 'left',
+                      maxWidth: '350px',
+                      width: '100%',
+                    }}
+                  >
+                    Payment details:
+                  </Typography>
+                  <Box sx={styles.cartTotal}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        p: '15px',
+                        width: '100%',
+                        gap: '25px',
+                      }}
+                    >
+                      <Box sx={styles.detailsWrapper}>
+                        <Typography sx={styles.paymentName}>
+                          Items ({totalProductsInCart})
+                        </Typography>
+                        <Typography sx={styles.paymentValues}>
+                          ${totalSum.toFixed(2)}
+                        </Typography>
+                      </Box>
+                      <Box sx={styles.detailsWrapper}>
+                        <Typography sx={styles.paymentName}>
+                          Shipping
+                        </Typography>
+                        <Typography sx={styles.paymentValues}>
+                          ${SHIPPING_PRICE}
+                        </Typography>
+                      </Box>
+                      <Box sx={styles.detailsWrapper}>
+                        <Typography sx={styles.paymentName}>Tax</Typography>
+                        <Typography sx={styles.paymentValues}>
+                          ${(totalSum * TAXES).toFixed(2)}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      mt: '15px',
+                      textAlign: 'left',
+                      maxWidth: '350px',
+                      width: '100%',
+                    }}
+                  >
+                    Total: $
+                    {(totalSum * (1 + TAXES) + SHIPPING_PRICE).toFixed(2)}
+                  </Typography>
+                  <Box
+                    sx={{
+                      maxWidth: '350px',
+                      width: '100%',
+                      mt: '15px',
+                    }}
+                  >
+                    <Button variant="contained" fullWidth>
+                      Check out
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
+              </Grid>
             </Grid>
           </Container>
         ) : (

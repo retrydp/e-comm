@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';import { ProductSchema } from '../utils/types';
+import { createSlice } from '@reduxjs/toolkit';
+import { ProductSchema } from '../utils/types';
 import Cookies from 'js-cookie';
 
 export interface CartProduct extends ProductSchema {
