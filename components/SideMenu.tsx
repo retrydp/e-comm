@@ -206,6 +206,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
           </Grid>
         </Grid>
       </Box>
+
       <Grid item sx={styles.grow}>
         <Box sx={styles.sideMenuItem}>
           <Typography variant="h4" sx={{ mb: '10px' }}>

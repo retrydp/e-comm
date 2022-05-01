@@ -18,7 +18,10 @@ import {
 } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { addProduct } from '../store/cart';
-import { useAppDispatch } from '../store';
+import { useAppDispatch, useAppSelector } from '../store';
+import { useSnackbar } from 'notistack';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 interface ListProps {
   products: ProductSchema[];
@@ -27,6 +30,41 @@ interface ListProps {
 const List: React.FC<ListProps> = ({ products }) => {
   const sm = useMediaQuery('(max-width:670px)');
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
+  const {
+    authStore: { userInfo },
+  } = useAppSelector((store) => store);
+
+  /**
+   * Add product to user's favorites list. If user is not logged in,
+   * redirect to login page.
+   * @param id slug of product
+   */
+  const addFavoriteHandler = async (id: string) => {
+    if (!userInfo) {
+      enqueueSnackbar(`Please login before adding favorites.`, {
+        variant: 'error',
+      });
+      router.push(`/login?redirect=${router.pathname}`);
+    } else {
+      try {
+        await axios.put(
+          `/api/users/favorite`,
+          { id },
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
+        enqueueSnackbar(`Product successfully added.`, { variant: 'success' });
+      } catch (error: any) {
+        enqueueSnackbar(`${error.response.data.message || error.toString()}`, {
+          variant: 'error',
+        });
+      }
+    }
+  };
+
   return (
     <Grid container spacing={2}>
       {products.map((product) => (
@@ -138,7 +176,10 @@ const List: React.FC<ListProps> = ({ products }) => {
                   >
                     Add to cart
                   </Button>
-                  <Button>
+                  <Button
+                    aria-label="add to favorites"
+                    onClick={() => addFavoriteHandler(product.slug)}
+                  >
                     <FavoriteBorder />
                   </Button>
                 </CardActions>

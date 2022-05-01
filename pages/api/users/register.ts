@@ -23,6 +23,7 @@ handler.post(async (req, res) => {
       email: req.body.email,
       password: hashedPassword,
       isAdmin: false,
+      favoritesId: [],
     });
     const user = await newUser.save();
     res.json({
@@ -43,7 +44,7 @@ handler.post(async (req, res) => {
         message: messages.join(', '),
       });
     } else if ((error as MongoError).code === 11000) {
-      return res.status(400).json({
+      return res.status(409).json({
         success: false,
         message: 'This email is already registered.',
       });

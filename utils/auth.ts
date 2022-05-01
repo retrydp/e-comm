@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextHandler } from 'next-connect';
 
-interface User {
+export interface UserAuth {
   _id: string;
   name: string;
   email: string;
@@ -13,10 +13,10 @@ interface AuthRequest extends NextApiRequest {
 }
 
 interface AuthAdmin extends NextApiRequest {
-  user: User;
+  user: UserAuth;
 }
 
-const signToken = (user: User) => {
+const signToken = (user: UserAuth) => {
   return jwt.sign(
     {
       _id: user._id,

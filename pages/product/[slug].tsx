@@ -14,12 +14,20 @@ import {
   Tab,
   Typography,
 } from '@mui/material';
-import { FavoriteBorder, ShoppingCartOutlined } from '@mui/icons-material';
+import {
+  FavoriteBorder,
+  ShoppingCartOutlined,
+  ArrowBack,
+} from '@mui/icons-material';
 import Image from 'next/image';
 import styles from '../../utils/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { addProduct } from '../../store/cart';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useSnackbar } from 'notistack';
+import NextLink from 'next/link';
 interface ProductScreenProps {
   product?: ProductSchema;
 }
@@ -29,9 +37,43 @@ type AllowedCategories = 'bags' | 'sneakers' | 'belts';
 const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
   const [value, setValue] = React.useState('1');
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
+  const {
+    authStore: { userInfo },
+  } = useAppSelector((store) => store);
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+  };
+
+  /**
+   * Add product to user's favorites list. If user is not logged in,
+   * redirect to login page.
+   * @param id slug of product
+   */
+  const addFavoriteHandler = async (id: string) => {
+    if (!userInfo) {
+      enqueueSnackbar(`Please login before adding favorites.`, {
+        variant: 'error',
+      });
+      router.push(`/login?redirect=/product/${product?.slug}`);
+    } else {
+      try {
+        await axios.put(
+          `/api/users/favorite`,
+          { id },
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
+        enqueueSnackbar(`Product successfully added.`, { variant: 'success' });
+      } catch (error: any) {
+        enqueueSnackbar(`${error.response.data.message || error.toString()}`, {
+          variant: 'error',
+        });
+      }
+    }
   };
 
   return (
@@ -39,8 +81,8 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
       customTitle={product?.name || 'Product not available'}
       title={product?.category as AllowedCategories}
     >
-      <Container maxWidth="lg">
-        {product ? (
+      {product ? (
+        <Container maxWidth="lg">
           <Grid container spacing={3}>
             <Grid
               item
@@ -131,7 +173,10 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                   >
                     Add to cart
                   </Button>
-                  <Button aria-label="add to favorites">
+                  <Button
+                    aria-label="add to favorites"
+                    onClick={() => addFavoriteHandler(product.slug)}
+                  >
                     <FavoriteBorder />
                   </Button>
                 </Box>
@@ -162,18 +207,36 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
               </TabContext>
             </Box>
           </Grid>
-        ) : (
-          <Typography
-            sx={{
-              typography: 'h4',
-              textAlign: 'center',
-              textTransform: 'uppercase',
-            }}
-          >
-            Product not available.
+        </Container>
+      ) : (
+        <Container
+          maxWidth="lg"
+          sx={{
+            mb: '15px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            padding: '50px',
+            gap: '15px',
+          }}
+        >
+          <Image
+            src="https://res.cloudinary.com/retrydp/image/upload/v1651399208/euezczftnocn3m4tk9dl.png"
+            alt="product not found"
+            priority={true}
+            width={300}
+            height={300}
+          ></Image>
+          <Typography sx={{ textAlign: 'left' }}>
+            Product not available.&nbsp;
           </Typography>
-        )}
-      </Container>
+          <NextLink href="/" passHref>
+            <Button component="a" variant="contained" startIcon={<ArrowBack />}>
+              go shopping
+            </Button>
+          </NextLink>
+        </Container>
+      )}
     </Layout>
   );
 };

@@ -1,8 +1,8 @@
 import nc from 'next-connect';
-import Product from '../../models/Product';
+import User from '../../models/User';
 import db from '../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
-import data from '../../utils/data';
+
 import { Error } from 'mongoose';
 import { MongoError } from 'mongodb';
 
@@ -11,8 +11,7 @@ const handler = nc();
 handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await db.dbConnect();
-    await Product.deleteMany();
-    await Product.insertMany(data.products);
+    await User.updateMany({}, { $set: { favoritesId: [] } });
     res.json({ message: 'seeded successfully' });
   } catch (error) {
     if (error instanceof Error.ValidationError) {
