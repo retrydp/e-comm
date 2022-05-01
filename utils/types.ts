@@ -1,4 +1,5 @@
-import { AxiosResponse } from 'axios';import mongoose from 'mongoose';
+import { AxiosResponse } from 'axios';
+import mongoose from 'mongoose';
 
 export interface Reviews {
   user: mongoose.Schema.Types.ObjectId;
@@ -13,6 +14,7 @@ export interface UserSchema {
   email: string;
   password?: string;
   isAdmin: boolean;
+  favoritesId?: string[];
 }
 
 export interface ProductSchema {

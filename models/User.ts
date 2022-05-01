@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import { UserSchema } from '../utils/types';
+import mongoose from 'mongoose';import { UserSchema } from '../utils/types';
 
 const Users = new mongoose.Schema<UserSchema, mongoose.Model<UserSchema>>(
   {
@@ -27,6 +26,10 @@ const Users = new mongoose.Schema<UserSchema, mongoose.Model<UserSchema>>(
       required: [true, 'Password is required'],
     },
     isAdmin: { type: Boolean, default: false },
+    favoritesId: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true,

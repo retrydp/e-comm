@@ -1,5 +1,4 @@
-import {
-  Button,
+import {  Button,
   Toolbar,
   Typography,
   Box,
@@ -13,7 +12,7 @@ import {
 } from '@mui/material';
 import {
   ShoppingCartOutlined,
-  Search,
+  FavoriteBorder,
   Menu as MenuIcon,
 } from '@mui/icons-material';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -70,9 +69,9 @@ const Header: React.FC = () => {
         <Box sx={styles.grow}></Box>
         <Box sx={styles.userActions}>
           <NextLink href="/" passHref>
-            <Tooltip title="Search" arrow>
-              <Button component="a" sx={styles.navLink} aria-label="Search">
-                <Search />
+            <Tooltip title="Favorites" arrow>
+              <Button component="a" sx={styles.navLink} aria-label="Favorites">
+                <FavoriteBorder />
               </Button>
             </Tooltip>
           </NextLink>

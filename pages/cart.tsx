@@ -1,9 +1,10 @@
-import {  Box,
+import {
+  Box,
   Button,
   Container,
+  Divider,
   Grid,
   IconButton,
-  Link,
   NoSsr,
   Typography,
   useMediaQuery,
@@ -13,10 +14,11 @@ import React from 'react';
 import { Layout } from '../components';
 import styles from '../utils/styles';
 import {
-  Favorite,
-  Delete,
+  FavoriteBorder,
+  DeleteOutline,
   AddBox,
   IndeterminateCheckBox,
+  ArrowBack,
 } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../store';
 import { decrementCount, incrementCount, deleteProduct } from '../store/cart';
@@ -43,6 +45,7 @@ const Cart: React.FC = () => {
       <Layout title="home" customTitle="Cart">
         {products.length > 0 ? (
           <Container maxWidth="lg" sx={{ mb: '15px' }}>
+            <Divider />
             <Grid container spacing={2}>
               {products.map((product) => (
                 <Grid item xs={12} key={product.slug}>
@@ -119,7 +122,7 @@ const Cart: React.FC = () => {
                             aria-label="Favorite"
                             component="span"
                           >
-                            <Favorite
+                            <FavoriteBorder
                               sx={{
                                 height: sm ? '25px' : '45px',
                                 width: sm ? '25px' : '45px',
@@ -132,7 +135,7 @@ const Cart: React.FC = () => {
                             component="span"
                             onClick={() => dispatch(deleteProduct(product))}
                           >
-                            <Delete
+                            <DeleteOutline
                               sx={{
                                 height: sm ? '25px' : '45px',
                                 width: sm ? '25px' : '45px',
@@ -143,6 +146,7 @@ const Cart: React.FC = () => {
                       </Box>
                     </Box>
                   </Box>
+                  <Divider />
                 </Grid>
               ))}
               <Grid item xs={12}>
@@ -226,12 +230,35 @@ const Cart: React.FC = () => {
             </Grid>
           </Container>
         ) : (
-          <Container maxWidth="lg" sx={{ mb: '15px', display: 'flex' }}>
+          <Container
+            maxWidth="lg"
+            sx={{
+              mb: '15px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              padding: '50px',
+              gap: '15px',
+            }}
+          >
+            <Image
+              src="https://res.cloudinary.com/retrydp/image/upload/v1651300005/d1me29qkm191jwnsqxgc.png"
+              alt="cart is empty"
+              priority={true}
+              width={300}
+              height={300}
+            ></Image>
             <Typography sx={{ textAlign: 'left' }}>
-              No items in cart&nbsp;
+              Your cart is empty&nbsp;
             </Typography>
             <NextLink href="/" passHref>
-              <Link sx={styles.plainAnchor}>go shopping.</Link>
+              <Button
+                component="a"
+                variant="contained"
+                startIcon={<ArrowBack />}
+              >
+                go shopping
+              </Button>
             </NextLink>
           </Container>
         )}
