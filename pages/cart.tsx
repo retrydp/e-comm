@@ -23,13 +23,22 @@ import {
 import { useAppDispatch, useAppSelector } from '../store';
 import { decrementCount, incrementCount, deleteProduct } from '../store/cart';
 import NextLink from 'next/link';
+import { useSnackbar } from 'notistack';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const TAXES = 0.2;
 const SHIPPING_PRICE = 10;
 
 const Cart: React.FC = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const sm = useMediaQuery('(max-width:600px)');
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const {
+    authStore: { userInfo },
+  } = useAppSelector((store) => store);
+
   const {
     cart: { products },
   } = useAppSelector((store) => store);
@@ -39,6 +48,35 @@ const Cart: React.FC = () => {
   const totalSum = products?.length
     ? products.reduce((prev, { price, count }) => prev + price * count, 0)
     : 0;
+
+  /**
+   * Add product to user's favorites list. If user is not logged in,
+   * redirect to login page.
+   * @param id slug of product
+   */
+  const addFavoriteHandler = async (id: string) => {
+    if (!userInfo) {
+      enqueueSnackbar(`Please login before adding favorites.`, {
+        variant: 'error',
+      });
+      router.push(`/login?redirect=${router.pathname}`);
+    } else {
+      try {
+        await axios.put(
+          `/api/users/favorite`,
+          { id },
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
+        enqueueSnackbar(`Product successfully added.`, { variant: 'success' });
+      } catch (error: any) {
+        enqueueSnackbar(`${error.response.data.message || error.toString()}`, {
+          variant: 'error',
+        });
+      }
+    }
+  };
 
   return (
     <NoSsr>
@@ -121,6 +159,7 @@ const Cart: React.FC = () => {
                             color="primary"
                             aria-label="Favorite"
                             component="span"
+                            onClick={() => addFavoriteHandler(product.slug)}
                           >
                             <FavoriteBorder
                               sx={{

@@ -1,4 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';import displayInterface from './displayInterface';
+import { configureStore } from '@reduxjs/toolkit';
+import displayInterface from './displayInterface';
 import authStore from './authStore';
 import adminPanelStore from './adminPanelStore';
 import adminProduct from './adminProduct';
