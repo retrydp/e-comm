@@ -4,6 +4,7 @@ import authStore from './authStore';
 import adminPanelStore from './adminPanelStore';
 import adminProduct from './adminProduct';
 import adminUser from './adminUser';
+import favorites from './favorites';
 import cart from './cart';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import Cookie from 'js-cookie';
@@ -20,6 +21,7 @@ const store = configureStore({
     adminProduct,
     adminUser,
     cart,
+    favorites,
   },
   devTools: process.env.NODE_ENV === 'development',
 });

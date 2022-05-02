@@ -1,4 +1,5 @@
-import {  Button,
+import {
+  Button,
   Toolbar,
   Typography,
   Box,
@@ -68,7 +69,7 @@ const Header: React.FC = () => {
         </NextLink>
         <Box sx={styles.grow}></Box>
         <Box sx={styles.userActions}>
-          <NextLink href="/" passHref>
+          <NextLink href="/favorites" passHref>
             <Tooltip title="Favorites" arrow>
               <Button component="a" sx={styles.navLink} aria-label="Favorites">
                 <FavoriteBorder />

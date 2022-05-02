@@ -53,4 +53,65 @@ handler.put(async (req, res) => {
   }
 });
 
+handler.get(async (req, res) => {
+  try {
+    await db.dbConnect();
+    const user = await User.findById(req.user._id);
+    const userFavorites = user?.favoritesId;
+    const products = await Product.find({ slug: { $in: userFavorites } });
+    res.status(200).json({
+      success: true,
+      payload: products,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error?.toString(),
+    });
+  }
+});
+
+handler.delete(async (req, res) => {
+  try {
+    await db.dbConnect();
+    const { id } = req.body;
+    const product = await Product.findOne({ slug: id });
+    if (product) {
+      const user = await User.findById(req.user._id);
+      if (user) {
+        if (user.favoritesId.includes(product.slug)) {
+          user.favoritesId = user.favoritesId.filter(
+            (item: string) => item !== product.slug
+          );
+          await user.save();
+          res.status(200).json({
+            success: true,
+            message: 'Product successfully removed from favorites.',
+          });
+        } else {
+          res.status(400).json({
+            success: false,
+            message: 'Product not in favorites.',
+          });
+        }
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'User not found.',
+        });
+      }
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Product not found.',
+      });
+    }
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error?.toString(),
+    });
+  }
+});
+
 export default handler;

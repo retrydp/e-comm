@@ -1,7 +1,12 @@
-import React from 'react';import { ProductSchema } from '../utils/types';
+import React from 'react';
+import { ProductSchema } from '../utils/types';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
-import { FavoriteBorder, ShoppingCartOutlined } from '@mui/icons-material';
+import {
+  FavoriteBorder,
+  ShoppingCartOutlined,
+  DeleteOutline,
+} from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -22,12 +27,17 @@ import { useAppDispatch, useAppSelector } from '../store';
 import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { deleteFavorite } from '../store/favorites';
 
 interface ListProps {
   products: ProductSchema[];
+  favoritesModeAccept?: boolean;
 }
 
-const List: React.FC<ListProps> = ({ products }) => {
+const List: React.FC<ListProps> = ({
+  products,
+  favoritesModeAccept = true,
+}) => {
   const sm = useMediaQuery('(max-width:670px)');
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -57,6 +67,35 @@ const List: React.FC<ListProps> = ({ products }) => {
           }
         );
         enqueueSnackbar(`Product successfully added.`, { variant: 'success' });
+      } catch (error: any) {
+        enqueueSnackbar(`${error.response.data.message || error.toString()}`, {
+          variant: 'error',
+        });
+      }
+    }
+  };
+
+  /**
+   * Delete product to user's favorites list. If user is not logged in,
+   * redirect to login page.
+   * @param id slug of product
+   */
+  const deleteFavoriteHandler = async (id: string) => {
+    if (!userInfo) {
+      enqueueSnackbar(`Please login before deleting favorites.`, {
+        variant: 'error',
+      });
+      router.push(`/login?redirect=${router.pathname}`);
+    } else {
+      try {
+        await axios.delete(`/api/users/favorite`, {
+          data: { id },
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+        enqueueSnackbar(`Product successfully deleted.`, {
+          variant: 'success',
+        });
+        dispatch(deleteFavorite(id));
       } catch (error: any) {
         enqueueSnackbar(`${error.response.data.message || error.toString()}`, {
           variant: 'error',
@@ -177,10 +216,20 @@ const List: React.FC<ListProps> = ({ products }) => {
                     Add to cart
                   </Button>
                   <Button
-                    aria-label="add to favorites"
-                    onClick={() => addFavoriteHandler(product.slug)}
+                    aria-label={`${
+                      favoritesModeAccept ? 'add to' : 'delete from'
+                    } favorites`}
+                    onClick={() =>
+                      favoritesModeAccept
+                        ? addFavoriteHandler(product.slug)
+                        : deleteFavoriteHandler(product.slug)
+                    }
                   >
-                    <FavoriteBorder />
+                    {favoritesModeAccept ? (
+                      <FavoriteBorder />
+                    ) : (
+                      <DeleteOutline sx={{ color: 'red' }} />
+                    )}
                   </Button>
                 </CardActions>
               </Box>

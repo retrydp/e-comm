@@ -217,7 +217,6 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
                     <ViewModule />
                   </Tooltip>
                 </ToggleButton>
-
                 <ToggleButton value="list" aria-label="Extended list">
                   <Tooltip title="Extended list" arrow>
                     <ViewList />

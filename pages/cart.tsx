@@ -83,6 +83,9 @@ const Cart: React.FC = () => {
       <Layout title="home" customTitle="Cart">
         {products.length > 0 ? (
           <Container maxWidth="lg" sx={{ mb: '15px' }}>
+            <Typography variant="h4" sx={{ padding: '15px 0' }}>
+              Your cart:
+            </Typography>
             <Divider />
             <Grid container spacing={2}>
               {products.map((product) => (
