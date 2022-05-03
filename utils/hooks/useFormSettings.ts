@@ -129,7 +129,7 @@ const useFormSettings = (): FormSettings => {
         minLength: 2,
       },
       inputType: 'text',
-      selectTypeContent: ['nike', 'adidas', 'airmax'],
+      // selectTypeContent: ['nike', 'adidas', 'airmax'],
       helperText: errors.brand
         ? errors.brand.type === 'minLength'
           ? 'Brand is to short'

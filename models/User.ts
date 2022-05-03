@@ -16,7 +16,7 @@ const Users = new mongoose.Schema<UserSchema, mongoose.Model<UserSchema>>(
       lowercase: true,
       validate: {
         validator: function (v: string) {
-          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
+          return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v);
         },
         message: 'Please enter a valid email',
       },

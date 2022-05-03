@@ -1,5 +1,4 @@
-import { Slider, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Slider, Typography } from '@mui/material';import { Box } from '@mui/system';
 import React from 'react';
 
 interface SliderProps {
@@ -32,7 +31,7 @@ const SliderSelector: React.FC<SliderProps> = ({ getSliderValues }) => {
           max={331}
           step={10}
           getAriaLabel={(idx: number) =>
-            Boolean(idx) ? 'Maximum price' : 'Minimum price'
+            idx ? 'Maximum price' : 'Minimum price'
           }
           value={sliderValue}
           onChange={sliderHandleChange}

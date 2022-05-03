@@ -3,8 +3,8 @@ import styles from '../utils/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Layout, Module } from '../components';
 import { ModulePlaceholder } from '../components';
-import axios, { AxiosResponse } from 'axios';
-import { InnerPayload, ProductPayload, ProductSchema } from '../utils/types';
+import axios from 'axios';
+import { AppResponse, InnerPayload, ProductSchema } from '../utils/types';
 
 type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
 
@@ -14,7 +14,6 @@ interface TabItems {
 
 const Index: React.FC = (): JSX.Element => {
   const [value, setValue] = React.useState<TabItemNames>('all');
-  const [errorResponse, setErrorResponse] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
   const [presentationData, setPresentationData] =
     React.useState<InnerPayload<ProductSchema>>();
@@ -35,16 +34,12 @@ const Index: React.FC = (): JSX.Element => {
 
   React.useEffect(() => {
     const goodsRequest = async () => {
-      try {
-        setLoading(true);
-        const { data } = await axios.get<{}, ProductPayload>(
-          '/api/presentation'
-        );
-        setPresentationData(data.payload);
-        setLoading(false);
-      } catch (error: any) {
-        setErrorResponse(error.message || error.toString());
-      }
+      setLoading(true);
+      const { data } = await axios.get<null, AppResponse<InnerPayload>>(
+        '/api/presentation'
+      );
+      setPresentationData(data.payload);
+      setLoading(false);
     };
     goodsRequest();
   }, []);

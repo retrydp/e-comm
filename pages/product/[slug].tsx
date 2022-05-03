@@ -28,6 +28,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import NextLink from 'next/link';
+
 interface ProductScreenProps {
   product?: ProductSchema;
 }

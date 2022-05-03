@@ -1,9 +1,7 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store';
+import { useAppSelector } from '../../store';
 import { useRouter } from 'next/router';
 import { CssBaseline, Grid } from '@mui/material';
-import styles from '../../utils/styles';
-
 import AdminSidebar from '../../components/AdminSidebar';
 
 const AdminDashboard: React.FC = () => {

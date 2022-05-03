@@ -1,10 +1,11 @@
-import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../utils/database';
 import Product from '../../models/Product';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
-const SHOW_LIMIT: number = 3;
+const SHOW_LIMIT = 3;
 
 handler.get(async (req, res) => {
   try {

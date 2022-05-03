@@ -73,20 +73,15 @@ export interface InnerPayload<T extends ProductSchema = ProductSchema> {
   bestOfSneakers: T[];
 }
 
-export interface ProductPayload
-  extends AxiosResponse<{
-    payload: InnerPayload;
-  }> {}
-
-export interface AppResponse<
+export type AppResponse<
   T extends
     | UserSchema[]
     | ProductSchema[]
     | ProductSchema
     | UserSchema
     | string
-    | ProductPayload
-> extends AxiosResponse<{
-    payload: T;
-    success: boolean;
-  }> {}
+    | InnerPayload
+> = AxiosResponse<{
+  payload: T;
+  success: boolean;
+}>;

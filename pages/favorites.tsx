@@ -18,7 +18,6 @@ import { ArrowBack } from '@mui/icons-material';
 
 const Favorites: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const {
@@ -36,7 +35,7 @@ const Favorites: React.FC = () => {
     } else {
       const fetchFavorites = async () => {
         dispatch(setLoading(true));
-        const { data } = await axios.get<{}, AppResponse<ProductSchema[]>>(
+        const { data } = await axios.get<null, AppResponse<ProductSchema[]>>(
           `/api/users/favorite`,
           {
             headers: {
@@ -56,8 +55,8 @@ const Favorites: React.FC = () => {
       <Layout title="home" customTitle="Favorites">
         {favoritesLoading ? (
           <CircularProgress sx={{ margin: '0 auto' }} />
-        ) : favoritesData && favoritesData.length > 0 ? (
-          <Container maxWidth="lg">
+        ) : favoritesData?.length > 0 ? (
+          <Container maxWidth="lg" sx={{ mb: '15px' }}>
             <Typography variant="h4" sx={{ padding: '15px 0' }}>
               Your favorites:
             </Typography>

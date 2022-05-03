@@ -1,5 +1,4 @@
-import {
-  AppBar,
+import {  AppBar,
   Box,
   Link,
   Toolbar,
@@ -12,7 +11,6 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 import styles from '../utils/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import logo from '../public/assets/img/logo.svg';
 import { SxProps } from '@mui/material/styles';
 
 export type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
@@ -62,7 +60,12 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ currentTab }) => {
         <NextLink href="/" passHref>
           <Link sx={styles.plainAnchor} aria-label="Site logo">
             <Box sx={styles.navLogo}>
-              <Image width={44} height={44} src={logo} alt="Site logo"></Image>
+              <Image
+                width={44}
+                height={44}
+                src="https://res.cloudinary.com/retrydp/image/upload/v1651478617/xmqphhxdjbtivv8o3lrm.svg"
+                alt="Site logo"
+              ></Image>
               {sm && <Typography sx={styles.logoText}>E-comm</Typography>}
             </Box>
           </Link>

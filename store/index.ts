@@ -10,7 +10,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import Cookie from 'js-cookie';
 import throttle from 'lodash.throttle';
 
-const saveState = (nextState: any, key: string = 'cart') =>
+const saveState = (nextState: any, key: string) =>
   Cookie.set(key, JSON.stringify(nextState));
 
 const store = configureStore({
@@ -27,7 +27,7 @@ const store = configureStore({
 });
 
 store.subscribe(
-  throttle(() => saveState(store.getState().cart.products), 1000)
+  throttle(() => saveState(store.getState().cart.products, 'cart'), 1000)
 );
 
 export default store;

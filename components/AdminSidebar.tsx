@@ -9,7 +9,7 @@ import {  Divider,
 } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-import logo from '../public/assets/img/logo.svg';
+
 import {
   ShoppingCart,
   People,
@@ -40,7 +40,11 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
       <List sx={{ width: '100%' }} disablePadding>
         <ListItem>
           <ListItemIcon>
-            <Image src={logo.src} width={45} height={45} />
+            <Image
+              src="https://res.cloudinary.com/retrydp/image/upload/v1651478617/xmqphhxdjbtivv8o3lrm.svg"
+              width={45}
+              height={45}
+            />
           </ListItemIcon>
           <ListItemText
             primary={

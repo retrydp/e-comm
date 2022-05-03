@@ -17,7 +17,6 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-import styles from '../../../utils/styles';
 import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
@@ -44,7 +43,6 @@ const CreateProduct: React.FC = () => {
   const [preview, setPreview] = React.useState<string>();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const { redirect } = router.query;
   const {
     authStore: { userInfo },
     adminProduct: { loading, loadingAdd },
@@ -81,9 +79,7 @@ const CreateProduct: React.FC = () => {
     color,
     itemsInStock,
     images,
-  }: {
-    [key: string]: any;
-  }) => {
+  }: Record<string, any>) => {
     try {
       dispatch(addRequest());
       const { data } = await axios.put<
@@ -122,7 +118,7 @@ const CreateProduct: React.FC = () => {
    * @description This function is used to upload the image to the server.
    */
   const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target!.files?.[0];
+    const file = event.target.files?.[0];
     if (!file) {
       enqueueSnackbar('Can not get file.', { variant: 'error' });
       return;

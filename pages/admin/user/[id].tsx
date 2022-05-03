@@ -17,7 +17,6 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-import styles from '../../../utils/styles';
 import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
@@ -25,8 +24,8 @@ import axios from 'axios';
 import { AppResponse, UserSchema } from '../../../utils/types';
 import { editError, editRequest, editSuccess } from '../../../store/adminUser';
 import { GetServerSideProps } from 'next';
-
 import useFormSettings from '../../../utils/hooks/useFormSettings';
+
 interface EditUserProps {
   id: string;
 }
@@ -35,7 +34,6 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
   const [isAdminValue, setIsAdminValue] = React.useState<boolean>(false);
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const { redirect } = router.query;
   const {
     authStore: { userInfo },
     adminUser: { loading, errorText },
@@ -56,9 +54,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
     name,
     email,
     isAdmin,
-  }: {
-    [key: string]: any;
-  }) => {
+  }: Record<string, any>) => {
     try {
       dispatch(editRequest());
       const { data } = await axios.patch<UserSchema, AppResponse<UserSchema>>(

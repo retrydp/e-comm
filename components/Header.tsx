@@ -1,7 +1,6 @@
 import {
   Button,
   Toolbar,
-  Typography,
   Box,
   Tooltip,
   Menu,
@@ -16,7 +15,6 @@ import {
   FavoriteBorder,
   Menu as MenuIcon,
 } from '@mui/icons-material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import React from 'react';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
@@ -27,7 +25,7 @@ import { userLogout } from '../store/authStore';
 
 const Header: React.FC = () => {
   const [totalProducts, setTotalProducts] = React.useState<number>(0);
-  const sm = useMediaQuery('(min-width:600px)');
+
   const {
     cart: { products },
     authStore: { userInfo },
@@ -47,7 +45,7 @@ const Header: React.FC = () => {
     router.push('/');
   };
 
-  const handleMenuClose = (event: React.MouseEvent<HTMLLIElement>) => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
   React.useEffect(() => {

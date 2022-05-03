@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
 import { useRouter } from 'next/router';
 import {
   Box,
@@ -17,7 +16,6 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-import styles from '../../../utils/styles';
 import { useSnackbar } from 'notistack';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
@@ -49,7 +47,6 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   const [preview, setPreview] = React.useState<string>();
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const { redirect } = router.query;
   const {
     authStore: { userInfo },
     adminProduct: { loading, loadingAdd, errorText },
@@ -86,9 +83,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     color,
     itemsInStock,
     images,
-  }: {
-    [key: string]: any;
-  }) => {
+  }: Record<string, any>) => {
     try {
       dispatch(addRequest());
       const { data } = await axios.patch<
@@ -127,7 +122,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
    * @description This function is used to upload the image to the server.
    */
   const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target!.files?.[0];
+    const file = event.target.files?.[0];
     if (!file) {
       enqueueSnackbar('Can not get file.', { variant: 'error' });
       return;
@@ -174,7 +169,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     const fetchProducts = async () => {
       try {
         dispatch(uploadRequest());
-        const { data } = await axios.get<{}, AppResponse<ProductSchema>>(
+        const { data } = await axios.get<null, AppResponse<ProductSchema>>(
           `/api/admin/product/${slug}`,
           {
             headers: {

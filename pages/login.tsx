@@ -1,9 +1,7 @@
-import React from 'react';
-import Cookies from 'js-cookie';
+import React from 'react';import Cookies from 'js-cookie';
 import { AppResponse, UserSchema } from '../utils/types';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import logo from '../public/assets/img/logo.svg';
 import {
   Box,
   Button,
@@ -46,7 +44,7 @@ const Login: React.FC = () => {
   /**
    * @description This function is used to send the request to the server with the data from the forms.
    */
-  const submitHandler = async ({ email, password }: { [key: string]: any }) => {
+  const submitHandler = async ({ email, password }: Record<string, string>) => {
     try {
       const { data } = await axios.post<
         { email: string; password: string },
@@ -80,7 +78,12 @@ const Login: React.FC = () => {
       <CssBaseline />
       <Container maxWidth="sm" sx={styles.regContainer}>
         <Box sx={{ mt: '60px' }}>
-          <Image src={logo.src} width="72" height="72" alt="E-comm logo" />
+          <Image
+            src="https://res.cloudinary.com/retrydp/image/upload/v1651478617/xmqphhxdjbtivv8o3lrm.svg"
+            width="72"
+            height="72"
+            alt="E-comm logo"
+          />
         </Box>
         <Typography variant="h2" sx={styles.regHeader}>
           Welcome to E-Comm
@@ -133,7 +136,7 @@ const Login: React.FC = () => {
               </Button>
             </ListItem>
             <ListItem>
-              Don't have an account? &nbsp;
+              Don&apos;t have an account? &nbsp;
               <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
                 <Link>Sign Up</Link>
               </NextLink>

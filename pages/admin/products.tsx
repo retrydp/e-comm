@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../store';
 import {
   fetchRequest,
   fetchSuccess,
@@ -50,7 +49,7 @@ const AdminProducts: React.FC = () => {
       dispatch(deleteRequest());
       setModalOpen(true);
       try {
-        await axios.delete<{}, AppResponse<ProductSchema[]>>(
+        await axios.delete<string, AppResponse<ProductSchema[]>>(
           '/api/admin/products',
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },
@@ -132,7 +131,7 @@ const AdminProducts: React.FC = () => {
     const fetchHandler = async () => {
       try {
         dispatch(fetchRequest());
-        const { data } = await axios.get<{}, AppResponse<ProductSchema>>(
+        const { data } = await axios.get<null, AppResponse<ProductSchema>>(
           '/api/admin/products',
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },

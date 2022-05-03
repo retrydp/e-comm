@@ -20,7 +20,6 @@ import {
   PasswordOutlined,
 } from '@mui/icons-material';
 import Image from 'next/image';
-import logo from '../public/assets/img/logo.svg';
 import styles from '../utils/styles';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -56,9 +55,7 @@ const Register: React.FC = () => {
     password,
     name,
     confirmPassword,
-  }: {
-    [key: string]: any;
-  }) => {
+  }: Record<string, any>) => {
     if (password !== confirmPassword) {
       enqueueSnackbar('Passwords don`t match', { variant: 'error' });
       return;
@@ -97,7 +94,12 @@ const Register: React.FC = () => {
       <CssBaseline />
       <Container maxWidth="sm" sx={styles.regContainer}>
         <Box sx={{ mt: '60px' }}>
-          <Image src={logo.src} width="72" height="72" alt="E-comm logo" />
+          <Image
+            src="https://res.cloudinary.com/retrydp/image/upload/v1651478617/xmqphhxdjbtivv8o3lrm.svg"
+            width="72"
+            height="72"
+            alt="E-comm logo"
+          />
         </Box>
         <Typography variant="h2" sx={styles.regHeader}>
           Let’s Get Started

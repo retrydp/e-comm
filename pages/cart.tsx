@@ -37,9 +37,6 @@ const Cart: React.FC = () => {
   const router = useRouter();
   const {
     authStore: { userInfo },
-  } = useAppSelector((store) => store);
-
-  const {
     cart: { products },
   } = useAppSelector((store) => store);
   const totalProductsInCart = products?.length
@@ -81,7 +78,7 @@ const Cart: React.FC = () => {
   return (
     <NoSsr>
       <Layout title="home" customTitle="Cart">
-        {products.length > 0 ? (
+        {products?.length > 0 ? (
           <Container maxWidth="lg" sx={{ mb: '15px' }}>
             <Typography variant="h4" sx={{ padding: '15px 0' }}>
               Your cart:

@@ -1,4 +1,5 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../store';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../store';
 import {
   fetchRequest,
   fetchSuccess,
@@ -46,10 +47,13 @@ const AdminUsers: React.FC = () => {
       dispatch(deleteRequest());
       setModalOpen(true);
       try {
-        await axios.delete<{}, AppResponse<UserSchema[]>>('/api/admin/users', {
-          headers: { authorization: `Bearer ${userInfo?.token}` },
-          data: userId,
-        });
+        await axios.delete<string, AppResponse<UserSchema[]>>(
+          '/api/admin/users',
+          {
+            headers: { authorization: `Bearer ${userInfo?.token}` },
+            data: userId,
+          }
+        );
         dispatch(
           deleteSuccess(
             (data as UserSchema[]).filter(({ _id }) => _id !== userId)
@@ -107,7 +111,7 @@ const AdminUsers: React.FC = () => {
     const fetchHandler = async () => {
       try {
         dispatch(fetchRequest());
-        const { data } = await axios.get<{}, AppResponse<UserSchema[]>>(
+        const { data } = await axios.get<null, AppResponse<UserSchema[]>>(
           '/api/admin/users',
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },

@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { ProductSchema, UserSchema } from '../utils/types';
+import { createSlice } from '@reduxjs/toolkit';import { ProductSchema, UserSchema } from '../utils/types';
 
 type DataSchemas = ProductSchema[] | UserSchema[] | [];
 
@@ -36,6 +35,7 @@ const adminPanelStore = createSlice({
     },
     fetchError: (state, action) => {
       state.loading = false;
+      state.error = action.payload;
     },
     deleteRequest: (state) => {
       state.loadingDelete = true;

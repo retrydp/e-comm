@@ -1,5 +1,4 @@
-import React from 'react';
-import NextLink from 'next/link';
+import React from 'react';import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -159,7 +158,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
                 <Link>
                   <Box sx={{ mb: '20px' }}>
                     <Image
-                      src="https://res.cloudinary.com/retrydp/image/upload/v1649574027/ul87ugvhgmn6z587n5r3.png"
+                      src="https://res.cloudinary.com/retrydp/image/upload/v1651495865/banner_gxsmbo.png"
                       width={860}
                       height={300}
                       alt="Nike Air Max Plus"
