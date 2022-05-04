@@ -1,12 +1,11 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../store';
 import {
-  fetchRequest,
-  fetchSuccess,
-  fetchError,
-  deleteRequest,
-  deleteSuccess,
-  deleteError,
+  adminPanelFetchRequest,
+  adminPanelFetchSuccess,
+  adminPanelFetchError,
+  adminPanelDeleteRequest,
+  adminPanelDeleteSuccess,
+  adminPanelDeleteError,
 } from '../../store/adminPanelStore';
 import { useRouter } from 'next/router';
 import {
@@ -26,15 +25,14 @@ import axios from 'axios';
 import { AppResponse, UserSchema } from '../../utils/types';
 import NextLink from 'next/link';
 import { Delete, Edit } from '@mui/icons-material';
-import { useSnackbar } from 'notistack';
+import { useSharedContext } from '../../context/SharedContext';
 
 const AdminUsers: React.FC = () => {
+  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
-  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const {
-    authStore: { userInfo },
-    adminPanelStore: { data, error, loading },
+    adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
 
@@ -44,7 +42,7 @@ const AdminUsers: React.FC = () => {
    */
   const handleDeleteUser = async (userId: string) => {
     if (confirm(`Do you want to delete ${userId}`)) {
-      dispatch(deleteRequest());
+      dispatch(adminPanelDeleteRequest());
       setModalOpen(true);
       try {
         await axios.delete<string, AppResponse<UserSchema[]>>(
@@ -55,19 +53,19 @@ const AdminUsers: React.FC = () => {
           }
         );
         dispatch(
-          deleteSuccess(
-            (data as UserSchema[]).filter(({ _id }) => _id !== userId)
+          adminPanelDeleteSuccess(
+            (adminPanelData as UserSchema[]).filter(({ _id }) => _id !== userId)
           )
         );
         setModalOpen(false);
-        enqueueSnackbar(`${userId} deleted successfully`, {
+        snackbar(`${userId} deleted successfully`, {
           variant: 'success',
         });
       } catch (error: any) {
         const errorText = error.response.data.message || error.toString();
         setModalOpen(false);
-        dispatch(deleteError(error.toString()));
-        enqueueSnackbar(errorText, { variant: 'error' });
+        dispatch(adminPanelDeleteError(error.toString()));
+        snackbar(errorText, { variant: 'error' });
       }
     }
   };
@@ -105,21 +103,19 @@ const AdminUsers: React.FC = () => {
   ];
 
   React.useEffect(() => {
-    if (!userInfo?.isAdmin) {
-      router.push('/');
-    }
+    onNotAdmin();
     const fetchHandler = async () => {
       try {
-        dispatch(fetchRequest());
+        dispatch(adminPanelFetchRequest());
         const { data } = await axios.get<null, AppResponse<UserSchema[]>>(
           '/api/admin/users',
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },
           }
         );
-        dispatch(fetchSuccess(data.payload));
+        dispatch(adminPanelFetchSuccess(data.payload));
       } catch (error: any) {
-        dispatch(fetchError(error.toString()));
+        dispatch(adminPanelFetchError(error.toString()));
       }
     };
     fetchHandler();
@@ -158,14 +154,14 @@ const AdminUsers: React.FC = () => {
             <Typography sx={{ fontSize: '20px' }}>Users</Typography>
           </Box>
           <Box sx={{ height: 800, width: '100%' }}>
-            {loading ? (
+            {adminPanelLoading ? (
               <CircularProgress />
-            ) : error ? (
-              <Typography sx={{ color: 'red' }}>{error}</Typography>
+            ) : adminPanelError ? (
+              <Typography sx={{ color: 'red' }}>{adminPanelError}</Typography>
             ) : (
               <DataGrid
                 getRowId={(row) => row._id}
-                rows={data}
+                rows={adminPanelData}
                 columns={columns}
                 pageSize={30}
                 // onCellClick={({ id }) => console.log(id)}

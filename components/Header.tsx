@@ -1,5 +1,4 @@
-import {
-  Button,
+import {  Button,
   Toolbar,
   Box,
   Tooltip,
@@ -22,13 +21,13 @@ import { useAppSelector, useAppDispatch } from '../store';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import { userLogout } from '../store/authStore';
+import { useSharedContext } from '../context/SharedContext';
 
 const Header: React.FC = () => {
+  const { userInfo } = useSharedContext();
   const [totalProducts, setTotalProducts] = React.useState<number>(0);
-
   const {
-    cart: { products },
-    authStore: { userInfo },
+    cart: { cartProducts },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -48,12 +47,13 @@ const Header: React.FC = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
   React.useEffect(() => {
-    const totalProductsInCart = products?.length
-      ? products.reduce((prev, { count }) => prev + count, 0)
+    const totalProductsInCart = cartProducts?.length
+      ? cartProducts.reduce((prev, { count }) => prev + count, 0)
       : 0;
     setTotalProducts(totalProductsInCart);
-  }, [products]);
+  }, [cartProducts]);
 
   return (
     <>

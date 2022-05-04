@@ -1,11 +1,12 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../store';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../store';
 import {
-  fetchRequest,
-  fetchSuccess,
-  fetchError,
-  deleteRequest,
-  deleteSuccess,
-  deleteError,
+  adminPanelFetchRequest,
+  adminPanelFetchSuccess,
+  adminPanelFetchError,
+  adminPanelDeleteRequest,
+  adminPanelDeleteSuccess,
+  adminPanelDeleteError,
 } from '../../store/adminPanelStore';
 import { useRouter } from 'next/router';
 import {
@@ -28,15 +29,14 @@ import NextLink from 'next/link';
 import { AdminSidebar } from '../../components';
 import axios from 'axios';
 import { AppResponse, ProductSchema } from '../../utils/types';
-import { useSnackbar } from 'notistack';
+import { useSharedContext } from '../../context/SharedContext';
 
 const AdminProducts: React.FC = () => {
+  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
-  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const {
-    authStore: { userInfo },
-    adminPanelStore: { data, error, loading },
+    adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
 
@@ -46,7 +46,7 @@ const AdminProducts: React.FC = () => {
    */
   const handleDeleteProduct = async (productSlug: string) => {
     if (confirm(`Do you want to delete ${productSlug}`)) {
-      dispatch(deleteRequest());
+      dispatch(adminPanelDeleteRequest());
       setModalOpen(true);
       try {
         await axios.delete<string, AppResponse<ProductSchema[]>>(
@@ -57,19 +57,21 @@ const AdminProducts: React.FC = () => {
           }
         );
         dispatch(
-          deleteSuccess(
-            (data as ProductSchema[]).filter(({ slug }) => slug !== productSlug)
+          adminPanelDeleteSuccess(
+            (adminPanelData as ProductSchema[]).filter(
+              ({ slug }) => slug !== productSlug
+            )
           )
         );
         setModalOpen(false);
-        enqueueSnackbar(`${productSlug} deleted successfully`, {
+        snackbar(`${productSlug} deleted successfully`, {
           variant: 'success',
         });
       } catch (error: any) {
         const errorText = error.response.data.message || error.toString();
         setModalOpen(false);
-        dispatch(deleteError(error.toString()));
-        enqueueSnackbar(errorText, { variant: 'error' });
+        dispatch(adminPanelDeleteError(error.toString()));
+        snackbar(errorText, { variant: 'error' });
       }
     }
   };
@@ -125,21 +127,19 @@ const AdminProducts: React.FC = () => {
   ];
 
   React.useEffect(() => {
-    if (!userInfo?.isAdmin) {
-      router.push('/');
-    }
+    onNotAdmin();
     const fetchHandler = async () => {
       try {
-        dispatch(fetchRequest());
+        dispatch(adminPanelFetchRequest());
         const { data } = await axios.get<null, AppResponse<ProductSchema>>(
           '/api/admin/products',
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },
           }
         );
-        dispatch(fetchSuccess(data.payload));
+        dispatch(adminPanelFetchSuccess(data.payload));
       } catch (error: any) {
-        dispatch(fetchError(error.toString()));
+        dispatch(adminPanelFetchError(error.toString()));
       }
     };
     fetchHandler();
@@ -188,14 +188,14 @@ const AdminProducts: React.FC = () => {
             </NextLink>
           </Box>
           <Box sx={{ height: 800, width: '100%' }}>
-            {loading ? (
+            {adminPanelLoading ? (
               <CircularProgress />
-            ) : error ? (
-              <Typography sx={{ color: 'red' }}>{error}</Typography>
+            ) : adminPanelError ? (
+              <Typography sx={{ color: 'red' }}>{adminPanelError}</Typography>
             ) : (
               <DataGrid
                 getRowId={(row) => row._id}
-                rows={data}
+                rows={adminPanelData}
                 columns={columns}
                 pageSize={50}
                 rowsPerPageOptions={[50]}

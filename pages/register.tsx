@@ -1,5 +1,4 @@
-import React from 'react';
-import Head from 'next/head';
+import React from 'react';import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -23,7 +22,7 @@ import Image from 'next/image';
 import styles from '../utils/styles';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useSnackbar } from 'notistack';
+import { useSharedContext } from '../context/SharedContext';
 import { AppResponse, UserSchema } from '../utils/types';
 import Cookies from 'js-cookie';
 import { useAppDispatch } from '../store';
@@ -31,9 +30,10 @@ import { userLogin } from '../store/authStore';
 import useFormSettings from '../utils/hooks/useFormSettings';
 
 const Register: React.FC = () => {
+  const { snackbar } = useSharedContext();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
+
   const { redirect } = router.query;
   const {
     handleSubmit,
@@ -57,7 +57,7 @@ const Register: React.FC = () => {
     confirmPassword,
   }: Record<string, any>) => {
     if (password !== confirmPassword) {
-      enqueueSnackbar('Passwords don`t match', { variant: 'error' });
+      snackbar('Passwords don`t match', { variant: 'error' });
       return;
     }
     try {
@@ -76,7 +76,7 @@ const Register: React.FC = () => {
       if (axios.isAxiosError(error)) {
         const responseError = error?.response?.data?.['message'];
         if (responseError) {
-          enqueueSnackbar(responseError, {
+          snackbar(responseError, {
             variant: 'error',
           });
         }

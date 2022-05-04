@@ -1,57 +1,56 @@
-import { createSlice } from '@reduxjs/toolkit';
-interface ApInitialState {
-  loading: boolean;
-  loadingAdd: boolean;
-  errorText: string;
-  errorAdd: string;
+import { createSlice } from '@reduxjs/toolkit';interface ApInitialState {
+  adminProductLoading: boolean;
+  adminProductLoadingAdd: boolean;
+  adminProductErrorText: string;
+  adminProductErrorAdd: string;
 }
 
 const initialState: ApInitialState = {
-  loading: false,
-  loadingAdd: false,
-  errorText: '',
-  errorAdd: '',
+  adminProductLoading: false,
+  adminProductLoadingAdd: false,
+  adminProductErrorText: '',
+  adminProductErrorAdd: '',
 };
 
 const adminProduct = createSlice({
   name: 'adminProduct',
   initialState,
   reducers: {
-    uploadRequest: (state) => {
-      state.loading = true;
-      state.errorText = '';
+    adminProductUploadRequest: (state) => {
+      state.adminProductLoading = true;
+      state.adminProductErrorText = '';
     },
-    uploadSuccess: (state) => {
-      state.loading = false;
-      state.errorText = '';
+    adminProductUploadSuccess: (state) => {
+      state.adminProductLoading = false;
+      state.adminProductErrorText = '';
     },
 
-    uploadError: (state, action) => {
-      state.loading = false;
-      state.errorText = action.payload;
+    adminProductUploadError: (state, action) => {
+      state.adminProductLoading = false;
+      state.adminProductErrorText = action.payload;
     },
-    addRequest: (state) => {
-      state.loadingAdd = true;
-      state.errorAdd = '';
+    adminProductAddRequest: (state) => {
+      state.adminProductLoadingAdd = true;
+      state.adminProductErrorAdd = '';
     },
-    addSuccess: (state) => {
-      state.loadingAdd = false;
-      state.errorAdd = '';
+    adminProductAddSuccess: (state) => {
+      state.adminProductLoadingAdd = false;
+      state.adminProductErrorAdd = '';
     },
-    addError: (state, action) => {
-      state.loadingAdd = false;
-      state.errorAdd = action.payload;
+    adminProductAddError: (state, action) => {
+      state.adminProductLoadingAdd = false;
+      state.adminProductErrorAdd = action.payload;
     },
   },
 });
 
 export const {
-  uploadRequest,
-  uploadSuccess,
-  uploadError,
-  addError,
-  addSuccess,
-  addRequest,
+  adminProductUploadRequest,
+  adminProductUploadSuccess,
+  adminProductUploadError,
+  adminProductAddError,
+  adminProductAddSuccess,
+  adminProductAddRequest,
 } = adminProduct.actions;
 
 export default adminProduct.reducer;

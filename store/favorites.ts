@@ -15,14 +15,14 @@ const favorites = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    fetchFavorite: (state, action) => {
+    favoritesFetch: (state, action) => {
       const favorites = action.payload;
       state.favoritesData = favorites;
     },
-    setLoading: (state, action) => {
+    favoritesSetLoading: (state, action) => {
       state.favoritesLoading = action.payload;
     },
-    deleteFavorite: (state, action) => {
+    favoritesDelete: (state, action) => {
       const slug = action.payload;
       state.favoritesData = state.favoritesData.filter(
         (item) => item.slug !== slug
@@ -31,6 +31,7 @@ const favorites = createSlice({
   },
 });
 
-export const { fetchFavorite, setLoading, deleteFavorite } = favorites.actions;
+export const { favoritesFetch, favoritesSetLoading, favoritesDelete } =
+  favorites.actions;
 
 export default favorites.reducer;

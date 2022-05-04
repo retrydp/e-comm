@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { ProductSchema } from '../utils/types';
+import { createSlice } from '@reduxjs/toolkit';import { ProductSchema } from '../utils/types';
 import Cookies from 'js-cookie';
 
 export interface CartProduct extends ProductSchema {
@@ -7,11 +6,11 @@ export interface CartProduct extends ProductSchema {
 }
 
 interface CartInitialState {
-  products: CartProduct[];
+  cartProducts: CartProduct[];
 }
 
 const initialState: CartInitialState = {
-  products: Cookies.get('cart')
+  cartProducts: Cookies.get('cart')
     ? JSON.parse(Cookies.get('cart') as string)
     : [],
 };
@@ -20,42 +19,46 @@ const cart = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addProduct: (state, action) => {
+    cartAddProduct: (state, action) => {
       const product = action.payload;
-      const productIndex = state.products.findIndex(
+      const productIndex = state.cartProducts.findIndex(
         ({ slug }) => slug === product.slug
       );
       if (productIndex === -1) {
-        state.products.push({ ...product, count: 1 });
+        state.cartProducts.push({ ...product, count: 1 });
       } else {
-        state.products[productIndex].count += 1;
+        state.cartProducts[productIndex].count += 1;
       }
     },
-    incrementCount: (state, action) => {
+    cartIncrementCount: (state, action) => {
       const product = action.payload;
-      const productIndex = state.products.findIndex(
+      const productIndex = state.cartProducts.findIndex(
         ({ slug }) => slug === product.slug
       );
-      state.products[productIndex].count += 1;
+      state.cartProducts[productIndex].count += 1;
     },
-    decrementCount: (state, action) => {
+    cartDecrementCount: (state, action) => {
       const product = action.payload;
-      const productIndex = state.products.findIndex(
+      const productIndex = state.cartProducts.findIndex(
         ({ slug }) => slug === product.slug
       );
-      state.products[productIndex].count -=
-        state.products[productIndex].count > 1 ? 1 : 0;
+      state.cartProducts[productIndex].count -=
+        state.cartProducts[productIndex].count > 1 ? 1 : 0;
     },
-    deleteProduct: (state, action) => {
+    cartDeleteProduct: (state, action) => {
       const product = action.payload;
-      state.products = state.products.filter(
+      state.cartProducts = state.cartProducts.filter(
         ({ slug }) => slug !== product.slug
       );
     },
   },
 });
 
-export const { addProduct, incrementCount, decrementCount, deleteProduct } =
-  cart.actions;
+export const {
+  cartAddProduct,
+  cartIncrementCount,
+  cartDecrementCount,
+  cartDeleteProduct,
+} = cart.actions;
 
 export default cart.reducer;

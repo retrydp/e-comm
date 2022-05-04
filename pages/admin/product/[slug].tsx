@@ -16,7 +16,7 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-import { useSnackbar } from 'notistack';
+import { useSharedContext } from '../../../context/SharedContext';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
@@ -26,12 +26,12 @@ import {
   ProductSchema,
 } from '../../../utils/types';
 import {
-  uploadRequest,
-  uploadSuccess,
-  uploadError,
-  addError,
-  addRequest,
-  addSuccess,
+  adminProductUploadRequest,
+  adminProductUploadSuccess,
+  adminProductUploadError,
+  adminProductAddError,
+  adminProductAddSuccess,
+  adminProductAddRequest,
 } from '../../../store/adminProduct';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
@@ -42,14 +42,17 @@ interface EditProductProps {
 }
 
 const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
+  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
   const router = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
   const {
-    authStore: { userInfo },
-    adminProduct: { loading, loadingAdd, errorText },
+    adminProduct: {
+      adminProductLoading,
+      adminProductLoadingAdd,
+      adminProductErrorText,
+    },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const {
@@ -85,7 +88,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     images,
   }: Record<string, any>) => {
     try {
-      dispatch(addRequest());
+      dispatch(adminProductAddRequest());
       const { data } = await axios.patch<
         ProductRequest,
         AppResponse<ProductSchema>
@@ -106,15 +109,15 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           headers: { authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      enqueueSnackbar(`Product ${data.payload.name} updated successfully`, {
+      snackbar(`Product ${data.payload.name} updated successfully`, {
         variant: 'success',
       });
-      dispatch(addSuccess());
+      dispatch(adminProductAddSuccess());
       //   router.push((redirect as string) || '/');
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
-      dispatch(addError(error.toString()));
-      enqueueSnackbar(errorText, { variant: 'error' });
+      dispatch(adminProductAddError(error.toString()));
+      snackbar(errorText, { variant: 'error' });
     }
   };
 
@@ -124,13 +127,13 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
-      enqueueSnackbar('Can not get file.', { variant: 'error' });
+      snackbar('Can not get file.', { variant: 'error' });
       return;
     }
     const bodyFormData = new FormData();
     bodyFormData.append('file', file);
     try {
-      dispatch(uploadRequest());
+      dispatch(adminProductUploadRequest());
       const { data } = await axios.post<FormData, AppResponse<string>>(
         '/api/admin/upload',
         bodyFormData,
@@ -141,16 +144,16 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           },
         }
       );
-      dispatch(uploadSuccess());
+      dispatch(adminProductUploadSuccess());
       setValue('images', data.payload);
       setPreview(data.payload);
-      enqueueSnackbar('File uploaded successfully', { variant: 'success' });
+      snackbar('File uploaded successfully', { variant: 'success' });
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
-      dispatch(uploadError(error.toString()));
+      dispatch(adminProductUploadError(error.toString()));
       setPreview('');
       setValue('images', '');
-      enqueueSnackbar(errorText, { variant: 'error' });
+      snackbar(errorText, { variant: 'error' });
     }
   };
 
@@ -168,7 +171,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   React.useEffect(() => {
     const fetchProducts = async () => {
       try {
-        dispatch(uploadRequest());
+        dispatch(adminProductUploadRequest());
         const { data } = await axios.get<null, AppResponse<ProductSchema>>(
           `/api/admin/product/${slug}`,
           {
@@ -178,18 +181,18 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
             },
           }
         );
-        dispatch(uploadSuccess());
+        dispatch(adminProductUploadSuccess());
         const formTitles = product.map(({ name }) => name);
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
         setPreview(data.payload.images[0]);
       } catch (error: any) {
-        dispatch(uploadError(error.toString()));
+        dispatch(adminProductUploadError(error.toString()));
       }
     };
     fetchProducts();
-    if (!userInfo?.isAdmin) router.push('/');
+    onNotAdmin();
   }, []);
 
   return (
@@ -209,10 +212,12 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           >
             <Typography sx={{ fontSize: '20px' }}>Edit Product</Typography>
           </Box>
-          {loadingAdd || loading ? (
+          {adminProductLoadingAdd || adminProductLoading ? (
             <CircularProgress />
-          ) : errorText ? (
-            <Typography sx={{ color: 'red' }}>{errorText}</Typography>
+          ) : adminProductErrorText ? (
+            <Typography sx={{ color: 'red' }}>
+              {adminProductErrorText}
+            </Typography>
           ) : (
             <form
               onSubmit={handleSubmit(submitHandler)}
@@ -300,7 +305,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                       accept="image/*"
                     />
                   </Button>
-                  {loading && <CircularProgress />}
+                  {adminProductLoading && <CircularProgress />}
                 </ListItem>
                 {preview && (
                   <ListItem

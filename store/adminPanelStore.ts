@@ -1,64 +1,65 @@
-import { createSlice } from '@reduxjs/toolkit';import { ProductSchema, UserSchema } from '../utils/types';
+import { createSlice } from '@reduxjs/toolkit';
+import { ProductSchema, UserSchema } from '../utils/types';
 
 type DataSchemas = ProductSchema[] | UserSchema[] | [];
 
 interface AuthInitialState<T extends DataSchemas> {
-  data: T;
-  loading: boolean;
-  error: string;
-  loadingDelete: boolean;
-  errorDelete: boolean;
-  deleteErrorText: string;
+  adminPanelData: T;
+  adminPanelLoading: boolean;
+  adminPanelError: string;
+  adminPanelLoadingDelete: boolean;
+  adminPanelErrorDelete: boolean;
+  adminPanelDeleteErrorText: string;
 }
 
 const initialState: AuthInitialState<DataSchemas> = {
-  data: [],
-  loading: false,
-  error: '',
-  loadingDelete: false,
-  errorDelete: false,
-  deleteErrorText: '',
+  adminPanelData: [],
+  adminPanelLoading: false,
+  adminPanelError: '',
+  adminPanelLoadingDelete: false,
+  adminPanelErrorDelete: false,
+  adminPanelDeleteErrorText: '',
 };
 
 const adminPanelStore = createSlice({
   name: 'adminPanelStore',
   initialState,
   reducers: {
-    fetchRequest: (state) => {
-      state.loading = true;
-      state.error = '';
+    adminPanelFetchRequest: (state) => {
+      state.adminPanelLoading = true;
+      state.adminPanelError = '';
     },
-    fetchSuccess: (state, action) => {
-      state.loading = false;
-      state.data = action.payload;
-      state.error = '';
+    adminPanelFetchSuccess: (state, action) => {
+      state.adminPanelLoading = false;
+      state.adminPanelData = action.payload;
+      state.adminPanelError = '';
     },
-    fetchError: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+    adminPanelFetchError: (state, action) => {
+      state.adminPanelLoading = false;
+      state.adminPanelError = action.payload;
     },
-    deleteRequest: (state) => {
-      state.loadingDelete = true;
+    adminPanelDeleteRequest: (state) => {
+      state.adminPanelLoadingDelete = true;
     },
-    deleteSuccess: (state, action) => {
-      state.loadingDelete = false;
-      state.deleteErrorText = '';
-      state.data = action.payload;
+    adminPanelDeleteSuccess: (state, action) => {
+      state.adminPanelLoadingDelete = false;
+      state.adminPanelDeleteErrorText = '';
+      state.adminPanelData = action.payload;
     },
-    deleteError: (state, action) => {
-      state.loadingDelete = false;
-      state.deleteErrorText = action.payload;
+    adminPanelDeleteError: (state, action) => {
+      state.adminPanelLoadingDelete = false;
+      state.adminPanelDeleteErrorText = action.payload;
     },
   },
 });
 
 export const {
-  fetchRequest,
-  fetchSuccess,
-  fetchError,
-  deleteRequest,
-  deleteSuccess,
-  deleteError,
+  adminPanelFetchRequest,
+  adminPanelFetchSuccess,
+  adminPanelFetchError,
+  adminPanelDeleteRequest,
+  adminPanelDeleteSuccess,
+  adminPanelDeleteError,
 } = adminPanelStore.actions;
 
 export default adminPanelStore.reducer;

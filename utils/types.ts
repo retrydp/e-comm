@@ -65,13 +65,14 @@ export interface ProductRequest {
   images: string[];
 }
 
-export interface InnerPayload<T extends ProductSchema = ProductSchema> {
-  productRandom: T[];
-  bestOfAll: T[];
-  bestOfBelts: T[];
-  bestOfBags: T[];
-  bestOfSneakers: T[];
-}
+export type InnerPayload<T extends ProductSchema = ProductSchema> = Record<
+  | 'productRandom'
+  | 'bestOfAll'
+  | 'bestOfBelts'
+  | 'bestOfBags'
+  | 'bestOfSneakers',
+  T[]
+>;
 
 export type AppResponse<
   T extends

@@ -1,34 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit';
-interface ApInitialState {
-  loading: boolean;
-  errorText: string;
+import { createSlice } from '@reduxjs/toolkit';interface ApInitialState {
+  adminUserLoading: boolean;
+  adminUserErrorText: string;
 }
 
 const initialState: ApInitialState = {
-  loading: false,
-  errorText: '',
+  adminUserLoading: false,
+  adminUserErrorText: '',
 };
 
 const adminUser = createSlice({
   name: 'adminUser',
   initialState,
   reducers: {
-    editRequest: (state) => {
-      state.loading = true;
-      state.errorText = '';
+    adminUserEditRequest: (state) => {
+      state.adminUserLoading = true;
+      state.adminUserErrorText = '';
     },
-    editSuccess: (state) => {
-      state.loading = false;
-      state.errorText = '';
+    adminUserEditSuccess: (state) => {
+      state.adminUserLoading = false;
+      state.adminUserErrorText = '';
     },
 
-    editError: (state, action) => {
-      state.loading = false;
-      state.errorText = action.payload;
+    adminUserEditError: (state, action) => {
+      state.adminUserLoading = false;
+      state.adminUserErrorText = action.payload;
     },
   },
 });
 
-export const { editRequest, editSuccess, editError } = adminUser.actions;
+export const {
+  adminUserEditRequest,
+  adminUserEditSuccess,
+  adminUserEditError,
+} = adminUser.actions;
 
 export default adminUser.reducer;

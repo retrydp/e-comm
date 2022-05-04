@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
-interface AuthInitialState {
+export interface AuthInitialState {
   userInfo: {
     token: string;
     _id: string;

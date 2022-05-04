@@ -27,7 +27,7 @@ const store = configureStore({
 });
 
 store.subscribe(
-  throttle(() => saveState(store.getState().cart.products, 'cart'), 1000)
+  throttle(() => saveState(store.getState().cart.cartProducts, 'cart'), 1000)
 );
 
 export default store;

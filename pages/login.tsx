@@ -1,4 +1,5 @@
-import React from 'react';import Cookies from 'js-cookie';
+import React from 'react';
+import Cookies from 'js-cookie';
 import { AppResponse, UserSchema } from '../utils/types';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -18,7 +19,7 @@ import { MailOutline, PasswordOutlined } from '@mui/icons-material';
 import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
-import { useSnackbar } from 'notistack';
+import { useSharedContext } from '../context/SharedContext';
 import Head from 'next/head';
 import styles from '../utils/styles';
 import { useAppDispatch } from '../store';
@@ -26,9 +27,10 @@ import { userLogin } from '../store/authStore';
 import useFormSettings from '../utils/hooks/useFormSettings';
 
 const Login: React.FC = () => {
+  const { snackbar } = useSharedContext();
   const router = useRouter();
   const { redirect } = router.query;
-  const { enqueueSnackbar } = useSnackbar();
+
   const dispatch = useAppDispatch();
   const {
     handleSubmit,
@@ -47,7 +49,7 @@ const Login: React.FC = () => {
   const submitHandler = async ({ email, password }: Record<string, string>) => {
     try {
       const { data } = await axios.post<
-        { email: string; password: string },
+        Record<'email' | 'password', string>,
         AppResponse<UserSchema>
       >('/api/users/login', {
         email,
@@ -60,7 +62,7 @@ const Login: React.FC = () => {
       if (axios.isAxiosError(error)) {
         const responseError = error?.response?.data?.['message'];
         if (responseError) {
-          enqueueSnackbar(responseError, {
+          snackbar(responseError, {
             variant: 'error',
           });
         }

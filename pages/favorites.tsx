@@ -7,34 +7,34 @@ import {
   Typography,
 } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../store';
-import { useSnackbar } from 'notistack';
+import { useSharedContext } from '../context/SharedContext';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { AppResponse, ProductSchema } from '../utils/types';
-import { fetchFavorite, setLoading } from '../store/favorites';
+import { favoritesFetch, favoritesSetLoading } from '../store/favorites';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { ArrowBack } from '@mui/icons-material';
 
 const Favorites: React.FC = () => {
+  const { snackbar, userInfo } = useSharedContext();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
+
   const {
     favorites: { favoritesData, favoritesLoading },
-    authStore: { userInfo },
   } = useAppSelector((store) => store);
 
   React.useEffect(() => {
     if (!userInfo) {
-      enqueueSnackbar('Please login to view favorites.', {
+      snackbar('Please login to view favorites.', {
         variant: 'error',
       });
       router.push(`/login?redirect=${router.pathname}`);
       return;
     } else {
       const fetchFavorites = async () => {
-        dispatch(setLoading(true));
+        dispatch(favoritesSetLoading(true));
         const { data } = await axios.get<null, AppResponse<ProductSchema[]>>(
           `/api/users/favorite`,
           {
@@ -43,8 +43,8 @@ const Favorites: React.FC = () => {
             },
           }
         );
-        dispatch(fetchFavorite(data.payload));
-        dispatch(setLoading(false));
+        dispatch(favoritesFetch(data.payload));
+        dispatch(favoritesSetLoading(false));
       };
       fetchFavorites();
     }

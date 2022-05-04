@@ -21,9 +21,13 @@ import {
   ArrowBack,
 } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '../store';
-import { decrementCount, incrementCount, deleteProduct } from '../store/cart';
+import {
+  cartIncrementCount,
+  cartDecrementCount,
+  cartDeleteProduct,
+} from '../store/cart';
 import NextLink from 'next/link';
-import { useSnackbar } from 'notistack';
+import { useSharedContext } from '../context/SharedContext';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
@@ -31,19 +35,19 @@ const TAXES = 0.2;
 const SHIPPING_PRICE = 10;
 
 const Cart: React.FC = () => {
-  const { enqueueSnackbar } = useSnackbar();
+  const { snackbar, userInfo } = useSharedContext();
+
   const sm = useMediaQuery('(max-width:600px)');
   const dispatch = useAppDispatch();
   const router = useRouter();
   const {
-    authStore: { userInfo },
-    cart: { products },
+    cart: { cartProducts },
   } = useAppSelector((store) => store);
-  const totalProductsInCart = products?.length
-    ? products.reduce((prev, { count }) => prev + count, 0)
+  const totalProductsInCart = cartProducts?.length
+    ? cartProducts.reduce((prev, { count }) => prev + count, 0)
     : 0;
-  const totalSum = products?.length
-    ? products.reduce((prev, { price, count }) => prev + price * count, 0)
+  const totalSum = cartProducts?.length
+    ? cartProducts.reduce((prev, { price, count }) => prev + price * count, 0)
     : 0;
 
   /**
@@ -53,7 +57,7 @@ const Cart: React.FC = () => {
    */
   const addFavoriteHandler = async (id: string) => {
     if (!userInfo) {
-      enqueueSnackbar(`Please login before adding favorites.`, {
+      snackbar(`Please login before adding favorites.`, {
         variant: 'error',
       });
       router.push(`/login?redirect=${router.pathname}`);
@@ -66,9 +70,9 @@ const Cart: React.FC = () => {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           }
         );
-        enqueueSnackbar(`Product successfully added.`, { variant: 'success' });
+        snackbar(`Product successfully added.`, { variant: 'success' });
       } catch (error: any) {
-        enqueueSnackbar(`${error.response.data.message || error.toString()}`, {
+        snackbar(`${error.response.data.message || error.toString()}`, {
           variant: 'error',
         });
       }
@@ -78,14 +82,14 @@ const Cart: React.FC = () => {
   return (
     <NoSsr>
       <Layout title="home" customTitle="Cart">
-        {products?.length > 0 ? (
+        {cartProducts?.length > 0 ? (
           <Container maxWidth="lg" sx={{ mb: '15px' }}>
             <Typography variant="h4" sx={{ padding: '15px 0' }}>
               Your cart:
             </Typography>
             <Divider />
             <Grid container spacing={2}>
-              {products.map((product) => (
+              {cartProducts.map((product) => (
                 <Grid item xs={12} key={product.slug}>
                   <Box sx={styles.cartWrapper}>
                     <Box>
@@ -117,7 +121,7 @@ const Cart: React.FC = () => {
                           color="primary"
                           aria-label="Add one item"
                           component="span"
-                          onClick={() => dispatch(incrementCount(product))}
+                          onClick={() => dispatch(cartIncrementCount(product))}
                         >
                           <AddBox
                             sx={{
@@ -133,7 +137,7 @@ const Cart: React.FC = () => {
                           color="primary"
                           aria-label="Delete one item"
                           component="span"
-                          onClick={() => dispatch(decrementCount(product))}
+                          onClick={() => dispatch(cartDecrementCount(product))}
                         >
                           <IndeterminateCheckBox
                             sx={{
@@ -172,7 +176,7 @@ const Cart: React.FC = () => {
                             color="primary"
                             aria-label="Delete"
                             component="span"
-                            onClick={() => dispatch(deleteProduct(product))}
+                            onClick={() => dispatch(cartDeleteProduct(product))}
                           >
                             <DeleteOutline
                               sx={{

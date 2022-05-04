@@ -17,8 +17,8 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-import { useSnackbar } from 'notistack';
-import { Controller, useForm } from 'react-hook-form';
+import { useSharedContext } from '../../../context/SharedContext';
+import { Controller, useForm, FieldValues } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
 import {
@@ -27,25 +27,24 @@ import {
   ProductSchema,
 } from '../../../utils/types';
 import {
-  uploadRequest,
-  uploadSuccess,
-  uploadError,
-  addError,
-  addRequest,
-  addSuccess,
+  adminProductUploadRequest,
+  adminProductUploadSuccess,
+  adminProductUploadError,
+  adminProductAddError,
+  adminProductAddSuccess,
+  adminProductAddRequest,
 } from '../../../store/adminProduct';
 import Image from 'next/image';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
 
 const CreateProduct: React.FC = () => {
+  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
   const router = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
   const {
-    authStore: { userInfo },
-    adminProduct: { loading, loadingAdd },
+    adminProduct: { adminProductLoading, adminProductLoadingAdd },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const {
@@ -79,9 +78,9 @@ const CreateProduct: React.FC = () => {
     color,
     itemsInStock,
     images,
-  }: Record<string, any>) => {
+  }: FieldValues) => {
     try {
-      dispatch(addRequest());
+      dispatch(adminProductAddRequest());
       const { data } = await axios.put<
         ProductRequest,
         AppResponse<ProductSchema>
@@ -102,15 +101,15 @@ const CreateProduct: React.FC = () => {
           headers: { authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      enqueueSnackbar(`Product ${data.payload.name} uploaded successfully`, {
+      snackbar(`Product ${data.payload.name} uploaded successfully`, {
         variant: 'success',
       });
-      dispatch(addSuccess());
+      dispatch(adminProductAddSuccess());
       //   router.push((redirect as string) || '/');
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
-      dispatch(addError(error.toString()));
-      enqueueSnackbar(errorText, { variant: 'error' });
+      dispatch(adminProductAddError(error.toString()));
+      snackbar(errorText, { variant: 'error' });
     }
   };
 
@@ -120,13 +119,13 @@ const CreateProduct: React.FC = () => {
   const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
-      enqueueSnackbar('Can not get file.', { variant: 'error' });
+      snackbar('Can not get file.', { variant: 'error' });
       return;
     }
     const bodyFormData = new FormData();
     bodyFormData.append('file', file);
     try {
-      dispatch(uploadRequest());
+      dispatch(adminProductUploadRequest());
       const { data } = await axios.post<FormData, AppResponse<string>>(
         '/api/admin/upload',
         bodyFormData,
@@ -137,16 +136,16 @@ const CreateProduct: React.FC = () => {
           },
         }
       );
-      dispatch(uploadSuccess());
+      dispatch(adminProductUploadSuccess());
       setValue('images', data.payload);
       setPreview(data.payload);
-      enqueueSnackbar('File uploaded successfully', { variant: 'success' });
+      snackbar('File uploaded successfully', { variant: 'success' });
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
-      dispatch(uploadError(error.toString()));
+      dispatch(adminProductUploadError(error.toString()));
       setPreview('');
       setValue('images', '');
-      enqueueSnackbar(errorText, { variant: 'error' });
+      snackbar(errorText, { variant: 'error' });
     }
   };
 
@@ -164,7 +163,7 @@ const CreateProduct: React.FC = () => {
   React.useEffect(() => {
     setValue('category', categoryValue);
     setValue('brand', brandValue);
-    if (!userInfo?.isAdmin) router.push('/');
+    onNotAdmin();
   }, []);
 
   return (
@@ -184,7 +183,7 @@ const CreateProduct: React.FC = () => {
           >
             <Typography sx={{ fontSize: '20px' }}>Add Product</Typography>
           </Box>
-          {loadingAdd ? (
+          {adminProductLoadingAdd ? (
             <CircularProgress />
           ) : (
             <form
@@ -273,7 +272,7 @@ const CreateProduct: React.FC = () => {
                       accept="image/*"
                     />
                   </Button>
-                  {loading && <CircularProgress />}
+                  {adminProductLoading && <CircularProgress />}
                 </ListItem>
                 {preview && (
                   <ListItem

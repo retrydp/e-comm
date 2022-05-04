@@ -17,12 +17,16 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-import { useSnackbar } from 'notistack';
+import { useSharedContext } from '../../../context/SharedContext';
 import { Controller, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
 import { AppResponse, UserSchema } from '../../../utils/types';
-import { editError, editRequest, editSuccess } from '../../../store/adminUser';
+import {
+  adminUserEditRequest,
+  adminUserEditSuccess,
+  adminUserEditError,
+} from '../../../store/adminUser';
 import { GetServerSideProps } from 'next';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
 
@@ -31,12 +35,11 @@ interface EditUserProps {
 }
 
 const EditUser: React.FC<EditUserProps> = ({ id }) => {
+  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
   const [isAdminValue, setIsAdminValue] = React.useState<boolean>(false);
   const router = useRouter();
-  const { enqueueSnackbar } = useSnackbar();
   const {
-    authStore: { userInfo },
-    adminUser: { loading, errorText },
+    adminUser: { adminUserLoading, adminUserErrorText },
   } = useAppSelector((store) => store);
   const dispatch = useAppDispatch();
   const {
@@ -56,7 +59,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
     isAdmin,
   }: Record<string, any>) => {
     try {
-      dispatch(editRequest());
+      dispatch(adminUserEditRequest());
       const { data } = await axios.patch<UserSchema, AppResponse<UserSchema>>(
         `/api/admin/user/${id}`,
         {
@@ -68,15 +71,15 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
           headers: { authorization: `Bearer ${userInfo?.token}` },
         }
       );
-      enqueueSnackbar(`User ${data.payload.name} updated successfully`, {
+      snackbar(`User ${data.payload.name} updated successfully`, {
         variant: 'success',
       });
-      dispatch(editSuccess());
+      dispatch(adminUserEditSuccess());
       //   router.push((redirect as string) || '/');
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
-      dispatch(editError(error.toString()));
-      enqueueSnackbar(errorText, { variant: 'error' });
+      dispatch(adminUserEditError(error.toString()));
+      snackbar(errorText, { variant: 'error' });
     }
   };
 
@@ -91,29 +94,28 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
   React.useEffect(() => {
     const fetchUsers = async () => {
       try {
-        dispatch(editRequest());
+        dispatch(adminUserEditRequest());
         const { data } = await axios.get<'', AppResponse<UserSchema>>(
           `/api/admin/user/${id}`,
           {
             headers: {
-              'Content-Type': 'multipart/form-data',
               authorization: `Bearer ${userInfo?.token}`,
             },
           }
         );
 
-        dispatch(editSuccess());
+        dispatch(adminUserEditSuccess());
         const formTitles = user.map(({ name }) => name);
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
         setIsAdminValue(data.payload.isAdmin);
       } catch (error: any) {
-        dispatch(editError(error.toString()));
+        dispatch(adminUserEditError(error.toString()));
       }
     };
     fetchUsers();
-    if (!userInfo?.isAdmin) router.push('/');
+    onNotAdmin();
   }, []);
 
   return (
@@ -133,10 +135,10 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
           >
             <Typography sx={{ fontSize: '20px' }}>Edit User</Typography>
           </Box>
-          {loading ? (
+          {adminUserLoading ? (
             <CircularProgress />
-          ) : errorText ? (
-            <Typography sx={{ color: 'red' }}>{errorText}</Typography>
+          ) : adminUserErrorText ? (
+            <Typography sx={{ color: 'red' }}>{adminUserErrorText}</Typography>
           ) : (
             <form
               onSubmit={handleSubmit(submitHandler)}

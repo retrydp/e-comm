@@ -1,5 +1,4 @@
-import React from 'react';
-import { ProductSchema } from '../utils/types';
+import React from 'react';import { ProductSchema } from '../utils/types';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
 import {
@@ -22,13 +21,12 @@ import {
   Typography,
 } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { addProduct } from '../store/cart';
-import { useAppDispatch, useAppSelector } from '../store';
-import { useSnackbar } from 'notistack';
+import { cartAddProduct } from '../store/cart';
+import { useAppDispatch } from '../store';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { deleteFavorite } from '../store/favorites';
-
+import { favoritesDelete } from '../store/favorites';
+import { useSharedContext } from '../context/SharedContext';
 interface ListProps {
   products: ProductSchema[];
   favoritesModeAccept?: boolean;
@@ -38,13 +36,10 @@ const List: React.FC<ListProps> = ({
   products,
   favoritesModeAccept = true,
 }) => {
+  const { userInfo, snackbar } = useSharedContext();
   const sm = useMediaQuery('(max-width:670px)');
   const dispatch = useAppDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
-  const {
-    authStore: { userInfo },
-  } = useAppSelector((store) => store);
 
   /**
    * Add product to user's favorites list. If user is not logged in,
@@ -53,7 +48,7 @@ const List: React.FC<ListProps> = ({
    */
   const addFavoriteHandler = async (id: string) => {
     if (!userInfo) {
-      enqueueSnackbar(`Please login before adding favorites.`, {
+      snackbar(`Please login before adding favorites.`, {
         variant: 'error',
       });
       router.push(`/login?redirect=${router.pathname}`);
@@ -66,9 +61,9 @@ const List: React.FC<ListProps> = ({
             headers: { Authorization: `Bearer ${userInfo.token}` },
           }
         );
-        enqueueSnackbar(`Product successfully added.`, { variant: 'success' });
+        snackbar(`Product successfully added.`, { variant: 'success' });
       } catch (error: any) {
-        enqueueSnackbar(`${error.response.data.message || error.toString()}`, {
+        snackbar(`${error.response.data.message || error.toString()}`, {
           variant: 'error',
         });
       }
@@ -82,7 +77,7 @@ const List: React.FC<ListProps> = ({
    */
   const deleteFavoriteHandler = async (id: string) => {
     if (!userInfo) {
-      enqueueSnackbar(`Please login before deleting favorites.`, {
+      snackbar(`Please login before deleting favorites.`, {
         variant: 'error',
       });
       router.push(`/login?redirect=${router.pathname}`);
@@ -92,12 +87,12 @@ const List: React.FC<ListProps> = ({
           data: { id },
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        enqueueSnackbar(`Product successfully deleted.`, {
+        snackbar(`Product successfully deleted.`, {
           variant: 'success',
         });
-        dispatch(deleteFavorite(id));
+        dispatch(favoritesDelete(id));
       } catch (error: any) {
-        enqueueSnackbar(`${error.response.data.message || error.toString()}`, {
+        snackbar(`${error.response.data.message || error.toString()}`, {
           variant: 'error',
         });
       }
@@ -210,7 +205,7 @@ const List: React.FC<ListProps> = ({
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => dispatch(addProduct(product))}
+                    onClick={() => dispatch(cartAddProduct(product))}
                     startIcon={<ShoppingCartOutlined />}
                   >
                     Add to cart

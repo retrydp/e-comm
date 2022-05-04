@@ -22,11 +22,11 @@ import {
 import Image from 'next/image';
 import styles from '../../utils/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { addProduct } from '../../store/cart';
+import { cartAddProduct } from '../../store/cart';
 import { useAppDispatch, useAppSelector } from '../../store';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useSnackbar } from 'notistack';
+import { useSharedContext } from '../../context/SharedContext';
 import NextLink from 'next/link';
 
 interface ProductScreenProps {
@@ -36,9 +36,9 @@ interface ProductScreenProps {
 type AllowedCategories = 'bags' | 'sneakers' | 'belts';
 
 const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
+  const { snackbar } = useSharedContext();
   const [value, setValue] = React.useState('1');
   const dispatch = useAppDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const {
     authStore: { userInfo },
@@ -55,7 +55,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
    */
   const addFavoriteHandler = async (id: string) => {
     if (!userInfo) {
-      enqueueSnackbar(`Please login before adding favorites.`, {
+      snackbar(`Please login before adding favorites.`, {
         variant: 'error',
       });
       router.push(`/login?redirect=/product/${product?.slug}`);
@@ -68,9 +68,9 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
             headers: { Authorization: `Bearer ${userInfo.token}` },
           }
         );
-        enqueueSnackbar(`Product successfully added.`, { variant: 'success' });
+        snackbar(`Product successfully added.`, { variant: 'success' });
       } catch (error: any) {
-        enqueueSnackbar(`${error.response.data.message || error.toString()}`, {
+        snackbar(`${error.response.data.message || error.toString()}`, {
           variant: 'error',
         });
       }
@@ -169,7 +169,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => dispatch(addProduct(product))}
+                    onClick={() => dispatch(cartAddProduct(product))}
                     startIcon={<ShoppingCartOutlined />}
                   >
                     Add to cart
