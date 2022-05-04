@@ -1,6 +1,6 @@
 import { Connection } from 'mongoose';
 declare global {
-  let mongoose: any;
+  var mongoose: any; //eslint-disable-line
 }
 
 export const mongoose = global.mongoose || new Connection();
