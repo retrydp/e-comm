@@ -28,6 +28,7 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useSharedContext } from '../../context/SharedContext';
 import NextLink from 'next/link';
+import apiRoutes from '../../constants/apiRoutes';
 
 interface ProductScreenProps {
   product?: ProductSchema;
@@ -62,7 +63,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
     } else {
       try {
         await axios.put(
-          `/api/users/favorite`,
+          apiRoutes.USER_FAVORITE,
           { id },
           {
             headers: { Authorization: `Bearer ${userInfo.token}` },

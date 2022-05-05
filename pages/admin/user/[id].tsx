@@ -1,6 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
-import { useRouter } from 'next/router';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -29,6 +27,7 @@ import {
 } from '../../../store/adminUser';
 import { GetServerSideProps } from 'next';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
+import apiRoutes from '../../../constants/apiRoutes';
 
 interface EditUserProps {
   id: string;
@@ -37,7 +36,6 @@ interface EditUserProps {
 const EditUser: React.FC<EditUserProps> = ({ id }) => {
   const { snackbar, userInfo, onNotAdmin } = useSharedContext();
   const [isAdminValue, setIsAdminValue] = React.useState<boolean>(false);
-  const router = useRouter();
   const {
     adminUser: { adminUserLoading, adminUserErrorText },
   } = useAppSelector((store) => store);
@@ -61,7 +59,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
     try {
       dispatch(adminUserEditRequest());
       const { data } = await axios.patch<UserSchema, AppResponse<UserSchema>>(
-        `/api/admin/user/${id}`,
+        `${apiRoutes.ADMIN_USER}${id}`,
         {
           name,
           email,
@@ -96,7 +94,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
       try {
         dispatch(adminUserEditRequest());
         const { data } = await axios.get<'', AppResponse<UserSchema>>(
-          `/api/admin/user/${id}`,
+          `${apiRoutes.ADMIN_USER}${id}`,
           {
             headers: {
               authorization: `Bearer ${userInfo?.token}`,

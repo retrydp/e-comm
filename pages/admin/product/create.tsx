@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../../store';
-import { useRouter } from 'next/router';
 import {
   Box,
   Button,
@@ -36,13 +35,13 @@ import {
 } from '../../../store/adminProduct';
 import Image from 'next/image';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
+import apiRoutes from '../../../constants/apiRoutes';
 
 const CreateProduct: React.FC = () => {
   const { snackbar, userInfo, onNotAdmin } = useSharedContext();
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
-  const router = useRouter();
   const {
     adminProduct: { adminProductLoading, adminProductLoadingAdd },
   } = useAppSelector((store) => store);
@@ -85,7 +84,7 @@ const CreateProduct: React.FC = () => {
         ProductRequest,
         AppResponse<ProductSchema>
       >(
-        '/api/admin/product/add',
+        apiRoutes.ADMIN_PRODUCT_ADD,
         {
           name,
           description,
@@ -127,7 +126,7 @@ const CreateProduct: React.FC = () => {
     try {
       dispatch(adminProductUploadRequest());
       const { data } = await axios.post<FormData, AppResponse<string>>(
-        '/api/admin/upload',
+        apiRoutes.ADMIN_UPLOAD,
         bodyFormData,
         {
           headers: {

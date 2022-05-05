@@ -8,7 +8,6 @@ import {
   adminPanelDeleteSuccess,
   adminPanelDeleteError,
 } from '../../store/adminPanelStore';
-import { useRouter } from 'next/router';
 import {
   Box,
   Button,
@@ -30,11 +29,11 @@ import { AdminSidebar } from '../../components';
 import axios from 'axios';
 import { AppResponse, ProductSchema } from '../../utils/types';
 import { useSharedContext } from '../../context/SharedContext';
+import apiRoutes from '../../constants/apiRoutes';
 
 const AdminProducts: React.FC = () => {
   const { snackbar, userInfo, onNotAdmin } = useSharedContext();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
-  const router = useRouter();
   const {
     adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
   } = useAppSelector((store) => store);
@@ -50,7 +49,7 @@ const AdminProducts: React.FC = () => {
       setModalOpen(true);
       try {
         await axios.delete<string, AppResponse<ProductSchema[]>>(
-          '/api/admin/products',
+          apiRoutes.ADMIN_PRODUCTS,
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },
             data: productSlug,
@@ -132,7 +131,7 @@ const AdminProducts: React.FC = () => {
       try {
         dispatch(adminPanelFetchRequest());
         const { data } = await axios.get<null, AppResponse<ProductSchema>>(
-          '/api/admin/products',
+          apiRoutes.ADMIN_PRODUCTS,
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },
           }

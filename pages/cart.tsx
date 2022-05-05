@@ -1,5 +1,4 @@
-import {
-  Box,
+import {  Box,
   Button,
   Container,
   Divider,
@@ -30,6 +29,7 @@ import NextLink from 'next/link';
 import { useSharedContext } from '../context/SharedContext';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import apiRoutes from '../constants/apiRoutes';
 
 const TAXES = 0.2;
 const SHIPPING_PRICE = 10;
@@ -64,7 +64,7 @@ const Cart: React.FC = () => {
     } else {
       try {
         await axios.put(
-          `/api/users/favorite`,
+          apiRoutes.USER_FAVORITE,
           { id },
           {
             headers: { Authorization: `Bearer ${userInfo.token}` },

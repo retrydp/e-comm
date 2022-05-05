@@ -1,10 +1,12 @@
-import { Box, Container, Tab, Tabs, Typography } from '@mui/material';import React from 'react';
+import { Box, Container, Tab, Tabs, Typography } from '@mui/material';
+import React from 'react';
 import styles from '../utils/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Layout, Module } from '../components';
 import { ModulePlaceholder } from '../components';
 import axios from 'axios';
 import { AppResponse, InnerPayload, ProductSchema } from '../utils/types';
+import apiRoutes from '../constants/apiRoutes';
 
 type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
 
@@ -36,7 +38,7 @@ const Index: React.FC = (): JSX.Element => {
     const goodsRequest = async () => {
       setLoading(true);
       const { data } = await axios.get<null, AppResponse<InnerPayload>>(
-        '/api/presentation'
+        apiRoutes.USER_PRESENTATION
       );
       setPresentationData(data.payload);
       setLoading(false);

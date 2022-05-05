@@ -1,4 +1,5 @@
-import React from 'react';import Head from 'next/head';
+import React from 'react';
+import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -28,6 +29,7 @@ import Cookies from 'js-cookie';
 import { useAppDispatch } from '../store';
 import { userLogin } from '../store/authStore';
 import useFormSettings from '../utils/hooks/useFormSettings';
+import apiRoutes from '../constants/apiRoutes';
 
 const Register: React.FC = () => {
   const { snackbar } = useSharedContext();
@@ -64,7 +66,7 @@ const Register: React.FC = () => {
       const { data } = await axios.post<
         { name: string; email: string; password: string },
         AppResponse<UserSchema>
-      >('/api/users/register', {
+      >(apiRoutes.USER_REGISTER, {
         name,
         email,
         password,

@@ -1,5 +1,4 @@
-import React from 'react';
-import Cookies from 'js-cookie';
+import React from 'react';import Cookies from 'js-cookie';
 import { AppResponse, UserSchema } from '../utils/types';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -25,6 +24,7 @@ import styles from '../utils/styles';
 import { useAppDispatch } from '../store';
 import { userLogin } from '../store/authStore';
 import useFormSettings from '../utils/hooks/useFormSettings';
+import apiRoutes from '../constants/apiRoutes';
 
 const Login: React.FC = () => {
   const { snackbar } = useSharedContext();
@@ -51,7 +51,7 @@ const Login: React.FC = () => {
       const { data } = await axios.post<
         Record<'email' | 'password', string>,
         AppResponse<UserSchema>
-      >('/api/users/login', {
+      >(apiRoutes.USERS_LOGIN, {
         email,
         password,
       });

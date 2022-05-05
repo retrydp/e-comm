@@ -1,4 +1,5 @@
-import React from 'react';import { ProductSchema } from '../utils/types';
+import React from 'react';
+import { ProductSchema } from '../utils/types';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
 import {
@@ -27,6 +28,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { favoritesDelete } from '../store/favorites';
 import { useSharedContext } from '../context/SharedContext';
+import apiRoutes from '../constants/apiRoutes';
 interface ListProps {
   products: ProductSchema[];
   favoritesModeAccept?: boolean;
@@ -55,7 +57,7 @@ const List: React.FC<ListProps> = ({
     } else {
       try {
         await axios.put(
-          `/api/users/favorite`,
+          apiRoutes.USER_FAVORITE,
           { id },
           {
             headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -83,7 +85,7 @@ const List: React.FC<ListProps> = ({
       router.push(`/login?redirect=${router.pathname}`);
     } else {
       try {
-        await axios.delete(`/api/users/favorite`, {
+        await axios.delete(apiRoutes.USER_FAVORITE, {
           data: { id },
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });

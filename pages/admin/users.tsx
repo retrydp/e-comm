@@ -1,4 +1,5 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../store';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../store';
 import {
   adminPanelFetchRequest,
   adminPanelFetchSuccess,
@@ -7,7 +8,6 @@ import {
   adminPanelDeleteSuccess,
   adminPanelDeleteError,
 } from '../../store/adminPanelStore';
-import { useRouter } from 'next/router';
 import {
   Box,
   CssBaseline,
@@ -26,11 +26,11 @@ import { AppResponse, UserSchema } from '../../utils/types';
 import NextLink from 'next/link';
 import { Delete, Edit } from '@mui/icons-material';
 import { useSharedContext } from '../../context/SharedContext';
+import apiRoutes from '../../constants/apiRoutes';
 
 const AdminUsers: React.FC = () => {
   const { snackbar, userInfo, onNotAdmin } = useSharedContext();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
-  const router = useRouter();
   const {
     adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
   } = useAppSelector((store) => store);
@@ -46,7 +46,7 @@ const AdminUsers: React.FC = () => {
       setModalOpen(true);
       try {
         await axios.delete<string, AppResponse<UserSchema[]>>(
-          '/api/admin/users',
+          apiRoutes.ADMIN_USERS,
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },
             data: userId,
@@ -108,7 +108,7 @@ const AdminUsers: React.FC = () => {
       try {
         dispatch(adminPanelFetchRequest());
         const { data } = await axios.get<null, AppResponse<UserSchema[]>>(
-          '/api/admin/users',
+          apiRoutes.ADMIN_USERS,
           {
             headers: { authorization: `Bearer ${userInfo?.token}` },
           }

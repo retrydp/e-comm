@@ -1,7 +1,9 @@
-import React from 'react';import { useSnackbar } from 'notistack';
+import React from 'react';
+import { useSnackbar } from 'notistack';
 import { useAppSelector } from '../store';
 import { RootState } from '../store';
 import { useRouter } from 'next/router';
+
 interface AppContextInterface {
   snackbar: ReturnType<typeof useSnackbar>['enqueueSnackbar'];
   userInfo: RootState['authStore']['userInfo'];

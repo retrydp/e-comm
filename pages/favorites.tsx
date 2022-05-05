@@ -1,4 +1,5 @@
-import React from 'react';import { Layout, List } from '../components';
+import React from 'react';
+import { Layout, List } from '../components';
 import {
   Button,
   CircularProgress,
@@ -15,6 +16,7 @@ import { favoritesFetch, favoritesSetLoading } from '../store/favorites';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { ArrowBack } from '@mui/icons-material';
+import apiRoutes from '../constants/apiRoutes';
 
 const Favorites: React.FC = () => {
   const { snackbar, userInfo } = useSharedContext();
@@ -36,7 +38,7 @@ const Favorites: React.FC = () => {
       const fetchFavorites = async () => {
         dispatch(favoritesSetLoading(true));
         const { data } = await axios.get<null, AppResponse<ProductSchema[]>>(
-          `/api/users/favorite`,
+          apiRoutes.USER_FAVORITE,
           {
             headers: {
               Authorization: `Bearer ${userInfo?.token}`,

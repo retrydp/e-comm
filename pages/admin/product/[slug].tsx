@@ -1,5 +1,5 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
-import { useRouter } from 'next/router';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -36,6 +36,7 @@ import {
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
+import apiRoutes from '../../../constants/apiRoutes';
 
 interface EditProductProps {
   slug: string;
@@ -46,7 +47,6 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
-  const router = useRouter();
   const {
     adminProduct: {
       adminProductLoading,
@@ -93,7 +93,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
         ProductRequest,
         AppResponse<ProductSchema>
       >(
-        `/api/admin/product/${slug}`,
+        `${apiRoutes.ADMIN_PRODUCT}${slug}`,
         {
           name,
           description,
@@ -135,7 +135,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     try {
       dispatch(adminProductUploadRequest());
       const { data } = await axios.post<FormData, AppResponse<string>>(
-        '/api/admin/upload',
+        apiRoutes.ADMIN_UPLOAD,
         bodyFormData,
         {
           headers: {
@@ -173,7 +173,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       try {
         dispatch(adminProductUploadRequest());
         const { data } = await axios.get<null, AppResponse<ProductSchema>>(
-          `/api/admin/product/${slug}`,
+          `${apiRoutes.ADMIN_PRODUCT}${slug}`,
           {
             headers: {
               'Content-Type': 'multipart/form-data',
