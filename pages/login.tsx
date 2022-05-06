@@ -1,4 +1,5 @@
-import React from 'react';import Cookies from 'js-cookie';
+import React from 'react';
+import Cookies from 'js-cookie';
 import { AppResponse, UserSchema } from '../utils/types';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -27,7 +28,7 @@ import useFormSettings from '../utils/hooks/useFormSettings';
 import apiRoutes from '../constants/apiRoutes';
 
 const Login: React.FC = () => {
-  const { snackbar } = useSharedContext();
+  const { snackbarError } = useSharedContext();
   const router = useRouter();
   const { redirect } = router.query;
 
@@ -62,9 +63,7 @@ const Login: React.FC = () => {
       if (axios.isAxiosError(error)) {
         const responseError = error?.response?.data?.['message'];
         if (responseError) {
-          snackbar(responseError, {
-            variant: 'error',
-          });
+          snackbarError(responseError);
         }
       } else {
         throw new Error('Bcrypt error.');

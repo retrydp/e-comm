@@ -18,11 +18,11 @@ import {
   Typography,
 } from '@mui/material';
 import styles from '../utils/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { SideMenuTemplate, Module, List } from '../components';
 import { useAppSelector, useAppDispatch } from '../store';
+import { useSharedContext } from '../context/SharedContext';
 import {
   setSort,
   setView,
@@ -46,9 +46,8 @@ export const filterValues: FilterValues[] = [
 ];
 
 const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
+  const { mdMax, smMin } = useSharedContext();
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
-  const md = useMediaQuery('(max-width:900px)');
-  const sm = useMediaQuery('(min-width:600px)');
   const dispatch = useAppDispatch();
   const {
     display: {
@@ -100,7 +99,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
       </Drawer>
       <Container maxWidth="lg">
         <Grid container spacing={2}>
-          {md ? (
+          {mdMax ? (
             <Grid item container rowSpacing={2} sx={{ alignItems: 'center' }}>
               <Grid item>
                 <Button
@@ -154,7 +153,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
             lg={9}
             md={9}
           >
-            {sm && (
+            {smMin && (
               <NextLink href="/product/nike-air-max-plus" passHref>
                 <Link>
                   <Box sx={{ mb: '20px' }}>
@@ -176,7 +175,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
                   alignItems: 'center',
                 }}
               >
-                {sm && (
+                {smMin && (
                   <Typography
                     sx={{
                       fontSize: '16px',

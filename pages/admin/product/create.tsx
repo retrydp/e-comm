@@ -36,9 +36,16 @@ import {
 import Image from 'next/image';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
 import apiRoutes from '../../../constants/apiRoutes';
+import notificationMessages from '../../../constants/notificationMessages';
 
 const CreateProduct: React.FC = () => {
-  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
+  const {
+    snackbarSuccess,
+    snackbarError,
+    onNotAdmin,
+    authHeader,
+    authHeaderForm,
+  } = useSharedContext();
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
@@ -96,19 +103,15 @@ const CreateProduct: React.FC = () => {
           itemsInStock,
           images,
         },
-        {
-          headers: { authorization: `Bearer ${userInfo?.token}` },
-        }
+        authHeader
       );
-      snackbar(`Product ${data.payload.name} uploaded successfully`, {
-        variant: 'success',
-      });
+      snackbarSuccess(`Product ${data.payload.name} uploaded successfully`);
       dispatch(adminProductAddSuccess());
       //   router.push((redirect as string) || '/');
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductAddError(error.toString()));
-      snackbar(errorText, { variant: 'error' });
+      snackbarError(errorText);
     }
   };
 
@@ -118,7 +121,7 @@ const CreateProduct: React.FC = () => {
   const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
-      snackbar('Can not get file.', { variant: 'error' });
+      snackbarError(notificationMessages.UPLOAD_NO_FILE);
       return;
     }
     const bodyFormData = new FormData();
@@ -128,23 +131,18 @@ const CreateProduct: React.FC = () => {
       const { data } = await axios.post<FormData, AppResponse<string>>(
         apiRoutes.ADMIN_UPLOAD,
         bodyFormData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            authorization: `Bearer ${userInfo?.token}`,
-          },
-        }
+        authHeaderForm
       );
       dispatch(adminProductUploadSuccess());
       setValue('images', data.payload);
       setPreview(data.payload);
-      snackbar('File uploaded successfully', { variant: 'success' });
+      snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductUploadError(error.toString()));
       setPreview('');
       setValue('images', '');
-      snackbar(errorText, { variant: 'error' });
+      snackbarError(errorText);
     }
   };
 

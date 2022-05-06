@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
 import Product from '../../../models/Product';
 import { isAdmin, isAuth } from '../../../utils/auth';
+import notificationMessages from '../../../constants/notificationMessages';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
@@ -30,12 +31,12 @@ handler.delete(async (req, res) => {
       await product.remove();
       res.status(202).json({
         success: true,
-        payload: 'Deleted successfully',
+        payload: notificationMessages.PRODUCT_DELETED,
       });
     } else {
       res.status(400).json({
         success: false,
-        message: 'Product not found',
+        message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
   } catch (error: any) {

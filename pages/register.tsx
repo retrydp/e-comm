@@ -1,5 +1,4 @@
-import React from 'react';
-import Head from 'next/head';
+import React from 'react';import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -32,7 +31,7 @@ import useFormSettings from '../utils/hooks/useFormSettings';
 import apiRoutes from '../constants/apiRoutes';
 
 const Register: React.FC = () => {
-  const { snackbar } = useSharedContext();
+  const { snackbarError } = useSharedContext();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -59,7 +58,7 @@ const Register: React.FC = () => {
     confirmPassword,
   }: Record<string, any>) => {
     if (password !== confirmPassword) {
-      snackbar('Passwords don`t match', { variant: 'error' });
+      snackbarError('Passwords don`t match');
       return;
     }
     try {
@@ -78,9 +77,7 @@ const Register: React.FC = () => {
       if (axios.isAxiosError(error)) {
         const responseError = error?.response?.data?.['message'];
         if (responseError) {
-          snackbar(responseError, {
-            variant: 'error',
-          });
+          snackbarError(responseError);
         }
       } else {
         throw new Error('Bcrypt error.');

@@ -30,9 +30,11 @@ import axios from 'axios';
 import { AppResponse, ProductSchema } from '../../utils/types';
 import { useSharedContext } from '../../context/SharedContext';
 import apiRoutes from '../../constants/apiRoutes';
+import notificationMessages from '../../constants/notificationMessages';
 
 const AdminProducts: React.FC = () => {
-  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
+  const { snackbarSuccess, snackbarError, onNotAdmin, authHeader } =
+    useSharedContext();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const {
     adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
@@ -51,7 +53,7 @@ const AdminProducts: React.FC = () => {
         await axios.delete<string, AppResponse<ProductSchema[]>>(
           apiRoutes.ADMIN_PRODUCTS,
           {
-            headers: { authorization: `Bearer ${userInfo?.token}` },
+            ...authHeader,
             data: productSlug,
           }
         );
@@ -63,14 +65,12 @@ const AdminProducts: React.FC = () => {
           )
         );
         setModalOpen(false);
-        snackbar(`${productSlug} deleted successfully`, {
-          variant: 'success',
-        });
+        snackbarSuccess(notificationMessages.PRODUCT_DELETED);
       } catch (error: any) {
         const errorText = error.response.data.message || error.toString();
         setModalOpen(false);
         dispatch(adminPanelDeleteError(error.toString()));
-        snackbar(errorText, { variant: 'error' });
+        snackbarError(errorText);
       }
     }
   };
@@ -132,9 +132,7 @@ const AdminProducts: React.FC = () => {
         dispatch(adminPanelFetchRequest());
         const { data } = await axios.get<null, AppResponse<ProductSchema>>(
           apiRoutes.ADMIN_PRODUCTS,
-          {
-            headers: { authorization: `Bearer ${userInfo?.token}` },
-          }
+          authHeader
         );
         dispatch(adminPanelFetchSuccess(data.payload));
       } catch (error: any) {

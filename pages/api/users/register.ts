@@ -1,11 +1,11 @@
-import nc from 'next-connect';
-import User from '../../../models/User';
+import nc from 'next-connect';import User from '../../../models/User';
 import { Error } from 'mongoose';
 import db from '../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import { MongoError } from 'mongodb';
 import { signToken } from '../../../utils/auth';
+import notificationMessages from '../../../constants/notificationMessages';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
@@ -14,7 +14,7 @@ handler.post(async (req, res) => {
     if (!req.body.password)
       return res.status(400).json({
         success: false,
-        message: 'Password is not set.',
+        message: notificationMessages.AUTH_NO_PASSWORD,
       });
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     await db.dbConnect();
@@ -46,7 +46,7 @@ handler.post(async (req, res) => {
     } else if ((error as MongoError).code === 11000) {
       return res.status(409).json({
         success: false,
-        message: 'This email is already registered.',
+        message: notificationMessages.AUTH_EMAIL_EXISTS,
       });
     }
     res.status(500).json({

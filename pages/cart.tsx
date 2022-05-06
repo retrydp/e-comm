@@ -1,4 +1,5 @@
-import {  Box,
+import {
+  Box,
   Button,
   Container,
   Divider,
@@ -6,7 +7,6 @@ import {  Box,
   IconButton,
   NoSsr,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
@@ -27,19 +27,13 @@ import {
 } from '../store/cart';
 import NextLink from 'next/link';
 import { useSharedContext } from '../context/SharedContext';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import apiRoutes from '../constants/apiRoutes';
 
 const TAXES = 0.2;
 const SHIPPING_PRICE = 10;
 
 const Cart: React.FC = () => {
-  const { snackbar, userInfo } = useSharedContext();
-
-  const sm = useMediaQuery('(max-width:600px)');
+  const { addFavoriteHandler, smMax } = useSharedContext();
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const {
     cart: { cartProducts },
   } = useAppSelector((store) => store);
@@ -49,35 +43,6 @@ const Cart: React.FC = () => {
   const totalSum = cartProducts?.length
     ? cartProducts.reduce((prev, { price, count }) => prev + price * count, 0)
     : 0;
-
-  /**
-   * Add product to user's favorites list. If user is not logged in,
-   * redirect to login page.
-   * @param id slug of product
-   */
-  const addFavoriteHandler = async (id: string) => {
-    if (!userInfo) {
-      snackbar(`Please login before adding favorites.`, {
-        variant: 'error',
-      });
-      router.push(`/login?redirect=${router.pathname}`);
-    } else {
-      try {
-        await axios.put(
-          apiRoutes.USER_FAVORITE,
-          { id },
-          {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          }
-        );
-        snackbar(`Product successfully added.`, { variant: 'success' });
-      } catch (error: any) {
-        snackbar(`${error.response.data.message || error.toString()}`, {
-          variant: 'error',
-        });
-      }
-    }
-  };
 
   return (
     <NoSsr>
@@ -95,8 +60,8 @@ const Cart: React.FC = () => {
                     <Box>
                       <Image
                         priority={true}
-                        width={sm ? '120%' : '420'}
-                        height={sm ? '120%' : '525'}
+                        width={smMax ? '120%' : '420'}
+                        height={smMax ? '120%' : '525'}
                         src={product.images[0]}
                       ></Image>
                     </Box>
@@ -112,9 +77,9 @@ const Cart: React.FC = () => {
                       <Typography sx={styles.cartItemText}>
                         {product.name}
                       </Typography>
-                      {!sm && <Typography>{product.description}</Typography>}
+                      {!smMax && <Typography>{product.description}</Typography>}
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography sx={{ fontSize: sm ? '12px' : '20px' }}>
+                        <Typography sx={{ fontSize: smMax ? '12px' : '20px' }}>
                           Quantity:
                         </Typography>
                         <IconButton
@@ -125,12 +90,12 @@ const Cart: React.FC = () => {
                         >
                           <AddBox
                             sx={{
-                              height: sm ? '30px' : '45px',
-                              width: sm ? '30px' : '45px',
+                              height: smMax ? '30px' : '45px',
+                              width: smMax ? '30px' : '45px',
                             }}
                           />
                         </IconButton>
-                        <Typography sx={{ fontSize: sm ? '12px' : '20px' }}>
+                        <Typography sx={{ fontSize: smMax ? '12px' : '20px' }}>
                           {product.count}
                         </Typography>
                         <IconButton
@@ -141,8 +106,8 @@ const Cart: React.FC = () => {
                         >
                           <IndeterminateCheckBox
                             sx={{
-                              height: sm ? '30px' : '45px',
-                              width: sm ? '30px' : '45px',
+                              height: smMax ? '30px' : '45px',
+                              width: smMax ? '30px' : '45px',
                             }}
                           />
                         </IconButton>
@@ -167,8 +132,8 @@ const Cart: React.FC = () => {
                           >
                             <FavoriteBorder
                               sx={{
-                                height: sm ? '25px' : '45px',
-                                width: sm ? '25px' : '45px',
+                                height: smMax ? '25px' : '45px',
+                                width: smMax ? '25px' : '45px',
                               }}
                             />
                           </IconButton>
@@ -180,8 +145,8 @@ const Cart: React.FC = () => {
                           >
                             <DeleteOutline
                               sx={{
-                                height: sm ? '25px' : '45px',
-                                width: sm ? '25px' : '45px',
+                                height: smMax ? '25px' : '45px',
+                                width: smMax ? '25px' : '45px',
                               }}
                             />
                           </IconButton>

@@ -27,9 +27,11 @@ import NextLink from 'next/link';
 import { Delete, Edit } from '@mui/icons-material';
 import { useSharedContext } from '../../context/SharedContext';
 import apiRoutes from '../../constants/apiRoutes';
+import notificationMessages from '../../constants/notificationMessages';
 
 const AdminUsers: React.FC = () => {
-  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
+  const { snackbarSuccess, snackbarError, onNotAdmin, authHeader } =
+    useSharedContext();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const {
     adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
@@ -48,7 +50,7 @@ const AdminUsers: React.FC = () => {
         await axios.delete<string, AppResponse<UserSchema[]>>(
           apiRoutes.ADMIN_USERS,
           {
-            headers: { authorization: `Bearer ${userInfo?.token}` },
+            ...authHeader,
             data: userId,
           }
         );
@@ -58,14 +60,12 @@ const AdminUsers: React.FC = () => {
           )
         );
         setModalOpen(false);
-        snackbar(`${userId} deleted successfully`, {
-          variant: 'success',
-        });
+        snackbarSuccess(notificationMessages.USER_DELETED);
       } catch (error: any) {
         const errorText = error.response.data.message || error.toString();
         setModalOpen(false);
         dispatch(adminPanelDeleteError(error.toString()));
-        snackbar(errorText, { variant: 'error' });
+        snackbarError(errorText);
       }
     }
   };
@@ -109,9 +109,7 @@ const AdminUsers: React.FC = () => {
         dispatch(adminPanelFetchRequest());
         const { data } = await axios.get<null, AppResponse<UserSchema[]>>(
           apiRoutes.ADMIN_USERS,
-          {
-            headers: { authorization: `Bearer ${userInfo?.token}` },
-          }
+          authHeader
         );
         dispatch(adminPanelFetchSuccess(data.payload));
       } catch (error: any) {

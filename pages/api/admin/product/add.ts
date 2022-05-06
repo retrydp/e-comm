@@ -6,6 +6,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import slugify from 'slugify';
 import { MongoError } from 'mongodb';
 import { isAdmin, isAuth } from '../../../../utils/auth';
+import notificationMessages from '../../../../constants/notificationMessages';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
@@ -48,7 +49,7 @@ handler.put(async (req, res) => {
     } else if ((error as MongoError).code === 11000) {
       return res.status(400).json({
         success: false,
-        message: 'This product is already registered.',
+        message: notificationMessages.PRODUCT_ALREADY_EXISTS,
       });
     }
     res.status(500).json({

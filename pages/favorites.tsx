@@ -1,5 +1,4 @@
-import React from 'react';
-import { Layout, List } from '../components';
+import React from 'react';import { Layout, List } from '../components';
 import {
   Button,
   CircularProgress,
@@ -10,46 +9,35 @@ import {
 import { useAppSelector, useAppDispatch } from '../store';
 import { useSharedContext } from '../context/SharedContext';
 import axios from 'axios';
-import { useRouter } from 'next/router';
 import { AppResponse, ProductSchema } from '../utils/types';
 import { favoritesFetch, favoritesSetLoading } from '../store/favorites';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { ArrowBack } from '@mui/icons-material';
 import apiRoutes from '../constants/apiRoutes';
+import notificationMessages from '../constants/notificationMessages';
 
 const Favorites: React.FC = () => {
-  const { snackbar, userInfo } = useSharedContext();
+  const { userInfo, onNotLoggedIn, authHeader } = useSharedContext();
   const dispatch = useAppDispatch();
-  const router = useRouter();
-
   const {
     favorites: { favoritesData, favoritesLoading },
   } = useAppSelector((store) => store);
 
   React.useEffect(() => {
-    if (!userInfo) {
-      snackbar('Please login to view favorites.', {
-        variant: 'error',
-      });
-      router.push(`/login?redirect=${router.pathname}`);
-      return;
-    } else {
-      const fetchFavorites = async () => {
-        dispatch(favoritesSetLoading(true));
-        const { data } = await axios.get<null, AppResponse<ProductSchema[]>>(
-          apiRoutes.USER_FAVORITE,
-          {
-            headers: {
-              Authorization: `Bearer ${userInfo?.token}`,
-            },
-          }
-        );
-        dispatch(favoritesFetch(data.payload));
-        dispatch(favoritesSetLoading(false));
-      };
-      fetchFavorites();
-    }
+    if (!userInfo)
+      return onNotLoggedIn(notificationMessages.FAVORITES_GET_NOT_LOGGED);
+    const fetchFavorites = async () => {
+      dispatch(favoritesSetLoading(true));
+      const { data } = await axios.get<null, AppResponse<ProductSchema[]>>(
+        apiRoutes.USER_FAVORITE,
+
+        authHeader
+      );
+      dispatch(favoritesFetch(data.payload));
+      dispatch(favoritesSetLoading(false));
+    };
+    fetchFavorites();
   }, []);
 
   return (

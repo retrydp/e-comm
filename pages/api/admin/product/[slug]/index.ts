@@ -5,6 +5,7 @@ import db from '../../../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import slugify from 'slugify';
 import { isAdmin, isAuth } from '../../../../../utils/auth';
+import notificationMessages from '../../../../../constants/notificationMessages';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
@@ -60,7 +61,9 @@ handler.patch(async (req, res) => {
       await editProduct.save();
       res.status(202).json({ success: true, payload: editProduct });
     } else {
-      res.status(404).json({ success: false, message: 'Product not found.' });
+      res
+        .status(404)
+        .json({ success: false, message: notificationMessages.PRODUCT_NOT_FOUND });
     }
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {

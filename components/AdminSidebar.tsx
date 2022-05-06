@@ -1,4 +1,5 @@
-import {  Divider,
+import {
+  Divider,
   Grid,
   List,
   ListItem,
@@ -9,7 +10,6 @@ import {  Divider,
 } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-
 import {
   ShoppingCart,
   People,

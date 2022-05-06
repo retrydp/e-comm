@@ -1,15 +1,13 @@
-import React from 'react';import { useRouter } from 'next/router';
-import { CssBaseline, Grid } from '@mui/material';
+import React from 'react';import { CssBaseline, Grid } from '@mui/material';
 import AdminSidebar from '../../components/AdminSidebar';
 import { useSharedContext } from '../../context/SharedContext';
 
 const AdminDashboard: React.FC = () => {
-  const { userInfo, onNotAdmin } = useSharedContext();
-  const router = useRouter();
+  const { onNotAdmin } = useSharedContext();
 
   React.useEffect(() => {
     onNotAdmin();
-  });
+  }, []);
 
   return (
     <>

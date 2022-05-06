@@ -4,6 +4,7 @@ import db from '../../../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isAdmin, isAuth } from '../../../../../utils/auth';
 import User from '../../../../../models/User';
+import notificationMessages from '../../../../../constants/notificationMessages';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
@@ -45,7 +46,9 @@ handler.patch(async (req, res) => {
       editUser.password = null;
       res.status(202).json({ success: true, payload: editUser });
     } else {
-      res.status(404).json({ success: false, message: 'User not found.' });
+      res
+        .status(404)
+        .json({ success: false, message: notificationMessages.USER_NOT_FOUND });
     }
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {

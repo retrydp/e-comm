@@ -1,4 +1,5 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -28,13 +29,15 @@ import {
 import { GetServerSideProps } from 'next';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
 import apiRoutes from '../../../constants/apiRoutes';
+import notificationMessages from '../../../constants/notificationMessages';
 
 interface EditUserProps {
   id: string;
 }
 
 const EditUser: React.FC<EditUserProps> = ({ id }) => {
-  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
+  const { snackbarSuccess, snackbarError, onNotAdmin, authHeader } =
+    useSharedContext();
   const [isAdminValue, setIsAdminValue] = React.useState<boolean>(false);
   const {
     adminUser: { adminUserLoading, adminUserErrorText },
@@ -58,26 +61,21 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
   }: Record<string, any>) => {
     try {
       dispatch(adminUserEditRequest());
-      const { data } = await axios.patch<UserSchema, AppResponse<UserSchema>>(
+      await axios.patch<UserSchema, AppResponse<UserSchema>>(
         `${apiRoutes.ADMIN_USER}${id}`,
         {
           name,
           email,
           isAdmin,
         },
-        {
-          headers: { authorization: `Bearer ${userInfo?.token}` },
-        }
+        authHeader
       );
-      snackbar(`User ${data.payload.name} updated successfully`, {
-        variant: 'success',
-      });
+      snackbarSuccess(notificationMessages.USER_UPDATE_SUCCESS);
       dispatch(adminUserEditSuccess());
-      //   router.push((redirect as string) || '/');
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminUserEditError(error.toString()));
-      snackbar(errorText, { variant: 'error' });
+      snackbarError(errorText);
     }
   };
 
@@ -90,18 +88,14 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
   };
 
   React.useEffect(() => {
+    onNotAdmin();
     const fetchUsers = async () => {
       try {
         dispatch(adminUserEditRequest());
         const { data } = await axios.get<'', AppResponse<UserSchema>>(
           `${apiRoutes.ADMIN_USER}${id}`,
-          {
-            headers: {
-              authorization: `Bearer ${userInfo?.token}`,
-            },
-          }
+          authHeader
         );
-
         dispatch(adminUserEditSuccess());
         const formTitles = user.map(({ name }) => name);
         formTitles.forEach((title) => {
@@ -113,7 +107,6 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
       }
     };
     fetchUsers();
-    onNotAdmin();
   }, []);
 
   return (

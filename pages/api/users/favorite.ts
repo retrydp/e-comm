@@ -1,9 +1,9 @@
-import nc from 'next-connect';
-import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
 import User from '../../../models/User';
 import Product from '../../../models/Product';
 import { isAuth, UserAuth } from '../../../utils/auth';
+import notificationMessages from '../../../constants/notificationMessages';
 
 interface FavoriteRequest extends NextApiRequest {
   user: UserAuth;
@@ -23,7 +23,7 @@ handler.put(async (req, res) => {
         if (user.favoritesId.includes(product.slug)) {
           res.status(409).json({
             success: false,
-            message: 'Product already in favorites.',
+            message: notificationMessages.FAVORITES_ADD_ALREADY_EXISTS,
           });
           return;
         }
@@ -31,18 +31,18 @@ handler.put(async (req, res) => {
         await user.save();
         res.status(200).json({
           success: true,
-          message: 'Product successfully added to favorites.',
+          message: notificationMessages.FAVORITES_ADD_SUCCESS,
         });
       } else {
         res.status(404).json({
           success: false,
-          message: 'User not found.',
+          message: notificationMessages.USER_NOT_FOUND,
         });
       }
     } else {
       res.status(404).json({
         success: false,
-        message: 'Product not found.',
+        message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
   } catch (error: any) {

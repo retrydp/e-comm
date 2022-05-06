@@ -1,4 +1,5 @@
-import {  AppBar,
+import {
+  AppBar,
   Box,
   Link,
   Toolbar,
@@ -10,8 +11,8 @@ import React from 'react';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import styles from '../utils/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { SxProps } from '@mui/material/styles';
+import { useSharedContext } from '../context/SharedContext';
 
 export type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
 type NavPaths =
@@ -37,6 +38,7 @@ interface LinkTabProps {
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ currentTab }) => {
+  const { smMin } = useSharedContext();
   const menuItems: NavItems[] = [
     { title: 'home', path: '/' },
     { title: 'bags', path: '/loading?category=bags' },
@@ -44,7 +46,6 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ currentTab }) => {
     { title: 'belts', path: '/loading?category=belts' },
     { title: 'contacts', path: '/contacts' },
   ];
-  const sm = useMediaQuery('(min-width:600px)');
 
   const LinkTab = (props: LinkTabProps) => {
     return (
@@ -66,7 +67,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ currentTab }) => {
                 src="https://res.cloudinary.com/retrydp/image/upload/v1651478617/xmqphhxdjbtivv8o3lrm.svg"
                 alt="Site logo"
               ></Image>
-              {sm && <Typography sx={styles.logoText}>E-comm</Typography>}
+              {smMin && <Typography sx={styles.logoText}>E-comm</Typography>}
             </Box>
           </Link>
         </NextLink>

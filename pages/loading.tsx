@@ -3,14 +3,13 @@ import { Layout, ModulePlaceholder } from '../components';
 import { useRouter } from 'next/router';
 import { Box, Container, Grid, Skeleton } from '@mui/material';
 import { NavTitles } from '../components/NavigationBar';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { useSharedContext } from '../context/SharedContext';
 import styles from '../utils/styles';
 
 const LoadingPage: React.FC = () => {
+  const { smMin, mdMin } = useSharedContext();
   const router = useRouter();
   const { category } = router.query;
-  const md = useMediaQuery('(min-width:900px)');
-  const sm = useMediaQuery('(min-width:600px)');
 
   React.useEffect(() => {
     router.replace(`/${category || ''}`);
@@ -30,7 +29,7 @@ const LoadingPage: React.FC = () => {
             direction="column"
             sx={{ mb: 4 }}
           >
-            {md && (
+            {mdMin && (
               <Grid item>
                 <Skeleton
                   variant="rectangular"
@@ -47,7 +46,7 @@ const LoadingPage: React.FC = () => {
             lg={9}
             md={9}
           >
-            {sm && (
+            {smMin && (
               <Box sx={{ mb: '20px' }}>
                 <Skeleton
                   variant="rectangular"

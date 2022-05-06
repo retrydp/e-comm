@@ -1,8 +1,8 @@
-import nc from 'next-connect';
-import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
 import User from '../../../models/User';
 import { isAdmin, isAuth } from '../../../utils/auth';
+import notificationMessages from '../../../constants/notificationMessages';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
 
@@ -29,12 +29,12 @@ handler.delete(async (req, res) => {
       await user.remove();
       res.status(202).json({
         success: true,
-        payload: 'Deleted successfully',
+        payload: notificationMessages.USER_DELETED,
       });
     } else {
       res.status(400).json({
         success: false,
-        message: 'User not found',
+        message: notificationMessages.USER_NOT_FOUND,
       });
     }
   } catch (error: any) {

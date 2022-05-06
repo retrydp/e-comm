@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -37,13 +36,20 @@ import Image from 'next/image';
 import { GetServerSideProps } from 'next';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
 import apiRoutes from '../../../constants/apiRoutes';
+import notificationMessages from '../../../constants/notificationMessages';
 
 interface EditProductProps {
   slug: string;
 }
 
 const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
-  const { snackbar, userInfo, onNotAdmin } = useSharedContext();
+  const {
+    snackbarSuccess,
+    snackbarError,
+    onNotAdmin,
+    authHeader,
+    authHeaderForm,
+  } = useSharedContext();
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
@@ -89,10 +95,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   }: Record<string, any>) => {
     try {
       dispatch(adminProductAddRequest());
-      const { data } = await axios.patch<
-        ProductRequest,
-        AppResponse<ProductSchema>
-      >(
+      await axios.patch<ProductRequest, AppResponse<ProductSchema>>(
         `${apiRoutes.ADMIN_PRODUCT}${slug}`,
         {
           name,
@@ -105,19 +108,15 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           itemsInStock,
           images,
         },
-        {
-          headers: { authorization: `Bearer ${userInfo?.token}` },
-        }
+        authHeader
       );
-      snackbar(`Product ${data.payload.name} updated successfully`, {
-        variant: 'success',
-      });
+      snackbarSuccess(notificationMessages.PRODUCT_UPDATED);
       dispatch(adminProductAddSuccess());
       //   router.push((redirect as string) || '/');
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductAddError(error.toString()));
-      snackbar(errorText, { variant: 'error' });
+      snackbarError(errorText);
     }
   };
 
@@ -127,7 +126,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   const uploadHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
-      snackbar('Can not get file.', { variant: 'error' });
+      snackbarError(notificationMessages.UPLOAD_NO_FILE);
       return;
     }
     const bodyFormData = new FormData();
@@ -137,23 +136,18 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       const { data } = await axios.post<FormData, AppResponse<string>>(
         apiRoutes.ADMIN_UPLOAD,
         bodyFormData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            authorization: `Bearer ${userInfo?.token}`,
-          },
-        }
+        authHeaderForm
       );
       dispatch(adminProductUploadSuccess());
       setValue('images', data.payload);
       setPreview(data.payload);
-      snackbar('File uploaded successfully', { variant: 'success' });
+      snackbarSuccess('File uploaded successfully');
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductUploadError(error.toString()));
       setPreview('');
       setValue('images', '');
-      snackbar(errorText, { variant: 'error' });
+      snackbarError(errorText);
     }
   };
 
@@ -169,17 +163,13 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   };
 
   React.useEffect(() => {
+    onNotAdmin();
     const fetchProducts = async () => {
       try {
         dispatch(adminProductUploadRequest());
         const { data } = await axios.get<null, AppResponse<ProductSchema>>(
           `${apiRoutes.ADMIN_PRODUCT}${slug}`,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              authorization: `Bearer ${userInfo?.token}`,
-            },
-          }
+          authHeaderForm
         );
         dispatch(adminProductUploadSuccess());
         const formTitles = product.map(({ name }) => name);
@@ -192,7 +182,6 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       }
     };
     fetchProducts();
-    onNotAdmin();
   }, []);
 
   return (

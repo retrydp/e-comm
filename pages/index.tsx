@@ -1,12 +1,12 @@
 import { Box, Container, Tab, Tabs, Typography } from '@mui/material';
 import React from 'react';
 import styles from '../utils/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { Layout, Module } from '../components';
 import { ModulePlaceholder } from '../components';
 import axios from 'axios';
 import { AppResponse, InnerPayload, ProductSchema } from '../utils/types';
 import apiRoutes from '../constants/apiRoutes';
+import { useSharedContext } from '../context/SharedContext';
 
 type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
 
@@ -15,11 +15,12 @@ interface TabItems {
 }
 
 const Index: React.FC = (): JSX.Element => {
+  const { smMin } = useSharedContext();
   const [value, setValue] = React.useState<TabItemNames>('all');
   const [loading, setLoading] = React.useState<boolean>(false);
   const [presentationData, setPresentationData] =
     React.useState<InnerPayload<ProductSchema>>();
-  const sm = useMediaQuery('(min-width:600px)');
+
   const tabItems: TabItems[] = [
     { name: 'all' },
     { name: 'bags' },
@@ -56,7 +57,7 @@ const Index: React.FC = (): JSX.Element => {
   return (
     <>
       <Layout title="home">
-        {sm && (
+        {smMin && (
           <Box sx={styles.banner}>
             <Container maxWidth="lg">
               <Typography sx={styles.bannerText} variant="h2">

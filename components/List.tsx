@@ -21,14 +21,14 @@ import {
   Rating,
   Typography,
 } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { cartAddProduct } from '../store/cart';
 import { useAppDispatch } from '../store';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import { favoritesDelete } from '../store/favorites';
 import { useSharedContext } from '../context/SharedContext';
 import apiRoutes from '../constants/apiRoutes';
+import notificationMessages from '../constants/notificationMessages';
+
 interface ListProps {
   products: ProductSchema[];
   favoritesModeAccept?: boolean;
@@ -38,39 +38,16 @@ const List: React.FC<ListProps> = ({
   products,
   favoritesModeAccept = true,
 }) => {
-  const { userInfo, snackbar } = useSharedContext();
-  const sm = useMediaQuery('(max-width:670px)');
+  const {
+    userInfo,
+    snackbarSuccess,
+    snackbarError,
+    addFavoriteHandler,
+    smList,
+    onNotLoggedIn,
+    authHeader,
+  } = useSharedContext();
   const dispatch = useAppDispatch();
-  const router = useRouter();
-
-  /**
-   * Add product to user's favorites list. If user is not logged in,
-   * redirect to login page.
-   * @param id slug of product
-   */
-  const addFavoriteHandler = async (id: string) => {
-    if (!userInfo) {
-      snackbar(`Please login before adding favorites.`, {
-        variant: 'error',
-      });
-      router.push(`/login?redirect=${router.pathname}`);
-    } else {
-      try {
-        await axios.put(
-          apiRoutes.USER_FAVORITE,
-          { id },
-          {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          }
-        );
-        snackbar(`Product successfully added.`, { variant: 'success' });
-      } catch (error: any) {
-        snackbar(`${error.response.data.message || error.toString()}`, {
-          variant: 'error',
-        });
-      }
-    }
-  };
 
   /**
    * Delete product to user's favorites list. If user is not logged in,
@@ -78,26 +55,18 @@ const List: React.FC<ListProps> = ({
    * @param id slug of product
    */
   const deleteFavoriteHandler = async (id: string) => {
-    if (!userInfo) {
-      snackbar(`Please login before deleting favorites.`, {
-        variant: 'error',
+    if (!userInfo)
+      return onNotLoggedIn(notificationMessages.FAVORITES_DELETE_NOT_LOGGED);
+    try {
+      await axios.delete(apiRoutes.USER_FAVORITE, {
+        ...authHeader,
+        data: { id },
       });
-      router.push(`/login?redirect=${router.pathname}`);
-    } else {
-      try {
-        await axios.delete(apiRoutes.USER_FAVORITE, {
-          data: { id },
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
-        snackbar(`Product successfully deleted.`, {
-          variant: 'success',
-        });
-        dispatch(favoritesDelete(id));
-      } catch (error: any) {
-        snackbar(`${error.response.data.message || error.toString()}`, {
-          variant: 'error',
-        });
-      }
+
+      snackbarSuccess(notificationMessages.PRODUCT_DELETED);
+      dispatch(favoritesDelete(id));
+    } catch (error: any) {
+      snackbarError(`${error.response.data.message || error.toString()}`);
     }
   };
 
@@ -114,7 +83,7 @@ const List: React.FC<ListProps> = ({
             <NextLink href={`/product/${product.slug}`} passHref>
               <Link sx={styles.plainAnchor}>
                 <CardMedia
-                  sx={{ width: sm ? '100%' : '280px', height: '100%' }}
+                  sx={{ width: smList ? '100%' : '280px', height: '100%' }}
                   component="img"
                   image={product.images[0]}
                   alt={product.name}
@@ -125,7 +94,7 @@ const List: React.FC<ListProps> = ({
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: sm ? '100%' : '55%',
+                width: smList ? '100%' : '55%',
               }}
             >
               <NextLink href={`/product/${product.slug}`} passHref>

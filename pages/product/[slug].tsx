@@ -23,12 +23,9 @@ import Image from 'next/image';
 import styles from '../../utils/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { cartAddProduct } from '../../store/cart';
-import { useAppDispatch, useAppSelector } from '../../store';
-import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useAppDispatch } from '../../store';
 import { useSharedContext } from '../../context/SharedContext';
 import NextLink from 'next/link';
-import apiRoutes from '../../constants/apiRoutes';
 
 interface ProductScreenProps {
   product?: ProductSchema;
@@ -37,45 +34,12 @@ interface ProductScreenProps {
 type AllowedCategories = 'bags' | 'sneakers' | 'belts';
 
 const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
-  const { snackbar } = useSharedContext();
+  const { addFavoriteHandler } = useSharedContext();
   const [value, setValue] = React.useState('1');
   const dispatch = useAppDispatch();
-  const router = useRouter();
-  const {
-    authStore: { userInfo },
-  } = useAppSelector((store) => store);
 
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
-  };
-
-  /**
-   * Add product to user's favorites list. If user is not logged in,
-   * redirect to login page.
-   * @param id slug of product
-   */
-  const addFavoriteHandler = async (id: string) => {
-    if (!userInfo) {
-      snackbar(`Please login before adding favorites.`, {
-        variant: 'error',
-      });
-      router.push(`/login?redirect=/product/${product?.slug}`);
-    } else {
-      try {
-        await axios.put(
-          apiRoutes.USER_FAVORITE,
-          { id },
-          {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          }
-        );
-        snackbar(`Product successfully added.`, { variant: 'success' });
-      } catch (error: any) {
-        snackbar(`${error.response.data.message || error.toString()}`, {
-          variant: 'error',
-        });
-      }
-    }
   };
 
   return (
