@@ -35,6 +35,8 @@ export interface ProductSchema {
   numReviews: number;
 }
 
+export type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
+
 export interface GoodsProps {
   goods: ProductSchema[];
 }

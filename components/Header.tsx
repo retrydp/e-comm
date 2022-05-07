@@ -48,12 +48,15 @@ const Header: React.FC = () => {
     setAnchorEl(null);
   };
 
+  const totalProductsInCartHandler = () => {
+    return cartProducts.reduce((prev, { count }) => prev + count, 0);
+  };
+
+  const totalProductsInCart = totalProductsInCartHandler();
+
   React.useEffect(() => {
-    const totalProductsInCart = cartProducts?.length
-      ? cartProducts.reduce((prev, { count }) => prev + count, 0)
-      : 0;
     setTotalProducts(totalProductsInCart);
-  }, [cartProducts]);
+  }, [totalProductsInCart]);
 
   return (
     <>
@@ -77,9 +80,11 @@ const Header: React.FC = () => {
           <NextLink href="/cart" passHref>
             <Tooltip title="Cart" arrow>
               <Button component="a" sx={styles.navLink} aria-label="User Cart">
-                <Badge badgeContent={totalProducts} color="primary">
-                  <ShoppingCartOutlined />
-                </Badge>
+                <NoSsr>
+                  <Badge badgeContent={totalProducts} color="primary">
+                    <ShoppingCartOutlined />
+                  </Badge>
+                </NoSsr>
               </Button>
             </Tooltip>
           </NextLink>

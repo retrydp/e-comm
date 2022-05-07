@@ -1,4 +1,5 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -112,7 +113,6 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       );
       snackbarSuccess(notificationMessages.PRODUCT_UPDATED);
       dispatch(adminProductAddSuccess());
-      //   router.push((redirect as string) || '/');
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductAddError(error.toString()));
@@ -141,7 +141,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       dispatch(adminProductUploadSuccess());
       setValue('images', data.payload);
       setPreview(data.payload);
-      snackbarSuccess('File uploaded successfully');
+      snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductUploadError(error.toString()));

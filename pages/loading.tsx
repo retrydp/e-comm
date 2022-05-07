@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, ModulePlaceholder } from '../components';
 import { useRouter } from 'next/router';
 import { Box, Container, Grid, Skeleton } from '@mui/material';
-import { NavTitles } from '../components/NavigationBar';
+import { NavTitles } from '../utils/types';
 import { useSharedContext } from '../context/SharedContext';
 import styles from '../utils/styles';
 

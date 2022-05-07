@@ -1,5 +1,4 @@
-import {
-  AppBar,
+import {  AppBar,
   Box,
   Link,
   Toolbar,
@@ -13,8 +12,8 @@ import NextLink from 'next/link';
 import styles from '../utils/styles';
 import { SxProps } from '@mui/material/styles';
 import { useSharedContext } from '../context/SharedContext';
+import { NavTitles } from '../utils/types';
 
-export type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
 type NavPaths =
   | '/'
   | '/loading?category=bags'

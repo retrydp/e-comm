@@ -143,7 +143,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
               direction="column"
               sx={{ mb: 4 }}
             >
-              <SideMenuTemplate width="100%" withSort={true} />
+              <SideMenuTemplate width="100%" withSort />
             </Grid>
           )}
           <Grid

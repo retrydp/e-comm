@@ -87,10 +87,7 @@ const CreateProduct: React.FC = () => {
   }: FieldValues) => {
     try {
       dispatch(adminProductAddRequest());
-      const { data } = await axios.put<
-        ProductRequest,
-        AppResponse<ProductSchema>
-      >(
+      await axios.put<ProductRequest, AppResponse<ProductSchema>>(
         apiRoutes.ADMIN_PRODUCT_ADD,
         {
           name,
@@ -105,9 +102,8 @@ const CreateProduct: React.FC = () => {
         },
         authHeader
       );
-      snackbarSuccess(`Product ${data.payload.name} uploaded successfully`);
+      snackbarSuccess(notificationMessages.PRODUCT_CREATED);
       dispatch(adminProductAddSuccess());
-      //   router.push((redirect as string) || '/');
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductAddError(error.toString()));

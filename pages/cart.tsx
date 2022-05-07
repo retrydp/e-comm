@@ -1,39 +1,15 @@
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  IconButton,
-  NoSsr,
-  Typography,
-} from '@mui/material';
-import Image from 'next/image';
+import { Box, Button, Container, Grid, NoSsr, Typography } from '@mui/material';import Image from 'next/image';
 import React from 'react';
-import { Layout } from '../components';
+import { Layout, List } from '../components';
 import styles from '../utils/styles';
-import {
-  FavoriteBorder,
-  DeleteOutline,
-  AddBox,
-  IndeterminateCheckBox,
-  ArrowBack,
-} from '@mui/icons-material';
-import { useAppDispatch, useAppSelector } from '../store';
-import {
-  cartIncrementCount,
-  cartDecrementCount,
-  cartDeleteProduct,
-} from '../store/cart';
+import { ArrowBack } from '@mui/icons-material';
+import { useAppSelector } from '../store';
 import NextLink from 'next/link';
-import { useSharedContext } from '../context/SharedContext';
 
 const TAXES = 0.2;
 const SHIPPING_PRICE = 10;
 
 const Cart: React.FC = () => {
-  const { addFavoriteHandler, smMax } = useSharedContext();
-  const dispatch = useAppDispatch();
   const {
     cart: { cartProducts },
   } = useAppSelector((store) => store);
@@ -52,111 +28,8 @@ const Cart: React.FC = () => {
             <Typography variant="h4" sx={{ padding: '15px 0' }}>
               Your cart:
             </Typography>
-            <Divider />
             <Grid container spacing={2}>
-              {cartProducts.map((product) => (
-                <Grid item xs={12} key={product.slug}>
-                  <Box sx={styles.cartWrapper}>
-                    <Box>
-                      <Image
-                        priority={true}
-                        width={smMax ? '120%' : '420'}
-                        height={smMax ? '120%' : '525'}
-                        src={product.images[0]}
-                      ></Image>
-                    </Box>
-                    <Box
-                      sx={{
-                        ml: '15px',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                      }}
-                    >
-                      <Typography sx={styles.cartItemText}>
-                        {product.name}
-                      </Typography>
-                      {!smMax && <Typography>{product.description}</Typography>}
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography sx={{ fontSize: smMax ? '12px' : '20px' }}>
-                          Quantity:
-                        </Typography>
-                        <IconButton
-                          color="primary"
-                          aria-label="Add one item"
-                          component="span"
-                          onClick={() => dispatch(cartIncrementCount(product))}
-                        >
-                          <AddBox
-                            sx={{
-                              height: smMax ? '30px' : '45px',
-                              width: smMax ? '30px' : '45px',
-                            }}
-                          />
-                        </IconButton>
-                        <Typography sx={{ fontSize: smMax ? '12px' : '20px' }}>
-                          {product.count}
-                        </Typography>
-                        <IconButton
-                          color="primary"
-                          aria-label="Delete one item"
-                          component="span"
-                          onClick={() => dispatch(cartDecrementCount(product))}
-                        >
-                          <IndeterminateCheckBox
-                            sx={{
-                              height: smMax ? '30px' : '45px',
-                              width: smMax ? '30px' : '45px',
-                            }}
-                          />
-                        </IconButton>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          flexWrap: 'wrap',
-                        }}
-                      >
-                        <Typography sx={styles.cartItemPrice}>
-                          ${product.price}
-                        </Typography>
-                        <Box sx={{ display: 'flex' }}>
-                          <IconButton
-                            color="primary"
-                            aria-label="Favorite"
-                            component="span"
-                            onClick={() => addFavoriteHandler(product.slug)}
-                          >
-                            <FavoriteBorder
-                              sx={{
-                                height: smMax ? '25px' : '45px',
-                                width: smMax ? '25px' : '45px',
-                              }}
-                            />
-                          </IconButton>
-                          <IconButton
-                            color="primary"
-                            aria-label="Delete"
-                            component="span"
-                            onClick={() => dispatch(cartDeleteProduct(product))}
-                          >
-                            <DeleteOutline
-                              sx={{
-                                height: smMax ? '25px' : '45px',
-                                width: smMax ? '25px' : '45px',
-                              }}
-                            />
-                          </IconButton>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                  <Divider />
-                </Grid>
-              ))}
+              <List products={cartProducts} cartMode></List>
               <Grid item xs={12}>
                 <Box
                   sx={{

@@ -91,19 +91,19 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        snackbarSuccess,
-        userInfo,
-        onNotAdmin,
-        addFavoriteHandler,
         mdMin,
         mdMax,
         smMin,
         smMax,
         smList,
-        onNotLoggedIn,
-        snackbarError,
+        userInfo,
         authHeader,
         authHeaderForm,
+        addFavoriteHandler,
+        onNotAdmin,
+        onNotLoggedIn,
+        snackbarError,
+        snackbarSuccess,
       }}
     >
       {children}

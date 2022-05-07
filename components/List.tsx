@@ -1,11 +1,12 @@
 import React from 'react';
-import { ProductSchema } from '../utils/types';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
 import {
   FavoriteBorder,
   ShoppingCartOutlined,
   DeleteOutline,
+  AddBox,
+  IndeterminateCheckBox,
 } from '@mui/icons-material';
 import {
   Box,
@@ -17,26 +18,36 @@ import {
   CardMedia,
   Divider,
   Grid,
+  IconButton,
   Link,
   Rating,
   Typography,
 } from '@mui/material';
 import { cartAddProduct } from '../store/cart';
 import { useAppDispatch } from '../store';
+import {
+  cartIncrementCount,
+  cartDecrementCount,
+  cartDeleteProduct,
+} from '../store/cart';
+import { CartProduct } from '../store/cart';
 import axios from 'axios';
 import { favoritesDelete } from '../store/favorites';
 import { useSharedContext } from '../context/SharedContext';
 import apiRoutes from '../constants/apiRoutes';
 import notificationMessages from '../constants/notificationMessages';
+import { ProductSchema } from '../utils/types';
 
 interface ListProps {
-  products: ProductSchema[];
+  products: CartProduct[] | ProductSchema[];
   favoritesModeAccept?: boolean;
+  cartMode?: boolean;
 }
 
 const List: React.FC<ListProps> = ({
   products,
   favoritesModeAccept = true,
+  cartMode = false,
 }) => {
   const {
     userInfo,
@@ -62,7 +73,6 @@ const List: React.FC<ListProps> = ({
         ...authHeader,
         data: { id },
       });
-
       snackbarSuccess(notificationMessages.PRODUCT_DELETED);
       dispatch(favoritesDelete(id));
     } catch (error: any) {
@@ -71,7 +81,7 @@ const List: React.FC<ListProps> = ({
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container item spacing={2}>
       {products.map((product) => (
         <Grid item lg={12} md={12} sm={12} xs={12} key={product.name}>
           <Card
@@ -131,7 +141,7 @@ const List: React.FC<ListProps> = ({
                     </Typography>
                   </Button>
                 </Box>
-                <Divider sx={{ ml: '15px' }} />
+                <Divider sx={{ m: '0 15px' }} />
                 <CardContent
                   sx={{
                     ...styles.cardContentWrapperSecondary,
@@ -148,7 +158,7 @@ const List: React.FC<ListProps> = ({
                         }}
                       >
                         <Typography sx={styles.oldPrice} aria-label="old price">
-                          ${product.oldPrice}
+                          ${product.oldPrice.toFixed(2)}
                         </Typography>
                         <Typography sx={styles.percent} aria-label="discount">
                           {Math.round(
@@ -172,16 +182,23 @@ const List: React.FC<ListProps> = ({
                     <Typography>{product.description}</Typography>
                   </Box>
                 </CardContent>
-                <CardActions sx={{ padding: '15px' }}>
-                  <Button
-                    variant="contained"
+                <CardActions
+                  sx={{
+                    padding: '15px',
+                  }}
+                >
+                  {!cartMode && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => dispatch(cartAddProduct(product))}
+                      startIcon={<ShoppingCartOutlined />}
+                    >
+                      Add to cart
+                    </Button>
+                  )}
+                  <IconButton
                     color="primary"
-                    onClick={() => dispatch(cartAddProduct(product))}
-                    startIcon={<ShoppingCartOutlined />}
-                  >
-                    Add to cart
-                  </Button>
-                  <Button
                     aria-label={`${
                       favoritesModeAccept ? 'add to' : 'delete from'
                     } favorites`}
@@ -196,7 +213,41 @@ const List: React.FC<ListProps> = ({
                     ) : (
                       <DeleteOutline sx={{ color: 'red' }} />
                     )}
-                  </Button>
+                  </IconButton>
+                  {cartMode && (
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <IconButton
+                        aria-label="Add one item"
+                        component="span"
+                        onClick={() => dispatch(cartIncrementCount(product))}
+                      >
+                        <AddBox />
+                      </IconButton>
+                      <Typography sx={{ m: '15px' }}>
+                        {(product as CartProduct).count}
+                      </Typography>
+                      <IconButton
+                        aria-label="Delete one item"
+                        component="span"
+                        onClick={() => dispatch(cartDecrementCount(product))}
+                      >
+                        <IndeterminateCheckBox />
+                      </IconButton>
+                      <IconButton
+                        color="primary"
+                        aria-label="Delete"
+                        component="span"
+                        onClick={() => dispatch(cartDeleteProduct(product))}
+                      >
+                        <DeleteOutline sx={{ color: 'red' }} />
+                      </IconButton>
+                    </Box>
+                  )}
                 </CardActions>
               </Box>
             </Box>
