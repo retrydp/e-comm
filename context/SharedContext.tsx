@@ -1,5 +1,4 @@
-import React from 'react';
-import { useSnackbar } from 'notistack';
+import React from 'react';import { useSnackbar } from 'notistack';
 import { useAppSelector } from '../store';
 import { RootState } from '../store';
 import { useRouter } from 'next/router';
@@ -13,7 +12,6 @@ interface AppContextInterface {
   onNotAdmin: () => void;
   addFavoriteHandler: (id: string) => Promise<void>;
   smMin: boolean;
-  smMax: boolean;
   mdMin: boolean;
   mdMax: boolean;
   smList: boolean;
@@ -34,7 +32,6 @@ const Context = React.createContext<AppContextInterface>(
 
 export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
   const smMin = useMediaQuery('(min-width:600px)');
-  const smMax = useMediaQuery('(max-width:600px)');
   const mdMin = useMediaQuery('(min-width:900px)');
   const mdMax = useMediaQuery('(max-width:900px)');
   const smList = useMediaQuery('(max-width:670px)');
@@ -94,7 +91,6 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
         mdMin,
         mdMax,
         smMin,
-        smMax,
         smList,
         userInfo,
         authHeader,

@@ -148,31 +148,31 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                 </Box>
               </Box>
             </Grid>
-            <Box sx={{ width: '100%', mt: '15px' }}>
-              <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList
-                    onChange={handleChangeTab}
-                    aria-label="product information and reviews"
-                    variant="scrollable"
-                  >
-                    <Tab
-                      label="Product information"
-                      value="1"
-                      sx={{ typography: 'h4' }}
-                    />
-                    <Tab
-                      label="Reviews (0)"
-                      value="2"
-                      sx={{ typography: 'h4' }}
-                    />
-                  </TabList>
-                </Box>
-                <TabPanel value="1">{product.description}</TabPanel>
-                <TabPanel value="2">Reviews currently not available</TabPanel>
-              </TabContext>
-            </Box>
           </Grid>
+          <Box sx={{ width: '100%', mt: '15px' }}>
+            <TabContext value={value}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <TabList
+                  onChange={handleChangeTab}
+                  aria-label="product information and reviews"
+                  variant="scrollable"
+                >
+                  <Tab
+                    label="Product information"
+                    value="1"
+                    sx={{ typography: 'h4' }}
+                  />
+                  <Tab
+                    label="Reviews (0)"
+                    value="2"
+                    sx={{ typography: 'h4' }}
+                  />
+                </TabList>
+              </Box>
+              <TabPanel value="1">{product.description}</TabPanel>
+              <TabPanel value="2">Reviews currently not available</TabPanel>
+            </TabContext>
+          </Box>
         </Container>
       ) : (
         <Container

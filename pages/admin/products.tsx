@@ -98,7 +98,7 @@ const AdminProducts: React.FC = () => {
             </IconButton>
           </Tooltip>
         </Box>
-      ), //params.row.slug
+      ),
       width: 100,
     },
     {

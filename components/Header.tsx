@@ -32,10 +32,11 @@ const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const router = useRouter();
+
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const router = useRouter();
 
   const logoutClickHandler = () => {
     setAnchorEl(null);

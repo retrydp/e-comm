@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from '../utils/styles';
+import React from 'react';import styles from '../utils/styles';
 import NextLink from 'next/link';
 import {
   FavoriteBorder,
@@ -50,6 +49,8 @@ const List: React.FC<ListProps> = ({
   cartMode = false,
 }) => {
   const {
+    smMin,
+    mdMin,
     userInfo,
     snackbarSuccess,
     snackbarError,
@@ -93,7 +94,11 @@ const List: React.FC<ListProps> = ({
             <NextLink href={`/product/${product.slug}`} passHref>
               <Link sx={styles.plainAnchor}>
                 <CardMedia
-                  sx={{ width: smList ? '100%' : '280px', height: '100%' }}
+                  sx={{
+                    width: smList ? '50%' : '280px',
+                    height: '100%',
+                    m: '0 auto',
+                  }}
                   component="img"
                   image={product.images[0]}
                   alt={product.name}
@@ -130,9 +135,11 @@ const List: React.FC<ListProps> = ({
                     readOnly
                     size="small"
                   />
-                  <Typography sx={styles.reviewsText}>
-                    {product.reviews?.length || 0} reviews
-                  </Typography>
+                  {smMin && (
+                    <Typography sx={styles.reviewsText}>
+                      {product.reviews?.length || 0} reviews
+                    </Typography>
+                  )}
                   <Button>
                     <Typography
                       sx={{ fontSize: '14px', textTransform: 'none' }}
@@ -178,13 +185,16 @@ const List: React.FC<ListProps> = ({
                       </Typography>
                     </Box>
                   </Box>
-                  <Box>
-                    <Typography>{product.description}</Typography>
-                  </Box>
+                  {mdMin && (
+                    <Box>
+                      <Typography>{product.description}</Typography>
+                    </Box>
+                  )}
                 </CardContent>
                 <CardActions
                   sx={{
                     padding: '15px',
+                    m: cartMode && !smMin ? '0 auto' : 0,
                   }}
                 >
                   {!cartMode && (
