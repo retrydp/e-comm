@@ -125,6 +125,7 @@ const List: React.FC<ListProps> = ({
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
+                  height: '100%',
                 }}
               >
                 <Box sx={styles.ratingBar}>
@@ -194,7 +195,7 @@ const List: React.FC<ListProps> = ({
                 <CardActions
                   sx={{
                     padding: '15px',
-                    m: cartMode && !smMin ? '0 auto' : 0,
+                    m: cartMode && !smMin ? '0 auto' : 'auto 0 0 0',
                   }}
                 >
                   {!cartMode && (
