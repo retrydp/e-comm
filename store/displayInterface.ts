@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-export type Brands = 'nike' | 'airmax' | 'adidas' | 'vans' | 'all';
+import { createSlice } from '@reduxjs/toolkit';export type Brands = 'nike' | 'airmax' | 'adidas' | 'vans' | 'all';
 export type SortParams = 'popular' | 'new' | 'asc' | 'desc';
 export type View = 'module' | 'list';
 export type AvailableColors =
@@ -21,6 +20,7 @@ export interface DisplayInterface {
   sort: SortParams;
   color: AvailableColors[] | [];
   sliderValue: number[];
+  minMaxPrice: number[];
   view: View;
   quantity: number;
 }
@@ -29,7 +29,8 @@ const initialState: DisplayInterface = {
   brand: 'all',
   sort: 'new',
   color: [],
-  sliderValue: [0, 331],
+  sliderValue: [0, 0],
+  minMaxPrice: [0, 0],
   view: 'module',
   quantity: 12,
 };
@@ -56,6 +57,9 @@ const displayInterface = createSlice({
     setQuantity: (state, action) => {
       state.quantity = action.payload;
     },
+    setMinMaxPrice: (state, action) => {
+      state.minMaxPrice = action.payload;
+    },
   },
 });
 
@@ -66,6 +70,7 @@ export const {
   setSliderValue,
   setView,
   setQuantity,
+  setMinMaxPrice,
 } = displayInterface.actions;
 
 export default displayInterface.reducer;

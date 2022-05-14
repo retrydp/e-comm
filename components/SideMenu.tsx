@@ -1,5 +1,4 @@
-import React from 'react';
-import {
+import React from 'react';import {
   Box,
   Chip,
   FormControl,
@@ -19,7 +18,6 @@ import {
   Brands,
   setBrand,
   setColor,
-  setSliderValue,
   setSort,
 } from '../store/displayInterface';
 import styles from '../utils/styles';
@@ -103,14 +101,6 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
         typeof value === 'string' ? value.split(',') : value
       )
     );
-  };
-
-  /**
-   * @description Obtain values from the slider.
-   * @param {number[]} values - values from the slider component as array [min, max]
-   */
-  const getSliderValues = (values: number[]) => {
-    dispatch(setSliderValue(values));
   };
 
   return (
@@ -213,7 +203,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
           <Typography variant="h4" sx={{ mb: '10px' }}>
             Price
           </Typography>
-          <SliderSelector getSliderValues={getSliderValues} />
+          <SliderSelector />
         </Box>
       </Grid>
     </Grid>

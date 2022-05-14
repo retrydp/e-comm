@@ -39,6 +39,8 @@ export type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
 
 export interface GoodsProps {
   goods: ProductSchema[];
+  minPrice?: number;
+  maxPrice?: number;
 }
 
 export interface Inputs {

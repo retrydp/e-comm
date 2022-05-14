@@ -1,24 +1,29 @@
 import { Slider, Typography } from '@mui/material';import { Box } from '@mui/system';
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../store';
+import { setSliderValue } from '../store/displayInterface';
 
-interface SliderProps {
-  getSliderValues: (values: number[]) => void;
-}
-
-const SliderSelector: React.FC<SliderProps> = ({ getSliderValues }) => {
-  const [sliderValue, setSliderValue] = React.useState<number[]>([0, 331]);
+const SliderSelector: React.FC = () => {
+  const [minMax, setMinMax] = React.useState([0, 0]);
+  const dispatch = useAppDispatch();
+  const {
+    display: { sliderValue, minMaxPrice },
+  } = useAppSelector((store) => store);
 
   /**
    * @description Change the slider value.
    * @param newValue
    */
   const sliderHandleChange = (event: Event, newValue: number | number[]) => {
-    setSliderValue(newValue as number[]);
+    dispatch(setSliderValue(newValue as number[]));
   };
 
   const sliderValueText = () => {
     return `Price range: $ ${sliderValue[0]} to $ ${sliderValue[1]}`;
   };
+  React.useEffect(() => {
+    setMinMax(minMaxPrice);
+  }, [minMaxPrice]);
 
   return (
     <>
@@ -27,18 +32,14 @@ const SliderSelector: React.FC<SliderProps> = ({ getSliderValues }) => {
       </Typography>
       <Box sx={{ width: '100%' }}>
         <Slider
-          min={0}
-          max={331}
-          step={10}
+          min={minMax[0]}
+          max={minMax[1]}
+          step={2}
           getAriaLabel={(idx: number) =>
             idx ? 'Maximum price' : 'Minimum price'
           }
           value={sliderValue}
           onChange={sliderHandleChange}
-          //event listeners on changes
-          onMouseUp={() => getSliderValues(sliderValue)}
-          onTouchEnd={() => getSliderValues(sliderValue)}
-          onKeyUp={() => getSliderValues(sliderValue)}
           valueLabelDisplay="off"
           getAriaValueText={sliderValueText}
         />
