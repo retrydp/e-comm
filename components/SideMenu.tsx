@@ -1,4 +1,5 @@
-import React from 'react';import {
+import React from 'react';
+import {
   Box,
   Chip,
   FormControl,
@@ -13,17 +14,11 @@ import React from 'react';import {
 import { SliderSelector } from '.';
 import { filterValues } from './GoodsWrapper';
 import { useAppDispatch, useAppSelector } from '../store';
-import {
-  AvailableColors,
-  Brands,
-  setBrand,
-  setColor,
-  setSort,
-} from '../store/displayInterface';
+import { setBrand, setColor, setSort } from '../store/displayInterface';
 import styles from '../utils/styles';
 
 interface AvailableColorsList {
-  color: AvailableColors;
+  color: string;
   bg: string;
   slug: string;
 }
@@ -37,6 +32,9 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   width,
   withSort,
 }) => {
+  const [innerColors, setInnerColors] = React.useState<AvailableColorsList[]>(
+    []
+  );
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -49,24 +47,16 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
       },
     },
   };
-  const hotDealsLinks: Brands[] = ['all', 'nike', 'airmax', 'adidas', 'vans'];
-  const availableColorsList: AvailableColorsList[] = [
-    { color: 'black', bg: 'black', slug: 'Black' },
-    { color: 'blue', bg: 'blue', slug: 'Blue' },
-    { color: 'brown', bg: 'brown', slug: 'Brown' },
-    { color: 'green', bg: 'green', slug: 'Green' },
-    { color: 'grey', bg: 'grey', slug: 'Grey' },
-    { color: 'multicolour', bg: 'grey', slug: 'Multi-Colour' },
-    { color: 'orange', bg: 'orange', slug: 'Orange' },
-    { color: 'pink', bg: 'pink', slug: 'Pink' },
-    { color: 'purple', bg: 'purple', slug: 'Purple' },
-    { color: 'red', bg: 'red', slug: 'Red' },
-    { color: 'white', bg: 'white', slug: 'White' },
-    { color: 'yellow', bg: 'yellow', slug: 'Yellow' },
-  ];
+
   const dispatch = useAppDispatch();
   const {
-    display: { brand, sort, color: colorChecked },
+    display: {
+      brand,
+      sort,
+      color: colorChecked,
+      availableBrands,
+      availableColors,
+    },
   } = useAppSelector((store) => store);
 
   /**
@@ -103,28 +93,45 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
     );
   };
 
+  React.useEffect(() => {
+    const colorsMap = availableColors.map(
+      (el) =>
+        ({
+          color: el,
+          bg: el,
+          slug: el.replace(/^./, (str) => str.toUpperCase()),
+        } as AvailableColorsList)
+    );
+
+    setInnerColors(colorsMap);
+  }, [availableColors.length]);
+
   return (
     <Grid item sx={styles.grow}>
       <Box sx={styles.sideMenuItem}>
         <Grid item container spacing={2} direction="column">
           <Grid item>
-            <FormControl sx={{ width: width }}>
-              <InputLabel id="brandSelect-label">Brand</InputLabel>
-              <Select
-                labelId="brandSelect-label"
-                id="brandSelect"
-                value={brand}
-                onChange={brandHandler}
-                inputProps={{ 'aria-label': 'Brand selection' }}
-                label="Brand"
-              >
-                {hotDealsLinks.map((el) => (
-                  <MenuItem value={el} key={el}>
-                    {el && el[0].toUpperCase() + el.slice(1)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            {availableBrands.length > 0 && (
+              <FormControl sx={{ width: width }}>
+                <InputLabel id="brandSelect-label">Brand</InputLabel>
+                <Select
+                  labelId="brandSelect-label"
+                  id="brandSelect"
+                  value={brand}
+                  defaultValue="all"
+                  onChange={brandHandler}
+                  inputProps={{ 'aria-label': 'Brand selection' }}
+                  label="Brand"
+                >
+                  <MenuItem value="all">All</MenuItem>
+                  {availableBrands.map((el) => (
+                    <MenuItem value={el} key={el}>
+                      {el && el[0].toUpperCase() + el.slice(1)}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
           </Grid>
           {withSort && (
             <Grid item>
@@ -148,56 +155,58 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
             </Grid>
           )}
           <Grid item>
-            <FormControl sx={{ width }}>
-              <InputLabel id="colorChange-label">Color</InputLabel>
-              <Select
-                labelId="colorChange-label"
-                id="colorChange"
-                multiple
-                value={colorChecked}
-                onChange={colorsChangeHandler}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: 0.5,
-                    }}
-                  >
-                    {selected.map((value) => (
-                      <Chip
-                        key={value}
-                        label={
-                          availableColorsList.find(
-                            ({ color }) => color === value
-                          )?.slug
-                        }
-                        sx={{
-                          color: availableColorsList.find(
-                            ({ color }) => color === value
-                          )?.bg,
-                          backgroundColor: 'primary',
-                        }}
-                      />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-              >
-                {availableColorsList.map(({ color, slug, bg }) => (
-                  <MenuItem key={color} value={color}>
-                    <Typography sx={{ color: bg === 'white' ? 'black' : bg }}>
-                      {slug}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            {innerColors.length > 0 && (
+              <FormControl sx={{ width }}>
+                <InputLabel id="colorChange-label">Color</InputLabel>
+                <Select
+                  labelId="colorChange-label"
+                  id="colorChange"
+                  multiple
+                  value={colorChecked}
+                  onChange={colorsChangeHandler}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="Chip" />
+                  }
+                  renderValue={(selected) => (
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 0.5,
+                      }}
+                    >
+                      {selected.map((value) => (
+                        <Chip
+                          key={value}
+                          label={
+                            innerColors.find(({ color }) => color === value)
+                              ?.slug
+                          }
+                          sx={{
+                            color: innerColors.find(
+                              ({ color }) => color === value
+                            )?.bg,
+                            backgroundColor: 'primary',
+                          }}
+                        />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {innerColors.map(({ color, slug, bg }) => (
+                    <MenuItem key={color} value={color}>
+                      <Typography sx={{ color: bg === 'white' ? 'black' : bg }}>
+                        {slug}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
           </Grid>
         </Grid>
       </Box>
-
       <Grid item sx={styles.grow}>
         <Box sx={styles.sideMenuItem}>
           <Typography variant="h4" sx={{ mb: '10px' }}>

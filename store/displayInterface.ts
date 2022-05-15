@@ -1,28 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';export type Brands = 'nike' | 'airmax' | 'adidas' | 'vans' | 'all';
-export type SortParams = 'popular' | 'new' | 'asc' | 'desc';
-export type View = 'module' | 'list';
-export type AvailableColors =
-  | 'black'
-  | 'blue'
-  | 'brown'
-  | 'green'
-  | 'grey'
-  | 'multicolour'
-  | 'orange'
-  | 'pink'
-  | 'purple'
-  | 'red'
-  | 'white'
-  | 'yellow';
+import { createSlice } from '@reduxjs/toolkit';export type SortParams = 'popular' | 'new' | 'asc' | 'desc';
 
 export interface DisplayInterface {
-  brand: Brands;
+  brand: string;
   sort: SortParams;
-  color: AvailableColors[] | [];
+  color: string[];
   sliderValue: number[];
   minMaxPrice: number[];
-  view: View;
   quantity: number;
+  availableColors: string[];
+  availableBrands: string[];
 }
 
 const initialState: DisplayInterface = {
@@ -31,8 +17,9 @@ const initialState: DisplayInterface = {
   color: [],
   sliderValue: [0, 0],
   minMaxPrice: [0, 0],
-  view: 'module',
   quantity: 12,
+  availableBrands: [],
+  availableColors: [],
 };
 
 const displayInterface = createSlice({
@@ -51,14 +38,18 @@ const displayInterface = createSlice({
     setSliderValue: (state, action) => {
       state.sliderValue = action.payload;
     },
-    setView: (state, action) => {
-      state.view = action.payload;
-    },
+
     setQuantity: (state, action) => {
       state.quantity = action.payload;
     },
     setMinMaxPrice: (state, action) => {
       state.minMaxPrice = action.payload;
+    },
+    setAvailableColors: (state, action) => {
+      state.availableColors = action.payload;
+    },
+    setAvailableBrands: (state, action) => {
+      state.availableBrands = action.payload;
     },
   },
 });
@@ -68,9 +59,10 @@ export const {
   setSort,
   setColor,
   setSliderValue,
-  setView,
   setQuantity,
   setMinMaxPrice,
+  setAvailableColors,
+  setAvailableBrands,
 } = displayInterface.actions;
 
 export default displayInterface.reducer;

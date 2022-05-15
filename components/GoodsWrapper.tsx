@@ -1,5 +1,4 @@
-import React from 'react';
-import NextLink from 'next/link';
+import React from 'react';import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -23,13 +22,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { SideMenuTemplate, Module, List } from '../components';
 import { useAppSelector, useAppDispatch } from '../store';
 import { useSharedContext } from '../context/SharedContext';
-import {
-  setSort,
-  setView,
-  setQuantity,
-  SortParams,
-  View,
-} from '../store/displayInterface';
+import { setSort, setQuantity, SortParams } from '../store/displayInterface';
 import { GoodsProps } from '../utils/types';
 import Image from 'next/image';
 
@@ -37,6 +30,8 @@ export interface FilterValues {
   id: SortParams;
   title: string;
 }
+
+export type View = 'module' | 'list';
 
 export const filterValues: FilterValues[] = [
   { id: 'popular', title: 'Popular' },
@@ -46,6 +41,7 @@ export const filterValues: FilterValues[] = [
 ];
 
 const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
+  const [view, setView] = React.useState<View>('module');
   const { mdMax, smMin } = useSharedContext();
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -55,7 +51,6 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
       sort,
       color: colorChecked,
       sliderValue: priceRange,
-      view,
       quantity,
     },
   } = useAppSelector((store) => store);
@@ -84,7 +79,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
     nextView: View
   ) => {
     if (nextView !== null) {
-      dispatch(setView(nextView));
+      setView(nextView);
     }
   };
 

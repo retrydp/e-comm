@@ -41,6 +41,8 @@ export interface GoodsProps {
   goods: ProductSchema[];
   minPrice?: number;
   maxPrice?: number;
+  availableColors?: string[];
+  availableBrands?: string[];
 }
 
 export interface Inputs {

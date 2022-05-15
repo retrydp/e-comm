@@ -5,16 +5,29 @@ import db from '../utils/database';
 import Product from '../models/Product';
 import { GetServerSideProps } from 'next';
 import { useAppDispatch } from '../store';
-import { setMinMaxPrice, setSliderValue } from '../store/displayInterface';
+import {
+  setMinMaxPrice,
+  setSliderValue,
+  setAvailableBrands,
+  setAvailableColors,
+} from '../store/displayInterface';
 
 const PAGE = 'belts';
 
-const Belts: React.FC<GoodsProps> = ({ goods, minPrice, maxPrice }) => {
+const Belts: React.FC<GoodsProps> = ({
+  goods,
+  minPrice,
+  maxPrice,
+  availableColors,
+  availableBrands,
+}) => {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     dispatch(setMinMaxPrice([minPrice, maxPrice]));
     dispatch(setSliderValue([minPrice, maxPrice]));
+    dispatch(setAvailableBrands(availableBrands));
+    dispatch(setAvailableColors(availableColors));
   }, []);
 
   return (
@@ -41,6 +54,17 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     },
   ]);
+  const uniqueColors = await Product.aggregate([
+    { $match: { category: `${PAGE}` } },
+    {
+      $group: {
+        _id: null,
+        availableColors: { $addToSet: '$color' },
+        availableBrands: { $addToSet: '$brand' },
+      },
+    },
+  ]);
+  const { availableColors, availableBrands } = uniqueColors[0];
   const minPrice = Math.floor(prices[0].minValue);
   const maxPrice = Math.floor(prices[0].maxValue);
 
@@ -51,6 +75,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
       goods: products,
       minPrice,
       maxPrice,
+      availableColors,
+      availableBrands,
     },
   };
 };
