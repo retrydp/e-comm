@@ -54,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     },
   ]);
-  const uniqueColors = await Product.aggregate([
+  const uniqueValues = await Product.aggregate([
     { $match: { category: `${PAGE}` } },
     {
       $group: {
@@ -64,7 +64,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
     },
   ]);
-  const { availableColors, availableBrands } = uniqueColors[0];
+  const { availableColors, availableBrands } = uniqueValues[0];
   const minPrice = Math.floor(prices[0].minValue);
   const maxPrice = Math.floor(prices[0].maxValue);
 

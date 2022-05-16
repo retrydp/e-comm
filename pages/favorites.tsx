@@ -1,4 +1,5 @@
-import React from 'react';import { Layout, List } from '../components';
+import React from 'react';
+import { Layout, List } from '../components';
 import {
   Button,
   CircularProgress,
@@ -31,7 +32,6 @@ const Favorites: React.FC = () => {
       dispatch(favoritesSetLoading(true));
       const { data } = await axios.get<null, AppResponse<ProductSchema[]>>(
         apiRoutes.USER_FAVORITE,
-
         authHeader
       );
       dispatch(favoritesFetch(data.payload));

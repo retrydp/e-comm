@@ -20,7 +20,6 @@ const Index: React.FC = (): JSX.Element => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [presentationData, setPresentationData] =
     React.useState<InnerPayload<ProductSchema>>();
-
   const tabItems: TabItems[] = [
     { name: 'all' },
     { name: 'bags' },
