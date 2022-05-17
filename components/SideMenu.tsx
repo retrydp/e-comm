@@ -1,5 +1,4 @@
-import React from 'react';
-import {
+import React from 'react';import {
   Box,
   Chip,
   FormControl,
@@ -14,9 +13,10 @@ import {
 import { SliderSelector } from '.';
 import { filterValues } from './GoodsWrapper';
 import { useAppDispatch, useAppSelector } from '../store';
-import { setBrand, setColor, setSort } from '../store/displayInterface';
+import { setColor } from '../store/displayInterface';
 import styles from '../utils/styles';
-
+import { useSharedContext } from '../context/SharedContext';
+import { useRouter } from 'next/router';
 interface AvailableColorsList {
   color: string;
   bg: string;
@@ -32,8 +32,16 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   width,
   withSort,
 }) => {
+  const { filterQuery } = useSharedContext();
+  const router = useRouter();
   const [innerColors, setInnerColors] = React.useState<AvailableColorsList[]>(
     []
+  );
+  const [sort, setSort] = React.useState<string>(
+    (router.query['sort'] as string) || 'new'
+  );
+  const [brand, setBrand] = React.useState<string>(
+    (router.query['brand'] as string) || 'all'
   );
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -50,13 +58,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
 
   const dispatch = useAppDispatch();
   const {
-    display: {
-      brand,
-      sort,
-      color: colorChecked,
-      availableBrands,
-      availableColors,
-    },
+    display: { color: colorChecked, availableBrands, availableColors },
   } = useAppSelector((store) => store);
 
   /**
@@ -64,7 +66,8 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
    * @param {SelectChangeEvent} event
    */
   const brandHandler = (event: SelectChangeEvent) => {
-    dispatch(setBrand(event.target.value));
+    setBrand(event.target.value);
+    filterQuery('brand', event.target.value);
   };
 
   /**
@@ -72,7 +75,8 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
    * @param {SelectChangeEvent} event
    */
   const sortHandler = (event: SelectChangeEvent) => {
-    dispatch(setSort(event.target.value));
+    filterQuery('sort', event.target.value);
+    setSort(event.target.value);
   };
 
   /**

@@ -58,12 +58,10 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
               xs={12}
               sx={{ display: 'flex', height: '100%', justifyContent: 'center' }}
             >
-              <Image
-                priority={true}
-                width={420}
-                height={525}
-                alt={product.name}
+              <img
                 src={product.images[0]}
+                alt={product.name}
+                style={{ maxWidth: '90%' }}
               />
             </Grid>
             <Grid item lg={8} md={8} sm={12} xs={12}>

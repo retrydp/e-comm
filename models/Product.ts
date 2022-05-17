@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import { ProductSchema, Reviews } from '../utils/types';
+import mongoose from 'mongoose';import { ProductSchema, Reviews } from '../utils/types';
 
 const reviewSchema = new mongoose.Schema<Reviews, mongoose.Model<Reviews>>(
   {
@@ -28,7 +27,7 @@ const Products = new mongoose.Schema<
       required: [true, 'Please add a product name'],
       unique: true,
       trim: true,
-      maxlength: [50, 'Product name cannot be more than 50 characters'],
+      maxlength: [100, 'Product name cannot be more than 100 characters'],
     },
     description: {
       type: String,

@@ -1,4 +1,5 @@
-import React from 'react';import { useSnackbar } from 'notistack';
+import React from 'react';
+import { useSnackbar } from 'notistack';
 import { useAppSelector } from '../store';
 import { RootState } from '../store';
 import { useRouter } from 'next/router';
@@ -20,6 +21,7 @@ interface AppContextInterface {
   snackbarError: (message: string) => void;
   authHeader: AxiosRequestConfig<any>;
   authHeaderForm: AxiosRequestConfig<any>;
+  filterQuery: (param: string, value: string | string[]) => void;
 }
 
 interface SharedContextProps {
@@ -84,6 +86,17 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
       snackbarError(`${error.response.data.message || error.toString()}`);
     }
   };
+  const filterQuery = (param: string, value: string | string[]) => {
+    const path = router.pathname;
+    const query = router.query;
+    //if (!isEqual(query[param], value)) {
+    query[param] = value;
+    //}
+    router.push({
+      pathname: path,
+      query,
+    });
+  };
 
   return (
     <Context.Provider
@@ -100,6 +113,7 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
         onNotLoggedIn,
         snackbarError,
         snackbarSuccess,
+        filterQuery,
       }}
     >
       {children}
