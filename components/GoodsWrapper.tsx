@@ -1,4 +1,5 @@
-import React from 'react';import NextLink from 'next/link';
+import React from 'react';
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -22,12 +23,12 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { SideMenuTemplate, Module, List } from '../components';
 import { useAppSelector, useAppDispatch } from '../store';
 import { useSharedContext } from '../context/SharedContext';
-import { setSort, setQuantity, SortParams } from '../store/displayInterface';
+import { setQuantity } from '../store/displayInterface';
 import { GoodsProps } from '../utils/types';
 import Image from 'next/image';
-
+import { useRouter } from 'next/router';
 export interface FilterValues {
-  id: SortParams;
+  id: string;
   title: string;
 }
 
@@ -42,17 +43,15 @@ export const filterValues: FilterValues[] = [
 
 const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
   const [view, setView] = React.useState<View>('module');
+  const router = useRouter();
   const { mdMax, smMin } = useSharedContext();
+  const [sort, setSort] = React.useState<string>(
+    (router.query['sort'] as string) || 'new'
+  );
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
   const dispatch = useAppDispatch();
   const {
-    display: {
-      brand,
-      sort,
-      color: colorChecked,
-      sliderValue: priceRange,
-      quantity,
-    },
+    display: { quantity },
   } = useAppSelector((store) => store);
 
   /**
@@ -60,7 +59,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
    * @param {SelectChangeEvent} event
    */
   const sortHandler = (event: SelectChangeEvent) => {
-    dispatch(setSort(event.target.value));
+    setSort(event.target.value);
   };
 
   /**
@@ -220,9 +219,6 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
             </Toolbar>
             {view === 'module' && <Module products={goods} />}
             {view === 'list' && <List products={goods} />}
-            [Properties selected: Sort: {sort} | Brand: {brand} | Price range:{' '}
-            {priceRange.join('-')} | Colors Checked: {colorChecked.join(',')} |
-            Quantity: {quantity.toString()} | View: {view}]
           </Grid>
         </Grid>
       </Container>
