@@ -1,4 +1,5 @@
-import React from 'react';import {
+import React from 'react';
+import {
   Box,
   Chip,
   FormControl,
@@ -12,8 +13,7 @@ import React from 'react';import {
 } from '@mui/material';
 import { SliderSelector } from '.';
 import { filterValues } from './GoodsWrapper';
-import { useAppDispatch, useAppSelector } from '../store';
-import { setColor } from '../store/displayInterface';
+import { useAppSelector } from '../store';
 import styles from '../utils/styles';
 import { useSharedContext } from '../context/SharedContext';
 import { useRouter } from 'next/router';
@@ -33,6 +33,9 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   withSort,
 }) => {
   const { filterQuery } = useSharedContext();
+  const {
+    display: { availableBrands, availableColors },
+  } = useAppSelector((store) => store);
   const router = useRouter();
   const [innerColors, setInnerColors] = React.useState<AvailableColorsList[]>(
     []
@@ -43,6 +46,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   const [brand, setBrand] = React.useState<string>(
     (router.query['brand'] as string) || 'all'
   );
+  const [colorChecked, setColorChecked] = React.useState<string[]>([]);
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -55,11 +59,6 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
       },
     },
   };
-
-  const dispatch = useAppDispatch();
-  const {
-    display: { color: colorChecked, availableBrands, availableColors },
-  } = useAppSelector((store) => store);
 
   /**
    * @description Changes current selected brand option.
@@ -89,12 +88,11 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
     const {
       target: { value },
     } = event;
-    dispatch(
-      setColor(
-        // On autofill we get a stringified value.
-        typeof value === 'string' ? value.split(',') : value
-      )
+    setColorChecked(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value
     );
+    filterQuery('colors', typeof value === 'string' ? value.split(',') : value);
   };
 
   React.useEffect(() => {

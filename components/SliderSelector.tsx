@@ -1,15 +1,16 @@
-import { Slider, Typography } from '@mui/material';import { Box } from '@mui/system';
+import { Slider, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import React, { SyntheticEvent } from 'react';
-import { useAppDispatch, useAppSelector } from '../store';
-import { setSliderValue } from '../store/displayInterface';
+import { useSharedContext } from '../context/SharedContext';
+import { useAppSelector } from '../store';
 
 const SliderSelector: React.FC = () => {
+  const { filterQuery } = useSharedContext();
   const [minMax, setMinMax] = React.useState<number[]>([0, 0]);
-  const dispatch = useAppDispatch();
   const {
-    display: { sliderValue, minMaxPrice },
+    display: { minMaxPrice },
   } = useAppSelector((store) => store);
-  const [value, setValue] = React.useState<number[]>(sliderValue);
+  const [value, setValue] = React.useState<number[]>(minMaxPrice);
 
   /**
    * @description Change the slider value.
@@ -22,11 +23,15 @@ const SliderSelector: React.FC = () => {
     event: Event | SyntheticEvent<Element, Event>,
     newValue: number | number[]
   ) => {
-    dispatch(setSliderValue(newValue as number[]));
+    setValue(newValue as number[]);
+    filterQuery('minPrice', newValue[0]);
+    filterQuery('maxPrice', newValue[1]);
   };
+  
   const sliderValueText = () => {
-    return `Price range: $ ${sliderValue[0]} to $ ${sliderValue[1]}`;
+    return `Price range: $ ${value[0]} to $ ${value[1]}`;
   };
+
   React.useEffect(() => {
     setMinMax(minMaxPrice);
     setValue(minMaxPrice);
@@ -35,7 +40,7 @@ const SliderSelector: React.FC = () => {
   return (
     <>
       <Typography>
-        Range: $ {sliderValue[0]} - $ {sliderValue[1]}
+        Range: $ {value[0]} - $ {value[1]}
       </Typography>
       <Box sx={{ width: '100%' }}>
         <Slider

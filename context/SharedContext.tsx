@@ -89,9 +89,7 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
   const filterQuery = (param: string, value: string | string[]) => {
     const path = router.pathname;
     const query = router.query;
-    //if (!isEqual(query[param], value)) {
     query[param] = value;
-    //}
     router.push({
       pathname: path,
       query,

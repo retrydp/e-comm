@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../store';
 import {
   adminPanelFetchRequest,
   adminPanelFetchSuccess,
@@ -194,8 +193,8 @@ const AdminProducts: React.FC = () => {
                 getRowId={(row) => row._id}
                 rows={adminPanelData}
                 columns={columns}
-                pageSize={50}
-                rowsPerPageOptions={[50]}
+                pageSize={25}
+                rowsPerPageOptions={[25]}
                 checkboxSelection={false}
               />
             )}

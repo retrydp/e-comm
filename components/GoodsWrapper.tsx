@@ -21,12 +21,11 @@ import styles from '../utils/styles';
 import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { SideMenuTemplate, Module, List } from '../components';
-import { useAppSelector, useAppDispatch } from '../store';
 import { useSharedContext } from '../context/SharedContext';
-import { setQuantity } from '../store/displayInterface';
 import { GoodsProps } from '../utils/types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+
 export interface FilterValues {
   id: string;
   title: string;
@@ -42,6 +41,7 @@ export const filterValues: FilterValues[] = [
 ];
 
 const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
+  const { filterQuery } = useSharedContext();
   const [view, setView] = React.useState<View>('module');
   const router = useRouter();
   const { mdMax, smMin } = useSharedContext();
@@ -49,10 +49,9 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
     (router.query['sort'] as string) || 'new'
   );
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
-  const dispatch = useAppDispatch();
-  const {
-    display: { quantity },
-  } = useAppSelector((store) => store);
+  const [quantity, setQuantity] = React.useState<string>(
+    (router.query['quantity'] as string) || '12'
+  );
 
   /**
    * @description Changes current selected sort order option.
@@ -60,6 +59,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
    */
   const sortHandler = (event: SelectChangeEvent) => {
     setSort(event.target.value);
+    filterQuery('sort', event.target.value);
   };
 
   /**
@@ -70,7 +70,8 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
   };
 
   const quantityHandler = (event: SelectChangeEvent) => {
-    dispatch(setQuantity(parseInt(event.target.value, 10)));
+    setQuantity(event.target.value);
+    filterQuery('quantity', event.target.value);
   };
 
   const viewChangeHandler = (
@@ -148,7 +149,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
             md={9}
           >
             {smMin && (
-              <NextLink href="/product/nike-air-max-plus" passHref>
+              <NextLink href="/sneakers/nike-air-max-plus" passHref>
                 <Link>
                   <Box sx={{ mb: '20px' }}>
                     <Image

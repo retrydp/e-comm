@@ -1,4 +1,5 @@
-import {  Box,
+import {
+  Box,
   Container,
   createTheme,
   CssBaseline,
@@ -6,7 +7,7 @@ import {  Box,
 } from '@mui/material';
 import Head from 'next/head';
 import React from 'react';
-import { Footer, Header, NavigationBar } from '.';
+import { Footer, Header, NavigationBar, BreadcrumbsBar } from '.';
 import styles from '../utils/styles';
 
 interface LayoutProps {
@@ -79,6 +80,7 @@ const Layout: React.FC<LayoutProps> = ({
           <Container maxWidth="lg">
             <Header />
             <NavigationBar currentTab={title || 'home'} />
+            {title !== 'home' && <BreadcrumbsBar />}
           </Container>
           {children}
           <Box sx={styles.grow}></Box>

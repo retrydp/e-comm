@@ -1,8 +1,8 @@
 const notificationMessages = {
-  FAVORITES_ADD_NOT_LOGGED: 'Please login before deleting favorites.',
+  FAVORITES_ADD_NOT_LOGGED: 'Please login before adding favorites.',
   FAVORITES_ADD_ALREADY_EXISTS: 'Product already exists in favorites.',
   FAVORITES_ADD_SUCCESS: 'Product successfully added to favorites.',
-  FAVORITES_DELETE_NOT_LOGGED: 'Please login before adding favorites.',
+  FAVORITES_DELETE_NOT_LOGGED: 'Please login before deleting favorites.',
   FAVORITES_GET_NOT_LOGGED: 'Please login to view favorites.',
   UPLOAD_NO_FILE: 'No file checked.',
   UPLOAD_SUCCESS: 'File uploaded successfully.',

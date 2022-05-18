@@ -1,5 +1,4 @@
-import React from 'react';
-import { Layout, GoodsWrapper } from '../components';
+import React from 'react';import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';
@@ -7,7 +6,6 @@ import { GetServerSideProps } from 'next';
 import { useAppDispatch } from '../store';
 import {
   setMinMaxPrice,
-  setSliderValue,
   setAvailableBrands,
   setAvailableColors,
 } from '../store/displayInterface';
@@ -25,7 +23,6 @@ const Sneakers: React.FC<GoodsProps> = ({
 
   React.useEffect(() => {
     dispatch(setMinMaxPrice([minPrice, maxPrice]));
-    dispatch(setSliderValue([minPrice, maxPrice]));
     dispatch(setAvailableBrands(availableBrands));
     dispatch(setAvailableColors(availableColors));
   }, []);
