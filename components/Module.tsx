@@ -1,5 +1,4 @@
-import {
-  Card,
+import {  Card,
   CardContent,
   CardHeader,
   CardMedia,
@@ -24,7 +23,7 @@ const Module: React.FC<ModuleProps> = ({ products }) => {
       {products.map(
         ({ name, rating, oldPrice, price, images, slug, category }) => (
           <Grid item lg={4} md={4} sm={4} xs={12} key={name}>
-            <NextLink href={`/${category}/${slug}`} passHref>
+            <NextLink href={`${category}/${slug}`} passHref>
               <Link sx={styles.plainAnchor}>
                 <Card>
                   <CardMedia

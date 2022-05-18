@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from '../utils/styles';
+import React from 'react';import styles from '../utils/styles';
 import NextLink from 'next/link';
 import {
   FavoriteBorder,
@@ -92,7 +91,7 @@ const List: React.FC<ListProps> = ({
               flexWrap: 'wrap',
             }}
           >
-            <NextLink href={`/${product.category}/${product.slug}`} passHref>
+            <NextLink href={`${product.category}/${product.slug}`} passHref>
               <Link sx={styles.plainAnchor}>
                 <CardMedia
                   sx={{
@@ -113,7 +112,7 @@ const List: React.FC<ListProps> = ({
                 width: smList ? '100%' : '55%',
               }}
             >
-              <NextLink href={`/${product.category}/${product.slug}`} passHref>
+              <NextLink href={`${product.category}/${product.slug}`} passHref>
                 <Link sx={styles.plainAnchor}>
                   <CardHeader
                     title={product.name}
