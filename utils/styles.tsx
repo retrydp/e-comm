@@ -1,6 +1,6 @@
 const black = '#262626';
 const primaryGrey = '#C1C8CE';
-const secondaryGrey = '#F6F7F8';
+//const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
 const primaryRed = '#FB7181';
 const neutralBlue = '#BCDDFE';
@@ -191,7 +191,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     p: '20px',
-    backgroundColor: secondaryGrey,
     gap: '10px',
   },
   sideLinksText: {
@@ -212,7 +211,6 @@ const styles = {
     textTransform: 'capitalize',
   },
   sortToolbar: {
-    backgroundColor: secondaryGrey,
     padding: '10px',
     flexWrap: 'wrap',
     gap: '8px',

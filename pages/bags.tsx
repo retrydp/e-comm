@@ -66,7 +66,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const maxPrice = Math.floor(prices[0].maxValue);
 
   const products = productDocs.map(db.convertDocToObj);
-
   return {
     props: {
       goods: products,

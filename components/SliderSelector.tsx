@@ -24,10 +24,11 @@ const SliderSelector: React.FC = () => {
     newValue: number | number[]
   ) => {
     setValue(newValue as number[]);
+    //TODO need to throttle this, or steal form rozetka:DD
     filterQuery('minPrice', newValue[0]);
     filterQuery('maxPrice', newValue[1]);
   };
-  
+
   const sliderValueText = () => {
     return `Price range: $ ${value[0]} to $ ${value[1]}`;
   };

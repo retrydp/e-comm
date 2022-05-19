@@ -117,6 +117,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
                     onChange={sortHandler}
                     inputProps={{ 'aria-label': 'Sorting selection' }}
                     label="Sort by"
+                    size="small"
                   >
                     {filterValues.map(({ id, title }) => (
                       <MenuItem value={id} key={id}>
@@ -205,6 +206,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
                 value={view}
                 exclusive
                 onChange={viewChangeHandler}
+                sx={{ padding: '7px' }}
               >
                 <ToggleButton value="module" aria-label="Simple list">
                   <Tooltip title="Simple list" arrow>
