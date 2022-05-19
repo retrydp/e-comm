@@ -1,5 +1,4 @@
-import React from 'react';
-import NextLink from 'next/link';
+import React from 'react';import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -206,14 +205,21 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
                 value={view}
                 exclusive
                 onChange={viewChangeHandler}
-                sx={{ padding: '7px' }}
               >
-                <ToggleButton value="module" aria-label="Simple list">
+                <ToggleButton
+                  value="module"
+                  aria-label="Simple list"
+                  sx={{ p: '7px' }}
+                >
                   <Tooltip title="Simple list" arrow>
                     <ViewModule />
                   </Tooltip>
                 </ToggleButton>
-                <ToggleButton value="list" aria-label="Extended list">
+                <ToggleButton
+                  value="list"
+                  aria-label="Extended list"
+                  sx={{ p: '7px' }}
+                >
                   <Tooltip title="Extended list" arrow>
                     <ViewList />
                   </Tooltip>
