@@ -34,9 +34,9 @@ const Context = React.createContext<AppContextInterface>(
 
 export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
   const smMin = useMediaQuery('(min-width:600px)');
+  const smList = useMediaQuery('(max-width:670px)');
   const mdMin = useMediaQuery('(min-width:900px)');
   const mdMax = useMediaQuery('(max-width:900px)');
-  const smList = useMediaQuery('(max-width:670px)');
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const {
