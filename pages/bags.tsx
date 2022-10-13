@@ -9,6 +9,7 @@ import {
   setAvailableBrands,
   setAvailableColors,
 } from '../store/displayInterface';
+import { isNull } from 'lodash';
 
 const PAGE = 'bags';
 
@@ -38,8 +39,13 @@ export default Bags;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await db.dbConnect();
+  console.log(ctx);
+  const { brand, colors } = ctx.query;
+
   const productDocs = await Product.find({
     category: `${PAGE}`,
+    brand: brand === 'all' || !brand ? { $exists: true } : brand,
+    color: colors?.length ? colors : { $exists: true },
   }).lean();
   const prices = await Product.aggregate([
     { $match: { category: `${PAGE}` } },
