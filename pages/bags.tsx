@@ -1,4 +1,5 @@
-import React from 'react';import { Layout, GoodsWrapper } from '../components';
+import React from 'react';
+import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';
@@ -9,7 +10,6 @@ import {
   setAvailableBrands,
   setAvailableColors,
 } from '../store/displayInterface';
-import { isNull } from 'lodash';
 
 const PAGE = 'bags';
 
@@ -39,7 +39,6 @@ export default Bags;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await db.dbConnect();
-  console.log(ctx);
   const { brand, colors } = ctx.query;
 
   const productDocs = await Product.find({

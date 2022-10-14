@@ -26,7 +26,7 @@ import { cartAddProduct } from '../../store/cart';
 import { useAppDispatch } from '../../store';
 import { useSharedContext } from '../../context/SharedContext';
 import NextLink from 'next/link';
-
+import { setCurrentProduct } from '../../store/displayInterface';
 interface ProductScreenProps {
   product?: ProductSchema;
 }
@@ -41,6 +41,10 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
   const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+
+  React.useEffect(() => {
+    dispatch(setCurrentProduct(product?.name));
+  }, []);
 
   return (
     <Layout

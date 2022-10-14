@@ -3,6 +3,7 @@ export interface DisplayInterface {
   minMaxPrice: number[];
   availableColors: string[];
   availableBrands: string[];
+  currentProduct?: string;
 }
 
 const initialState: DisplayInterface = {
@@ -24,10 +25,17 @@ const displayInterface = createSlice({
     setAvailableBrands: (state, action) => {
       state.availableBrands = action.payload;
     },
+    setCurrentProduct: (state, action) => {
+      state.currentProduct = action.payload;
+    },
   },
 });
 
-export const { setMinMaxPrice, setAvailableColors, setAvailableBrands } =
-  displayInterface.actions;
+export const {
+  setMinMaxPrice,
+  setAvailableColors,
+  setAvailableBrands,
+  setCurrentProduct,
+} = displayInterface.actions;
 
 export default displayInterface.reducer;
