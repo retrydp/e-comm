@@ -8,7 +8,7 @@ interface WithRouterProps {
 }
 
 const BreadcrumbsBar: React.FC<WithRouterProps> = ({ router }) => {
-  const { category } = router.query;
+  const { category, slug } = router.query;
   const {
     display: { currentProduct },
   } = useAppSelector((store) => store);
@@ -28,8 +28,14 @@ const BreadcrumbsBar: React.FC<WithRouterProps> = ({ router }) => {
         </NextLink>
       )}
       {router.pathname === '/loading' || (
-        <Typography sx={{ ml: 2, fontSize: '0.875rem' }}>
-          {currentProduct ? currentProduct : 'Product not available'}
+        <Typography
+          sx={{ ml: 2, fontSize: '0.875rem', textTransform: 'capitalize' }}
+        >
+          {slug
+            ? currentProduct
+              ? currentProduct
+              : 'Product not available'
+            : router.pathname.split('/').pop()}
         </Typography>
       )}
     </Breadcrumbs>

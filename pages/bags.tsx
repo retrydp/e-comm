@@ -39,15 +39,15 @@ export default Bags;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await db.dbConnect();
-  const { brand, colors } = ctx.query;
+  const {
+    brand,
+    colors,
+    minPrice: minQueryPrice,
+    maxPrice: maxQueryPrice,
+  } = ctx.query;
 
-  const productDocs = await Product.find({
-    category: `${PAGE}`,
-    brand: brand === 'all' || !brand ? { $exists: true } : brand,
-    color: colors?.length ? colors : { $exists: true },
-  }).lean();
-  const prices = await Product.aggregate([
-    { $match: { category: `${PAGE}` } },
+  const overallPrices = await Product.aggregate([
+    { $match: { category: PAGE } },
     {
       $group: {
         _id: null,
@@ -56,8 +56,22 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     },
   ]);
+
+  const minPrice = Math.floor(overallPrices[0].minValue);
+  const maxPrice = Math.floor(overallPrices[0].maxValue);
+
+  const productDocs = await Product.find({
+    category: PAGE,
+    brand: brand === 'all' || !brand ? { $exists: true } : brand,
+    color: colors?.length ? colors : { $exists: true },
+    price: {
+      $gt: minQueryPrice || minPrice,
+      $lt: maxQueryPrice || maxPrice,
+    },
+  }).lean();
+
   const uniqueValues = await Product.aggregate([
-    { $match: { category: `${PAGE}` } },
+    { $match: { category: PAGE } },
     {
       $group: {
         _id: null,
@@ -67,10 +81,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   ]);
   const { availableColors, availableBrands } = uniqueValues[0];
-  const minPrice = Math.floor(prices[0].minValue);
-  const maxPrice = Math.floor(prices[0].maxValue);
 
   const products = productDocs.map(db.convertDocToObj);
+
   return {
     props: {
       goods: products,
