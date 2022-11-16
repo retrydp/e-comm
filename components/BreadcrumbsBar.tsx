@@ -27,7 +27,7 @@ const BreadcrumbsBar: React.FC<WithRouterProps> = ({ router }) => {
           </Button>
         </NextLink>
       )}
-      {router.pathname === '/loading' || (
+      {router.pathname !== '/loading' ? (
         <Typography
           sx={{ ml: 2, fontSize: '0.875rem', textTransform: 'capitalize' }}
         >
@@ -37,7 +37,7 @@ const BreadcrumbsBar: React.FC<WithRouterProps> = ({ router }) => {
               : 'Product not available'
             : router.pathname.split('/').pop()}
         </Typography>
-      )}
+      ) : null}
     </Breadcrumbs>
   );
 };
