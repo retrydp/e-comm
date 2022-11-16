@@ -80,6 +80,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     },
   ]);
+
   const { availableColors, availableBrands } = uniqueValues[0];
 
   const products = productDocs.map(db.convertDocToObj);
