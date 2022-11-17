@@ -1,5 +1,4 @@
-import { AxiosResponse } from 'axios';
-import mongoose from 'mongoose';
+import { AxiosResponse } from 'axios';import mongoose from 'mongoose';
 
 export interface Reviews {
   user: mongoose.Schema.Types.ObjectId;
@@ -17,19 +16,10 @@ export interface UserSchema {
   favoritesId?: string[];
 }
 
-export interface ProductSchema {
+export interface ProductSchema extends ProductRequest {
   slug: string;
-  name: string;
-  description: string;
-  category: string;
-  brand: string;
-  price: number;
-  oldPrice: number;
-  color: string;
-  images: string[];
   rating?: number;
   salesCount?: number;
-  itemsInStock: number;
   deliveryMethods?: string;
   reviews?: mongoose.Model<Reviews>;
   numReviews: number;
@@ -67,10 +57,10 @@ export interface ProductRequest {
   description: string;
   category: string;
   brand: string;
-  price: string;
-  oldPrice: string;
+  price: number;
+  oldPrice: number;
   color: string;
-  itemsInStock: string;
+  itemsInStock: number;
   images: string[];
 }
 
