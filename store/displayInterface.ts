@@ -1,15 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
-export interface DisplayInterface {
+import { createSlice } from '@reduxjs/toolkit';export interface DisplayInterface {
   minMaxPrice: number[];
   availableColors: string[];
   availableBrands: string[];
   currentProduct?: string;
+  productsQuantity: number;
 }
 
 const initialState: DisplayInterface = {
   minMaxPrice: [0, 0],
   availableBrands: [],
   availableColors: [],
+  productsQuantity: 12,
 };
 
 const displayInterface = createSlice({
@@ -28,6 +29,9 @@ const displayInterface = createSlice({
     setCurrentProduct: (state, action) => {
       state.currentProduct = action.payload;
     },
+    setProductsQuantity: (state, action) => {
+      state.productsQuantity = action.payload;
+    },
   },
 });
 
@@ -36,6 +40,7 @@ export const {
   setAvailableColors,
   setAvailableBrands,
   setCurrentProduct,
+  setProductsQuantity,
 } = displayInterface.actions;
 
 export default displayInterface.reducer;

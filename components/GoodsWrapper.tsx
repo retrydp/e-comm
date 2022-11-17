@@ -1,4 +1,5 @@
-import React from 'react';import NextLink from 'next/link';
+import React from 'react';
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -21,9 +22,10 @@ import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { SideMenuTemplate, Module, List } from '../components';
 import { useSharedContext } from '../context/SharedContext';
-import { GoodsProps } from '../utils/types';
+import { WrapperProps } from '../utils/types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useAppSelector } from '../store';
 
 export interface FilterValues {
   id: string;
@@ -39,7 +41,10 @@ export const filterValues: FilterValues[] = [
   { id: 'desc', title: 'Price descending' },
 ];
 
-const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
+const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
+  const {
+    display: { productsQuantity },
+  } = useAppSelector((store) => store);
   const { filterQuery } = useSharedContext();
   const [view, setView] = React.useState<View>('module');
   const router = useRouter();
@@ -177,7 +182,7 @@ const GoodsWrapper: React.FC<GoodsProps> = ({ goods }) => {
                       paddingLeft: '20px',
                     }}
                   >
-                    Items: {goods.length || 0}
+                    Items: {productsQuantity}
                   </Typography>
                 )}
                 <FormControl sx={{ minWidth: 150 }}>

@@ -43,7 +43,10 @@ export interface GoodsProps {
   maxPrice?: number;
   availableColors?: string[];
   availableBrands?: string[];
+  productsQuantity: number;
 }
+
+export type WrapperProps = Pick<GoodsProps, 'goods'>;
 
 export interface Inputs {
   name: string;
