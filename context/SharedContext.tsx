@@ -90,10 +90,12 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
     const path = router.pathname;
     const query = router.query;
     query[param] = value;
-    router.push({
-      pathname: path,
-      query,
-    });
+    setTimeout(() => {
+      router.push({
+        pathname: path,
+        query,
+      });
+    }, 0.5);
   };
 
   return (
