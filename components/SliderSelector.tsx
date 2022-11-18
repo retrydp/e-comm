@@ -1,5 +1,4 @@
-import { Slider, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import { Slider, Typography } from '@mui/material';import { Box } from '@mui/system';
 import React, { SyntheticEvent } from 'react';
 import { useSharedContext } from '../context/SharedContext';
 import { useAppSelector } from '../store';
@@ -23,7 +22,6 @@ const SliderSelector: React.FC = () => {
     event: Event | SyntheticEvent<Element, Event>,
     newValue: number | number[]
   ) => {
-    // setValue(newValue as number[]);
     filterQuery('minPrice', newValue[0]);
     filterQuery('maxPrice', newValue[1]);
   };
