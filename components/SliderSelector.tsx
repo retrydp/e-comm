@@ -23,7 +23,7 @@ const SliderSelector: React.FC = () => {
     event: Event | SyntheticEvent<Element, Event>,
     newValue: number | number[]
   ) => {
-    setValue(newValue as number[]);
+    // setValue(newValue as number[]);
     filterQuery('minPrice', newValue[0]);
     filterQuery('maxPrice', newValue[1]);
   };
@@ -35,7 +35,7 @@ const SliderSelector: React.FC = () => {
   React.useEffect(() => {
     setMinMax(minMaxPrice);
     setValue(minMaxPrice);
-  }, [minMaxPrice]);
+  }, [minMaxPrice[0], minMaxPrice[1]]);
 
   return (
     <>
