@@ -1,5 +1,4 @@
-const black = '#262626';
-const primaryGrey = '#C1C8CE';
+const black = '#262626';const primaryGrey = '#C1C8CE';
 //const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
 const primaryRed = '#FB7181';
@@ -10,6 +9,13 @@ const neutralGrey = '#9098B1';
 const styles = {
   grow: {
     flexGrow: 1,
+  },
+  headerBar: {
+    borderBottom: 1,
+    borderColor: 'divider',
+    width: '100%',
+    backgroundColor: 'white',
+    boxShadow: 'none',
   },
   layoutWrapper: {
     display: 'flex',

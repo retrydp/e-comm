@@ -27,8 +27,8 @@ const Layout: React.FC<LayoutProps> = ({
           <title>{customTitle || title?.toUpperCase() || 'E-comm'}</title>
         </Head>
         <Box sx={styles.layoutWrapper}>
-          <Container maxWidth="lg">
-            <Header />
+          <Header />
+          <Container maxWidth="lg" sx={{ mt: '64px' }}>
             <NavigationBar currentTab={title || 'home'} />
             {title !== 'home' ? <BreadcrumbsBar /> : null}
           </Container>
