@@ -66,25 +66,31 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     brand: brand === 'all' || !brand ? { $exists: true } : brand,
     color: colors?.length ? colors : { $exists: true },
     price: {
-      $gt: minQueryPrice || minPrice,
-      $lt: maxQueryPrice || maxPrice,
+      $gt: minQueryPrice || minPrice, //TODO: this should be validated to be a number
+      $lt: maxQueryPrice || maxPrice, //TODO: this should be validated to be a number
     },
   };
   const productDocsWithNoFilters = await Product.find(queryParams).lean();
   const productsQuantity = productDocsWithNoFilters.map(
     db.convertDocToObj
   ).length;
-  const DEFAULT_LIMIT = 12;
+  const DEFAULT_LIMIT = '12';
+  const quantityFromQuery = quantity || DEFAULT_LIMIT;
   const parseHandler = (param: string | string[]) => parseInt(param as string);
-  const multiplyValues = parseHandler(quantity) * (parseHandler(page) - 1);
-  const pagesToSkip = !isNaN(multiplyValues) ? multiplyValues : 0;
+  const calculatedSkipLimit =
+    parseHandler(quantityFromQuery) * (parseHandler(page) - 1);
+  const pagesToSkip = !isNaN(calculatedSkipLimit) ? calculatedSkipLimit : 0;
   const productDocs = await Product.find(queryParams)
     .lean()
-    .limit(parseHandler(quantity) || DEFAULT_LIMIT)
+    .limit(parseHandler(quantityFromQuery))
     .skip(pagesToSkip);
 
   const uniqueValues = await Product.aggregate([
-    { $match: { category: PAGE_NAME } },
+    {
+      $match: {
+        category: PAGE_NAME,
+      },
+    },
     {
       $group: {
         _id: null,
