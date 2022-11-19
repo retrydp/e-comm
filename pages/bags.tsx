@@ -1,4 +1,5 @@
-import React from 'react';import { Layout, GoodsWrapper } from '../components';
+import React from 'react';
+import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';
@@ -66,8 +67,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     brand: brand === 'all' || !brand ? { $exists: true } : brand,
     color: colors?.length ? colors : { $exists: true },
     price: {
-      $gt: minQueryPrice || minPrice, //TODO: this should be validated to be a number
-      $lt: maxQueryPrice || maxPrice, //TODO: this should be validated to be a number
+      $gt: minQueryPrice || minPrice, //TODO this should be validated to be a number
+      $lt: maxQueryPrice || maxPrice, //TODO this should be validated to be a number
     },
   };
   const productDocsWithNoFilters = await Product.find(queryParams).lean();
