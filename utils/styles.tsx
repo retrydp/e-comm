@@ -289,7 +289,7 @@ const styles = {
     borderRight: '1px solid #E0E0E0',
   },
   adminModalAddProgress: {
-    position: 'absolute', // as "absolute"
+    position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -299,7 +299,6 @@ const styles = {
     p: 4,
   },
   cartWrapper: {
-    //border: `1px solid ${primaryGrey}`,
     borderRadius: '5px',
     display: 'flex',
     padding: '15px',

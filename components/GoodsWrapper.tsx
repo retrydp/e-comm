@@ -1,5 +1,4 @@
-import React from 'react';
-import NextLink from 'next/link';
+import React from 'react';import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -20,7 +19,7 @@ import {
 import styles from '../utils/styles';
 import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { SideMenuTemplate, Module, List } from '../components';
+import { SideMenuTemplate, Module, List, Pagination } from '../components';
 import { useSharedContext } from '../context/SharedContext';
 import { WrapperProps } from '../utils/types';
 import Image from 'next/image';
@@ -97,7 +96,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
         <SideMenuTemplate width="60vw" withSort={false} />
       </Drawer>
       <Container maxWidth="lg">
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
           {mdMax ? (
             <Grid item container rowSpacing={2} sx={{ alignItems: 'center' }}>
               <Grid item>
@@ -234,6 +233,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
             {view === 'module' && <Module products={goods} />}
             {view === 'list' && <List products={goods} />}
           </Grid>
+          <Pagination />
         </Grid>
       </Container>
     </>

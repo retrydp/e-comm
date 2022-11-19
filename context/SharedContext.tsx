@@ -86,6 +86,7 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
       snackbarError(`${error.response.data.message || error.toString()}`);
     }
   };
+
   const filterQuery = (param: string, value: string | string[]) => {
     const path = router.pathname;
     const query = router.query;
