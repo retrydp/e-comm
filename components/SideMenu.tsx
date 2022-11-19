@@ -1,5 +1,4 @@
-import React from 'react';
-import {
+import React from 'react';import {
   Box,
   Chip,
   FormControl,
@@ -67,6 +66,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   const brandHandler = (event: SelectChangeEvent) => {
     setBrand(event.target.value);
     filterQuery('brand', event.target.value);
+    filterQuery('page', '1');
   };
 
   /**
@@ -75,6 +75,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
    */
   const sortHandler = (event: SelectChangeEvent) => {
     filterQuery('sort', event.target.value);
+    filterQuery('page', '1');
     setSort(event.target.value);
   };
 
@@ -93,6 +94,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
       typeof value === 'string' ? value.split(',') : value
     );
     filterQuery('colors', typeof value === 'string' ? value.split(',') : value);
+    filterQuery('page', '1');
   };
 
   React.useEffect(() => {

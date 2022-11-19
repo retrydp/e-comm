@@ -11,7 +11,7 @@ import {
   setProductsQuantity,
 } from '../store/displayInterface';
 
-const PAGE = 'bags';
+const PAGE_NAME = 'bags';
 
 const Bags: React.FC<GoodsProps> = ({
   goods,
@@ -29,7 +29,7 @@ const Bags: React.FC<GoodsProps> = ({
     dispatch(setProductsQuantity(productsQuantity));
   }, [minPrice, maxPrice, productsQuantity]);
   return (
-    <Layout title={PAGE}>
+    <Layout title={PAGE_NAME}>
       <GoodsWrapper goods={goods} />
     </Layout>
   );
@@ -45,10 +45,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     minPrice: minQueryPrice,
     maxPrice: maxQueryPrice,
     quantity,
+    page,
   } = ctx.query;
 
   const overallPrices = await Product.aggregate([
-    { $match: { category: PAGE } },
+    { $match: { category: PAGE_NAME } },
     {
       $group: {
         _id: null,
@@ -61,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const minPrice = Math.floor(overallPrices[0].minValue);
   const maxPrice = Math.floor(overallPrices[0].maxValue);
   const queryParams = {
-    category: PAGE,
+    category: PAGE_NAME,
     brand: brand === 'all' || !brand ? { $exists: true } : brand,
     color: colors?.length ? colors : { $exists: true },
     price: {
@@ -69,15 +70,21 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       $lt: maxQueryPrice || maxPrice,
     },
   };
-
   const productDocsWithNoFilters = await Product.find(queryParams).lean();
-
+  const productsQuantity = productDocsWithNoFilters.map(
+    db.convertDocToObj
+  ).length;
+  const DEFAULT_LIMIT = 12;
+  const parseHandler = (param: string | string[]) => parseInt(param as string);
+  const multiplyValues = parseHandler(quantity) * (parseHandler(page) - 1);
+  const pagesToSkip = !isNaN(multiplyValues) ? multiplyValues : 0;
   const productDocs = await Product.find(queryParams)
     .lean()
-    .limit(parseInt(quantity as string) || 12);
+    .limit(parseHandler(quantity) || DEFAULT_LIMIT)
+    .skip(pagesToSkip);
 
   const uniqueValues = await Product.aggregate([
-    { $match: { category: PAGE } },
+    { $match: { category: PAGE_NAME } },
     {
       $group: {
         _id: null,
@@ -89,9 +96,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { availableColors, availableBrands } = uniqueValues[0];
 
   const products = productDocs.map(db.convertDocToObj);
-  const productsQuantity = productDocsWithNoFilters.map(
-    db.convertDocToObj
-  ).length;
+
   return {
     props: {
       goods: products,

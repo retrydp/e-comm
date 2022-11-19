@@ -26,6 +26,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '../store';
 
+const DEFAULT_QUANTITY = '12';
+const QUANTITY_VALUES = ['12', '24', '48', '60'];
 export interface FilterValues {
   id: string;
   title: string;
@@ -52,9 +54,14 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
     (router.query['sort'] as string) || 'new'
   );
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
-  const [quantity, setQuantity] = React.useState<string>(
-    (router.query['quantity'] as string) || '12'
-  );
+  const validateQuantity = () => {
+    if (!QUANTITY_VALUES.includes(router.query['quantity'] as string)) {
+      return DEFAULT_QUANTITY;
+    }
+
+    return router.query['quantity'] as string;
+  };
+  const [quantity, setQuantity] = React.useState<string>(validateQuantity());
 
   /**
    * @description Changes current selected sort order option.
@@ -75,6 +82,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
   const quantityHandler = (event: SelectChangeEvent) => {
     setQuantity(event.target.value);
     filterQuery('quantity', event.target.value);
+    filterQuery('page', '1');
   };
 
   const viewChangeHandler = (
@@ -195,7 +203,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
                     label="Quantity"
                     size="small"
                   >
-                    {[12, 16, 20, 24].map((el) => (
+                    {QUANTITY_VALUES.map((el) => (
                       <MenuItem value={el} key={el}>
                         {el}
                       </MenuItem>
