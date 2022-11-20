@@ -1,4 +1,5 @@
-import React from 'react';import NextLink from 'next/link';
+import React from 'react';
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -25,9 +26,8 @@ import { WrapperProps } from '../utils/types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '../store';
+import commonConst from '../constants/common';
 
-const DEFAULT_QUANTITY = '12';
-const QUANTITY_VALUES = ['12', '24', '48', '60'];
 export interface FilterValues {
   id: string;
   title: string;
@@ -55,8 +55,10 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
   );
   const [drawerIsVisible, setDrawerIsVisible] = React.useState<boolean>(false);
   const validateQuantity = () => {
-    if (!QUANTITY_VALUES.includes(router.query['quantity'] as string)) {
-      return DEFAULT_QUANTITY;
+    if (
+      !commonConst.QUANTITY_VALUES.includes(router.query['quantity'] as string)
+    ) {
+      return commonConst.DEFAULT_LIMIT;
     }
 
     return router.query['quantity'] as string;
@@ -203,7 +205,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
                     label="Quantity"
                     size="small"
                   >
-                    {QUANTITY_VALUES.map((el) => (
+                    {commonConst.QUANTITY_VALUES.map((el) => (
                       <MenuItem value={el} key={el}>
                         {el}
                       </MenuItem>

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextHandler } from 'next-connect';
+import notificationMessages from '../constants/notificationMessages';
 
 export interface UserAuth {
   _id: string;
@@ -42,7 +43,9 @@ const isAuth = async (
     const token = authorization.split(' ')[1];
     jwt.verify(token, process.env.JWT_TOKEN_SECRET as string, (err, decode) => {
       if (err) {
-        res.status(401).json({ message: 'Token is not valid' });
+        res
+          .status(401)
+          .json({ message: notificationMessages.AUTH_INVALID_TOKEN });
       } else {
         req.user = decode;
 
@@ -50,7 +53,9 @@ const isAuth = async (
       }
     });
   } else {
-    res.status(401).json({ message: 'Token is not supplied' });
+    res
+      .status(401)
+      .json({ message: notificationMessages.AUTH_TOKEN_NOT_SUPPLIED });
   }
 };
 
@@ -62,7 +67,7 @@ const isAdmin = async (
   if (req.user?.isAdmin) {
     next();
   } else {
-    res.status(401).json({ message: 'User is not admin' });
+    res.status(401).json({ message: notificationMessages.AUTH_NOT_ADMIN });
   }
 };
 

@@ -3,6 +3,8 @@ const notificationMessages = {
   FAVORITES_ADD_ALREADY_EXISTS: 'Product already exists in favorites.',
   FAVORITES_ADD_SUCCESS: 'Product successfully added to favorites.',
   FAVORITES_DELETE_NOT_LOGGED: 'Please login before deleting favorites.',
+  FAVORITES_DELETE_SUCCESS: 'Product successfully removed from favorites.',
+  FAVORITES_DELETE_NOT_FOUND: 'Product not in favorites.',
   FAVORITES_GET_NOT_LOGGED: 'Please login to view favorites.',
   UPLOAD_NO_FILE: 'No file checked.',
   UPLOAD_SUCCESS: 'File uploaded successfully.',
@@ -17,5 +19,8 @@ const notificationMessages = {
   AUTH_NO_PASSWORD: 'Password is not set.',
   AUTH_INVALID_USER_DATA: 'Invalid email or password.',
   AUTH_EMAIL_EXISTS: 'This email is already registered.',
+  AUTH_INVALID_TOKEN: 'Token is not valid.',
+  AUTH_TOKEN_NOT_SUPPLIED: 'Token is not supplied.',
+  AUTH_NOT_ADMIN: 'User is not an administrator.',
 } as const;
 export default notificationMessages;

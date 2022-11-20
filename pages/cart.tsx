@@ -5,9 +5,7 @@ import styles from '../utils/styles';
 import { ArrowBack } from '@mui/icons-material';
 import { useAppSelector } from '../store';
 import NextLink from 'next/link';
-
-const TAXES = 0.2;
-const SHIPPING_PRICE = 10;
+import commonConst from '../constants/common';
 
 const Cart: React.FC = () => {
   const {
@@ -72,13 +70,13 @@ const Cart: React.FC = () => {
                           Shipping
                         </Typography>
                         <Typography sx={styles.paymentValues}>
-                          ${SHIPPING_PRICE}
+                          ${commonConst.SHIPPING_PRICE}
                         </Typography>
                       </Box>
                       <Box sx={styles.detailsWrapper}>
                         <Typography sx={styles.paymentName}>Tax</Typography>
                         <Typography sx={styles.paymentValues}>
-                          ${(totalSum * TAXES).toFixed(2)}
+                          ${(totalSum * commonConst.TAXES).toFixed(2)}
                         </Typography>
                       </Box>
                     </Box>
@@ -93,7 +91,10 @@ const Cart: React.FC = () => {
                     }}
                   >
                     Total: $
-                    {(totalSum * (1 + TAXES) + SHIPPING_PRICE).toFixed(2)}
+                    {(
+                      totalSum * (1 + commonConst.TAXES) +
+                      commonConst.SHIPPING_PRICE
+                    ).toFixed(2)}
                   </Typography>
                   <Box
                     sx={{

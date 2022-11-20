@@ -19,6 +19,7 @@ const SliderSelector: React.FC = () => {
   const sliderHandleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
+
   const commitedChangeHandler = (
     event: Event | SyntheticEvent<Element, Event>,
     newValue: number | number[]

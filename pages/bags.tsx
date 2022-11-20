@@ -11,6 +11,7 @@ import {
   setAvailableColors,
   setProductsQuantity,
 } from '../store/displayInterface';
+import commonConst from '../constants/common';
 
 const PAGE_NAME = 'bags';
 
@@ -29,6 +30,7 @@ const Bags: React.FC<GoodsProps> = ({
     dispatch(setAvailableColors(availableColors));
     dispatch(setProductsQuantity(productsQuantity));
   }, [minPrice, maxPrice, productsQuantity]);
+
   return (
     <Layout title={PAGE_NAME}>
       <GoodsWrapper goods={goods} />
@@ -94,17 +96,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   };
 
   const productDocsWithNoFilters = await Product.find(queryParams).lean();
+  //calculate amount of products
   const productsQuantity = productDocsWithNoFilters.map(
     db.convertDocToObj
   ).length;
-  const DEFAULT_LIMIT = '12';
-  const quantityFromQuery = quantity || DEFAULT_LIMIT;
+  const quantityFromQuery = quantity || commonConst.DEFAULT_LIMIT;
 
   const calculatedSkipLimit =
     parseHandler(quantityFromQuery) * (parseHandler(page) - 1);
 
   const pagesToSkip = !isNaN(calculatedSkipLimit) ? calculatedSkipLimit : 0;
-
+  //query  to db
   const productDocs = await Product.find(queryParams)
     .lean()
     .limit(parseHandler(quantityFromQuery))

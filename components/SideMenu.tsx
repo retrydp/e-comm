@@ -16,12 +16,12 @@ import { useAppSelector } from '../store';
 import styles from '../utils/styles';
 import { useSharedContext } from '../context/SharedContext';
 import { useRouter } from 'next/router';
+
 interface AvailableColorsList {
   color: string;
   bg: string;
   slug: string;
 }
-
 interface SideMenuTemplateProps {
   width: '60vw' | '100%';
   withSort: boolean;

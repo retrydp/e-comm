@@ -23,7 +23,7 @@ handler.get(async (req, res) => {
     } else {
       res.status(404).json({
         success: false,
-        message: 'User not found',
+        message: notificationMessages.USER_NOT_FOUND,
       });
     }
   } catch (error: any) {

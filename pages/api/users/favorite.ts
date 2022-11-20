@@ -1,4 +1,5 @@
-import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
 import User from '../../../models/User';
 import Product from '../../../models/Product';
@@ -86,24 +87,24 @@ handler.delete(async (req, res) => {
           await user.save();
           res.status(200).json({
             success: true,
-            message: 'Product successfully removed from favorites.',
+            message: notificationMessages.FAVORITES_DELETE_SUCCESS,
           });
         } else {
           res.status(400).json({
             success: false,
-            message: 'Product not in favorites.',
+            message: notificationMessages.FAVORITES_DELETE_NOT_FOUND,
           });
         }
       } else {
         res.status(404).json({
           success: false,
-          message: 'User not found.',
+          message: notificationMessages.USER_NOT_FOUND,
         });
       }
     } else {
       res.status(404).json({
         success: false,
-        message: 'Product not found.',
+        message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
   } catch (error: any) {
