@@ -1,4 +1,5 @@
-const black = '#262626';const primaryGrey = '#C1C8CE';
+const black = '#262626';
+const primaryGrey = '#C1C8CE';
 //const secondaryGrey = '#F6F7F8';
 const primaryBlue = '#40BFFF';
 const primaryRed = '#FB7181';
@@ -353,6 +354,18 @@ const styles = {
   detailsWrapper: {
     display: 'flex',
     justifyContent: 'space-between',
+  },
+  footerText: { maxWidth: '220px', fontSize: '12px' },
+  footerHeader: {
+    fontFamily: 'Poppins',
+    fontSize: '18px',
+    fontWeight: '700',
+  },
+  footerItemWrapper: {
+    display: 'flex',
+    gap: '20px 0px',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 } as const;
 
