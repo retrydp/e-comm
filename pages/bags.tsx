@@ -60,27 +60,51 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     },
   ]);
 
+  const parseHandler = (param: string | string[]) => parseInt(param as string);
+
   const minPrice = Math.floor(overallPrices[0].minValue);
   const maxPrice = Math.floor(overallPrices[0].maxValue);
+
+  const validatePrices = (value: string): number => {
+    const validatedPrices = { minPrice, maxPrice };
+
+    if (
+      parseHandler(minQueryPrice) >= minPrice ||
+      !isNaN(parseHandler(minQueryPrice))
+    ) {
+      validatedPrices.minPrice = +minQueryPrice;
+    }
+    if (
+      parseHandler(maxQueryPrice) <= maxPrice ||
+      !isNaN(parseHandler(maxQueryPrice))
+    ) {
+      validatedPrices.maxPrice = +maxQueryPrice;
+    }
+    return validatedPrices[value];
+  };
+
   const queryParams = {
     category: PAGE_NAME,
     brand: brand === 'all' || !brand ? { $exists: true } : brand,
     color: colors?.length ? colors : { $exists: true },
     price: {
-      $gt: minQueryPrice || minPrice, //TODO this should be validated to be a number
-      $lt: maxQueryPrice || maxPrice, //TODO this should be validated to be a number
+      $gt: validatePrices('minPrice'),
+      $lt: validatePrices('maxPrice'),
     },
   };
+
   const productDocsWithNoFilters = await Product.find(queryParams).lean();
   const productsQuantity = productDocsWithNoFilters.map(
     db.convertDocToObj
   ).length;
   const DEFAULT_LIMIT = '12';
   const quantityFromQuery = quantity || DEFAULT_LIMIT;
-  const parseHandler = (param: string | string[]) => parseInt(param as string);
+
   const calculatedSkipLimit =
     parseHandler(quantityFromQuery) * (parseHandler(page) - 1);
+
   const pagesToSkip = !isNaN(calculatedSkipLimit) ? calculatedSkipLimit : 0;
+
   const productDocs = await Product.find(queryParams)
     .lean()
     .limit(parseHandler(quantityFromQuery))
