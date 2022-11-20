@@ -1,5 +1,4 @@
-import React from 'react';
-import { Layout, GoodsWrapper } from '../components';
+import React from 'react';import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';
@@ -24,6 +23,7 @@ const Bags: React.FC<GoodsProps> = ({
   productsQuantity,
 }) => {
   const dispatch = useAppDispatch();
+
   React.useEffect(() => {
     dispatch(setMinMaxPrice([minPrice, maxPrice]));
     dispatch(setAvailableBrands(availableBrands));
@@ -69,18 +69,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const validatePrices = (value: string): number => {
     const validatedPrices = { minPrice, maxPrice };
-
     if (
       parseHandler(minQueryPrice) >= minPrice ||
       !isNaN(parseHandler(minQueryPrice))
     ) {
-      validatedPrices.minPrice = +minQueryPrice;
+      validatedPrices.minPrice = parseHandler(minQueryPrice);
     }
     if (
       parseHandler(maxQueryPrice) <= maxPrice ||
       !isNaN(parseHandler(maxQueryPrice))
     ) {
-      validatedPrices.maxPrice = +maxQueryPrice;
+      validatedPrices.maxPrice = parseHandler(maxQueryPrice);
     }
     return validatedPrices[value];
   };
@@ -94,17 +93,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       $lt: validatePrices('maxPrice'),
     },
   };
-
   const productDocsWithNoFilters = await Product.find(queryParams).lean();
   //calculate amount of products
   const productsQuantity = productDocsWithNoFilters.map(
     db.convertDocToObj
   ).length;
   const quantityFromQuery = quantity || commonConst.DEFAULT_LIMIT;
-
   const calculatedSkipLimit =
     parseHandler(quantityFromQuery) * (parseHandler(page) - 1);
-
   const pagesToSkip = !isNaN(calculatedSkipLimit) ? calculatedSkipLimit : 0;
   //query  to db
   const productDocs = await Product.find(queryParams)
