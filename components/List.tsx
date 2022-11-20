@@ -51,7 +51,7 @@ const List: React.FC<ListProps> = ({
 }) => {
   const {
     smMin,
-    mdMin,
+
     userInfo,
     snackbarSuccess,
     snackbarError,
@@ -187,7 +187,7 @@ const List: React.FC<ListProps> = ({
                       </Typography>
                     </Box>
                   </Box>
-                  {mdMin && (
+                  {!cartMode && (
                     <Box>
                       <Typography>{product.description}</Typography>
                     </Box>
