@@ -1,4 +1,5 @@
-import React from 'react';import { Layout, GoodsWrapper } from '../components';
+import React from 'react';
+import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';
@@ -52,6 +53,22 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     sort,
   } = ctx.query;
 
+  const uniqueValues = await Product.aggregate([
+    {
+      $match: {
+        category: PAGE_NAME,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        availableColors: { $addToSet: '$color' },
+        availableBrands: { $addToSet: '$brand' },
+      },
+    },
+  ]);
+  const { availableColors, availableBrands } = uniqueValues[0];
+
   const overallPrices = await Product.aggregate([
     { $match: { category: PAGE_NAME } },
     {
@@ -91,10 +108,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
     return validatedPrices[value];
   };
-
+  const validateBrand = (value: string) => {
+    if (value === 'all' || !value || !availableBrands.includes(value)) {
+      return { $exists: true };
+    }
+    return value;
+  };
   const queryParams = {
     category: PAGE_NAME,
-    brand: brand === 'all' || !brand ? { $exists: true } : brand,
+    brand: validateBrand(brand as string),
     color: colors?.length ? colors : { $exists: true },
     price: {
       $gt: validatePrices('minPrice'),
@@ -116,22 +138,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     .sort(validateSorting(sort as string))
     .limit(parseHandler(quantityFromQuery))
     .skip(pagesToSkip);
-
-  const uniqueValues = await Product.aggregate([
-    {
-      $match: {
-        category: PAGE_NAME,
-      },
-    },
-    {
-      $group: {
-        _id: null,
-        availableColors: { $addToSet: '$color' },
-        availableBrands: { $addToSet: '$brand' },
-      },
-    },
-  ]);
-  const { availableColors, availableBrands } = uniqueValues[0];
 
   const products = productDocs.map(db.convertDocToObj);
 

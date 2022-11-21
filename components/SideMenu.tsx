@@ -1,4 +1,5 @@
-import React from 'react';import {
+import React from 'react';
+import {
   Box,
   Chip,
   FormControl,
@@ -16,6 +17,7 @@ import { useAppSelector } from '../store';
 import styles from '../utils/styles';
 import { useSharedContext } from '../context/SharedContext';
 import { useRouter } from 'next/router';
+import commonConst from '../constants/common';
 
 interface AvailableColorsList {
   color: string;
@@ -40,12 +42,19 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
     []
   );
   const [sort, setSort] = React.useState<string>(
-    (router.query['sort'] as string) || 'new'
+    (router.query['sort'] as string) in commonConst.SORT_PARAMS
+      ? (router.query['sort'] as string)
+      : 'new'
   );
   const [brand, setBrand] = React.useState<string>(
-    (router.query['brand'] as string) || 'all'
+    availableBrands.includes(router.query['brand'] as string)
+      ? (router.query['brand'] as string)
+      : 'all'
   );
-  const [colorChecked, setColorChecked] = React.useState<string[]>([]);
+  const [colorChecked, setColorChecked] = React.useState<string[]>(
+    router.query['colors'] as string[]
+  );
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
