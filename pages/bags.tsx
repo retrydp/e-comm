@@ -1,5 +1,4 @@
-import React from 'react';
-import { Layout, GoodsWrapper } from '../components';
+import React from 'react';import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';
@@ -67,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const parseHandler = (param: string | string[]) => parseInt(param as string);
 
   const validateSorting = (value: string) => {
-    if (!Object.hasOwn(commonConst.SORT_PARAMS, value)) {
+    if (!(value in commonConst.SORT_PARAMS)) {
       return commonConst.SORT_PARAMS['new'];
     }
     return commonConst.SORT_PARAMS[value];
