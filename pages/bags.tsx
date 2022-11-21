@@ -1,4 +1,5 @@
-import React from 'react';import { Layout, GoodsWrapper } from '../components';
+import React from 'react';
+import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';
@@ -49,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     maxPrice: maxQueryPrice,
     quantity,
     page,
+    sort,
   } = ctx.query;
 
   const overallPrices = await Product.aggregate([
@@ -63,6 +65,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   ]);
 
   const parseHandler = (param: string | string[]) => parseInt(param as string);
+
+  const validateSorting = (value: string) => {
+    if (!Object.hasOwn(commonConst.SORT_PARAMS, value)) {
+      return commonConst.SORT_PARAMS['new'];
+    }
+    return commonConst.SORT_PARAMS[value];
+  };
 
   const minPrice = Math.floor(overallPrices[0].minValue);
   const maxPrice = Math.floor(overallPrices[0].maxValue);
@@ -105,6 +114,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   //query  to db
   const productDocs = await Product.find(queryParams)
     .lean()
+    .sort(validateSorting(sort as string))
     .limit(parseHandler(quantityFromQuery))
     .skip(pagesToSkip);
 

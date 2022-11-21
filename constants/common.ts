@@ -3,6 +3,12 @@ const commonConst = {
   QUANTITY_VALUES: ['12', '24', '48', '60'],
   TAXES: 0.2,
   SHIPPING_PRICE: 10,
+  SORT_PARAMS: {
+    popular: { rating: 'desc' },
+    new: { createdAt: 'desc' },
+    asc: { price: 'asc' },
+    desc: { price: 'desc' },
+  },
 };
 
 export default commonConst;
