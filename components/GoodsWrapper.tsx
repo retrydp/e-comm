@@ -96,6 +96,39 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
     }
   };
 
+  const viewRenderHandler = () => {
+    if (productsQuantity === 0) {
+      return (
+        <Box
+          sx={{
+            mb: '15px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            padding: '50px',
+            gap: '15px',
+          }}
+        >
+          <Image
+            src="https://res.cloudinary.com/retrydp/image/upload/v1669098608/joyewwspqavz0bojkqxk.jpg"
+            alt="product not found"
+            priority={true}
+            width={300}
+            height={300}
+          ></Image>
+          <Typography sx={{ textAlign: 'center' }}>
+            Products not found.
+          </Typography>
+        </Box>
+      );
+    }
+    return view === 'module' ? (
+      <Module products={goods} />
+    ) : (
+      <List products={goods} />
+    );
+  };
+
   return (
     <>
       <Drawer
@@ -240,10 +273,9 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
                 </ToggleButton>
               </ToggleButtonGroup>
             </Toolbar>
-            {view === 'module' && <Module products={goods} />}
-            {view === 'list' && <List products={goods} />}
+            {viewRenderHandler()}
           </Grid>
-          <Pagination />
+          {productsQuantity === 0 || <Pagination />}
         </Grid>
       </Container>
     </>

@@ -51,9 +51,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
       ? (router.query['brand'] as string)
       : 'all'
   );
-  const [colorChecked, setColorChecked] = React.useState<string[]>(
-    router.query['colors'] as string[]
-  );
+  const [colorChecked, setColorChecked] = React.useState<string[]>([]);
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;

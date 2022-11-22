@@ -1,4 +1,5 @@
-import { Box, Button, Container, Grid, NoSsr, Typography } from '@mui/material';import Image from 'next/image';
+import { Box, Button, Container, Grid, NoSsr, Typography } from '@mui/material';
+import Image from 'next/image';
 import React from 'react';
 import { Layout, List } from '../components';
 import styles from '../utils/styles';
