@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-const MONGODB_URI = process.env.MONGODB_URI || '';
+import mongoose from 'mongoose';const MONGODB_URI = process.env.MONGODB_URI || '';
 
 if (!MONGODB_URI) {
   throw new Error(
@@ -36,6 +35,7 @@ async function dbConnect() {
   return cached.conn;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function convertDocToObj(doc: any) {
   const newDoc = {
     ...doc,
