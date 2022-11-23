@@ -1,5 +1,4 @@
-import nc from 'next-connect';
-import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
 import Product from '../../../models/Product';
 import { isAdmin, isAuth } from '../../../utils/auth';
@@ -15,6 +14,7 @@ handler.get(async (req, res) => {
     const products = await Product.find({});
 
     res.json({ success: true, payload: products });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -39,6 +39,7 @@ handler.delete(async (req, res) => {
         message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,

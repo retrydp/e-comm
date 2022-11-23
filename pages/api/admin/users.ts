@@ -13,6 +13,7 @@ handler.get(async (req, res) => {
     await db.dbConnect();
     const products = await User.find({});
     res.json({ success: true, payload: products });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -37,6 +38,7 @@ handler.delete(async (req, res) => {
         message: notificationMessages.USER_NOT_FOUND,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,

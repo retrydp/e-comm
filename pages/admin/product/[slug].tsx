@@ -93,7 +93,8 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     color,
     itemsInStock,
     images,
-  }: Record<string, any>) => {
+  }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Record<string, any>) => {
     try {
       dispatch(adminProductAddRequest());
       await axios.patch<ProductRequest, AppResponse<ProductSchema>>(
@@ -113,6 +114,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       );
       snackbarSuccess(notificationMessages.PRODUCT_UPDATED);
       dispatch(adminProductAddSuccess());
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductAddError(error.toString()));
@@ -142,6 +144,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       setValue('images', data.payload);
       setPreview(data.payload);
       snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductUploadError(error.toString()));
@@ -177,6 +180,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           setValue(title, data.payload[title]);
         });
         setPreview(data.payload.images[0]);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         dispatch(adminProductUploadError(error.toString()));
       }

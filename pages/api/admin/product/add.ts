@@ -39,6 +39,7 @@ handler.put(async (req, res) => {
     });
     const product = await newProduct.save();
     res.status(201).json({ success: true, payload: product });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);

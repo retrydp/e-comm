@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from '../utils/styles';
+import React from 'react';import styles from '../utils/styles';
 import NextLink from 'next/link';
 import {
   FavoriteBorder,
@@ -77,6 +76,7 @@ const List: React.FC<ListProps> = ({
       });
       snackbarSuccess(notificationMessages.PRODUCT_DELETED);
       dispatch(favoritesDelete(id));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       snackbarError(`${error.response.data.message || error.toString()}`);
     }

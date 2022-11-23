@@ -1,5 +1,4 @@
-import nc from 'next-connect';
-import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../utils/database';
 import Product from '../../models/Product';
 
@@ -32,6 +31,7 @@ handler.get(async (req, res) => {
         bestOfSneakers,
       },
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,

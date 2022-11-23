@@ -1,4 +1,5 @@
-import nc from 'next-connect';import User from '../../../models/User';
+import nc from 'next-connect';
+import User from '../../../models/User';
 import { Error } from 'mongoose';
 import db from '../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
@@ -36,6 +37,7 @@ handler.post(async (req, res) => {
         isAdmin: user.isAdmin,
       },
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);

@@ -58,7 +58,8 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
     name,
     email,
     isAdmin,
-  }: Record<string, any>) => {
+  }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Record<string, any>) => {
     try {
       dispatch(adminUserEditRequest());
       await axios.patch<UserSchema, AppResponse<UserSchema>>(
@@ -72,6 +73,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
       );
       snackbarSuccess(notificationMessages.USER_UPDATE_SUCCESS);
       dispatch(adminUserEditSuccess());
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminUserEditError(error.toString()));
@@ -102,6 +104,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
           setValue(title, data.payload[title]);
         });
         setIsAdminValue(data.payload.isAdmin);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         dispatch(adminUserEditError(error.toString()));
       }

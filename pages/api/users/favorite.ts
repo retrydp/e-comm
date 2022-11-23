@@ -1,5 +1,4 @@
-import nc from 'next-connect';
-import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
 import User from '../../../models/User';
 import Product from '../../../models/Product';
@@ -46,6 +45,7 @@ handler.put(async (req, res) => {
         message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -64,6 +64,7 @@ handler.get(async (req, res) => {
       success: true,
       payload: products,
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -107,6 +108,7 @@ handler.delete(async (req, res) => {
         message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,

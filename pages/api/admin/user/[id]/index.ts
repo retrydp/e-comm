@@ -1,5 +1,4 @@
-import nc from 'next-connect';
-import { Error } from 'mongoose';
+import nc from 'next-connect';import { Error } from 'mongoose';
 import db from '../../../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isAdmin, isAuth } from '../../../../../utils/auth';
@@ -26,6 +25,7 @@ handler.get(async (req, res) => {
         message: notificationMessages.USER_NOT_FOUND,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -50,6 +50,7 @@ handler.patch(async (req, res) => {
         .status(404)
         .json({ success: false, message: notificationMessages.USER_NOT_FOUND });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);

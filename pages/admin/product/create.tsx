@@ -104,6 +104,8 @@ const CreateProduct: React.FC = () => {
       );
       snackbarSuccess(notificationMessages.PRODUCT_CREATED);
       dispatch(adminProductAddSuccess());
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductAddError(error.toString()));
@@ -133,6 +135,7 @@ const CreateProduct: React.FC = () => {
       setValue('images', data.payload);
       setPreview(data.payload);
       snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductUploadError(error.toString()));

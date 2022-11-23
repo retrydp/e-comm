@@ -1,5 +1,4 @@
-import nc from 'next-connect';
-import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { isAdmin, isAuth } from '../../../utils/auth';
@@ -8,7 +7,7 @@ import streamifier from 'streamifier';
 interface FileRequest extends NextApiRequest {
   file: Express.Multer.File;
 }
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onError = async (err: any, req: NextApiRequest, res: NextApiResponse) => {
   res.status(500).json({
     success: false,
@@ -47,7 +46,7 @@ handler.post(async (req, res) => {
       streamifier.createReadStream(req.file.buffer).pipe(stream);
     });
   };
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const result: any = await streamUpload(req);
 
   res.json({ success: true, payload: result.secure_url });

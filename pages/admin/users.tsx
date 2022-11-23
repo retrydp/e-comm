@@ -61,6 +61,7 @@ const AdminUsers: React.FC = () => {
         );
         setModalOpen(false);
         snackbarSuccess(notificationMessages.USER_DELETED);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         const errorText = error.response.data.message || error.toString();
         setModalOpen(false);
@@ -112,6 +113,7 @@ const AdminUsers: React.FC = () => {
           authHeader
         );
         dispatch(adminPanelFetchSuccess(data.payload));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         dispatch(adminPanelFetchError(error.toString()));
       }

@@ -35,6 +35,7 @@ handler.get(async (req, res) => {
         message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -61,10 +62,12 @@ handler.patch(async (req, res) => {
       await editProduct.save();
       res.status(202).json({ success: true, payload: editProduct });
     } else {
-      res
-        .status(404)
-        .json({ success: false, message: notificationMessages.PRODUCT_NOT_FOUND });
+      res.status(404).json({
+        success: false,
+        message: notificationMessages.PRODUCT_NOT_FOUND,
+      });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);

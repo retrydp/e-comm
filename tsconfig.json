@@ -29,7 +29,7 @@
     "**/*.tsx",
     "next.config.js",
     "utils/global.d.ts"
-  ],
+, "__tests__/index.test.tsx"  ],
   "exclude": [
     "node_modules"
   ]

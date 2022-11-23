@@ -1,5 +1,4 @@
-import nc from 'next-connect';
-import bcrypt from 'bcryptjs';
+import nc from 'next-connect';import bcrypt from 'bcryptjs';
 import { signToken } from '../../../utils/auth';
 import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
@@ -35,6 +34,7 @@ handler.post(async (req, res) => {
         message: notificationMessages.AUTH_INVALID_USER_DATA,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,

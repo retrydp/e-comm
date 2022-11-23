@@ -1,5 +1,4 @@
-import React from 'react';
-import Head from 'next/head';
+import React from 'react';import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -56,7 +55,8 @@ const Register: React.FC = () => {
     password,
     name,
     confirmPassword,
-  }: Record<string, any>) => {
+  }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Record<string, any>) => {
     if (password !== confirmPassword) {
       snackbarError('Passwords don`t match');
       return;
