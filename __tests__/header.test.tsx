@@ -1,4 +1,5 @@
-import { render } from '@testing-library/react';import Component from '../components/Header';
+import { render } from '@testing-library/react';
+import Component from '../components/Header';
 import { Provider } from 'react-redux';
 import '@testing-library/jest-dom';
 import React from 'react';
