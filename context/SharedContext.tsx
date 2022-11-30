@@ -19,8 +19,8 @@ interface AppContextInterface {
   onNotLoggedIn: (message: string) => void;
   snackbarSuccess: (message: string) => void;
   snackbarError: (message: string) => void;
-  authHeader: AxiosRequestConfig<any>;
-  authHeaderForm: AxiosRequestConfig<any>;
+  authHeader: AxiosRequestConfig;
+  authHeaderForm: AxiosRequestConfig;
   filterQuery: (param: string, value: string | string[]) => void;
 }
 
@@ -55,7 +55,7 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
     enqueueSnackbar(message, { variant: 'error' });
   };
 
-  const onNotLoggedIn = <T extends string>(message: T) => {
+  const onNotLoggedIn = (message: string) => {
     snackbarError(message);
     router.push(`/login?redirect=${router.asPath}`);
   };
@@ -82,6 +82,7 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
     try {
       await axios.put(apiRoutes.USER_FAVORITE, { id }, authHeader);
       snackbarSuccess(notificationMessages.FAVORITES_ADD_SUCCESS);
+      // eslint-disable-next-line
     } catch (error: any) {
       snackbarError(`${error.response.data.message || error.toString()}`);
     }

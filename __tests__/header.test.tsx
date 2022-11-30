@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Component from '../components/Header';
 import { Provider } from 'react-redux';
 import '@testing-library/jest-dom';
@@ -6,40 +6,35 @@ import React from 'react';
 import store from '../store';
 
 describe('header test', () => {
-  const tree = () =>
+  beforeEach(() =>
     render(
       <Provider store={store}>
         <Component />
       </Provider>
-    );
+    )
+  );
+
+  const getElementByLabel = <T extends HTMLElement = HTMLAnchorElement>(
+    text: string | RegExp
+  ) => screen.getByLabelText(text) as T;
 
   it('login button is present ', () => {
-    const { getByLabelText } = tree();
-    const loginButton = getByLabelText(/log in/i) as HTMLAnchorElement;
+    const loginButton = getElementByLabel(/log in/i);
     expect(loginButton).toBeInTheDocument();
     expect(loginButton.getAttribute('href')).toEqual('/login');
   });
   it('cart is present', () => {
-    const { getByLabelText } = tree();
-    const cartElement = getByLabelText(/user cart/i) as HTMLAnchorElement;
+    const cartElement = getElementByLabel(/user cart/i);
     expect(cartElement).toBeInTheDocument();
     expect(cartElement.getAttribute('href')).toEqual('/cart');
   });
   it('favorites is present', () => {
-    const { getByLabelText } = tree();
-    const favoritesElement = getByLabelText(/favorites/i) as HTMLAnchorElement;
+    const favoritesElement = getElementByLabel(/favorites/i);
     expect(favoritesElement).toBeInTheDocument();
     expect(favoritesElement.getAttribute('href')).toEqual('/favorites');
   });
   it('menu button is present', () => {
-    const { getByLabelText } = tree();
-    const menuButton = getByLabelText(/menu/i) as HTMLAnchorElement;
+    const menuButton = getElementByLabel(/menu/i);
     expect(menuButton).toBeInTheDocument();
-  });
-
-  it('header matches snapshot', () => {
-    const { asFragment } = tree();
-    const firstRender = asFragment();
-    expect(firstRender).toMatchSnapshot();
   });
 });
