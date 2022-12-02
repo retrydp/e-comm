@@ -1,4 +1,6 @@
-export { default as Header } from './Header';export { default as Footer } from './Footer';
+/* eslint-disable padding-line-between-statements */
+export { default as Header } from './Header';
+export { default as Footer } from './Footer';
 export { default as Layout } from './Layout';
 export { default as NavigationBar } from './NavigationBar';
 export { default as SliderSelector } from './SliderSelector';
