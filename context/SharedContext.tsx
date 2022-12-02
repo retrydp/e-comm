@@ -1,5 +1,4 @@
-import React from 'react';
-import { useSnackbar } from 'notistack';
+import React from 'react';import { useSnackbar } from 'notistack';
 import { useAppSelector } from '../store';
 import { RootState } from '../store';
 import { useRouter } from 'next/router';
@@ -16,12 +15,12 @@ interface AppContextInterface {
   mdMin: boolean;
   mdMax: boolean;
   smList: boolean;
-  onNotLoggedIn: (message: string) => void;
-  snackbarSuccess: (message: string) => void;
-  snackbarError: (message: string) => void;
+  onNotLoggedIn: <T>(message: T) => void;
+  snackbarSuccess: <T>(message: T) => void;
+  snackbarError: <T>(message: T) => void;
   authHeader: AxiosRequestConfig;
   authHeaderForm: AxiosRequestConfig;
-  filterQuery: (param: string, value: string | string[]) => void;
+  filterQuery: <T extends string>(param: T, value: T | T[]) => void;
 }
 
 interface SharedContextProps {
@@ -47,15 +46,15 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
     if (!userInfo?.isAdmin) router.push('/');
   };
 
-  const snackbarSuccess = (message: string) => {
+  const snackbarSuccess = <T,>(message: T) => {
     enqueueSnackbar(message, { variant: 'success' });
   };
 
-  const snackbarError = (message: string) => {
+  const snackbarError = <T,>(message: T) => {
     enqueueSnackbar(message, { variant: 'error' });
   };
 
-  const onNotLoggedIn = (message: string) => {
+  const onNotLoggedIn = <T,>(message: T) => {
     snackbarError(message);
     router.push(`/login?redirect=${router.asPath}`);
   };
@@ -88,7 +87,7 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
     }
   };
 
-  const filterQuery = (param: string, value: string | string[]) => {
+  const filterQuery = <T extends string>(param: T, value: T | T[]) => {
     const path = router.pathname;
     const query = router.query;
     query[param] = value;
