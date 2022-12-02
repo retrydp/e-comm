@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -17,7 +16,7 @@ import {
   FormControl,
 } from '@mui/material';
 import { useSharedContext } from '../../../context/SharedContext';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, FieldValues } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
 import {
@@ -93,8 +92,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     color,
     itemsInStock,
     images,
-  }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Record<string, any>) => {
+  }: FieldValues) => {
     try {
       dispatch(adminProductAddRequest());
       await axios.patch<ProductRequest, AppResponse<ProductSchema>>(

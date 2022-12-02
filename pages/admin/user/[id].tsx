@@ -17,7 +17,7 @@ import {
   FormControl,
 } from '@mui/material';
 import { useSharedContext } from '../../../context/SharedContext';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
 import { AppResponse, UserSchema } from '../../../utils/types';
@@ -54,12 +54,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
   /**
    * @description This function is used to send the request to the server with the data from the forms.
    */
-  const submitHandler = async ({
-    name,
-    email,
-    isAdmin,
-  }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Record<string, any>) => {
+  const submitHandler = async ({ name, email, isAdmin }: FieldValues) => {
     try {
       dispatch(adminUserEditRequest());
       await axios.patch<UserSchema, AppResponse<UserSchema>>(

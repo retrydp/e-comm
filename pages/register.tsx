@@ -20,7 +20,7 @@ import {
 } from '@mui/icons-material';
 import Image from 'next/image';
 import styles from '../utils/styles';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
 import { useSharedContext } from '../context/SharedContext';
 import { AppResponse, UserSchema } from '../utils/types';
@@ -55,8 +55,7 @@ const Register: React.FC = () => {
     password,
     name,
     confirmPassword,
-  }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Record<string, any>) => {
+  }: FieldValues) => {
     if (password !== confirmPassword) {
       snackbarError('Passwords don`t match');
       return;
