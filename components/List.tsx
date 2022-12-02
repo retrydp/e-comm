@@ -1,4 +1,5 @@
-import React from 'react';import styles from '../utils/styles';
+import React from 'react';
+import styles from '../utils/styles';
 import NextLink from 'next/link';
 import {
   FavoriteBorder,

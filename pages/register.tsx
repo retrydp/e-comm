@@ -1,4 +1,5 @@
-import React from 'react';import Head from 'next/head';
+import React from 'react';
+import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -58,6 +59,7 @@ const Register: React.FC = () => {
   }: FieldValues) => {
     if (password !== confirmPassword) {
       snackbarError('Passwords don`t match');
+
       return;
     }
     try {
@@ -107,6 +109,7 @@ const Register: React.FC = () => {
           <List>
             {register.map(({ name, label, icon, rules, helperText }) => {
               const Icon = icons[icon];
+
               return (
                 <ListItem key={name}>
                   <Controller

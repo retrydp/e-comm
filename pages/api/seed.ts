@@ -16,6 +16,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (error) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
+
       return res.status(400).json({
         success: false,
         message: 'Could not create product due to some invalid fields!',

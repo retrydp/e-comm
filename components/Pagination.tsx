@@ -1,4 +1,5 @@
-import React from 'react';import { Pagination as MuiPagination, Stack } from '@mui/material';
+import React from 'react';
+import { Pagination as MuiPagination, Stack } from '@mui/material';
 import { useSharedContext } from '../context/SharedContext';
 import { useAppSelector } from '../store';
 import { withRouter, useRouter } from 'next/router';
@@ -32,6 +33,7 @@ const Pagination: React.FC = () => {
 
     if (isNaN(parsedPage) || parsedPage < 0 || parsedPage > pages) {
       setPage(1);
+
       return;
     }
 

@@ -86,6 +86,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     if (!(value in commonConst.SORT_PARAMS)) {
       return commonConst.SORT_PARAMS['new'];
     }
+
     return commonConst.SORT_PARAMS[value];
   };
 
@@ -106,12 +107,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ) {
       validatedPrices.maxPrice = parseHandler(maxQueryPrice);
     }
+
     return validatedPrices[value];
   };
   const validateBrand = (value: string) => {
     if (value === 'all' || !value || !availableBrands.includes(value)) {
       return { $exists: true };
     }
+
     return value;
   };
   const queryParams = {

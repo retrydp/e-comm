@@ -1,4 +1,5 @@
-import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
 import User from '../../../models/User';
 import { isAdmin, isAuth } from '../../../utils/auth';

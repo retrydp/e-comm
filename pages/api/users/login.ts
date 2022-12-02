@@ -1,4 +1,5 @@
-import nc from 'next-connect';import bcrypt from 'bcryptjs';
+import nc from 'next-connect';
+import bcrypt from 'bcryptjs';
 import { signToken } from '../../../utils/auth';
 import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';

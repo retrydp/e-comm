@@ -120,6 +120,7 @@ const CreateProduct: React.FC = () => {
     const file = event.target.files?.[0];
     if (!file) {
       snackbarError(notificationMessages.UPLOAD_NO_FILE);
+
       return;
     }
     const bodyFormData = new FormData();

@@ -1,4 +1,5 @@
-import store from '../store';import React from 'react';
+import store from '../store';
+import React from 'react';
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
 import { SnackbarProvider } from 'notistack';

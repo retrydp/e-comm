@@ -1,4 +1,5 @@
-import React from 'react';import { Layout, GoodsWrapper } from '../components';
+import React from 'react';
+import { Layout, GoodsWrapper } from '../components';
 import { GoodsProps } from '../utils/types';
 import db from '../utils/database';
 import Product from '../models/Product';

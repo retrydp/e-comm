@@ -1,4 +1,5 @@
-import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { isAdmin, isAuth } from '../../../utils/auth';

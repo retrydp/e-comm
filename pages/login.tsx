@@ -94,6 +94,7 @@ const Login: React.FC = () => {
           <List>
             {login.map(({ name, label, icon, rules, helperText }) => {
               const Icon = icons[icon];
+
               return (
                 <ListItem key={name}>
                   <Controller

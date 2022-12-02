@@ -1,4 +1,5 @@
-import React from 'react';import { useAppSelector, useAppDispatch } from '../../../store';
+import React from 'react';
+import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -127,6 +128,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     const file = event.target.files?.[0];
     if (!file) {
       snackbarError(notificationMessages.UPLOAD_NO_FILE);
+
       return;
     }
     const bodyFormData = new FormData();
@@ -343,5 +345,6 @@ export default EditProduct;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const slug = params?.slug;
+
   return { props: { slug } };
 };

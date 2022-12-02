@@ -1,4 +1,5 @@
-import nc from 'next-connect';import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
 import User from '../../../models/User';
 import Product from '../../../models/Product';
@@ -25,6 +26,7 @@ handler.put(async (req, res) => {
             success: false,
             message: notificationMessages.FAVORITES_ADD_ALREADY_EXISTS,
           });
+
           return;
         }
         user.favoritesId.push(product.slug);

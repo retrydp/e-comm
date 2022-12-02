@@ -41,6 +41,7 @@ handler.post(async (req, res) => {
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
+
       return res.status(400).json({
         success: false,
         message: messages.join(', '),

@@ -1,4 +1,5 @@
-import nc from 'next-connect';import { Error } from 'mongoose';
+import nc from 'next-connect';
+import { Error } from 'mongoose';
 import db from '../../../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { isAdmin, isAuth } from '../../../../../utils/auth';
@@ -54,6 +55,7 @@ handler.patch(async (req, res) => {
   } catch (error: any) {
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
+
       return res.status(400).json({
         success: false,
         message: messages.join(', '),

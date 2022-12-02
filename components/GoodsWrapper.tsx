@@ -122,6 +122,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
         </Box>
       );
     }
+
     return view === 'module' ? (
       <Module products={goods} />
     ) : (

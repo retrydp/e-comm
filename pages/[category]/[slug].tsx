@@ -219,10 +219,12 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   }).lean();
   if (productDoc) {
     const product = db.convertDocToObj(productDoc);
+
     return {
       props: { product },
     };
   }
+
   return {
     props: {},
   };

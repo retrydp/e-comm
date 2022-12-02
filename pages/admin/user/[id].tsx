@@ -222,5 +222,6 @@ export default EditUser;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id;
+
   return { props: { id } };
 };
