@@ -282,7 +282,7 @@ const CreateProduct: React.FC = () => {
                   >
                     <Typography>Preview:</Typography>
                     <Box sx={{ width: '100%', maxWidth: '500px' }}>
-                      {/* TODO  this in other cases */}
+                      {/* TODO:  this in other cases */}
                       <Image
                         priority={true}
                         width="100%"
