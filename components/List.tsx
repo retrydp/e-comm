@@ -79,6 +79,7 @@ const List: React.FC<ListProps> = ({
       dispatch(favoritesDelete(id));
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      /* FIXME:  define specific type for error */
       snackbarError(`${error.response.data.message || error.toString()}`);
     }
   };

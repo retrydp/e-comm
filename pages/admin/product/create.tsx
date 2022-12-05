@@ -107,6 +107,7 @@ const CreateProduct: React.FC = () => {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      /* FIXME:  define specific type for error */
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductAddError(error.toString()));
       snackbarError(errorText);
@@ -138,6 +139,7 @@ const CreateProduct: React.FC = () => {
       snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      /* FIXME:  define specific type for error */
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductUploadError(error.toString()));
       setPreview('');
@@ -282,7 +284,7 @@ const CreateProduct: React.FC = () => {
                   >
                     <Typography>Preview:</Typography>
                     <Box sx={{ width: '100%', maxWidth: '500px' }}>
-                      {/* TODO:  this in other cases */}
+                      {/* FIXME:  this in other cases */}
                       <Image
                         priority={true}
                         width="100%"

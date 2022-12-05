@@ -41,6 +41,7 @@ handler.put(async (req, res) => {
     res.status(201).json({ success: true, payload: product });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    /* FIXME:  define specific type for error */
     if (error instanceof Error.ValidationError) {
       const messages = Object.values(error.errors).map((err) => err.message);
 

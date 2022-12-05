@@ -84,6 +84,7 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
       snackbarSuccess(notificationMessages.FAVORITES_ADD_SUCCESS);
       // eslint-disable-next-line
     } catch (error: any) {
+      /* FIXME:  define specific type for error */
       snackbarError(`${error.response.data.message || error.toString()}`);
     }
   };

@@ -50,6 +50,7 @@ handler.put(async (req, res) => {
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    /* FIXME:  define specific type for error */
     res.status(500).json({
       success: false,
       message: error?.toString(),
@@ -69,6 +70,7 @@ handler.get(async (req, res) => {
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    /* FIXME:  define specific type for error */
     res.status(500).json({
       success: false,
       message: error?.toString(),
@@ -113,6 +115,7 @@ handler.delete(async (req, res) => {
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
+    /* FIXME:  define specific type for error */
     res.status(500).json({
       success: false,
       message: error?.toString(),

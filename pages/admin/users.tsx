@@ -63,6 +63,7 @@ const AdminUsers: React.FC = () => {
         snackbarSuccess(notificationMessages.USER_DELETED);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
+        /* FIXME:  define specific type for error */
         const errorText = error.response.data.message || error.toString();
         setModalOpen(false);
         dispatch(adminPanelDeleteError(error.toString()));
@@ -115,6 +116,7 @@ const AdminUsers: React.FC = () => {
         dispatch(adminPanelFetchSuccess(data.payload));
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
+        /* FIXME:  define specific type for error */
         dispatch(adminPanelFetchError(error.toString()));
       }
     };

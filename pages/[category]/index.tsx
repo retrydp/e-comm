@@ -13,7 +13,7 @@ import {
 } from '../../store/displayInterface';
 import commonConst from '../../constants/common';
 
-const Bags: React.FC<GoodsProps & { category: NavTitles }> = ({
+const CategoryPresentation: React.FC<GoodsProps & { category: NavTitles }> = ({
   goods,
   minPrice,
   maxPrice,
@@ -38,7 +38,7 @@ const Bags: React.FC<GoodsProps & { category: NavTitles }> = ({
   );
 };
 
-export default Bags;
+export default CategoryPresentation;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   await db.dbConnect();

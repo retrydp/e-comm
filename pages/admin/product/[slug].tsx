@@ -115,6 +115,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       dispatch(adminProductAddSuccess());
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      /* FIXME:  define specific type for error */
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductAddError(error.toString()));
       snackbarError(errorText);
@@ -146,6 +147,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      /* FIXME:  define specific type for error */
       const errorText = error.response.data.message || error.toString();
       dispatch(adminProductUploadError(error.toString()));
       setPreview('');
@@ -182,6 +184,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
         setPreview(data.payload.images[0]);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
+        /* FIXME:  define specific type for error */
         dispatch(adminProductUploadError(error.toString()));
       }
     };
@@ -311,7 +314,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                   >
                     <Typography>Preview:</Typography>
                     <Box sx={{ width: '100%', maxWidth: '500px' }}>
-                      {/* TODO:  this in other cases */}
+                      {/* FIXME:  this in other cases */}
                       <Image
                         priority={true}
                         width="100%"

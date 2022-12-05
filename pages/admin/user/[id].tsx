@@ -70,6 +70,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
       dispatch(adminUserEditSuccess());
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      /* FIXME:  define specific type for error */
       const errorText = error.response.data.message || error.toString();
       dispatch(adminUserEditError(error.toString()));
       snackbarError(errorText);
@@ -101,6 +102,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
         setIsAdminValue(data.payload.isAdmin);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
+        /* FIXME:  define specific type for error */
         dispatch(adminUserEditError(error.toString()));
       }
     };
