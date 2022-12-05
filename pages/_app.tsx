@@ -6,6 +6,7 @@ import { SnackbarProvider } from 'notistack';
 import { SharedContext } from '../context/SharedContext';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '../config/createEmotionCache';
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }

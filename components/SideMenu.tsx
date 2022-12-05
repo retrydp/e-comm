@@ -24,6 +24,7 @@ interface AvailableColorsList {
   bg: string;
   slug: string;
 }
+
 interface SideMenuTemplateProps {
   width: '60vw' | '100%';
   withSort: boolean;

@@ -27,6 +27,7 @@ import { useAppDispatch } from '../../store';
 import { useSharedContext } from '../../context/SharedContext';
 import NextLink from 'next/link';
 import { setCurrentProduct } from '../../store/displayInterface';
+
 interface ProductScreenProps {
   product?: ProductSchema;
 }

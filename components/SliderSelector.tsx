@@ -61,4 +61,5 @@ const SliderSelector: React.FC = () => {
     </>
   );
 };
+
 export default SliderSelector;

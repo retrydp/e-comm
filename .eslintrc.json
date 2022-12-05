@@ -19,6 +19,19 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/padding-line-between-statements": [
+      "warn",
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": ["interface", "type"]
+      },
+      {
+        "blankLine": "always",
+        "prev": ["interface", "type"],
+        "next": "*"
+      }
+    ],
     "no-console": "warn",
     "semi-spacing": ["warn", { "before": false, "after": true }],
     "padding-line-between-statements": [

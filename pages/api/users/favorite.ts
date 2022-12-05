@@ -9,6 +9,7 @@ import notificationMessages from '../../../constants/notificationMessages';
 interface FavoriteRequest extends NextApiRequest {
   user: UserAuth;
 }
+
 const handler = nc<FavoriteRequest, NextApiResponse>();
 
 handler.use(isAuth);

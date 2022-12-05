@@ -8,6 +8,7 @@ import streamifier from 'streamifier';
 interface FileRequest extends NextApiRequest {
   file: Express.Multer.File;
 }
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onError = async (err: any, req: NextApiRequest, res: NextApiResponse) => {
   res.status(500).json({
