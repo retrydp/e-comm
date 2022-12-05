@@ -71,7 +71,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
    */
   const sortHandler = (event: SelectChangeEvent) => {
     setSort(event.target.value);
-    filterQuery('sort', event.target.value);
+    filterQuery({ sort: event.target.value });
   };
 
   /**
@@ -83,8 +83,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
 
   const quantityHandler = (event: SelectChangeEvent) => {
     setQuantity(event.target.value);
-    filterQuery('quantity', event.target.value);
-    filterQuery('page', '1');
+    filterQuery({ quantity: event.target.value, page: '1' });
   };
 
   const viewChangeHandler = (
@@ -96,8 +95,8 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
     }
   };
 
-  const viewRenderHandler = () => {
-    if (productsQuantity === 0) {
+  const ViewRenderHandler = () => {
+    if (!productsQuantity) {
       return (
         <Box
           sx={{
@@ -274,9 +273,9 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
                 </ToggleButton>
               </ToggleButtonGroup>
             </Toolbar>
-            {viewRenderHandler()}
+            <ViewRenderHandler />
           </Grid>
-          {productsQuantity === 0 || <Pagination />}
+          {!productsQuantity || <Pagination />}
         </Grid>
       </Container>
     </>

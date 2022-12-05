@@ -73,8 +73,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
    */
   const brandHandler = (event: SelectChangeEvent) => {
     setBrand(event.target.value);
-    filterQuery('brand', event.target.value);
-    filterQuery('page', '1');
+    filterQuery({ brand: event.target.value, page: '1' });
   };
 
   /**
@@ -82,8 +81,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
    * @param {SelectChangeEvent} event
    */
   const sortHandler = (event: SelectChangeEvent) => {
-    filterQuery('sort', event.target.value);
-    filterQuery('page', '1');
+    filterQuery({ sort: event.target.value, page: '1' });
     setSort(event.target.value);
   };
 
@@ -101,8 +99,11 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value
     );
-    filterQuery('colors', typeof value === 'string' ? value.split(',') : value);
-    filterQuery('page', '1');
+
+    filterQuery({
+      page: '1',
+      colors: typeof value === 'string' ? value.split(',') : value,
+    });
   };
 
   React.useEffect(() => {

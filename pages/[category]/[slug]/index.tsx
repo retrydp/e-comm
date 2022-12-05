@@ -1,9 +1,9 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
-import db from '../../utils/database';
-import Product from '../../models/Product';
-import { ProductSchema } from '../../utils/types';
-import { Layout } from '../../components';
+import db from '../../../utils/database';
+import Product from '../../../models/Product';
+import { ProductSchema } from '../../../utils/types';
+import { Layout } from '../../../components';
 import {
   Box,
   Button,
@@ -20,13 +20,13 @@ import {
   ArrowBack,
 } from '@mui/icons-material';
 import Image from 'next/image';
-import styles from '../../utils/styles';
+import styles from '../../../utils/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { cartAddProduct } from '../../store/cart';
-import { useAppDispatch } from '../../store';
-import { useSharedContext } from '../../context/SharedContext';
+import { cartAddProduct } from '../../../store/cart';
+import { useAppDispatch } from '../../../store';
+import { useSharedContext } from '../../../context/SharedContext';
 import NextLink from 'next/link';
-import { setCurrentProduct } from '../../store/displayInterface';
+import { setCurrentProduct } from '../../../store/displayInterface';
 
 interface ProductScreenProps {
   product?: ProductSchema;

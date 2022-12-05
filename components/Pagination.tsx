@@ -17,7 +17,7 @@ const Pagination: React.FC = () => {
     page: number
   ) => {
     setPage(page);
-    filterQuery('page', page.toString());
+    filterQuery({ page: page.toString() });
   };
   const [pagesCount, setPagesCount] = React.useState<number>();
   const [page, setPage] = React.useState<number>(1);

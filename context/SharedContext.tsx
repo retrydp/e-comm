@@ -21,7 +21,7 @@ interface AppContextInterface {
   snackbarError: <T>(message: T) => void;
   authHeader: AxiosRequestConfig;
   authHeaderForm: AxiosRequestConfig;
-  filterQuery: <T extends string>(param: T, value: T | T[]) => void;
+  filterQuery: (queryOpts: Record<string, string | string[]>) => void;
 }
 
 interface SharedContextProps {
@@ -88,14 +88,14 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
     }
   };
 
-  const filterQuery = <T extends string>(param: T, value: T | T[]) => {
+  const filterQuery = (queryOpts: Record<string, string | string[]>) => {
     const path = router.pathname;
-    const query = router.query;
-    query[param] = value;
+    const currentQuery = router.query;
+
     setTimeout(() => {
       router.push({
         pathname: path,
-        query,
+        query: { ...currentQuery, ...queryOpts },
       });
     }, 0.5);
   };

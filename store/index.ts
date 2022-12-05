@@ -33,7 +33,9 @@ store.subscribe(
 export default store;
 
 export type AppDispatch = typeof store.dispatch;
+
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export type RootState = ReturnType<typeof store.getState>;
+
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

@@ -1,27 +1,26 @@
 import React from 'react';
-import { Layout, GoodsWrapper } from '../components';
-import { GoodsProps } from '../utils/types';
-import db from '../utils/database';
-import Product from '../models/Product';
+import { Layout, GoodsWrapper } from '../../components';
+import { GoodsProps, NavTitles } from '../../utils/types';
+import db from '../../utils/database';
+import Product from '../../models/Product';
 import { GetServerSideProps } from 'next';
-import { useAppDispatch } from '../store';
+import { useAppDispatch } from '../../store';
 import {
   setMinMaxPrice,
   setAvailableBrands,
   setAvailableColors,
   setProductsQuantity,
-} from '../store/displayInterface';
-import commonConst from '../constants/common';
+} from '../../store/displayInterface';
+import commonConst from '../../constants/common';
 
-const PAGE_NAME = 'bags';
-
-const Bags: React.FC<GoodsProps> = ({
+const Bags: React.FC<GoodsProps & { category: NavTitles }> = ({
   goods,
   minPrice,
   maxPrice,
   availableColors,
   availableBrands,
   productsQuantity,
+  category,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -33,7 +32,7 @@ const Bags: React.FC<GoodsProps> = ({
   }, [minPrice, maxPrice, productsQuantity]);
 
   return (
-    <Layout title={PAGE_NAME}>
+    <Layout title={category}>
       <GoodsWrapper goods={goods} />
     </Layout>
   );
@@ -51,12 +50,27 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     quantity,
     page,
     sort,
+    category,
   } = ctx.query;
+
+  const validateCategory = (value: typeof category) => {
+    const parsedCategory = commonConst.AVAILABLE_CATEGORIES.includes(
+      value as string
+    );
+
+    return parsedCategory;
+  };
+
+  if (!validateCategory(category)) {
+    return {
+      notFound: true,
+    };
+  }
 
   const uniqueValues = await Product.aggregate([
     {
       $match: {
-        category: PAGE_NAME,
+        category,
       },
     },
     {
@@ -70,7 +84,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { availableColors, availableBrands } = uniqueValues[0];
 
   const overallPrices = await Product.aggregate([
-    { $match: { category: PAGE_NAME } },
+    { $match: { category } },
     {
       $group: {
         _id: null,
@@ -118,7 +132,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return value;
   };
   const queryParams = {
-    category: PAGE_NAME,
+    category,
     brand: validateBrand(brand as string),
     color: colors?.length ? colors : { $exists: true },
     price: {
@@ -152,6 +166,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       availableColors,
       availableBrands,
       productsQuantity,
+      category,
     },
   };
 };

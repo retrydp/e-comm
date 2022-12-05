@@ -9,6 +9,7 @@ const commonConst = {
     asc: { price: 'asc' },
     desc: { price: 'desc' },
   },
+  AVAILABLE_CATEGORIES: ['bags', 'sneakers', 'belts'],
 };
 
 export default commonConst;

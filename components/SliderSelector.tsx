@@ -24,9 +24,11 @@ const SliderSelector: React.FC = () => {
     event: Event | SyntheticEvent<Element, Event>,
     newValue: number | number[]
   ) => {
-    filterQuery('minPrice', newValue[0]);
-    filterQuery('maxPrice', newValue[1]);
-    filterQuery('page', '1');
+    filterQuery({
+      minPrice: newValue[0],
+      maxPrice: newValue[1],
+      page: '1',
+    });
   };
 
   const sliderValueText = () => {

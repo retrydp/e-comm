@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import commonConst from '../constants/common';
 
 export interface DisplayInterface {
   minMaxPrice: number[];
@@ -13,7 +12,7 @@ const initialState: DisplayInterface = {
   minMaxPrice: [0, 0],
   availableBrands: [],
   availableColors: [],
-  productsQuantity: parseInt(commonConst.DEFAULT_LIMIT),
+  productsQuantity: 0,
 };
 
 const displayInterface = createSlice({

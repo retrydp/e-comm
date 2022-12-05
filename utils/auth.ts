@@ -9,6 +9,7 @@ export interface UserAuth {
   email: string;
   isAdmin: boolean;
 }
+
 interface AuthRequest extends NextApiRequest {
   user?: string | jwt.JwtPayload;
 }

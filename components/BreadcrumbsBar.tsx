@@ -26,17 +26,13 @@ const BreadcrumbsBar: React.FC = () => {
           </Button>
         </NextLink>
       )}
-      {router.pathname !== '/loading' ? (
+      {currentProduct && slug && (
         <Typography
           sx={{ ml: 2, fontSize: '0.875rem', textTransform: 'capitalize' }}
         >
-          {slug
-            ? currentProduct
-              ? currentProduct
-              : 'Product not available'
-            : router.pathname.split('/').pop()}
+          {currentProduct}
         </Typography>
-      ) : null}
+      )}
     </Breadcrumbs>
   );
 };
