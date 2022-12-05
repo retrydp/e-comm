@@ -95,7 +95,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
     }
   };
 
-  const ViewRenderHandler = () => {
+  const PresentationSwitch = () => {
     if (!productsQuantity) {
       return (
         <Box
@@ -273,7 +273,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
                 </ToggleButton>
               </ToggleButtonGroup>
             </Toolbar>
-            <ViewRenderHandler />
+            <PresentationSwitch />
           </Grid>
           {!productsQuantity || <Pagination />}
         </Grid>
