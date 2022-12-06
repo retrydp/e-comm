@@ -95,6 +95,7 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
 
     setTimeout(() => {
       router.push({
+        // TODO: push without scrolling to top https://stackoverflow.com/questions/65902664/next-js-router-push-without-scrolling-to-the-top
         pathname: path,
         query: { ...currentQuery, ...queryOpts },
       });

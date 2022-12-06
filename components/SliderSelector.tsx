@@ -24,7 +24,7 @@ const SliderSelector: React.FC = () => {
     event: Event | SyntheticEvent<Element, Event>,
     newValue: number | number[]
   ) => {
-    //TODO: need to debounce this call
+    // TODO: need to debounce this call
     filterQuery({
       minPrice: newValue[0],
       maxPrice: newValue[1],
