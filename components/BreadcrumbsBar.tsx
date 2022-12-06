@@ -20,6 +20,7 @@ const BreadcrumbsBar: React.FC = () => {
         </Button>
       </NextLink>
       {category && (
+        //FIXME: incorrect display in contacts
         <NextLink href={`/loading?category=${category}`} passHref>
           <Button color="primary" sx={{ p: 1, textTransform: 'capitalize' }}>
             {category}
