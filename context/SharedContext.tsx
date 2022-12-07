@@ -7,7 +7,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import apiRoutes from '../constants/apiRoutes';
 import { useMediaQuery } from '@mui/material';
 import notificationMessages from '../constants/notificationMessages';
-import { isAxiosError } from 'utils/errorHandler';
+import { isAxiosError } from '../utils/errorHandler';
 
 interface AppContextInterface {
   userInfo: RootState['authStore']['userInfo'];

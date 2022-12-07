@@ -4,12 +4,23 @@ import { Provider } from 'react-redux';
 import '@testing-library/jest-dom';
 import React from 'react';
 import store from '../store';
+import { SharedContext } from '../context/SharedContext';
+import { SnackbarProvider } from 'notistack';
 
 describe('header test', () => {
   beforeEach(() =>
     render(
       <Provider store={store}>
-        <Component />
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <SharedContext>
+            <Component />
+          </SharedContext>
+        </SnackbarProvider>
       </Provider>
     )
   );
