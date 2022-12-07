@@ -38,6 +38,7 @@ import { GetServerSideProps } from 'next';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
 import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
+import { isAxiosError } from 'utils/errorHandler';
 
 interface EditProductProps {
   slug: string;
@@ -113,12 +114,15 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       );
       snackbarSuccess(notificationMessages.PRODUCT_UPDATED);
       dispatch(adminProductAddSuccess());
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      /* FIXME:  define specific type for error */
-      const errorText = error.response.data.message || error.toString();
-      dispatch(adminProductAddError(error.toString()));
-      snackbarError(errorText);
+    } catch (error: unknown) {
+      if (isAxiosError<{ message: string }>(error)) {
+        const errorText = error?.response?.data?.message;
+        snackbarError(errorText);
+        dispatch(adminProductAddError(errorText));
+      } else {
+        snackbarError(`Unexpected error`);
+        dispatch(adminProductAddError(`Unexpected error`));
+      }
     }
   };
 
@@ -145,14 +149,17 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       setValue('images', data.payload);
       setPreview(data.payload);
       snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      /* FIXME:  define specific type for error */
-      const errorText = error.response.data.message || error.toString();
-      dispatch(adminProductUploadError(error.toString()));
+    } catch (error: unknown) {
       setPreview('');
       setValue('images', '');
-      snackbarError(errorText);
+      if (isAxiosError<{ message: string }>(error)) {
+        const errorText = error.response?.data.message;
+        dispatch(adminProductUploadError(errorText));
+        snackbarError(errorText);
+      } else {
+        dispatch(adminProductUploadError(`Unexpected error`));
+        snackbarError(`Unexpected error`);
+      }
     }
   };
 
@@ -182,10 +189,12 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           setValue(title, data.payload[title]);
         });
         setPreview(data.payload.images[0]);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        /* FIXME:  define specific type for error */
-        dispatch(adminProductUploadError(error.toString()));
+      } catch (error: unknown) {
+        if (isAxiosError<{ message: string }>(error))
+          dispatch(adminProductUploadError(error.response?.data.message));
+        else {
+          dispatch(adminProductUploadError(`Unexpected error`));
+        }
       }
     };
     fetchProducts();

@@ -26,6 +26,7 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      autoCreate: false,
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
@@ -33,8 +34,10 @@ async function dbConnect() {
     });
   }
   cached.conn = await cached.promise;
+
   return cached.conn;
 }
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function convertDocToObj(doc: any) {
   const newDoc = {
@@ -46,6 +49,7 @@ function convertDocToObj(doc: any) {
 
   return newDoc;
 }
+
 const db = { dbConnect, convertDocToObj };
 
 export default db;

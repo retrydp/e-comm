@@ -1,4 +1,5 @@
-import mongoose from 'mongoose';import { ProductSchema, Reviews } from '../utils/types';
+import mongoose from 'mongoose';
+import { ProductSchema, Reviews } from '../utils/types';
 
 const reviewSchema = new mongoose.Schema<Reviews, mongoose.Model<Reviews>>(
   {

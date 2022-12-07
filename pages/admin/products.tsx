@@ -31,6 +31,7 @@ import { AppResponse, ProductSchema } from '../../utils/types';
 import { useSharedContext } from '../../context/SharedContext';
 import apiRoutes from '../../constants/apiRoutes';
 import notificationMessages from '../../constants/notificationMessages';
+import { isAxiosError } from 'utils/errorHandler';
 
 const AdminProducts: React.FC = () => {
   const { snackbarSuccess, snackbarError, onNotAdmin, authHeader } =
@@ -66,13 +67,16 @@ const AdminProducts: React.FC = () => {
         );
         setModalOpen(false);
         snackbarSuccess(notificationMessages.PRODUCT_DELETED);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        /* FIXME:  define specific type for error */
-        const errorText = error.response.data.message || error.toString();
+      } catch (error: unknown) {
         setModalOpen(false);
-        dispatch(adminPanelDeleteError(error.toString()));
-        snackbarError(errorText);
+        if (isAxiosError<{ message: string }>(error)) {
+          const errorText = error.response?.data.message;
+          dispatch(adminPanelDeleteError(errorText));
+          snackbarError(errorText);
+        } else {
+          dispatch(adminPanelDeleteError(`Unexpected error`));
+          snackbarError(`Unexpected error`);
+        }
       }
     }
   };
@@ -137,10 +141,13 @@ const AdminProducts: React.FC = () => {
           authHeader
         );
         dispatch(adminPanelFetchSuccess(data.payload));
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        /* FIXME:  define specific type for error */
-        dispatch(adminPanelFetchError(error.toString()));
+      } catch (error: unknown) {
+        if (isAxiosError<{ message: string }>(error)) {
+          const errorText = error.response?.data.message;
+          dispatch(adminPanelFetchError(errorText));
+        } else {
+          dispatch(adminPanelFetchError(`Unexpected error`));
+        }
       }
     };
     fetchHandler();

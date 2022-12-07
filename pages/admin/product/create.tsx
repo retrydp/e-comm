@@ -37,6 +37,7 @@ import Image from 'next/image';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
 import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
+import { isAxiosError } from 'utils/errorHandler';
 
 const CreateProduct: React.FC = () => {
   const {
@@ -104,13 +105,15 @@ const CreateProduct: React.FC = () => {
       );
       snackbarSuccess(notificationMessages.PRODUCT_CREATED);
       dispatch(adminProductAddSuccess());
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      /* FIXME:  define specific type for error */
-      const errorText = error.response.data.message || error.toString();
-      dispatch(adminProductAddError(error.toString()));
-      snackbarError(errorText);
+    } catch (error: unknown) {
+      if (isAxiosError<{ message: string }>(error)) {
+        const errorText = error.response?.data.message;
+        snackbarError(errorText);
+        dispatch(adminProductAddError(errorText));
+      } else {
+        snackbarError(`Unexpected error`);
+        dispatch(adminProductAddError(`Unexpected error`));
+      }
     }
   };
 
@@ -137,14 +140,17 @@ const CreateProduct: React.FC = () => {
       setValue('images', data.payload);
       setPreview(data.payload);
       snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      /* FIXME:  define specific type for error */
-      const errorText = error.response.data.message || error.toString();
-      dispatch(adminProductUploadError(error.toString()));
+    } catch (error: unknown) {
       setPreview('');
       setValue('images', '');
-      snackbarError(errorText);
+      if (isAxiosError<{ message: string }>(error)) {
+        const errorText = error.response?.data.message;
+        dispatch(adminProductUploadError(errorText));
+        snackbarError(errorText);
+      } else {
+        dispatch(adminProductUploadError(`Unexpected error`));
+        snackbarError(`Unexpected error`);
+      }
     }
   };
 

@@ -39,15 +39,11 @@ handler.put(async (req, res) => {
     });
     const product = await newProduct.save();
     res.status(201).json({ success: true, payload: product });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    /* FIXME:  define specific type for error */
+  } catch (error) {
     if (error instanceof Error.ValidationError) {
-      const messages = Object.values(error.errors).map((err) => err.message);
-
       return res.status(400).json({
         success: false,
-        message: messages.join(', '),
+        message: `Unexpected error`, // TODO: log this error
       });
     } else if ((error as MongoError).code === 11000) {
       return res.status(400).json({
@@ -57,7 +53,7 @@ handler.put(async (req, res) => {
     }
     res.status(500).json({
       success: false,
-      message: error.toString(),
+      message: `Unexpected error`, // TODO: log this error
     });
   }
 });

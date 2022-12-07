@@ -48,12 +48,10 @@ handler.put(async (req, res) => {
         message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    /* FIXME:  define specific type for error */
+  } catch (error) {
     res.status(500).json({
       success: false,
-      message: error?.toString(),
+      message: `Unexpected error`, // TODO: log this error
     });
   }
 });
@@ -68,12 +66,10 @@ handler.get(async (req, res) => {
       success: true,
       payload: products,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    /* FIXME:  define specific type for error */
+  } catch (error) {
     res.status(500).json({
       success: false,
-      message: error?.toString(),
+      message: `Unexpected error`, // TODO: log this error
     });
   }
 });
@@ -113,12 +109,10 @@ handler.delete(async (req, res) => {
         message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    /* FIXME:  define specific type for error */
+  } catch (error) {
     res.status(500).json({
       success: false,
-      message: error?.toString(),
+      message: `Unexpected error`, // TODO: log this error
     });
   }
 });

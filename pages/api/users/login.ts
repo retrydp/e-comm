@@ -35,12 +35,10 @@ handler.post(async (req, res) => {
         message: notificationMessages.AUTH_INVALID_USER_DATA,
       });
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    /* FIXME:  define specific type for error */
+  } catch (error) {
     res.status(500).json({
       success: false,
-      message: error?.toString(),
+      message: `Unexpected error`, // TODO log this error
     });
   }
 });

@@ -7,6 +7,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import apiRoutes from '../constants/apiRoutes';
 import { useMediaQuery } from '@mui/material';
 import notificationMessages from '../constants/notificationMessages';
+import { isAxiosError } from 'utils/errorHandler';
 
 interface AppContextInterface {
   userInfo: RootState['authStore']['userInfo'];
@@ -82,10 +83,12 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
     try {
       await axios.put(apiRoutes.USER_FAVORITE, { id }, authHeader);
       snackbarSuccess(notificationMessages.FAVORITES_ADD_SUCCESS);
-      // eslint-disable-next-line
-    } catch (error: any) {
-      /* FIXME:  define specific type for error */
-      snackbarError(`${error.response.data.message || error.toString()}`);
+    } catch (error: unknown) {
+      if (isAxiosError<{ message: string }>(error))
+        snackbarError(`${error.response?.data.message}`);
+      else {
+        snackbarError(`Unexpected error`);
+      }
     }
   };
 

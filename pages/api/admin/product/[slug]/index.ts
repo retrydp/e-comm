@@ -35,12 +35,10 @@ handler.get(async (req, res) => {
         message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    /* FIXME:  define specific type for error */
+  } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.toString(),
+      message: 'Unexpected error', // TODO: log this error
     });
   }
 });
@@ -68,20 +66,16 @@ handler.patch(async (req, res) => {
         message: notificationMessages.PRODUCT_NOT_FOUND,
       });
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    /* FIXME:  define specific type for error */
+  } catch (error) {
     if (error instanceof Error.ValidationError) {
-      const messages = Object.values(error.errors).map((err) => err.message);
-
       return res.status(400).json({
         success: false,
-        message: messages.join(', '),
+        message: 'Unexpected error', // TODO: log this error
       });
     } else {
       return res.status(500).json({
         success: false,
-        message: error.toString(),
+        message: 'Unexpected error', // TODO: log this error
       });
     }
   }

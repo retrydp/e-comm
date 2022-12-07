@@ -30,6 +30,7 @@ import { GetServerSideProps } from 'next';
 import useFormSettings from '../../../utils/hooks/useFormSettings';
 import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
+import { isAxiosError } from 'utils/errorHandler';
 
 interface EditUserProps {
   id: string;
@@ -68,12 +69,15 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
       );
       snackbarSuccess(notificationMessages.USER_UPDATE_SUCCESS);
       dispatch(adminUserEditSuccess());
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      /* FIXME:  define specific type for error */
-      const errorText = error.response.data.message || error.toString();
-      dispatch(adminUserEditError(error.toString()));
-      snackbarError(errorText);
+    } catch (error: unknown) {
+      if (isAxiosError<{ message: string }>(error)) {
+        const errorText = error.response?.data.message;
+        dispatch(adminUserEditError(errorText));
+        snackbarError(errorText);
+      } else {
+        dispatch(adminUserEditError(`Unexpected error`));
+        snackbarError(`Unexpected error`);
+      }
     }
   };
 
@@ -100,10 +104,13 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
           setValue(title, data.payload[title]);
         });
         setIsAdminValue(data.payload.isAdmin);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        /* FIXME:  define specific type for error */
-        dispatch(adminUserEditError(error.toString()));
+      } catch (error: unknown) {
+        if (isAxiosError<{ message: string }>(error)) {
+          const errorText = error.response?.data.message;
+          dispatch(adminUserEditError(errorText));
+        } else {
+          dispatch(adminUserEditError(`Unexpected error`));
+        }
       }
     };
     fetchUsers();

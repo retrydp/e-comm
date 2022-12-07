@@ -37,6 +37,7 @@ import { useSharedContext } from '../context/SharedContext';
 import apiRoutes from '../constants/apiRoutes';
 import notificationMessages from '../constants/notificationMessages';
 import { ProductSchema } from '../utils/types';
+import { isAxiosError } from '../utils/errorHandler';
 
 interface ListProps {
   products: CartProduct[] | ProductSchema[];
@@ -77,10 +78,12 @@ const List: React.FC<ListProps> = ({
       });
       snackbarSuccess(notificationMessages.PRODUCT_DELETED);
       dispatch(favoritesDelete(id));
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      /* FIXME:  define specific type for error */
-      snackbarError(`${error.response.data.message || error.toString()}`);
+    } catch (error: unknown) {
+      if (isAxiosError<{ message: string }>(error))
+        snackbarError(`${error.response?.data.message}`);
+      else {
+        snackbarError(`Unexpected error`);
+      }
     }
   };
 
