@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextHandler } from 'next-connect';
 import notificationMessages from '../constants/notificationMessages';
-
+import { getSession } from 'next-auth/react';
 export interface UserAuth {
   _id: string;
   name: string;
@@ -18,41 +18,15 @@ interface AuthAdmin extends NextApiRequest {
   user: UserAuth;
 }
 
-const signToken = (user: UserAuth) => {
-  return jwt.sign(
-    {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    },
-    process.env.JWT_TOKEN_SECRET as string,
-    {
-      expiresIn: '30d',
-    }
-  );
-};
-
 const isAuth = async (
   req: AuthRequest,
   res: NextApiResponse,
   next: NextHandler
 ) => {
-  const { authorization } = req.headers;
+  const session = await getSession({ req });
 
-  if (authorization) {
-    const token = authorization.split(' ')[1];
-    jwt.verify(token, process.env.JWT_TOKEN_SECRET as string, (err, decode) => {
-      if (err) {
-        res
-          .status(401)
-          .json({ message: notificationMessages.AUTH_INVALID_TOKEN });
-      } else {
-        req.user = decode;
-
-        next();
-      }
-    });
+  if (session?.user) {
+    next();
   } else {
     res
       .status(401)
@@ -65,11 +39,12 @@ const isAdmin = async (
   res: NextApiResponse,
   next: NextHandler
 ) => {
-  if (req.user?.isAdmin) {
+  const session = await getSession({ req });
+  if (session?.user?.isAdmin) {
     next();
   } else {
     res.status(401).json({ message: notificationMessages.AUTH_NOT_ADMIN });
   }
 };
 
-export { signToken, isAuth, isAdmin };
+export { isAuth, isAdmin };

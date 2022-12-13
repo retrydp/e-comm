@@ -25,15 +25,12 @@ import { Controller, useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
 import { useSharedContext } from '../context/SharedContext';
 import { AppResponse, UserSchema } from '../utils/types';
-import Cookies from 'js-cookie';
-import { useAppDispatch } from '../store';
-import { userLogin } from '../store/authStore';
 import useFormSettings from '../utils/hooks/useFormSettings';
 import apiRoutes from '../constants/apiRoutes';
+import { signIn } from 'next-auth/react';
 
 const Register: React.FC = () => {
   const { snackbarError } = useSharedContext();
-  const dispatch = useAppDispatch();
   const router = useRouter();
   const { redirect } = router.query;
   const {
@@ -71,9 +68,19 @@ const Register: React.FC = () => {
         email,
         password,
       });
-      dispatch(userLogin(data.payload));
-      Cookies.set('userInfo', JSON.stringify(data.payload));
-      router.push((redirect as string) || '/');
+      if (data.success) {
+        const res = await signIn('credentials', {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (res?.error) {
+          snackbarError(res.error);
+        } else {
+          router.push((redirect as string) || '/');
+        }
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const responseError = error?.response?.data?.['message'];
@@ -81,7 +88,7 @@ const Register: React.FC = () => {
           snackbarError(responseError);
         }
       } else {
-        throw new Error('Bcrypt error.');
+        throw new Error(`Unexpected error`);
       }
     }
   };

@@ -40,13 +40,7 @@ import notificationMessages from '../../../constants/notificationMessages';
 import { isAxiosError } from 'utils/errorHandler';
 
 const CreateProduct: React.FC = () => {
-  const {
-    snackbarSuccess,
-    snackbarError,
-    onNotAdmin,
-    authHeader,
-    authHeaderForm,
-  } = useSharedContext();
+  const { snackbarSuccess, snackbarError, onNotAdmin } = useSharedContext();
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
@@ -100,8 +94,7 @@ const CreateProduct: React.FC = () => {
           color,
           itemsInStock,
           images,
-        },
-        authHeader
+        }
       );
       snackbarSuccess(notificationMessages.PRODUCT_CREATED);
       dispatch(adminProductAddSuccess());
@@ -133,8 +126,7 @@ const CreateProduct: React.FC = () => {
       dispatch(adminProductUploadRequest());
       const { data } = await axios.post<FormData, AppResponse<string>>(
         apiRoutes.ADMIN_UPLOAD,
-        bodyFormData,
-        authHeaderForm
+        bodyFormData
       );
       dispatch(adminProductUploadSuccess());
       setValue('images', data.payload);

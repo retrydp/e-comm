@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import displayInterface from './displayInterface';
-import authStore from './authStore';
 import adminPanelStore from './adminPanelStore';
 import adminProduct from './adminProduct';
 import adminUser from './adminUser';
@@ -16,7 +15,6 @@ const saveState = (nextState: CartProduct[], key: string) =>
 const store = configureStore({
   reducer: {
     display: displayInterface,
-    authStore,
     adminPanelStore,
     adminProduct,
     adminUser,

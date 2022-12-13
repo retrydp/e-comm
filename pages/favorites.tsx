@@ -17,22 +17,24 @@ import NextLink from 'next/link';
 import { ArrowBack } from '@mui/icons-material';
 import apiRoutes from '../constants/apiRoutes';
 import notificationMessages from '../constants/notificationMessages';
+import { useSession } from 'next-auth/react';
 
 const Favorites: React.FC = () => {
-  const { userInfo, onNotLoggedIn, authHeader } = useSharedContext();
+  const { onNotLoggedIn } = useSharedContext();
   const dispatch = useAppDispatch();
   const {
     favorites: { favoritesData, favoritesLoading },
   } = useAppSelector((store) => store);
 
+  const { data } = useSession();
+
   React.useEffect(() => {
-    if (!userInfo)
+    if (!data?.user)
       return onNotLoggedIn(notificationMessages.FAVORITES_GET_NOT_LOGGED);
     const fetchFavorites = async () => {
       dispatch(favoritesSetLoading(true));
       const { data } = await axios.get<null, AppResponse<ProductSchema[]>>(
-        apiRoutes.USER_FAVORITE,
-        authHeader
+        apiRoutes.USER_FAVORITE
       );
       dispatch(favoritesFetch(data.payload));
       dispatch(favoritesSetLoading(false));

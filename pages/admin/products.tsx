@@ -34,8 +34,7 @@ import notificationMessages from '../../constants/notificationMessages';
 import { isAxiosError } from 'utils/errorHandler';
 
 const AdminProducts: React.FC = () => {
-  const { snackbarSuccess, snackbarError, onNotAdmin, authHeader } =
-    useSharedContext();
+  const { snackbarSuccess, snackbarError, onNotAdmin } = useSharedContext();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const {
     adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
@@ -54,7 +53,6 @@ const AdminProducts: React.FC = () => {
         await axios.delete<string, AppResponse<ProductSchema[]>>(
           apiRoutes.ADMIN_PRODUCTS,
           {
-            ...authHeader,
             data: productSlug,
           }
         );
@@ -137,8 +135,7 @@ const AdminProducts: React.FC = () => {
       try {
         dispatch(adminPanelFetchRequest());
         const { data } = await axios.get<null, AppResponse<ProductSchema>>(
-          apiRoutes.ADMIN_PRODUCTS,
-          authHeader
+          apiRoutes.ADMIN_PRODUCTS
         );
         dispatch(adminPanelFetchSuccess(data.payload));
       } catch (error: unknown) {

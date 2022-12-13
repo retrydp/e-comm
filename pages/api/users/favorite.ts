@@ -5,6 +5,7 @@ import User from '../../../models/User';
 import Product from '../../../models/Product';
 import { isAuth, UserAuth } from '../../../utils/auth';
 import notificationMessages from '../../../constants/notificationMessages';
+import { getSession } from 'next-auth/react';
 
 interface FavoriteRequest extends NextApiRequest {
   user: UserAuth;
@@ -15,12 +16,13 @@ const handler = nc<FavoriteRequest, NextApiResponse>();
 handler.use(isAuth);
 
 handler.put(async (req, res) => {
+  const session = await getSession({ req });
   try {
     await db.dbConnect();
     const { id } = req.body;
     const product = await Product.findOne({ slug: id });
     if (product) {
-      const user = await User.findById(req.user._id);
+      const user = await User.findById(session?.user.id);
       if (user) {
         if (user.favoritesId.includes(product.slug)) {
           res.status(409).json({
@@ -57,9 +59,10 @@ handler.put(async (req, res) => {
 });
 
 handler.get(async (req, res) => {
+  const session = await getSession({ req });
   try {
     await db.dbConnect();
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(session?.user.id);
     const userFavorites = user?.favoritesId;
     const products = await Product.find({ slug: { $in: userFavorites } });
     res.status(200).json({
@@ -75,12 +78,13 @@ handler.get(async (req, res) => {
 });
 
 handler.delete(async (req, res) => {
+  const session = await getSession({ req });
   try {
     await db.dbConnect();
     const { id } = req.body;
     const product = await Product.findOne({ slug: id });
     if (product) {
-      const user = await User.findById(req.user._id);
+      const user = await User.findById(session?.user.id);
       if (user) {
         if (user.favoritesId.includes(product.slug)) {
           user.favoritesId = user.favoritesId.filter(

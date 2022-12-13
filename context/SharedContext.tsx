@@ -1,16 +1,14 @@
 import React from 'react';
 import { useSnackbar } from 'notistack';
-import { useAppSelector } from '../store';
-import { RootState } from '../store';
 import { useRouter } from 'next/router';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import apiRoutes from '../constants/apiRoutes';
 import { useMediaQuery } from '@mui/material';
 import notificationMessages from '../constants/notificationMessages';
 import { isAxiosError } from '../utils/errorHandler';
+import { useSession } from 'next-auth/react';
 
 interface AppContextInterface {
-  userInfo: RootState['authStore']['userInfo'];
   onNotAdmin: () => void;
   addFavoriteHandler: (id: string) => Promise<void>;
   smMin: boolean;
@@ -20,8 +18,6 @@ interface AppContextInterface {
   onNotLoggedIn: <T>(message: T) => void;
   snackbarSuccess: <T>(message: T) => void;
   snackbarError: <T>(message: T) => void;
-  authHeader: AxiosRequestConfig;
-  authHeaderForm: AxiosRequestConfig;
   filterQuery: (queryOpts: Record<string, string | string[]>) => void;
 }
 
@@ -40,12 +36,10 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
   const mdMax = useMediaQuery('(max-width:900px)');
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const {
-    authStore: { userInfo },
-  } = useAppSelector((store) => store);
+  const { data } = useSession();
 
   const onNotAdmin = () => {
-    if (!userInfo?.isAdmin) router.push('/');
+    if (!data?.user?.isAdmin) router.push('/');
   };
 
   const snackbarSuccess = <T,>(message: T) => {
@@ -61,27 +55,16 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
     router.push(`/login?redirect=${router.asPath}`);
   };
 
-  const authHeader = {
-    headers: { authorization: `Bearer ${userInfo?.token}` },
-  };
-
-  const authHeaderForm = {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      authorization: `Bearer ${userInfo?.token}`,
-    },
-  };
-
   /**
    * Add product to user's favorites list. If user is not logged in,
    * redirect to login page.
    * @param id slug of product
    */
   const addFavoriteHandler = async (id: string) => {
-    if (!userInfo)
+    if (!data?.user)
       return onNotLoggedIn(notificationMessages.FAVORITES_ADD_NOT_LOGGED);
     try {
-      await axios.put(apiRoutes.USER_FAVORITE, { id }, authHeader);
+      await axios.put(apiRoutes.USER_FAVORITE, { id });
       snackbarSuccess(notificationMessages.FAVORITES_ADD_SUCCESS);
     } catch (error: unknown) {
       if (isAxiosError<{ message: string }>(error))
@@ -112,9 +95,7 @@ export const SharedContext: React.FC<SharedContextProps> = ({ children }) => {
         mdMax,
         smMin,
         smList,
-        userInfo,
-        authHeader,
-        authHeaderForm,
+
         addFavoriteHandler,
         onNotAdmin,
         onNotLoggedIn,

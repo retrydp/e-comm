@@ -37,8 +37,7 @@ interface EditUserProps {
 }
 
 const EditUser: React.FC<EditUserProps> = ({ id }) => {
-  const { snackbarSuccess, snackbarError, onNotAdmin, authHeader } =
-    useSharedContext();
+  const { snackbarSuccess, snackbarError, onNotAdmin } = useSharedContext();
   const [isAdminValue, setIsAdminValue] = React.useState<boolean>(false);
   const {
     adminUser: { adminUserLoading, adminUserErrorText },
@@ -64,8 +63,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
           name,
           email,
           isAdmin,
-        },
-        authHeader
+        }
       );
       snackbarSuccess(notificationMessages.USER_UPDATE_SUCCESS);
       dispatch(adminUserEditSuccess());
@@ -95,8 +93,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
       try {
         dispatch(adminUserEditRequest());
         const { data } = await axios.get<'', AppResponse<UserSchema>>(
-          `${apiRoutes.ADMIN_USER}${id}`,
-          authHeader
+          `${apiRoutes.ADMIN_USER}${id}`
         );
         dispatch(adminUserEditSuccess());
         const formTitles = user.map(({ name }) => name);

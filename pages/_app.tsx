@@ -6,6 +6,7 @@ import { SnackbarProvider } from 'notistack';
 import { SharedContext } from '../context/SharedContext';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '../config/createEmotionCache';
+import { SessionProvider } from 'next-auth/react';
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -19,20 +20,23 @@ const MyApp: React.FC<MyAppProps> = ({
   emotionCache = clientSideEmotionCache,
 }) => {
   return (
-    <CacheProvider value={emotionCache}>
-      <Provider store={store}>
-        <SnackbarProvider
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-        >
-          <SharedContext>
-            <Component {...pageProps} />
-          </SharedContext>
-        </SnackbarProvider>
-      </Provider>
-    </CacheProvider>
+    // eslint-disable-next-line
+    <SessionProvider session={(pageProps as any).session}>
+      <CacheProvider value={emotionCache}>
+        <Provider store={store}>
+          <SnackbarProvider
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+          >
+            <SharedContext>
+              <Component {...pageProps} />
+            </SharedContext>
+          </SnackbarProvider>
+        </Provider>
+      </CacheProvider>
+    </SessionProvider>
   );
 };
 

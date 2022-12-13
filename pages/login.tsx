@@ -1,6 +1,4 @@
 import React from 'react';
-import Cookies from 'js-cookie';
-import { AppResponse, UserSchema } from '../utils/types';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -18,21 +16,15 @@ import {
 import { MailOutline, PasswordOutlined } from '@mui/icons-material';
 import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
-import axios from 'axios';
 import { useSharedContext } from '../context/SharedContext';
 import Head from 'next/head';
 import styles from '../utils/styles';
-import { useAppDispatch } from '../store';
-import { userLogin } from '../store/authStore';
 import useFormSettings from '../utils/hooks/useFormSettings';
-import apiRoutes from '../constants/apiRoutes';
-
+import { signIn } from 'next-auth/react';
 const Login: React.FC = () => {
   const { snackbarError } = useSharedContext();
   const router = useRouter();
   const { redirect } = router.query;
-
-  const dispatch = useAppDispatch();
   const {
     handleSubmit,
     control,
@@ -48,26 +40,16 @@ const Login: React.FC = () => {
    * @description This function is used to send the request to the server with the data from the forms.
    */
   const submitHandler = async ({ email, password }: Record<string, string>) => {
-    try {
-      const { data } = await axios.post<
-        Record<'email' | 'password', string>,
-        AppResponse<UserSchema>
-      >(apiRoutes.USERS_LOGIN, {
-        email,
-        password,
-      });
-      dispatch(userLogin(data.payload));
-      Cookies.set('userInfo', JSON.stringify(data.payload));
+    const res = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (res?.error) {
+      snackbarError(res.error);
+    } else {
       router.push((redirect as string) || '/');
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const responseError = error?.response?.data?.['message'];
-        if (responseError) {
-          snackbarError(responseError);
-        }
-      } else {
-        throw new Error('Bcrypt error.');
-      }
     }
   };
 
