@@ -314,7 +314,6 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                   >
                     <Typography>Preview:</Typography>
                     <Box sx={{ width: '100%', maxWidth: '500px' }}>
-                      {/* FIXME:  this in other cases */}
                       <Image
                         priority={true}
                         width="100%"
