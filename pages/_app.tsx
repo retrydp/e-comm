@@ -20,8 +20,7 @@ const MyApp: React.FC<MyAppProps> = ({
   emotionCache = clientSideEmotionCache,
 }) => {
   return (
-    // eslint-disable-next-line
-    <SessionProvider session={(pageProps as any).session}>
+    <SessionProvider session={pageProps.session}>
       <CacheProvider value={emotionCache}>
         <Provider store={store}>
           <SnackbarProvider
