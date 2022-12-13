@@ -3,15 +3,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import db from '../../../utils/database';
 import User from '../../../models/User';
 import Product from '../../../models/Product';
-import { isAuth, UserAuth } from '../../../utils/auth';
+import { isAuth } from '../../../utils/auth';
 import notificationMessages from '../../../constants/notificationMessages';
 import { getSession } from 'next-auth/react';
 
-interface FavoriteRequest extends NextApiRequest {
-  user: UserAuth;
-}
-
-const handler = nc<FavoriteRequest, NextApiResponse>();
+const handler = nc<NextApiRequest, NextApiResponse>();
 
 handler.use(isAuth);
 
