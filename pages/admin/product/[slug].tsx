@@ -39,6 +39,7 @@ import useFormSettings from '../../../utils/hooks/useFormSettings';
 import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
 import { isAxiosError } from 'utils/errorHandler';
+import styles from 'utils/styles';
 
 interface EditProductProps {
   slug: string;
@@ -197,27 +198,19 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       <Grid container spacing={2}>
         <AdminSidebar activeTab="products" />
         <Grid item xl={9} lg={9} md={9} sm={12} xs={12}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              margin: '15px 5px',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
-            <Typography sx={{ fontSize: '20px' }}>Edit Product</Typography>
+          <Box sx={styles.userSidebar}>
+            <Typography sx={styles.fz20}>Edit Product</Typography>
           </Box>
           {adminProductLoadingAdd || adminProductLoading ? (
             <CircularProgress />
           ) : adminProductErrorText ? (
-            <Typography sx={{ color: 'red' }}>
+            <Typography sx={styles.colorRed}>
               {adminProductErrorText}
             </Typography>
           ) : (
             <form
               onSubmit={handleSubmit(submitHandler)}
-              style={{ width: '100%' }}
+              style={styles.fullWidth}
             >
               <List>
                 {product.map(
@@ -239,9 +232,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                           selectTypeContent ? (
                             <FormControl fullWidth>
                               <InputLabel id={`${name}-select-label`}>
-                                <Typography
-                                  sx={{ textTransform: 'capitalize' }}
-                                >
+                                <Typography sx={styles.capitalize}>
                                   {name}
                                 </Typography>
                               </InputLabel>
@@ -256,9 +247,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                               >
                                 {selectTypeContent.map((item) => (
                                   <MenuItem value={item} key={item}>
-                                    <Typography
-                                      sx={{ textTransform: 'capitalize' }}
-                                    >
+                                    <Typography sx={styles.capitalize}>
                                       {item}
                                     </Typography>
                                   </MenuItem>
@@ -291,7 +280,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                   <Button
                     variant="contained"
                     component="label"
-                    sx={{ backgroundColor: '#40BFFF' }}
+                    sx={styles.blueBg}
                   >
                     Upload Image
                     <input
@@ -304,16 +293,9 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                   {adminProductLoading && <CircularProgress />}
                 </ListItem>
                 {preview && (
-                  <ListItem
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      gap: '5px',
-                    }}
-                  >
+                  <ListItem sx={styles.preview}>
                     <Typography>Preview:</Typography>
-                    <Box sx={{ width: '100%', maxWidth: '500px' }}>
+                    <Box sx={styles.previewImage}>
                       <Image
                         priority={true}
                         width="100%"
@@ -326,11 +308,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                   </ListItem>
                 )}
                 <ListItem>
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    sx={{ backgroundColor: '#40BFFF' }}
-                  >
+                  <Button variant="contained" type="submit" sx={styles.blueBg}>
                     Update product
                   </Button>
                 </ListItem>

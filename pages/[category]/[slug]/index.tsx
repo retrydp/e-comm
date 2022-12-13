@@ -62,16 +62,16 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
               md={4}
               sm={12}
               xs={12}
-              sx={{ display: 'flex', height: '100%', justifyContent: 'center' }}
+              sx={styles.productContainerWrapper}
             >
               <img
                 src={product.images[0]}
                 alt={product.name}
-                style={{ maxWidth: '90%' }}
+                style={styles.mw90p}
               />
             </Grid>
             <Grid item lg={8} md={8} sm={12} xs={12}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Box sx={styles.productHeaderWrapper}>
                 <Typography sx={styles.cardHeaderTextSecondary}>
                   {product.name}
                 </Typography>
@@ -87,9 +87,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                     {product.reviews?.length || 0} reviews
                   </Typography>
                   <Button>
-                    <Typography
-                      sx={{ fontSize: '14px', textTransform: 'none' }}
-                    >
+                    <Typography sx={styles.reviewButton}>
                       Submit a review
                     </Typography>
                   </Button>
@@ -97,13 +95,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                 <Divider />
                 <Box sx={styles.promo}>
                   {product.oldPrice > 0 && (
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '9px',
-                      }}
-                    >
+                    <Box sx={styles.promoPrice}>
                       <Typography sx={styles.oldPrice} aria-label="old price">
                         ${product.oldPrice}
                       </Typography>
@@ -134,7 +126,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                 </Typography>
                 <Typography sx={styles.productInfo}>Free shipping</Typography>
                 <Divider />
-                <Box sx={{ display: 'flex', margin: '20px 0' }}>
+                <Box sx={styles.productButtonWrapper}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -153,9 +145,9 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
               </Box>
             </Grid>
           </Grid>
-          <Box sx={{ width: '100%', mt: '15px' }}>
+          <Box sx={{ ...styles.fullWidth, ...styles.mt15 }}>
             <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Box sx={styles.productDivider}>
                 <TabList
                   onChange={handleChangeTab}
                   aria-label="product information and reviews"
@@ -164,13 +156,9 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
                   <Tab
                     label="Product information"
                     value="1"
-                    sx={{ typography: 'h4' }}
+                    sx={styles.textH4}
                   />
-                  <Tab
-                    label="Reviews (0)"
-                    value="2"
-                    sx={{ typography: 'h4' }}
-                  />
+                  <Tab label="Reviews (0)" value="2" sx={styles.textH4} />
                 </TabList>
               </Box>
               <TabPanel value="1">{product.description}</TabPanel>
@@ -179,17 +167,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
           </Box>
         </Container>
       ) : (
-        <Container
-          maxWidth="lg"
-          sx={{
-            mb: '15px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '50px',
-            gap: '15px',
-          }}
-        >
+        <Container maxWidth="lg" sx={styles.productContainerSecondary}>
           <Image
             src="https://res.cloudinary.com/retrydp/image/upload/v1651399208/euezczftnocn3m4tk9dl.png"
             alt="product not found"
@@ -197,7 +175,7 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
             width={300}
             height={300}
           ></Image>
-          <Typography sx={{ textAlign: 'left' }}>
+          <Typography sx={styles.textLeft}>
             Product not available.&nbsp;
           </Typography>
           <NextLink href="/" passHref>

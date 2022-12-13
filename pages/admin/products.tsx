@@ -113,7 +113,7 @@ const AdminProducts: React.FC = () => {
         <Avatar
           alt={params.row.name}
           src={params.row.images[0]}
-          sx={{ width: 50, height: 50 }}
+          sx={styles.avatar}
         />
       ),
     },
@@ -162,7 +162,7 @@ const AdminProducts: React.FC = () => {
           <Typography id="modal-title" variant="h6" component="h2">
             Deleting product.
           </Typography>
-          <Typography id="modal-description" sx={{ mt: 2 }}>
+          <Typography id="modal-description" sx={styles.mt2}>
             This may take some time.
           </Typography>
           <CircularProgress />
@@ -171,20 +171,12 @@ const AdminProducts: React.FC = () => {
       <Grid container spacing={2}>
         <AdminSidebar activeTab="products" />
         <Grid item xl={9} lg={9} md={9} sm={12} xs={12}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              margin: '15px 5px',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
-            <Typography sx={{ fontSize: '20px' }}>Products</Typography>
+          <Box sx={styles.adminSidebarWrapper}>
+            <Typography sx={styles.fz20}>Products</Typography>
             <NextLink href="/admin/product/create" passHref>
               <Button
                 variant="contained"
-                sx={{ backgroundColor: '#40BFFF' }}
+                sx={styles.blueBg}
                 component="a"
                 startIcon={<Add />}
               >
@@ -192,11 +184,11 @@ const AdminProducts: React.FC = () => {
               </Button>
             </NextLink>
           </Box>
-          <Box sx={{ height: 800, width: '100%' }}>
+          <Box sx={styles.dataGrid}>
             {adminPanelLoading ? (
               <CircularProgress />
             ) : adminPanelError ? (
-              <Typography sx={{ color: 'red' }}>{adminPanelError}</Typography>
+              <Typography sx={styles.colorRed}>{adminPanelError}</Typography>
             ) : (
               <DataGrid
                 getRowId={(row) => row._id}

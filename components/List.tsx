@@ -88,12 +88,7 @@ const List: React.FC<ListProps> = ({
     <Grid container item spacing={2}>
       {products.map((product) => (
         <Grid item lg={12} md={12} sm={12} xs={12} key={product.name}>
-          <Card
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-            }}
-          >
+          <Card sx={styles.listCard}>
             <NextLink href={`/${product.category}/${product.slug}`} passHref>
               <Link sx={styles.plainAnchor}>
                 <CardMedia
@@ -119,18 +114,12 @@ const List: React.FC<ListProps> = ({
                 <Link sx={styles.plainAnchor}>
                   <CardHeader
                     title={product.name}
-                    sx={{ maxWidth: '300px' }}
+                    sx={styles.mw300}
                     titleTypographyProps={styles.cardHeaderTextSecondary}
                   ></CardHeader>
                 </Link>
               </NextLink>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: '100%',
-                }}
-              >
+              <Box sx={styles.ratingWrapper}>
                 <Box sx={styles.ratingBar}>
                   <Rating
                     name="half-rating-read"
@@ -145,14 +134,12 @@ const List: React.FC<ListProps> = ({
                     </Typography>
                   )}
                   <Button>
-                    <Typography
-                      sx={{ fontSize: '14px', textTransform: 'none' }}
-                    >
+                    <Typography sx={styles.ratingButtonText}>
                       Submit a review
                     </Typography>
                   </Button>
                 </Box>
-                <Divider sx={{ m: '0 15px' }} />
+                <Divider sx={styles.ratingDivider} />
                 <CardContent
                   sx={{
                     ...styles.cardContentWrapperSecondary,
@@ -161,13 +148,7 @@ const List: React.FC<ListProps> = ({
                 >
                   <Box sx={styles.promo}>
                     {product.oldPrice - product.price > 0 && (
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '9px',
-                        }}
-                      >
+                      <Box sx={styles.promoPrice}>
                         <Typography sx={styles.oldPrice} aria-label="old price">
                           ${product.oldPrice.toFixed(2)}
                         </Typography>
@@ -225,16 +206,11 @@ const List: React.FC<ListProps> = ({
                     {favoritesModeAccept ? (
                       <FavoriteBorder />
                     ) : (
-                      <DeleteOutline sx={{ color: 'red' }} />
+                      <DeleteOutline sx={styles.colorRed} />
                     )}
                   </IconButton>
                   {cartMode && (
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                      }}
-                    >
+                    <Box sx={styles.cardButtonWrapper}>
                       <IconButton
                         aria-label="Add one item"
                         component="span"
@@ -242,7 +218,7 @@ const List: React.FC<ListProps> = ({
                       >
                         <AddBox />
                       </IconButton>
-                      <Typography sx={{ m: '15px' }}>
+                      <Typography sx={styles.m15}>
                         {(product as CartProduct).count}
                       </Typography>
                       <IconButton
@@ -258,7 +234,7 @@ const List: React.FC<ListProps> = ({
                         component="span"
                         onClick={() => dispatch(cartDeleteProduct(product))}
                       >
-                        <DeleteOutline sx={{ color: 'red' }} />
+                        <DeleteOutline sx={styles.colorRed} />
                       </IconButton>
                     </Box>
                   )}

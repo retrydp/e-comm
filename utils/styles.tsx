@@ -11,6 +11,34 @@ const styles = {
   grow: {
     flexGrow: 1,
   },
+  jcsb: { justifyContent: 'space-between' },
+  aic: { alignItems: 'center' },
+  mr10: { mr: '10px' },
+  mw150: { minWidth: '150px' },
+  mw300: { minWidth: '300px' },
+  mw90p: { maxWidth: '90%' },
+  mCenter: { m: '0 auto' },
+  m15: { m: '15px' },
+  mb4: { mb: 4 },
+  mb10: { mb: '10px' },
+  mb15: { mb: '15px' },
+  mb20: { mb: '20px' },
+  mt2: { mt: 2 },
+  mt15: { mt: '15px' },
+  mt64: { mt: '64px' },
+  mt60: { mt: '60px' },
+  p7: { p: '7px' },
+  colorRed: { color: 'red' },
+  neutralBg: { bgcolor: neutralBlue },
+  blueBg: { bgcolor: primaryBlue },
+  capitalize: { textTransform: 'capitalize' },
+  textCenter: { textAlign: 'center' },
+  textLeft: { textAlign: 'left' },
+  textH4: { typography: 'h4' },
+  fullWidth: { width: '100%' },
+  defaultP: { p: '15px 0' },
+  mediumFontSize: { fontSize: '16px' },
+  fz20: { fontSize: '20px' },
   headerBar: {
     borderBottom: 1,
     borderColor: 'divider',
@@ -18,10 +46,17 @@ const styles = {
     backgroundColor: 'white',
     boxShadow: 'none',
   },
+  headerLink: { textDecoration: 'none', color: 'black' },
   layoutWrapper: {
     display: 'flex',
     height: '100vh',
     flexDirection: 'column',
+  },
+  headerLogoutButton: {
+    textDecoration: 'none',
+    color: 'black',
+    fontSize: '1rem',
+    padding: '2px 0',
   },
   navSelect: {
     m: 1,
@@ -33,7 +68,7 @@ const styles = {
     textDecoration: 'none',
     color: black,
     borderRadius: '50%',
-    padding: '8px',
+    p: '8px',
     minWidth: '20px',
     '&:hover': {
       color: primaryBlue,
@@ -50,7 +85,7 @@ const styles = {
   },
   appBar: {
     boxShadow: 'none',
-    padding: '10px 0',
+    p: '10px 0',
     backgroundColor: 'transparent',
   },
   toolBar: {
@@ -59,7 +94,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    padding: '0',
+    p: '0',
   },
   navLogo: {
     display: 'flex',
@@ -116,7 +151,7 @@ const styles = {
     backgroundSize: 'cover',
   },
   bannerText: {
-    margin: '280px 0px 140px 0px',
+    m: '280px 0px 140px 0px',
     maxWidth: '580px',
   },
   cardHeaderTextPresentation: {
@@ -128,7 +163,7 @@ const styles = {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     width: '82%',
-    padding: '10px',
+    p: '10px',
   },
   cardHeaderText: {
     fontFamily: 'Poppins',
@@ -149,10 +184,19 @@ const styles = {
     m: 0,
     width: '100%',
   },
+  cardButtonWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   promo: {
     display: 'flex',
     gap: '9px',
     flexWrap: 'wrap',
+  },
+  promoPrice: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '9px',
   },
   oldPrice: {
     fontFamily: 'Poppins',
@@ -218,23 +262,56 @@ const styles = {
     textTransform: 'capitalize',
   },
   sortToolbar: {
-    padding: '10px',
+    p: '10px',
     flexWrap: 'wrap',
     gap: '8px',
-    marginBottom: '15px',
+    mb: '15px',
+  },
+  sortToolbarInner: {
+    display: 'flex',
+    gap: '60px',
+    alignItems: 'center',
   },
   goodsWrapper: {
-    padding: 0,
+    p: 0,
+  },
+  goodsItemsText: {
+    fontSize: '16px',
+    paddingLeft: '20px',
+  },
+  goodsNotFoundWrapper: {
+    mb: '15px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '50px',
+    gap: '15px',
   },
   productWrapper: {
     display: 'flex',
     flexGrow: 1,
     border: '1px solid red',
   },
+  productDivider: { borderBottom: 1, borderColor: 'divider' },
+  productContainerWrapper: {
+    display: 'flex',
+    height: '100%',
+    justifyContent: 'center',
+  },
+  productContainerSecondary: {
+    mb: '15px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '50px',
+    gap: '15px',
+  },
+  productHeaderWrapper: { display: 'flex', flexDirection: 'column' },
   reviewsText: {
     color: primaryGrey,
     whiteSpace: 'nowrap',
   },
+  productButtonWrapper: { display: 'flex', margin: '20px 0' },
   cardHeaderTextSecondary: {
     fontFamily: 'Poppins',
     fontSize: '20px',
@@ -245,25 +322,37 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginTop: '30px',
+    mt: '30px',
     alignItems: 'flex-start',
     gap: '12px',
+  },
+  cardContentOuterWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   ratingBar: {
     display: 'flex',
     alignItems: 'center',
-    margin: '0 16px',
+    m: '0 16px',
     gap: '10px',
     flexWrap: 'wrap',
   },
+  ratingWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  ratingButtonText: { fontSize: '14px', textTransform: 'none' },
   customRatingBar: {
     display: 'flex',
     alignItems: 'center',
-    margin: '15px 0',
+    m: '15px 0',
     gap: '20px',
     flexWrap: 'wrap',
   },
-  productInfo: { margin: '10px 0' },
+  ratingDivider: { m: '0 15px' },
+  productInfo: { m: '10px 0' },
   regContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -289,6 +378,13 @@ const styles = {
     height: '100%',
     borderRight: '1px solid #E0E0E0',
   },
+  adminSidebarWrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    margin: '15px 5px',
+    gap: '5px',
+    alignItems: 'center',
+  },
   adminModalAddProgress: {
     position: 'absolute',
     top: '50%',
@@ -302,7 +398,7 @@ const styles = {
   cartWrapper: {
     borderRadius: '5px',
     display: 'flex',
-    padding: '15px',
+    p: '15px',
   },
   cartItemText: {
     fontSize: '12px',
@@ -312,6 +408,17 @@ const styles = {
     ['@media (min-width:600px)']: {
       fontSize: '20px',
     },
+  },
+  cartOuter: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    width: '100%',
+  },
+  cartOuterText: {
+    textAlign: 'left',
+    maxWidth: '350px',
+    width: '100%',
   },
   cartInnerWrapper: {
     display: 'flex',
@@ -333,6 +440,32 @@ const styles = {
     border: `1px solid ${primaryGrey}`,
     borderRadius: '5px',
     width: '100%',
+  },
+  cartTotalWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    p: '15px',
+    width: '100%',
+    gap: '25px',
+  },
+  cartTotalText: {
+    mt: '15px',
+    textAlign: 'left',
+    maxWidth: '350px',
+    width: '100%',
+  },
+  cartTotalButton: {
+    maxWidth: '350px',
+    width: '100%',
+    mt: '15px',
+  },
+  cartContainer: {
+    mb: '15px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '50px',
+    gap: '15px',
   },
   paymentName: {
     fontSize: '12px',
@@ -367,6 +500,62 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
   },
+  footerLogo: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '15px',
+    mb: '20px',
+  },
+  breadcrumbHomeButton: { p: 1 },
+  breadcrumbsButton: { p: 1, textTransform: 'capitalize' },
+  breadcrumbsText: { ml: 2, fontSize: '0.875rem', textTransform: 'capitalize' },
+  listCard: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  moduleContainer: { p: '15px 0' },
+  tabsIndicator: {
+    '& .MuiTabs-indicator': {
+      display: 'none',
+    },
+  },
+  pagination: { m: '0, auto', p: '24px' },
+  sideMenuForm: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 0.5,
+  },
+  favoritesContainer: {
+    mb: '15px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '50px',
+    gap: '15px',
+  },
+  skeletonMin: {
+    maxWidth: '100%',
+    borderRadius: '30px',
+  },
+  skeletonInner: { maxWidth: '100%', mb: '15px' },
+  skeletonCustom: { borderRadius: '5px' },
+  reviewButton: { fontSize: '14px', textTransform: 'none' },
+  avatar: { width: 50, height: 50 },
+  dataGrid: { height: 800, width: '100%' },
+  userSidebar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    margin: '15px 5px',
+    gap: '5px',
+    alignItems: 'center',
+  },
+  preview: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: '5px',
+  },
+  previewImage: { width: '100%', maxWidth: '500px' },
 } as const;
 
 export default styles;

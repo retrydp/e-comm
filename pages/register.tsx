@@ -100,7 +100,7 @@ const Register: React.FC = () => {
       </Head>
       <CssBaseline />
       <Container maxWidth="sm" sx={styles.regContainer}>
-        <Box sx={{ mt: '60px' }}>
+        <Box sx={styles.mt60}>
           <Image
             src="https://res.cloudinary.com/retrydp/image/upload/v1651478617/xmqphhxdjbtivv8o3lrm.svg"
             width="72"
@@ -112,7 +112,7 @@ const Register: React.FC = () => {
           Let’s Get Started
         </Typography>
         <Typography sx={styles.regText}>Create a new account</Typography>
-        <form onSubmit={handleSubmit(submitHandler)} style={{ width: '100%' }}>
+        <form onSubmit={handleSubmit(submitHandler)} style={styles.fullWidth}>
           <List>
             {register.map(({ name, label, icon, rules, helperText }) => {
               const Icon = icons[icon];
@@ -154,7 +154,7 @@ const Register: React.FC = () => {
                 variant="contained"
                 type="submit"
                 fullWidth
-                sx={{ backgroundColor: '#40BFFF' }}
+                sx={styles.blueBg}
               >
                 Register
               </Button>

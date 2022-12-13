@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = ({
         </Head>
         <Box sx={styles.layoutWrapper}>
           <Header />
-          <Container maxWidth="lg" sx={{ mt: '64px' }}>
+          <Container maxWidth="lg" sx={styles.mt64}>
             <NavigationBar currentTab={title || 'home'} />
             {title !== 'home' ? <BreadcrumbsBar /> : null}
           </Container>

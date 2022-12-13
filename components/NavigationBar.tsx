@@ -77,11 +77,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ currentTab }) => {
             value={menuItems.findIndex(({ title }) => title === currentTab)}
             aria-label="navigation links"
             variant="scrollable"
-            sx={{
-              '& .MuiTabs-indicator': {
-                display: 'none',
-              },
-            }}
+            sx={styles.tabsIndicator}
           >
             {menuItems.map(({ title, path }) => (
               <LinkTab

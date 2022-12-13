@@ -23,41 +23,19 @@ const Cart: React.FC = () => {
     <NoSsr>
       <Layout title="home" customTitle="Cart">
         {cartProducts?.length > 0 ? (
-          <Container maxWidth="lg" sx={{ mb: '15px' }}>
-            <Typography variant="h4" sx={{ padding: '15px 0' }}>
+          <Container maxWidth="lg" sx={styles.mb15}>
+            <Typography variant="h4" sx={styles.defaultP}>
               Your cart:
             </Typography>
             <Grid container spacing={2}>
               <List products={cartProducts} cartMode></List>
               <Grid item xs={12}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                    width: '100%',
-                  }}
-                >
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      textAlign: 'left',
-                      maxWidth: '350px',
-                      width: '100%',
-                    }}
-                  >
+                <Box sx={styles.cartOuter}>
+                  <Typography variant="h4" sx={styles.cartOuterText}>
                     Payment details:
                   </Typography>
                   <Box sx={styles.cartTotal}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        p: '15px',
-                        width: '100%',
-                        gap: '25px',
-                      }}
-                    >
+                    <Box sx={styles.cartTotalWrapper}>
                       <Box sx={styles.detailsWrapper}>
                         <Typography sx={styles.paymentName}>
                           Items ({totalProductsInCart})
@@ -82,28 +60,14 @@ const Cart: React.FC = () => {
                       </Box>
                     </Box>
                   </Box>
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      mt: '15px',
-                      textAlign: 'left',
-                      maxWidth: '350px',
-                      width: '100%',
-                    }}
-                  >
+                  <Typography variant="h4" sx={styles.cartTotalText}>
                     Total: $
                     {(
                       totalSum * (1 + commonConst.TAXES) +
                       commonConst.SHIPPING_PRICE
                     ).toFixed(2)}
                   </Typography>
-                  <Box
-                    sx={{
-                      maxWidth: '350px',
-                      width: '100%',
-                      mt: '15px',
-                    }}
-                  >
+                  <Box sx={styles.cartTotalButton}>
                     <Button variant="contained" fullWidth>
                       Check out
                     </Button>
@@ -113,17 +77,7 @@ const Cart: React.FC = () => {
             </Grid>
           </Container>
         ) : (
-          <Container
-            maxWidth="lg"
-            sx={{
-              mb: '15px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              padding: '50px',
-              gap: '15px',
-            }}
-          >
+          <Container maxWidth="lg" sx={styles.cartContainer}>
             <Image
               src="https://res.cloudinary.com/retrydp/image/upload/v1651300005/d1me29qkm191jwnsqxgc.png"
               alt="cart is empty"
@@ -131,7 +85,7 @@ const Cart: React.FC = () => {
               width={300}
               height={300}
             ></Image>
-            <Typography sx={{ textAlign: 'left' }}>
+            <Typography sx={styles.textLeft}>
               Your cart is empty&nbsp;
             </Typography>
             <NextLink href="/" passHref>

@@ -20,7 +20,7 @@ interface ModuleProps {
 
 const Module: React.FC<ModuleProps> = ({ products }) => {
   return (
-    <Grid container spacing={3} sx={{ padding: '15px 0' }}>
+    <Grid container spacing={3} sx={styles.moduleContainer}>
       {products.map(
         ({ name, rating, oldPrice, price, images, slug, category }) => (
           <Grid item lg={4} md={4} sm={4} xs={12} key={name}>
@@ -40,13 +40,7 @@ const Module: React.FC<ModuleProps> = ({ products }) => {
                       ...styles.cartHeaderTextPos,
                     }}
                   ></CardHeader>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                    }}
-                  >
+                  <Box sx={styles.cardContentOuterWrapper}>
                     <Rating
                       name="half-rating-read"
                       defaultValue={rating}

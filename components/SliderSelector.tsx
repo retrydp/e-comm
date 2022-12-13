@@ -1,6 +1,7 @@
 import { Slider, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { SyntheticEvent } from 'react';
+import styles from 'utils/styles';
 import { useSharedContext } from '../context/SharedContext';
 import { useAppSelector } from '../store';
 
@@ -46,7 +47,7 @@ const SliderSelector: React.FC = () => {
       <Typography>
         Range: $ {value[0]} - $ {value[1]}
       </Typography>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={styles.fullWidth}>
         <Slider
           min={minMax[0]}
           max={minMax[1]}

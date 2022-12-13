@@ -4,6 +4,7 @@ import { withRouter, useRouter } from 'next/router';
 import NextLink from 'next/link';
 import { Home } from '@mui/icons-material';
 import { useAppSelector } from '../store';
+import styles from 'utils/styles';
 
 const BreadcrumbsBar: React.FC = () => {
   const router = useRouter();
@@ -13,26 +14,22 @@ const BreadcrumbsBar: React.FC = () => {
   } = useAppSelector((store) => store);
 
   return (
-    <Breadcrumbs aria-label="breadcrumb" sx={{ p: '15px 0' }}>
+    <Breadcrumbs aria-label="breadcrumb" sx={styles.defaultP}>
       <NextLink href="/" passHref>
-        <Button color="primary" sx={{ p: 1 }}>
+        <Button color="primary" sx={styles.breadcrumbHomeButton}>
           <Home fontSize="inherit" />
         </Button>
       </NextLink>
       {category && (
         // FIXME: incorrect display in contacts
         <NextLink href={`/loading?category=${category}`} passHref>
-          <Button color="primary" sx={{ p: 1, textTransform: 'capitalize' }}>
+          <Button color="primary" sx={styles.breadcrumbsButton}>
             {category}
           </Button>
         </NextLink>
       )}
       {currentProduct && slug && (
-        <Typography
-          sx={{ ml: 2, fontSize: '0.875rem', textTransform: 'capitalize' }}
-        >
-          {currentProduct}
-        </Typography>
+        <Typography sx={styles.breadcrumbsText}>{currentProduct}</Typography>
       )}
     </Breadcrumbs>
   );

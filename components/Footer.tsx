@@ -1,4 +1,5 @@
-import {  Box,
+import {
+  Box,
   Container,
   Grid,
   IconButton,
@@ -16,18 +17,11 @@ const Footer: React.FC = (): JSX.Element => {
   return (
     <Box sx={styles.footer}>
       <Container maxWidth="lg">
-        <Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
+        <Grid container spacing={2} sx={styles.jcsb}>
           <Grid item>
             <NextLink href="/" passHref>
               <Link sx={styles.plainAnchor} aria-label="Site logo">
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '15px',
-                    mb: '20px',
-                  }}
-                >
+                <Box sx={styles.footerLogo}>
                   <Image
                     width={44}
                     height={44}

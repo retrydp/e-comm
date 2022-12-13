@@ -37,7 +37,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
 
   return (
     <Grid item sx={styles.adminSidebar} xl={2} lg={2} md={3} sm={12} xs={12}>
-      <List sx={{ width: '100%' }} disablePadding>
+      <List sx={styles.fullWidth} disablePadding>
         <ListItem>
           <ListItemIcon>
             <Image
@@ -48,11 +48,11 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
           </ListItemIcon>
           <ListItemText
             primary={
-              <Typography sx={{ fontSize: '16px' }}>
+              <Typography sx={styles.mediumFontSize}>
                 E-comm Dashboard
               </Typography>
             }
-            sx={{ textTransform: 'capitalize' }}
+            sx={styles.capitalize}
           />
         </ListItem>
         <Divider />
@@ -66,10 +66,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
             <NextLink href={`/admin/${title}`} passHref>
               <ListItemButton component="a">
                 <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText
-                  primary={title}
-                  sx={{ textTransform: 'capitalize' }}
-                />
+                <ListItemText primary={title} sx={styles.capitalize} />
               </ListItemButton>
             </NextLink>
           </ListItem>
@@ -82,7 +79,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
               </ListItemIcon>
               <ListItemText
                 primary={<Typography>Home</Typography>}
-                sx={{ textTransform: 'capitalize' }}
+                sx={styles.capitalize}
               />
             </ListItemButton>
           </NextLink>

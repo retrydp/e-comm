@@ -31,6 +31,7 @@ import useFormSettings from '../../../utils/hooks/useFormSettings';
 import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
 import { isAxiosError } from 'utils/errorHandler';
+import styles from 'utils/styles';
 
 interface EditUserProps {
   id: string;
@@ -119,25 +120,17 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
       <Grid container spacing={2}>
         <AdminSidebar activeTab="users" />
         <Grid item xl={9} lg={9} md={9} sm={12} xs={12}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              margin: '15px 5px',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
-            <Typography sx={{ fontSize: '20px' }}>Edit User</Typography>
+          <Box sx={styles.userSidebar}>
+            <Typography sx={styles.fz20}>Edit User</Typography>
           </Box>
           {adminUserLoading ? (
             <CircularProgress />
           ) : adminUserErrorText ? (
-            <Typography sx={{ color: 'red' }}>{adminUserErrorText}</Typography>
+            <Typography sx={styles.colorRed}>{adminUserErrorText}</Typography>
           ) : (
             <form
               onSubmit={handleSubmit(submitHandler)}
-              style={{ width: '100%' }}
+              style={styles.fullWidth}
             >
               <List>
                 {user.map(
@@ -159,9 +152,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
                           selectTypeContent ? (
                             <FormControl fullWidth>
                               <InputLabel id={`${name}-select-label`}>
-                                <Typography
-                                  sx={{ textTransform: 'capitalize' }}
-                                >
+                                <Typography sx={styles.capitalize}>
                                   {name}
                                 </Typography>
                               </InputLabel>
@@ -174,9 +165,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
                               >
                                 {selectTypeContent.map((item) => (
                                   <MenuItem value={item} key={item}>
-                                    <Typography
-                                      sx={{ textTransform: 'capitalize' }}
-                                    >
+                                    <Typography sx={styles.capitalize}>
                                       {item}
                                     </Typography>
                                   </MenuItem>
@@ -207,11 +196,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
                 )}
 
                 <ListItem>
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    sx={{ backgroundColor: '#40BFFF' }}
-                  >
+                  <Button variant="contained" type="submit" sx={styles.blueBg}>
                     Update user
                   </Button>
                 </ListItem>

@@ -98,16 +98,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
   const PresentationSwitch = () => {
     if (!productsQuantity) {
       return (
-        <Box
-          sx={{
-            mb: '15px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: '50px',
-            gap: '15px',
-          }}
-        >
+        <Box sx={styles.goodsNotFoundWrapper}>
           <Image
             src="https://res.cloudinary.com/retrydp/image/upload/v1669098608/joyewwspqavz0bojkqxk.jpg"
             alt="product not found"
@@ -115,9 +106,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
             width={300}
             height={300}
           ></Image>
-          <Typography sx={{ textAlign: 'center' }}>
-            Products not found.
-          </Typography>
+          <Typography sx={styles.textCenter}>Products not found.</Typography>
         </Box>
       );
     }
@@ -139,22 +128,22 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
         <SideMenuTemplate width="60vw" withSort={false} />
       </Drawer>
       <Container maxWidth="lg">
-        <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+        <Grid container spacing={2} sx={styles.jcsb}>
           {mdMax ? (
-            <Grid item container rowSpacing={2} sx={{ alignItems: 'center' }}>
+            <Grid item container rowSpacing={2} sx={styles.aic}>
               <Grid item>
                 <Button
                   variant="contained"
                   fullWidth
                   onClick={drawerVisibleHandler}
                 >
-                  <FilterAltRounded sx={{ mr: '10px' }} />
+                  <FilterAltRounded sx={styles.mr10} />
                   <Typography sx={styles.filterButton}>Filters</Typography>
                 </Button>
               </Grid>
               <Box sx={styles.grow}></Box>
               <Grid item>
-                <FormControl sx={{ minWidth: 150 }}>
+                <FormControl sx={styles.mw150}>
                   <InputLabel id="sortSelect-label">Sort by</InputLabel>
                   <Select
                     labelId="sortSelect-label"
@@ -183,7 +172,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
               container
               rowSpacing={2}
               direction="column"
-              sx={{ mb: 4 }}
+              sx={styles.mb4}
             >
               <SideMenuTemplate width="100%" withSort />
             </Grid>
@@ -198,7 +187,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
             {smMin && (
               <NextLink href="/sneakers/nike-air-max-plus" passHref>
                 <Link>
-                  <Box sx={{ mb: '20px' }}>
+                  <Box sx={styles.mb20}>
                     <Image
                       src="https://res.cloudinary.com/retrydp/image/upload/v1651495865/banner_gxsmbo.png"
                       width={860}
@@ -210,24 +199,13 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
               </NextLink>
             )}
             <Toolbar sx={styles.sortToolbar} disableGutters>
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: '60px',
-                  alignItems: 'center',
-                }}
-              >
+              <Box sx={styles.sortToolbarInner}>
                 {smMin && (
-                  <Typography
-                    sx={{
-                      fontSize: '16px',
-                      paddingLeft: '20px',
-                    }}
-                  >
+                  <Typography sx={styles.goodsItemsText}>
                     Items: {productsQuantity}
                   </Typography>
                 )}
-                <FormControl sx={{ minWidth: 150 }}>
+                <FormControl sx={styles.mw150}>
                   <InputLabel id="quantity-label">Quantity</InputLabel>
                   <Select
                     labelId="quantity-label"
@@ -256,7 +234,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
                 <ToggleButton
                   value="module"
                   aria-label="Simple list"
-                  sx={{ p: '7px' }}
+                  sx={styles.p7}
                 >
                   <Tooltip title="Simple list" arrow>
                     <ViewModule />
@@ -265,7 +243,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
                 <ToggleButton
                   value="list"
                   aria-label="Extended list"
-                  sx={{ p: '7px' }}
+                  sx={styles.p7}
                 >
                   <Tooltip title="Extended list" arrow>
                     <ViewList />

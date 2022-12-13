@@ -125,7 +125,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
         <Grid item container spacing={2} direction="column">
           <Grid item>
             {availableBrands.length > 0 && (
-              <FormControl sx={{ width: width }}>
+              <FormControl sx={{ width }}>
                 <InputLabel id="brandSelect-label">Brand</InputLabel>
                 <Select
                   labelId="brandSelect-label"
@@ -181,13 +181,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
                     <OutlinedInput id="select-multiple-chip" label="Chip" />
                   }
                   renderValue={(selected) => (
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: 0.5,
-                      }}
-                    >
+                    <Box sx={styles.sideMenuForm}>
                       {selected.map((value) => (
                         <Chip
                           key={value}
@@ -222,7 +216,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
       </Box>
       <Grid item sx={styles.grow}>
         <Box sx={styles.sideMenuItem}>
-          <Typography variant="h4" sx={{ mb: '10px' }}>
+          <Typography variant="h4" sx={styles.mb10}>
             Price
           </Typography>
           <SliderSelector />

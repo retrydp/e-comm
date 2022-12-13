@@ -38,6 +38,7 @@ import useFormSettings from '../../../utils/hooks/useFormSettings';
 import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
 import { isAxiosError } from 'utils/errorHandler';
+import styles from 'utils/styles';
 
 const CreateProduct: React.FC = () => {
   const { snackbarSuccess, snackbarError, onNotAdmin } = useSharedContext();
@@ -169,23 +170,15 @@ const CreateProduct: React.FC = () => {
       <Grid container spacing={2}>
         <AdminSidebar activeTab="products" />
         <Grid item xl={9} lg={9} md={9} sm={12} xs={12}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              margin: '15px 5px',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
-            <Typography sx={{ fontSize: '20px' }}>Add Product</Typography>
+          <Box sx={styles.userSidebar}>
+            <Typography sx={styles.fz20}>Add Product</Typography>
           </Box>
           {adminProductLoadingAdd ? (
             <CircularProgress />
           ) : (
             <form
               onSubmit={handleSubmit(submitHandler)}
-              style={{ width: '100%' }}
+              style={styles.fullWidth}
             >
               <List>
                 {product.map(
@@ -207,9 +200,7 @@ const CreateProduct: React.FC = () => {
                           selectTypeContent ? (
                             <FormControl fullWidth>
                               <InputLabel id={`${name}-select-label`}>
-                                <Typography
-                                  sx={{ textTransform: 'capitalize' }}
-                                >
+                                <Typography sx={styles.capitalize}>
                                   {name}
                                 </Typography>
                               </InputLabel>
@@ -224,9 +215,7 @@ const CreateProduct: React.FC = () => {
                               >
                                 {selectTypeContent.map((item) => (
                                   <MenuItem value={item} key={item}>
-                                    <Typography
-                                      sx={{ textTransform: 'capitalize' }}
-                                    >
+                                    <Typography sx={styles.capitalize}>
                                       {item}
                                     </Typography>
                                   </MenuItem>
@@ -259,7 +248,7 @@ const CreateProduct: React.FC = () => {
                   <Button
                     variant="contained"
                     component="label"
-                    sx={{ backgroundColor: '#40BFFF' }}
+                    sx={styles.blueBg}
                   >
                     Upload Image
                     <input
@@ -272,16 +261,9 @@ const CreateProduct: React.FC = () => {
                   {adminProductLoading && <CircularProgress />}
                 </ListItem>
                 {preview && (
-                  <ListItem
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      gap: '5px',
-                    }}
-                  >
+                  <ListItem sx={styles.preview}>
                     <Typography>Preview:</Typography>
-                    <Box sx={{ width: '100%', maxWidth: '500px' }}>
+                    <Box sx={styles.previewImage}>
                       <Image
                         priority={true}
                         width="100%"
@@ -294,11 +276,7 @@ const CreateProduct: React.FC = () => {
                   </ListItem>
                 )}
                 <ListItem>
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    sx={{ backgroundColor: '#40BFFF' }}
-                  >
+                  <Button variant="contained" type="submit" sx={styles.blueBg}>
                     Add product
                   </Button>
                 </ListItem>

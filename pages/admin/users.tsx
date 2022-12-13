@@ -139,7 +139,7 @@ const AdminUsers: React.FC = () => {
           <Typography id="modal-title" variant="h6" component="h2">
             Deleting user.
           </Typography>
-          <Typography id="modal-description" sx={{ mt: 2 }}>
+          <Typography id="modal-description" sx={styles.mt2}>
             This may take some time.
           </Typography>
           <CircularProgress />
@@ -148,22 +148,14 @@ const AdminUsers: React.FC = () => {
       <Grid container spacing={2}>
         <AdminSidebar activeTab="users" />
         <Grid item xl={9} lg={9} md={9} sm={12} xs={12}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              margin: '15px 5px',
-              gap: '5px',
-              alignItems: 'center',
-            }}
-          >
-            <Typography sx={{ fontSize: '20px' }}>Users</Typography>
+          <Box sx={styles.userSidebar}>
+            <Typography sx={styles.fz20}>Users</Typography>
           </Box>
-          <Box sx={{ height: 800, width: '100%' }}>
+          <Box sx={styles.dataGrid}>
             {adminPanelLoading ? (
               <CircularProgress />
             ) : adminPanelError ? (
-              <Typography sx={{ color: 'red' }}>{adminPanelError}</Typography>
+              <Typography sx={styles.colorRed}>{adminPanelError}</Typography>
             ) : (
               <DataGrid
                 getRowId={(row) => row._id}

@@ -27,14 +27,14 @@ const LoadingPage: React.FC = () => {
             container
             rowSpacing={2}
             direction="column"
-            sx={{ mb: 4 }}
+            sx={styles.mb4}
           >
             {mdMin && (
               <Grid item>
                 <Skeleton
                   variant="rectangular"
                   height={390}
-                  sx={{ maxWidth: '100%' }}
+                  sx={styles.fullWidth}
                 />
               </Grid>
             )}
@@ -47,21 +47,18 @@ const LoadingPage: React.FC = () => {
             md={9}
           >
             {smMin && (
-              <Box sx={{ mb: '20px' }}>
+              <Box sx={styles.mb20}>
                 <Skeleton
                   variant="rectangular"
                   height={300}
-                  sx={{
-                    maxWidth: '100%',
-                    borderRadius: '30px',
-                  }}
+                  sx={styles.skeletonMin}
                 />
               </Box>
             )}
             <Skeleton
               variant="rectangular"
               height={68}
-              sx={{ maxWidth: '100%', mb: '15px' }}
+              sx={styles.skeletonInner}
             />
             <ModulePlaceholder displayCount={9} />
           </Grid>

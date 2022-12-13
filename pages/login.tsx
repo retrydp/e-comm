@@ -60,7 +60,7 @@ const Login: React.FC = () => {
       </Head>
       <CssBaseline />
       <Container maxWidth="sm" sx={styles.regContainer}>
-        <Box sx={{ mt: '60px' }}>
+        <Box sx={styles.mt60}>
           <Image
             src="https://res.cloudinary.com/retrydp/image/upload/v1651478617/xmqphhxdjbtivv8o3lrm.svg"
             width="72"
@@ -72,7 +72,7 @@ const Login: React.FC = () => {
           Welcome to E-Comm
         </Typography>
         <Typography sx={styles.regText}>Sign in to continue</Typography>
-        <form onSubmit={handleSubmit(submitHandler)} style={{ width: '100%' }}>
+        <form onSubmit={handleSubmit(submitHandler)} style={styles.fullWidth}>
           <List>
             {login.map(({ name, label, icon, rules, helperText }) => {
               const Icon = icons[icon];
@@ -114,7 +114,7 @@ const Login: React.FC = () => {
                 variant="contained"
                 type="submit"
                 fullWidth
-                sx={{ backgroundColor: '#40BFFF' }}
+                sx={styles.blueBg}
               >
                 login
               </Button>

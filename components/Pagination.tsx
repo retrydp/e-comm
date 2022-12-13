@@ -4,6 +4,7 @@ import { useSharedContext } from '../context/SharedContext';
 import { useAppSelector } from '../store';
 import { withRouter, useRouter } from 'next/router';
 import commonConst from '../constants/common';
+import styles from 'utils/styles';
 
 const Pagination: React.FC = () => {
   const {
@@ -53,7 +54,7 @@ const Pagination: React.FC = () => {
         variant="outlined"
         shape="rounded"
         onChange={pageChangeHandler}
-        sx={{ m: '0, auto', p: '24px' }}
+        sx={styles.pagination}
       />
     </Stack>
   );

@@ -130,9 +130,7 @@ const Header: React.FC = (props) => {
                       onClick={handleMenuClick}
                       aria-label="user menu"
                     >
-                      <Avatar sx={{ bgcolor: '#BCDDFE' }}>
-                        {data.user.name[0]}
-                      </Avatar>
+                      <Avatar sx={styles.neutralBg}>{data.user.name[0]}</Avatar>
                     </Button>
                   </Tooltip>
                   <Menu
@@ -146,17 +144,13 @@ const Header: React.FC = (props) => {
                   >
                     <MenuItem onClick={handleMenuClose}>
                       <NextLink href="/profile" passHref>
-                        <Link sx={{ textDecoration: 'none', color: 'black' }}>
-                          Profile
-                        </Link>
+                        <Link sx={styles.headerLink}>Profile</Link>
                       </NextLink>
                     </MenuItem>
                     {data.user?.isAdmin && (
                       <MenuItem onClick={handleMenuClose}>
                         <NextLink href="/admin/dashboard" passHref>
-                          <Link sx={{ textDecoration: 'none', color: 'black' }}>
-                            Admin Dashboard
-                          </Link>
+                          <Link sx={styles.headerLink}>Admin Dashboard</Link>
                         </NextLink>
                       </MenuItem>
                     )}
@@ -164,12 +158,7 @@ const Header: React.FC = (props) => {
                       <Link
                         component="button"
                         aria-label="Log out"
-                        sx={{
-                          textDecoration: 'none',
-                          color: 'black',
-                          fontSize: '1rem',
-                          padding: '2px 0',
-                        }}
+                        sx={styles.headerLogoutButton}
                       >
                         Log out
                       </Link>
