@@ -45,13 +45,7 @@ interface EditProductProps {
 }
 
 const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
-  const {
-    snackbarSuccess,
-    snackbarError,
-    onNotAdmin,
-    authHeader,
-    authHeaderForm,
-  } = useSharedContext();
+  const { snackbarSuccess, snackbarError, onNotAdmin } = useSharedContext();
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
@@ -109,8 +103,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           color,
           itemsInStock,
           images,
-        },
-        authHeader
+        }
       );
       snackbarSuccess(notificationMessages.PRODUCT_UPDATED);
       dispatch(adminProductAddSuccess());
@@ -142,8 +135,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       dispatch(adminProductUploadRequest());
       const { data } = await axios.post<FormData, AppResponse<string>>(
         apiRoutes.ADMIN_UPLOAD,
-        bodyFormData,
-        authHeaderForm
+        bodyFormData
       );
       dispatch(adminProductUploadSuccess());
       setValue('images', data.payload);
@@ -180,8 +172,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
       try {
         dispatch(adminProductUploadRequest());
         const { data } = await axios.get<null, AppResponse<ProductSchema>>(
-          `${apiRoutes.ADMIN_PRODUCT}${slug}`,
-          authHeaderForm
+          `${apiRoutes.ADMIN_PRODUCT}${slug}`
         );
         dispatch(adminProductUploadSuccess());
         const formTitles = product.map(({ name }) => name);

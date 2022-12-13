@@ -17,6 +17,7 @@ const notificationMessages = {
   USER_NOT_FOUND: 'User not found.',
   USER_DELETED: 'User deleted successfully.',
   AUTH_NO_PASSWORD: 'Password is not set.',
+  AUTH_NO_EMAIL: 'E-mail address is not set.',
   AUTH_INVALID_USER_DATA: 'Invalid email or password.',
   AUTH_EMAIL_EXISTS: 'This email is already registered.',
   AUTH_INVALID_TOKEN: 'Token is not valid.',

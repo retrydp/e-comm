@@ -1,4 +1,5 @@
-import {  Button,
+import {
+  Button,
   Toolbar,
   Box,
   Tooltip,
@@ -20,11 +21,10 @@ import {
 import React from 'react';
 import styles from '../utils/styles';
 import NextLink from 'next/link';
-import { useAppSelector, useAppDispatch } from '../store';
+import { useAppSelector } from '../store';
+import { signOut, useSession } from 'next-auth/react';
+
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
-import { userLogout } from '../store/authStore';
-import { useSharedContext } from '../context/SharedContext';
 
 interface HeaderProps {
   window?: () => Window;
@@ -45,25 +45,23 @@ function HideOnScroll(props: HeaderProps) {
 }
 
 const Header: React.FC = (props) => {
-  const { userInfo } = useSharedContext();
   const [totalProducts, setTotalProducts] = React.useState<number>(0);
   const {
     cart: { cartProducts },
   } = useAppSelector((store) => store);
-  const dispatch = useAppDispatch();
+  const { data } = useSession();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const router = useRouter();
-
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const logoutClickHandler = () => {
+  const logoutClickHandler = async () => {
     setAnchorEl(null);
-    Cookies.remove('userInfo');
-    dispatch(userLogout());
-    router.push('/');
+    await signOut({ redirect: false }).then(() => {
+      router.push('/');
+    });
   };
 
   const handleMenuClose = () => {
@@ -120,9 +118,9 @@ const Header: React.FC = (props) => {
                   </Button>
                 </Tooltip>
               </NextLink>
-              {userInfo ? (
+              {data ? (
                 <NoSsr>
-                  <Tooltip title={userInfo.email} arrow>
+                  <Tooltip title={data.user.email} arrow>
                     <Button
                       sx={styles.navLink}
                       id="user-menu-button"
@@ -133,7 +131,7 @@ const Header: React.FC = (props) => {
                       aria-label="user menu"
                     >
                       <Avatar sx={{ bgcolor: '#BCDDFE' }}>
-                        {userInfo.name[0]}
+                        {data.user.name[0]}
                       </Avatar>
                     </Button>
                   </Tooltip>
@@ -153,7 +151,7 @@ const Header: React.FC = (props) => {
                         </Link>
                       </NextLink>
                     </MenuItem>
-                    {userInfo?.isAdmin && (
+                    {data.user?.isAdmin && (
                       <MenuItem onClick={handleMenuClose}>
                         <NextLink href="/admin/dashboard" passHref>
                           <Link sx={{ textDecoration: 'none', color: 'black' }}>

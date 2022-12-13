@@ -31,8 +31,7 @@ import notificationMessages from '../../constants/notificationMessages';
 import { isAxiosError } from 'utils/errorHandler';
 
 const AdminUsers: React.FC = () => {
-  const { snackbarSuccess, snackbarError, onNotAdmin, authHeader } =
-    useSharedContext();
+  const { snackbarSuccess, snackbarError, onNotAdmin } = useSharedContext();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const {
     adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
@@ -51,7 +50,6 @@ const AdminUsers: React.FC = () => {
         await axios.delete<string, AppResponse<UserSchema[]>>(
           apiRoutes.ADMIN_USERS,
           {
-            ...authHeader,
             data: userId,
           }
         );
@@ -114,8 +112,7 @@ const AdminUsers: React.FC = () => {
       try {
         dispatch(adminPanelFetchRequest());
         const { data } = await axios.get<null, AppResponse<UserSchema[]>>(
-          apiRoutes.ADMIN_USERS,
-          authHeader
+          apiRoutes.ADMIN_USERS
         );
         dispatch(adminPanelFetchSuccess(data.payload));
       } catch (error: unknown) {

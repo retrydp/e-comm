@@ -17,6 +17,10 @@ export interface UserSchema {
   favoritesId?: string[];
 }
 
+export interface UserInfo extends Omit<UserSchema, 'favoritesId' | '_id'> {
+  id: string;
+}
+
 export interface ProductSchema extends ProductRequest {
   slug: string;
   rating?: number;

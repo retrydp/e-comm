@@ -5,7 +5,6 @@ import db from '../../../utils/database';
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import { MongoError } from 'mongodb';
-import { signToken } from '../../../utils/auth';
 import notificationMessages from '../../../constants/notificationMessages';
 
 const handler = nc<NextApiRequest, NextApiResponse>();
@@ -29,15 +28,8 @@ handler.post(async (req, res) => {
     const user = await newUser.save();
     res.json({
       success: true,
-      payload: {
-        token: signToken(user),
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-      },
+      payload: { email: user.email, name: user.name },
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error) {
     if (error instanceof Error.ValidationError) {
       //const messages = Object.values(error.errors).map((err) => err.message);

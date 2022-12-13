@@ -38,6 +38,7 @@ import apiRoutes from '../constants/apiRoutes';
 import notificationMessages from '../constants/notificationMessages';
 import { ProductSchema } from '../utils/types';
 import { isAxiosError } from '../utils/errorHandler';
+import { useSession } from 'next-auth/react';
 
 interface ListProps {
   products: CartProduct[] | ProductSchema[];
@@ -52,28 +53,24 @@ const List: React.FC<ListProps> = ({
 }) => {
   const {
     smMin,
-
-    userInfo,
     snackbarSuccess,
     snackbarError,
     addFavoriteHandler,
     smList,
     onNotLoggedIn,
-    authHeader,
   } = useSharedContext();
   const dispatch = useAppDispatch();
-
+  const { data } = useSession();
   /**
    * Delete product to user's favorites list. If user is not logged in,
    * redirect to login page.
    * @param id slug of product
    */
   const deleteFavoriteHandler = async (id: string) => {
-    if (!userInfo)
+    if (!data)
       return onNotLoggedIn(notificationMessages.FAVORITES_DELETE_NOT_LOGGED);
     try {
       await axios.delete(apiRoutes.USER_FAVORITE, {
-        ...authHeader,
         data: { id },
       });
       snackbarSuccess(notificationMessages.PRODUCT_DELETED);
