@@ -27,6 +27,7 @@ import { useAppDispatch } from '../../../store';
 import { useSharedContext } from '../../../context/SharedContext';
 import NextLink from 'next/link';
 import { setCurrentProduct } from '../../../store/displayInterface';
+import commonConst from 'constants/common';
 
 interface ProductScreenProps {
   product?: ProductSchema;
@@ -213,7 +214,22 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
 export default ProductScreen;
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { slug } = query;
+  const { slug, category } = query;
+
+  const validateCategory = (value: typeof category) => {
+    const parsedCategory = commonConst.AVAILABLE_CATEGORIES.includes(
+      value as string
+    );
+
+    return parsedCategory;
+  };
+
+  if (!validateCategory(category)) {
+    return {
+      notFound: true,
+    };
+  }
+
   await db.dbConnect();
   const productDoc = await Product.findOne({
     slug,
