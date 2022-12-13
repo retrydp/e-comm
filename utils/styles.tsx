@@ -729,7 +729,7 @@ const styles = {
   },
 
   pagination: {
-    m: '0, auto',
+    m: '0 auto',
     p: '24px',
   },
 

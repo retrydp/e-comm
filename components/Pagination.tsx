@@ -46,7 +46,7 @@ const Pagination: React.FC = () => {
   }, [productsQuantity, quantity]);
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} sx={styles.pagination}>
       <MuiPagination
         page={page}
         count={pagesCount}
@@ -54,7 +54,6 @@ const Pagination: React.FC = () => {
         variant="outlined"
         shape="rounded"
         onChange={pageChangeHandler}
-        sx={styles.pagination}
       />
     </Stack>
   );
