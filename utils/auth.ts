@@ -1,25 +1,10 @@
-import jwt from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextHandler } from 'next-connect';
 import notificationMessages from '../constants/notificationMessages';
 import { getSession } from 'next-auth/react';
-export interface UserAuth {
-  _id: string;
-  name: string;
-  email: string;
-  isAdmin: boolean;
-}
-
-interface AuthRequest extends NextApiRequest {
-  user?: string | jwt.JwtPayload;
-}
-
-interface AuthAdmin extends NextApiRequest {
-  user: UserAuth;
-}
 
 const isAuth = async (
-  req: AuthRequest,
+  req: NextApiRequest,
   res: NextApiResponse,
   next: NextHandler
 ) => {
@@ -35,7 +20,7 @@ const isAuth = async (
 };
 
 const isAdmin = async (
-  req: AuthAdmin,
+  req: NextApiRequest,
   res: NextApiResponse,
   next: NextHandler
 ) => {
