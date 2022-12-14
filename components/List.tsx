@@ -200,7 +200,8 @@ const List: React.FC<ListProps> = ({
                     onClick={() =>
                       favoritesModeAccept
                         ? addFavoriteHandler(product.slug)
-                        : deleteFavoriteHandler(product.slug)
+                        : // TODO: ask user confirm on delete
+                          deleteFavoriteHandler(product.slug)
                     }
                   >
                     {favoritesModeAccept ? (

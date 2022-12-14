@@ -9,7 +9,6 @@ const isAuth = async (
   next: NextHandler
 ) => {
   const session = await getSession({ req });
-
   if (session?.user) {
     next();
   } else {
