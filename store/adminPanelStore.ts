@@ -3,8 +3,8 @@ import { ProductSchema, UserSchema } from '../utils/types';
 
 type DataSchemas = ProductSchema[] | UserSchema[] | [];
 
-interface AuthInitialState<T extends DataSchemas> {
-  adminPanelData: T;
+interface AuthInitialState {
+  adminPanelData: DataSchemas;
   adminPanelLoading: boolean;
   adminPanelError: string;
   adminPanelLoadingDelete: boolean;
@@ -12,7 +12,7 @@ interface AuthInitialState<T extends DataSchemas> {
   adminPanelDeleteErrorText: string;
 }
 
-const initialState: AuthInitialState<DataSchemas> = {
+const initialState: AuthInitialState = {
   adminPanelData: [],
   adminPanelLoading: false,
   adminPanelError: '',

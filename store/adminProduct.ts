@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';interface ApInitialState {
+import { createSlice } from '@reduxjs/toolkit';
+
+interface ApInitialState {
   adminProductLoading: boolean;
   adminProductLoadingAdd: boolean;
   adminProductErrorText: string;

@@ -78,7 +78,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
    * @description Filter sidebar visibility trigger.
    */
   const drawerVisibleHandler = () => {
-    setDrawerIsVisible(!drawerIsVisible);
+    setDrawerIsVisible((prev) => !prev);
   };
 
   const quantityHandler = (event: SelectChangeEvent) => {
