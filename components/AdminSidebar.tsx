@@ -19,22 +19,17 @@ import {
 import styles from '../utils/styles';
 import NextLink from 'next/link';
 
-interface Items {
-  title: 'products' | 'users' | 'dashboard';
-  icon: JSX.Element;
-}
+const menuItemsSettings = [
+  { title: 'dashboard', icon: <Dashboard /> },
+  { title: 'products', icon: <ShoppingCart /> },
+  { title: 'users', icon: <People /> },
+] as const;
 
 interface AdminSidebarProps {
-  activeTab: string;
+  activeTab: typeof menuItemsSettings[number]['title'];
 }
 
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab }) => {
-  const menuItemsSettings: Items[] = [
-    { title: 'dashboard', icon: <Dashboard /> },
-    { title: 'products', icon: <ShoppingCart /> },
-    { title: 'users', icon: <People /> },
-  ];
-
   return (
     <Grid item sx={styles.adminSidebar} xl={2} lg={2} md={3} sm={12} xs={12}>
       <List sx={styles.fullWidth} disablePadding>
