@@ -3,7 +3,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
 import { SnackbarProvider } from 'notistack';
-import { SharedContext } from '../context/SharedContext';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import createEmotionCache from '../config/createEmotionCache';
 import { SessionProvider } from 'next-auth/react';
@@ -29,9 +28,7 @@ const MyApp: React.FC<MyAppProps> = ({
               horizontal: 'center',
             }}
           >
-            <SharedContext>
-              <Component {...pageProps} />
-            </SharedContext>
+            <Component {...pageProps} />
           </SnackbarProvider>
         </Provider>
       </CacheProvider>

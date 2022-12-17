@@ -1,16 +1,16 @@
 import React from 'react';
 import { Pagination as MuiPagination, Stack } from '@mui/material';
-import { useSharedContext } from '../context/SharedContext';
 import { useAppSelector } from '../store';
 import { withRouter, useRouter } from 'next/router';
 import commonConst from '../constants/common';
 import styles from 'utils/styles';
+import useFilterQuery from 'utils/hooks/useFilterQuery';
 
 const Pagination: React.FC = () => {
   const {
     display: { productsQuantity },
   } = useAppSelector((store) => store);
-  const { filterQuery } = useSharedContext();
+  const { filterQuery } = useFilterQuery();
   const router = useRouter();
 
   const pageChangeHandler = (

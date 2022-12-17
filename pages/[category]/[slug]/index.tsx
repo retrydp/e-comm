@@ -24,10 +24,10 @@ import styles from '../../../utils/styles';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { cartAddProduct } from '../../../store/cart';
 import { useAppDispatch } from '../../../store';
-import { useSharedContext } from '../../../context/SharedContext';
 import NextLink from 'next/link';
 import { setCurrentProduct } from '../../../store/displayInterface';
 import commonConst from 'constants/common';
+import useHandler from 'utils/hooks/useHandler';
 
 interface ProductScreenProps {
   product?: ProductSchema;
@@ -36,7 +36,7 @@ interface ProductScreenProps {
 type AllowedCategories = 'bags' | 'sneakers' | 'belts';
 
 const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
-  const { addFavoriteHandler } = useSharedContext();
+  const { addFavoriteHandler } = useHandler();
   const [value, setValue] = React.useState('1');
   const dispatch = useAppDispatch();
 

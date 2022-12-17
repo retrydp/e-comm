@@ -25,13 +25,15 @@ import axios from 'axios';
 import { AppResponse, UserSchema } from '../../utils/types';
 import NextLink from 'next/link';
 import { Delete, Edit } from '@mui/icons-material';
-import { useSharedContext } from '../../context/SharedContext';
 import apiRoutes from '../../constants/apiRoutes';
 import notificationMessages from '../../constants/notificationMessages';
 import { isAxiosError } from 'utils/errorHandler';
+import useInform from 'utils/hooks/useInform';
+import useAccessProvider from 'utils/hooks/useAccessProvider';
 
 const AdminUsers: React.FC = () => {
-  const { snackbarSuccess, snackbarError, onNotAdmin } = useSharedContext();
+  const { snackbarSuccess, snackbarError } = useInform();
+  const { onNotAdmin } = useAccessProvider();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const {
     adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },

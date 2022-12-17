@@ -16,13 +16,14 @@ import {
 import { MailOutline, PasswordOutlined } from '@mui/icons-material';
 import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
-import { useSharedContext } from '../context/SharedContext';
 import Head from 'next/head';
 import styles from '../utils/styles';
 import useFormSettings from '../utils/hooks/useFormSettings';
 import { signIn } from 'next-auth/react';
+import useInform from 'utils/hooks/useInform';
+
 const Login: React.FC = () => {
-  const { snackbarError } = useSharedContext();
+  const { snackbarError } = useInform();
   const router = useRouter();
   const { redirect } = router.query;
   const {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { CssBaseline, Grid } from '@mui/material';
 import { AdminSidebar } from '../../components';
-import { useSharedContext } from '../../context/SharedContext';
+import useAccessProvider from 'utils/hooks/useAccessProvider';
 
 const AdminDashboard: React.FC = () => {
-  const { onNotAdmin } = useSharedContext();
+  const { onNotAdmin } = useAccessProvider();
 
   React.useEffect(() => {
     onNotAdmin();

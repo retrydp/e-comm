@@ -15,9 +15,9 @@ import { SliderSelector } from '.';
 import { filterValues } from './GoodsWrapper';
 import { useAppSelector } from '../store';
 import styles from '../utils/styles';
-import { useSharedContext } from '../context/SharedContext';
 import { useRouter } from 'next/router';
 import commonConst from '../constants/common';
+import useFilterQuery from 'utils/hooks/useFilterQuery';
 
 interface AvailableColorsList {
   color: string;
@@ -34,7 +34,7 @@ const SideMenuTemplate: React.FC<SideMenuTemplateProps> = ({
   width,
   withSort,
 }) => {
-  const { filterQuery } = useSharedContext();
+  const { filterQuery } = useFilterQuery();
   const {
     display: { availableBrands, availableColors },
   } = useAppSelector((store) => store);

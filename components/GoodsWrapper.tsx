@@ -21,13 +21,13 @@ import styles from '../utils/styles';
 import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { SideMenuTemplate, Module, List, Pagination } from '../components';
-import { useSharedContext } from '../context/SharedContext';
 import { WrapperProps } from '../utils/types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '../store';
 import commonConst from '../constants/common';
-
+import useAppMedia from 'utils/hooks/useAppMedia';
+import useFilterQuery from 'utils/hooks/useFilterQuery';
 export interface FilterValues {
   id: string;
   title: string;
@@ -46,10 +46,10 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
   const {
     display: { productsQuantity },
   } = useAppSelector((store) => store);
-  const { filterQuery } = useSharedContext();
+  const { filterQuery } = useFilterQuery();
   const [view, setView] = React.useState<View>('module');
   const router = useRouter();
-  const { mdMax, smMin } = useSharedContext();
+  const { mdMax, smMin } = useAppMedia();
   const [sort, setSort] = React.useState<string>(
     (router.query['sort'] as string) || 'new'
   );

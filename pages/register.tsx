@@ -23,14 +23,14 @@ import Image from 'next/image';
 import styles from '../utils/styles';
 import { Controller, useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
-import { useSharedContext } from '../context/SharedContext';
 import { AppResponse, UserSchema } from '../utils/types';
 import useFormSettings from '../utils/hooks/useFormSettings';
 import apiRoutes from '../constants/apiRoutes';
 import { signIn } from 'next-auth/react';
+import useInform from 'utils/hooks/useInform';
 
 const Register: React.FC = () => {
-  const { snackbarError } = useSharedContext();
+  const { snackbarError } = useInform();
   const router = useRouter();
   const { redirect } = router.query;
   const {

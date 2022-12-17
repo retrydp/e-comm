@@ -12,20 +12,9 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 import styles from '../utils/styles';
 import { SxProps } from '@mui/material/styles';
-import { useSharedContext } from '../context/SharedContext';
-import { NavTitles } from '../utils/types';
-
-type NavPaths =
-  | '/'
-  | '/loading?category=bags'
-  | '/loading?category=sneakers'
-  | '/loading?category=belts'
-  | '/contacts';
-
-interface NavItems {
-  title: NavTitles;
-  path: NavPaths;
-}
+import useAppMedia from 'utils/hooks/useAppMedia';
+import { NavTitles } from 'utils/types';
+import { menuItems } from 'constants/common';
 
 interface NavigationBarProps {
   currentTab: NavTitles;
@@ -38,14 +27,7 @@ interface LinkTabProps {
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ currentTab }) => {
-  const { smMin } = useSharedContext();
-  const menuItems: NavItems[] = [
-    { title: 'home', path: '/' },
-    { title: 'bags', path: '/loading?category=bags' },
-    { title: 'sneakers', path: '/loading?category=sneakers' },
-    { title: 'belts', path: '/loading?category=belts' },
-    { title: 'contacts', path: '/contacts' },
-  ];
+  const { smMin } = useAppMedia();
 
   const LinkTab = (props: LinkTabProps) => {
     return (

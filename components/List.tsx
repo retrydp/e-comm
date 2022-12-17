@@ -33,12 +33,15 @@ import {
 import { CartProduct } from '../store/cart';
 import axios from 'axios';
 import { favoritesDelete } from '../store/favorites';
-import { useSharedContext } from '../context/SharedContext';
 import apiRoutes from '../constants/apiRoutes';
 import notificationMessages from '../constants/notificationMessages';
 import { ProductSchema } from '../utils/types';
 import { isAxiosError } from '../utils/errorHandler';
 import { useSession } from 'next-auth/react';
+import useAppMedia from '../utils/hooks/useAppMedia';
+import useInform from 'utils/hooks/useInform';
+import useHandler from 'utils/hooks/useHandler';
+import useAccessProvider from 'utils/hooks/useAccessProvider';
 
 interface ListProps {
   products: CartProduct[] | ProductSchema[];
@@ -51,14 +54,10 @@ const List: React.FC<ListProps> = ({
   favoritesModeAccept = true,
   cartMode = false,
 }) => {
-  const {
-    smMin,
-    snackbarSuccess,
-    snackbarError,
-    addFavoriteHandler,
-    smList,
-    onNotLoggedIn,
-  } = useSharedContext();
+  const { onNotLoggedIn } = useAccessProvider();
+  const { snackbarError, snackbarSuccess } = useInform();
+  const { addFavoriteHandler } = useHandler();
+  const { smList, smMin } = useAppMedia();
   const dispatch = useAppDispatch();
   const { data } = useSession();
   /**

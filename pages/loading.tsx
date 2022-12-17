@@ -3,11 +3,11 @@ import { Layout, ModulePlaceholder } from '../components';
 import { useRouter } from 'next/router';
 import { Box, Container, Grid, Skeleton } from '@mui/material';
 import { NavTitles } from '../utils/types';
-import { useSharedContext } from '../context/SharedContext';
 import styles from '../utils/styles';
+import useAppMedia from 'utils/hooks/useAppMedia';
 
 const LoadingPage: React.FC = () => {
-  const { smMin, mdMin } = useSharedContext();
+  const { smMin, mdMin } = useAppMedia();
   const router = useRouter();
   const { category } = router.query;
 
@@ -16,7 +16,7 @@ const LoadingPage: React.FC = () => {
   });
 
   return (
-    <Layout title={`${category || 'home'}` as NavTitles}>
+    <Layout title={`${(category as NavTitles) || 'home'}`}>
       <Container maxWidth="lg">
         <Grid container spacing={2}>
           <Grid

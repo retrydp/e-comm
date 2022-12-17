@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { menuItems } from 'constants/common';
 import mongoose from 'mongoose';
 
 export interface Reviews {
@@ -29,8 +30,6 @@ export interface ProductSchema extends ProductRequest {
   reviews?: mongoose.Model<Reviews>;
   numReviews: number;
 }
-
-export type NavTitles = 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
 
 export interface GoodsProps {
   goods: ProductSchema[];
@@ -90,3 +89,5 @@ export type AppResponse<
   payload: T;
   success: boolean;
 }>;
+
+export type NavTitles = typeof menuItems[number]['title'];

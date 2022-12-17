@@ -4,10 +4,11 @@ import React from 'react';
 import { Footer, Header, NavigationBar, BreadcrumbsBar } from '.';
 import styles from '../utils/styles';
 import theme from '../config/theme';
+import { NavTitles } from '../utils/types';
 
 interface LayoutProps {
   description?: string;
-  title?: 'home' | 'bags' | 'sneakers' | 'belts' | 'contacts';
+  title?: NavTitles;
   customTitle?: string;
   children?: React.ReactNode;
 }

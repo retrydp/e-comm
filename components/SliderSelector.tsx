@@ -1,12 +1,12 @@
 import { Slider, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { SyntheticEvent } from 'react';
+import useFilterQuery from 'utils/hooks/useFilterQuery';
 import styles from 'utils/styles';
-import { useSharedContext } from '../context/SharedContext';
 import { useAppSelector } from '../store';
 
 const SliderSelector: React.FC = () => {
-  const { filterQuery } = useSharedContext();
+  const { filterQuery } = useFilterQuery();
   const [minMax, setMinMax] = React.useState<number[]>([0, 0]);
   const {
     display: { minMaxPrice },

@@ -16,7 +16,6 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-import { useSharedContext } from '../../../context/SharedContext';
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
@@ -32,13 +31,16 @@ import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
 import { isAxiosError } from 'utils/errorHandler';
 import styles from 'utils/styles';
+import useInform from 'utils/hooks/useInform';
+import useAccessProvider from 'utils/hooks/useAccessProvider';
 
 interface EditUserProps {
   id: string;
 }
 
 const EditUser: React.FC<EditUserProps> = ({ id }) => {
-  const { snackbarSuccess, snackbarError, onNotAdmin } = useSharedContext();
+  const { snackbarSuccess, snackbarError } = useInform();
+  const { onNotAdmin } = useAccessProvider();
   const [isAdminValue, setIsAdminValue] = React.useState<boolean>(false);
   const {
     adminUser: { adminUserLoading, adminUserErrorText },

@@ -6,7 +6,7 @@ import { ModulePlaceholder } from '../components';
 import axios from 'axios';
 import { AppResponse, InnerPayload, ProductSchema } from '../utils/types';
 import apiRoutes from '../constants/apiRoutes';
-import { useSharedContext } from '../context/SharedContext';
+import useAppMedia from 'utils/hooks/useAppMedia';
 
 type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
 
@@ -15,7 +15,7 @@ interface TabItems {
 }
 
 const Index: React.FC = (): JSX.Element => {
-  const { smMin } = useSharedContext();
+  const { smMin } = useAppMedia();
   const [value, setValue] = React.useState<TabItemNames>('all');
   const [loading, setLoading] = React.useState<boolean>(false);
   const [presentationData, setPresentationData] =

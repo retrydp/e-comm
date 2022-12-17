@@ -28,13 +28,15 @@ import NextLink from 'next/link';
 import { AdminSidebar } from '../../components';
 import axios from 'axios';
 import { AppResponse, ProductSchema } from '../../utils/types';
-import { useSharedContext } from '../../context/SharedContext';
 import apiRoutes from '../../constants/apiRoutes';
 import notificationMessages from '../../constants/notificationMessages';
 import { isAxiosError } from 'utils/errorHandler';
+import useAccessProvider from 'utils/hooks/useAccessProvider';
+import useInform from 'utils/hooks/useInform';
 
 const AdminProducts: React.FC = () => {
-  const { snackbarSuccess, snackbarError, onNotAdmin } = useSharedContext();
+  const { snackbarSuccess, snackbarError } = useInform();
+  const { onNotAdmin } = useAccessProvider();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const {
     adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },

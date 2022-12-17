@@ -12,4 +12,12 @@ const commonConst = {
   AVAILABLE_CATEGORIES: ['bags', 'sneakers', 'belts'],
 };
 
+export const menuItems = [
+  { title: 'home', path: '/' },
+  { title: 'bags', path: '/loading?category=bags' },
+  { title: 'sneakers', path: '/loading?category=sneakers' },
+  { title: 'belts', path: '/loading?category=belts' },
+  { title: 'contacts', path: '/contacts' },
+] as const;
+
 export default commonConst;

@@ -8,7 +8,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useAppSelector, useAppDispatch } from '../store';
-import { useSharedContext } from '../context/SharedContext';
 import axios from 'axios';
 import { AppResponse, ProductSchema } from '../utils/types';
 import { favoritesFetch, favoritesSetLoading } from '../store/favorites';
@@ -19,9 +18,10 @@ import apiRoutes from '../constants/apiRoutes';
 import notificationMessages from '../constants/notificationMessages';
 import { useSession } from 'next-auth/react';
 import styles from 'utils/styles';
+import useAccessProvider from 'utils/hooks/useAccessProvider';
 
 const Favorites: React.FC = () => {
-  const { onNotLoggedIn } = useSharedContext();
+  const { onNotLoggedIn } = useAccessProvider();
   const dispatch = useAppDispatch();
   const {
     favorites: { favoritesData, favoritesLoading },
