@@ -6,7 +6,7 @@ import { ModulePlaceholder } from '../components';
 import axios from 'axios';
 import { AppResponse, InnerPayload, ProductSchema } from '../utils/types';
 import apiRoutes from '../constants/apiRoutes';
-import useAppMedia from 'utils/hooks/useAppMedia';
+import { useAppMedia } from '../utils/hooks';
 
 type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
 

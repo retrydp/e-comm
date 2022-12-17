@@ -17,8 +17,8 @@ import { ArrowBack } from '@mui/icons-material';
 import apiRoutes from '../constants/apiRoutes';
 import notificationMessages from '../constants/notificationMessages';
 import { useSession } from 'next-auth/react';
-import styles from 'utils/styles';
-import useAccessProvider from 'utils/hooks/useAccessProvider';
+import styles from '../utils/styles';
+import { useAccessProvider } from '../utils/hooks';
 
 const Favorites: React.FC = () => {
   const { onNotLoggedIn } = useAccessProvider();

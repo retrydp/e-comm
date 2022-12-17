@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+
 const useFilterQuery = () => {
   const router = useRouter();
   const filterQuery = (queryOpts: Record<string, string | string[]>) => {

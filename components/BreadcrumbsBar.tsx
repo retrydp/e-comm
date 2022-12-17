@@ -4,7 +4,7 @@ import { withRouter, useRouter } from 'next/router';
 import NextLink from 'next/link';
 import { Home } from '@mui/icons-material';
 import { useAppSelector } from '../store';
-import styles from 'utils/styles';
+import styles from '../utils/styles';
 
 const BreadcrumbsBar: React.FC = () => {
   const router = useRouter();

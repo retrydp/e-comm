@@ -4,7 +4,7 @@ import {
   OverridableTypeMap,
 } from '@mui/material/OverridableComponent';
 import { Skeleton } from '@mui/material';
-import styles from 'utils/styles';
+import styles from '../../utils/styles';
 
 interface AddedProps {
   variant: 'text' | 'rectangular' | 'circular' | undefined;

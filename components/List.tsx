@@ -38,10 +38,12 @@ import notificationMessages from '../constants/notificationMessages';
 import { ProductSchema } from '../utils/types';
 import { isAxiosError } from '../utils/errorHandler';
 import { useSession } from 'next-auth/react';
-import useAppMedia from '../utils/hooks/useAppMedia';
-import useInform from 'utils/hooks/useInform';
-import useHandler from 'utils/hooks/useHandler';
-import useAccessProvider from 'utils/hooks/useAccessProvider';
+import {
+  useAppMedia,
+  useInform,
+  useHandler,
+  useAccessProvider,
+} from '../utils/hooks';
 
 interface ListProps {
   products: CartProduct[] | ProductSchema[];

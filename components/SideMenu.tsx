@@ -11,13 +11,13 @@ import {
   SelectChangeEvent,
   Typography,
 } from '@mui/material';
-import { SliderSelector } from '.';
+import { SliderSelector } from './';
 import { filterValues } from './GoodsWrapper';
 import { useAppSelector } from '../store';
 import styles from '../utils/styles';
 import { useRouter } from 'next/router';
 import commonConst from '../constants/common';
-import useFilterQuery from 'utils/hooks/useFilterQuery';
+import { useFilterQuery } from '../utils/hooks';
 
 interface AvailableColorsList {
   color: string;

@@ -24,10 +24,9 @@ import styles from '../utils/styles';
 import { Controller, useForm, FieldValues } from 'react-hook-form';
 import axios from 'axios';
 import { AppResponse, UserSchema } from '../utils/types';
-import useFormSettings from '../utils/hooks/useFormSettings';
+import { useFormSettings, useInform } from '../utils/hooks';
 import apiRoutes from '../constants/apiRoutes';
 import { signIn } from 'next-auth/react';
-import useInform from 'utils/hooks/useInform';
 
 const Register: React.FC = () => {
   const { snackbarError } = useInform();

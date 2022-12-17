@@ -26,8 +26,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '../store';
 import commonConst from '../constants/common';
-import useAppMedia from 'utils/hooks/useAppMedia';
-import useFilterQuery from 'utils/hooks/useFilterQuery';
+import { useAppMedia, useFilterQuery } from '../utils/hooks';
+
 export interface FilterValues {
   id: string;
   title: string;

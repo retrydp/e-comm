@@ -35,13 +35,15 @@ import {
 } from '../../../store/adminProduct';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
-import useFormSettings from '../../../utils/hooks/useFormSettings';
+import {
+  useFormSettings,
+  useInform,
+  useAccessProvider,
+} from '../../../utils/hooks';
 import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
-import { isAxiosError } from 'utils/errorHandler';
-import styles from 'utils/styles';
-import useInform from 'utils/hooks/useInform';
-import useAccessProvider from 'utils/hooks/useAccessProvider';
+import { isAxiosError } from '../../../utils/errorHandler';
+import styles from '../../../utils/styles';
 
 interface EditProductProps {
   slug: string;

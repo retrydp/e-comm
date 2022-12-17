@@ -18,9 +18,8 @@ import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
 import Head from 'next/head';
 import styles from '../utils/styles';
-import useFormSettings from '../utils/hooks/useFormSettings';
+import { useFormSettings, useInform } from '../utils/hooks';
 import { signIn } from 'next-auth/react';
-import useInform from 'utils/hooks/useInform';
 
 const Login: React.FC = () => {
   const { snackbarError } = useInform();

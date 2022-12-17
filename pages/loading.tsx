@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Box, Container, Grid, Skeleton } from '@mui/material';
 import { NavTitles } from '../utils/types';
 import styles from '../utils/styles';
-import useAppMedia from 'utils/hooks/useAppMedia';
+import { useAppMedia } from '../utils/hooks';
 
 const LoadingPage: React.FC = () => {
   const { smMin, mdMin } = useAppMedia();

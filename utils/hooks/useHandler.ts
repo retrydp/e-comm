@@ -2,7 +2,7 @@ import axios from 'axios';
 import apiRoutes from 'constants/apiRoutes';
 import notificationMessages from 'constants/notificationMessages';
 import { useSession } from 'next-auth/react';
-import { isAxiosError } from 'utils/errorHandler';
+import { isAxiosError } from '../errorHandler';
 import useAccessProvider from './useAccessProvider';
 import useInform from './useInform';
 

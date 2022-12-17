@@ -1,7 +1,7 @@
 import React from 'react';
 import { CssBaseline, Grid } from '@mui/material';
 import { AdminSidebar } from '../../components';
-import useAccessProvider from 'utils/hooks/useAccessProvider';
+import { useAccessProvider } from '../../utils/hooks';
 
 const AdminDashboard: React.FC = () => {
   const { onNotAdmin } = useAccessProvider();

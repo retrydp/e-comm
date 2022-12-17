@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import useInform from './useInform';
+
 const useAccessProvider = () => {
   const { data } = useSession();
   const router = useRouter();

@@ -1,7 +1,7 @@
 import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material';
 import Head from 'next/head';
 import React from 'react';
-import { Footer, Header, NavigationBar, BreadcrumbsBar } from '.';
+import { Footer, Header, NavigationBar, BreadcrumbsBar } from './';
 import styles from '../utils/styles';
 import theme from '../config/theme';
 import { NavTitles } from '../utils/types';

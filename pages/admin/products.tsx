@@ -30,9 +30,8 @@ import axios from 'axios';
 import { AppResponse, ProductSchema } from '../../utils/types';
 import apiRoutes from '../../constants/apiRoutes';
 import notificationMessages from '../../constants/notificationMessages';
-import { isAxiosError } from 'utils/errorHandler';
-import useAccessProvider from 'utils/hooks/useAccessProvider';
-import useInform from 'utils/hooks/useInform';
+import { isAxiosError } from '../../utils/errorHandler';
+import { useAccessProvider, useInform } from '../../utils/hooks';
 
 const AdminProducts: React.FC = () => {
   const { snackbarSuccess, snackbarError } = useInform();

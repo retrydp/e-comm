@@ -27,9 +27,8 @@ import NextLink from 'next/link';
 import { Delete, Edit } from '@mui/icons-material';
 import apiRoutes from '../../constants/apiRoutes';
 import notificationMessages from '../../constants/notificationMessages';
-import { isAxiosError } from 'utils/errorHandler';
-import useInform from 'utils/hooks/useInform';
-import useAccessProvider from 'utils/hooks/useAccessProvider';
+import { isAxiosError } from '../../utils/errorHandler';
+import { useInform, useAccessProvider } from '../../utils/hooks';
 
 const AdminUsers: React.FC = () => {
   const { snackbarSuccess, snackbarError } = useInform();

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { menuItems } from 'constants/common';
+import { menuItems } from '../constants/common';
 import mongoose from 'mongoose';
 
 export interface Reviews {

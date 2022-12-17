@@ -1,7 +1,7 @@
 import { Slider, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { SyntheticEvent } from 'react';
-import useFilterQuery from 'utils/hooks/useFilterQuery';
+import { useFilterQuery } from '../utils/hooks';
 import styles from 'utils/styles';
 import { useAppSelector } from '../store';
 

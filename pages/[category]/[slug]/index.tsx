@@ -26,8 +26,8 @@ import { cartAddProduct } from '../../../store/cart';
 import { useAppDispatch } from '../../../store';
 import NextLink from 'next/link';
 import { setCurrentProduct } from '../../../store/displayInterface';
-import commonConst from 'constants/common';
-import useHandler from 'utils/hooks/useHandler';
+import commonConst from '../../../constants/common';
+import { useHandler } from '../../../utils/hooks';
 
 interface ProductScreenProps {
   product?: ProductSchema;

@@ -1,10 +1,10 @@
 import User from 'models/User';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import db from 'utils/database';
+import db from '../../../utils/database';
 import bcrypt from 'bcryptjs';
-import notificationMessages from 'constants/notificationMessages';
-import { ValidationError } from 'utils/customErrors';
+import notificationMessages from '../../../constants/notificationMessages';
+import { ValidationError } from '../../../utils/customErrors';
 
 export default NextAuth({
   session: {

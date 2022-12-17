@@ -12,9 +12,9 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 import styles from '../utils/styles';
 import { SxProps } from '@mui/material/styles';
-import useAppMedia from 'utils/hooks/useAppMedia';
-import { NavTitles } from 'utils/types';
-import { menuItems } from 'constants/common';
+import { useAppMedia } from '../utils/hooks';
+import { NavTitles } from '../utils/types';
+import { menuItems } from '../constants/common';
 
 interface NavigationBarProps {
   currentTab: NavTitles;
