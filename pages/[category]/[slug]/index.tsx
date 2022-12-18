@@ -207,7 +207,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       notFound: true,
     };
   }
-  //FIXME: await db.dbConnect();
+  await db.dbConnect();
   const productDoc = await Product.findOne({
     slug,
   }).lean();

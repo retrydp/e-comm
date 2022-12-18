@@ -41,7 +41,7 @@ const CategoryPresentation: React.FC<GoodsProps & { category: NavTitles }> = ({
 export default CategoryPresentation;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  // FIXME: await db.dbConnect();
+  await db.dbConnect();
   const {
     brand,
     colors,
