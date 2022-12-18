@@ -38,7 +38,7 @@
       "warn",
       { "blankLine": "always", "prev": "export", "next": "export" },
       { "blankLine": "always", "prev": "*", "next": "return" },
-      { "blankLine": "always", "prev": "function", "next": "function" }
+      { "blankLine": "always", "prev": "*", "next": "function" }
     ]
   }
 }

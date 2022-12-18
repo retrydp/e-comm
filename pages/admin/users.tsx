@@ -1,13 +1,4 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store';
-import {
-  adminPanelFetchRequest,
-  adminPanelFetchSuccess,
-  adminPanelFetchError,
-  adminPanelDeleteRequest,
-  adminPanelDeleteSuccess,
-  adminPanelDeleteError,
-} from '../../store/adminPanelStore';
 import {
   Box,
   CssBaseline,
@@ -28,24 +19,32 @@ import { Delete, Edit } from '@mui/icons-material';
 import apiRoutes from '../../constants/apiRoutes';
 import notificationMessages from '../../constants/notificationMessages';
 import { isAxiosError } from '../../utils/errorHandler';
-import { useInform, useAccessProvider } from '../../utils/hooks';
+import {
+  useInform,
+  useAccessProvider,
+  useFetchHandler,
+} from '../../utils/hooks';
 
 const AdminUsers: React.FC = () => {
   const { snackbarSuccess, snackbarError } = useInform();
   const { onNotAdmin } = useAccessProvider();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
-  const {
-    adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
-  } = useAppSelector((store) => store);
-  const dispatch = useAppDispatch();
 
+  const {
+    fetchData,
+    fetchError,
+    isLoading,
+    setFetchData,
+    setFetchError,
+    setIsLoading,
+  } = useFetchHandler<UserSchema[]>();
   /**
    * @description Function to delete a user from the database.
    * @param userId id of the user.
    */
   const handleDeleteUser = async (userId: string) => {
     if (confirm(`Do you want to delete ${userId}`)) {
-      dispatch(adminPanelDeleteRequest());
+      setIsLoading(true);
       setModalOpen(true);
       try {
         await axios.delete<string, AppResponse<UserSchema[]>>(
@@ -54,21 +53,19 @@ const AdminUsers: React.FC = () => {
             data: userId,
           }
         );
-        dispatch(
-          adminPanelDeleteSuccess(
-            (adminPanelData as UserSchema[]).filter(({ _id }) => _id !== userId)
-          )
-        );
+        setFetchData((prev) => prev.filter(({ _id }) => _id !== userId));
+        setIsLoading(false);
         setModalOpen(false);
         snackbarSuccess(notificationMessages.USER_DELETED);
       } catch (error: unknown) {
         setModalOpen(false);
+        setIsLoading(false);
         if (isAxiosError<{ message: string }>(error)) {
           const errorText = error.response?.data.message;
-          dispatch(adminPanelDeleteError(errorText));
+          setFetchError(errorText);
           snackbarError(errorText);
         } else {
-          dispatch(adminPanelDeleteError(`Unexpected error`));
+          setFetchError(`Unexpected error`);
           snackbarError(`Unexpected error`);
         }
       }
@@ -111,17 +108,20 @@ const AdminUsers: React.FC = () => {
     onNotAdmin();
     const fetchHandler = async () => {
       try {
-        dispatch(adminPanelFetchRequest());
+        setIsLoading(true);
         const { data } = await axios.get<null, AppResponse<UserSchema[]>>(
           apiRoutes.ADMIN_USERS
         );
-        dispatch(adminPanelFetchSuccess(data.payload));
+        setFetchData(data.payload);
+        setIsLoading(false);
+        setFetchError('');
       } catch (error: unknown) {
+        setIsLoading(false);
         if (isAxiosError<{ message: string }>(error)) {
           const errorText = error.response?.data.message;
-          dispatch(adminPanelFetchError(errorText));
+          setFetchError(errorText);
         } else {
-          dispatch(adminPanelFetchError(`Unexpected error`));
+          setFetchError(`Unexpected error`);
         }
       }
     };
@@ -153,14 +153,14 @@ const AdminUsers: React.FC = () => {
             <Typography sx={styles.fz20}>Users</Typography>
           </Box>
           <Box sx={styles.dataGrid}>
-            {adminPanelLoading ? (
+            {isLoading ? (
               <CircularProgress />
-            ) : adminPanelError ? (
-              <Typography sx={styles.colorRed}>{adminPanelError}</Typography>
+            ) : fetchError ? (
+              <Typography sx={styles.colorRed}>{fetchError}</Typography>
             ) : (
               <DataGrid
                 getRowId={(row) => row._id}
-                rows={adminPanelData}
+                rows={fetchData}
                 columns={columns}
                 pageSize={30}
                 // onCellClick={({ id }) => console.log(id)}

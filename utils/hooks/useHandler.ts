@@ -10,6 +10,7 @@ const useHandler = () => {
   const { data } = useSession();
   const { onNotLoggedIn } = useAccessProvider();
   const { snackbarError, snackbarSuccess } = useInform();
+
   const addFavoriteHandler = async (id: string) => {
     if (!data?.user)
       return onNotLoggedIn(notificationMessages.FAVORITES_ADD_NOT_LOGGED);

@@ -1,13 +1,4 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store';
-import {
-  adminPanelFetchRequest,
-  adminPanelFetchSuccess,
-  adminPanelFetchError,
-  adminPanelDeleteRequest,
-  adminPanelDeleteSuccess,
-  adminPanelDeleteError,
-} from '../../store/adminPanelStore';
 import {
   Box,
   Button,
@@ -31,16 +22,24 @@ import { AppResponse, ProductSchema } from '../../utils/types';
 import apiRoutes from '../../constants/apiRoutes';
 import notificationMessages from '../../constants/notificationMessages';
 import { isAxiosError } from '../../utils/errorHandler';
-import { useAccessProvider, useInform } from '../../utils/hooks';
+import {
+  useAccessProvider,
+  useInform,
+  useFetchHandler,
+} from '../../utils/hooks';
 
 const AdminProducts: React.FC = () => {
   const { snackbarSuccess, snackbarError } = useInform();
   const { onNotAdmin } = useAccessProvider();
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const {
-    adminPanelStore: { adminPanelData, adminPanelError, adminPanelLoading },
-  } = useAppSelector((store) => store);
-  const dispatch = useAppDispatch();
+    fetchData,
+    fetchError,
+    isLoading,
+    setFetchData,
+    setFetchError,
+    setIsLoading,
+  } = useFetchHandler<ProductSchema[]>();
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
   /**
    * @description Function to delete a product from the database.
@@ -48,7 +47,7 @@ const AdminProducts: React.FC = () => {
    */
   const handleDeleteProduct = async (productSlug: string) => {
     if (confirm(`Do you want to delete ${productSlug}`)) {
-      dispatch(adminPanelDeleteRequest());
+      setIsLoading(true);
       setModalOpen(true);
       try {
         await axios.delete<string, AppResponse<ProductSchema[]>>(
@@ -57,23 +56,20 @@ const AdminProducts: React.FC = () => {
             data: productSlug,
           }
         );
-        dispatch(
-          adminPanelDeleteSuccess(
-            (adminPanelData as ProductSchema[]).filter(
-              ({ slug }) => slug !== productSlug
-            )
-          )
-        );
+        setIsLoading(false);
+        setFetchData((prev) => prev.filter(({ slug }) => slug !== productSlug));
+        setFetchError('');
         setModalOpen(false);
         snackbarSuccess(notificationMessages.PRODUCT_DELETED);
       } catch (error: unknown) {
         setModalOpen(false);
+        setIsLoading(false);
         if (isAxiosError<{ message: string }>(error)) {
           const errorText = error.response?.data.message;
-          dispatch(adminPanelDeleteError(errorText));
+          setFetchError(errorText);
           snackbarError(errorText);
         } else {
-          dispatch(adminPanelDeleteError(`Unexpected error`));
+          setFetchError(`Unexpected error`);
           snackbarError(`Unexpected error`);
         }
       }
@@ -134,17 +130,21 @@ const AdminProducts: React.FC = () => {
     onNotAdmin();
     const fetchHandler = async () => {
       try {
-        dispatch(adminPanelFetchRequest());
-        const { data } = await axios.get<null, AppResponse<ProductSchema>>(
+        setIsLoading(true);
+        const { data } = await axios.get<null, AppResponse<ProductSchema[]>>(
           apiRoutes.ADMIN_PRODUCTS
         );
-        dispatch(adminPanelFetchSuccess(data.payload));
+        setFetchData(data.payload);
+        setIsLoading(false);
       } catch (error: unknown) {
+        setIsLoading(false);
         if (isAxiosError<{ message: string }>(error)) {
           const errorText = error.response?.data.message;
-          dispatch(adminPanelFetchError(errorText));
+          setFetchError(errorText);
+          snackbarError(errorText);
         } else {
-          dispatch(adminPanelFetchError(`Unexpected error`));
+          setFetchError(`Unexpected error`);
+          snackbarError(`Unexpected error`);
         }
       }
     };
@@ -186,14 +186,14 @@ const AdminProducts: React.FC = () => {
             </NextLink>
           </Box>
           <Box sx={styles.dataGrid}>
-            {adminPanelLoading ? (
+            {isLoading ? (
               <CircularProgress />
-            ) : adminPanelError ? (
-              <Typography sx={styles.colorRed}>{adminPanelError}</Typography>
+            ) : fetchError ? (
+              <Typography sx={styles.colorRed}>{fetchError}</Typography>
             ) : (
               <DataGrid
                 getRowId={(row) => row._id}
-                rows={adminPanelData}
+                rows={fetchData}
                 columns={columns}
                 pageSize={25}
                 rowsPerPageOptions={[25]}

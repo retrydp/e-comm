@@ -7,10 +7,8 @@ import {
   NoSsr,
   Typography,
 } from '@mui/material';
-import { useAppSelector, useAppDispatch } from '../store';
 import axios from 'axios';
 import { AppResponse, ProductSchema } from '../utils/types';
-import { favoritesFetch, favoritesSetLoading } from '../store/favorites';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { ArrowBack } from '@mui/icons-material';
@@ -18,14 +16,12 @@ import apiRoutes from '../constants/apiRoutes';
 import notificationMessages from '../constants/notificationMessages';
 import { useSession } from 'next-auth/react';
 import styles from '../utils/styles';
-import { useAccessProvider } from '../utils/hooks';
+import { useAccessProvider, useFetchHandler } from '../utils/hooks';
 
 const Favorites: React.FC = () => {
   const { onNotLoggedIn } = useAccessProvider();
-  const dispatch = useAppDispatch();
-  const {
-    favorites: { favoritesData, favoritesLoading },
-  } = useAppSelector((store) => store);
+  const { fetchData, isLoading, setIsLoading, setFetchData } =
+    useFetchHandler<ProductSchema[]>();
 
   const { data } = useSession();
 
@@ -33,12 +29,12 @@ const Favorites: React.FC = () => {
     if (!data?.user)
       return onNotLoggedIn(notificationMessages.FAVORITES_GET_NOT_LOGGED);
     const fetchFavorites = async () => {
-      dispatch(favoritesSetLoading(true));
+      setIsLoading(true);
       const { data } = await axios.get<null, AppResponse<ProductSchema[]>>(
         apiRoutes.USER_FAVORITE
       );
-      dispatch(favoritesFetch(data.payload));
-      dispatch(favoritesSetLoading(false));
+      setFetchData(data.payload);
+      setIsLoading(false);
     };
     fetchFavorites();
   }, []);
@@ -46,14 +42,14 @@ const Favorites: React.FC = () => {
   return (
     <NoSsr>
       <Layout title="home" customTitle="Favorites">
-        {favoritesLoading ? (
+        {isLoading ? (
           <CircularProgress sx={styles.mCenter} />
-        ) : favoritesData?.length > 0 ? (
+        ) : fetchData?.length > 0 ? (
           <Container maxWidth="lg" sx={styles.mb15}>
             <Typography variant="h4" sx={styles.defaultP}>
               Your favorites:
             </Typography>
-            <List products={favoritesData} favoritesModeAccept={false}></List>
+            <List products={fetchData} favoritesModeAccept={false}></List>
           </Container>
         ) : (
           <Container maxWidth="lg" sx={styles.favoritesContainer}>

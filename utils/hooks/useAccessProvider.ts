@@ -6,6 +6,7 @@ const useAccessProvider = () => {
   const { data } = useSession();
   const router = useRouter();
   const { snackbarError } = useInform();
+
   const onNotAdmin = () => {
     if (!data?.user?.isAdmin) router.push('/');
   };

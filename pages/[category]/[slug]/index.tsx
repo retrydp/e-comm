@@ -207,7 +207,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       notFound: true,
     };
   }
-
   await db.dbConnect();
   const productDoc = await Product.findOne({
     slug,

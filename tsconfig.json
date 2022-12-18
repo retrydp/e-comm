@@ -1,4 +1,5 @@
-{  "compilerOptions": {
+{
+  "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -30,7 +31,8 @@
     "**/*.tsx",
     "next.config.js",
     "utils/global.d.ts",
-    "__tests__/header.test.tsx"
+    "__tests__/header.test.tsx",
+    "pages/api/seed.ts.old"
   ],
   "exclude": ["node_modules"]
 }

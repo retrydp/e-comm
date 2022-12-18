@@ -9,3 +9,5 @@ export { default as useFormSettings } from './useFormSettings';
 export { default as useHandler } from './useHandler';
 
 export { default as useInform } from './useInform';
+
+export { default as useFetchHandler } from './useFetchHandler';
