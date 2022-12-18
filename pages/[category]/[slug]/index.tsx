@@ -207,30 +207,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       notFound: true,
     };
   }
-  // await db.dbConnect();
-  // const productDoc = await Product.findOne({
-  //   slug,
-  // }).lean();
-  const productDoc = {
-    slug: 'Nike Air Max 270 React',
-    name: 'Nike Air Max 270 React',
-    description: 'This is a sample product',
-    category: 'sneakers',
-    brand: 'nike',
-    price: '110.00',
-    oldPrice: '122.50',
-    color: 'white',
-    images: [
-      'https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/9e191f45-9227-49a4-97a6-806487a55a34/air-huarache-le-sneakers-7ggQkX.png',
-    ],
-    rating: 4,
-    salesCount: 0,
-    itemsInStock: 21,
-    numReviews: 0,
-  };
+  await db.dbConnect();
+  const productDoc = await Product.findOne({
+    slug,
+  }).lean();
+
   if (productDoc) {
-    // const product = db.convertDocToObj(productDoc);
-    const product = productDoc;
+    const product = db.convertDocToObj(productDoc);
 
     return {
       props: { product },
