@@ -8,28 +8,24 @@ import { AppResponse, InnerPayload, ProductSchema } from '../utils/types';
 import apiRoutes from '../constants/apiRoutes';
 import { useAppMedia } from '../utils/hooks';
 
-type TabItemNames = 'all' | 'bags' | 'sneakers' | 'belts';
-
-interface TabItems {
-  name: TabItemNames;
-}
+const tabItems = [
+  { name: 'all' },
+  { name: 'bags' },
+  { name: 'sneakers' },
+  { name: 'belts' },
+] as const;
 
 const Index: React.FC = (): JSX.Element => {
   const { smMin } = useAppMedia();
-  const [value, setValue] = React.useState<TabItemNames>('all');
+  const [value, setValue] =
+    React.useState<typeof tabItems[number]['name']>('all');
   const [loading, setLoading] = React.useState<boolean>(false);
   const [presentationData, setPresentationData] =
     React.useState<InnerPayload<ProductSchema>>();
-  const tabItems: TabItems[] = [
-    { name: 'all' },
-    { name: 'bags' },
-    { name: 'sneakers' },
-    { name: 'belts' },
-  ];
 
   const handleTabChange = (
     event: React.SyntheticEvent,
-    newValue: TabItemNames
+    newValue: typeof tabItems[number]['name']
   ) => {
     setValue(newValue);
   };
