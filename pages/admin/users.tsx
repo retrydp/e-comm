@@ -164,7 +164,7 @@ const AdminUsers: React.FC = () => {
                 columns={columns}
                 pageSize={30}
                 // onCellClick={({ id }) => console.log(id)}
-                rowsPerPageOptions={[50]}
+                rowsPerPageOptions={[30]}
                 checkboxSelection={false}
               />
             )}

@@ -1,7 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import displayInterface from './displayInterface';
-import adminProduct from './adminProduct';
-import adminUser from './adminUser';
 import favorites from './favorites';
 import cart, { CartProduct } from './cart';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
@@ -14,8 +12,6 @@ const saveState = (nextState: CartProduct[], key: string) =>
 const store = configureStore({
   reducer: {
     display: displayInterface,
-    adminProduct,
-    adminUser,
     cart,
     favorites,
   },

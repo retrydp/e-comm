@@ -1,3 +1,6 @@
-module.exports = {  //eslint-disable-line
-  images: { domains: ['static.nike.com', 'res.cloudinary.com'] },
+//eslint-disable-next-line
+module.exports = {
+  images: {
+    domains: ['static.nike.com', 'res.cloudinary.com', 'assets.myntassets.com'],
+  },
 };

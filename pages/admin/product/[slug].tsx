@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -25,20 +24,14 @@ import {
   AppResponse,
   ProductSchema,
 } from '../../../utils/types';
-import {
-  adminProductUploadRequest,
-  adminProductUploadSuccess,
-  adminProductUploadError,
-  adminProductAddError,
-  adminProductAddSuccess,
-  adminProductAddRequest,
-} from '../../../store/adminProduct';
+
 import Image from 'next/image';
 import { GetServerSideProps } from 'next';
 import {
   useFormSettings,
   useInform,
   useAccessProvider,
+  useFetchHandler,
 } from '../../../utils/hooks';
 import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
@@ -52,17 +45,12 @@ interface EditProductProps {
 const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
   const { snackbarSuccess, snackbarError } = useInform();
   const { onNotAdmin } = useAccessProvider();
+  const { isLoading, fetchError, setFetchError, setIsLoading } =
+    useFetchHandler();
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
-  const {
-    adminProduct: {
-      adminProductLoading,
-      adminProductLoadingAdd,
-      adminProductErrorText,
-    },
-  } = useAppSelector((store) => store);
-  const dispatch = useAppDispatch();
+
   const {
     handleSubmit,
     setValue,
@@ -96,7 +84,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     images,
   }: FieldValues) => {
     try {
-      dispatch(adminProductAddRequest());
+      setIsLoading(true);
       await axios.patch<ProductRequest, AppResponse<ProductSchema>>(
         `${apiRoutes.ADMIN_PRODUCT}${slug}`,
         {
@@ -111,16 +99,18 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           images,
         }
       );
+      setIsLoading(false);
+      setFetchError('');
       snackbarSuccess(notificationMessages.PRODUCT_UPDATED);
-      dispatch(adminProductAddSuccess());
     } catch (error: unknown) {
+      setIsLoading(false);
       if (isAxiosError<{ message: string }>(error)) {
         const errorText = error?.response?.data?.message;
         snackbarError(errorText);
-        dispatch(adminProductAddError(errorText));
+        setFetchError(errorText);
       } else {
         snackbarError(`Unexpected error`);
-        dispatch(adminProductAddError(`Unexpected error`));
+        setFetchError(`Unexpected error`);
       }
     }
   };
@@ -138,24 +128,26 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     const bodyFormData = new FormData();
     bodyFormData.append('file', file);
     try {
-      dispatch(adminProductUploadRequest());
+      setIsLoading(true);
       const { data } = await axios.post<FormData, AppResponse<string>>(
         apiRoutes.ADMIN_UPLOAD,
         bodyFormData
       );
-      dispatch(adminProductUploadSuccess());
+      setIsLoading(false);
+      setFetchError('');
       setValue('images', data.payload);
       setPreview(data.payload);
       snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
     } catch (error: unknown) {
       setPreview('');
       setValue('images', '');
+      setIsLoading(false);
       if (isAxiosError<{ message: string }>(error)) {
         const errorText = error.response?.data.message;
-        dispatch(adminProductUploadError(errorText));
+        setFetchError(errorText);
         snackbarError(errorText);
       } else {
-        dispatch(adminProductUploadError(`Unexpected error`));
+        setFetchError(`Unexpected error`);
         snackbarError(`Unexpected error`);
       }
     }
@@ -176,21 +168,24 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
     onNotAdmin();
     const fetchProducts = async () => {
       try {
-        dispatch(adminProductUploadRequest());
+        setIsLoading(true);
         const { data } = await axios.get<null, AppResponse<ProductSchema>>(
           `${apiRoutes.ADMIN_PRODUCT}${slug}`
         );
-        dispatch(adminProductUploadSuccess());
+
         const formTitles = product.map(({ name }) => name);
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
+        setIsLoading(false);
+        setFetchError('');
         setPreview(data.payload.images[0]);
       } catch (error: unknown) {
+        setIsLoading(false);
         if (isAxiosError<{ message: string }>(error))
-          dispatch(adminProductUploadError(error.response?.data.message));
+          setFetchError(error.response?.data.message);
         else {
-          dispatch(adminProductUploadError(`Unexpected error`));
+          setFetchError(`Unexpected error`);
         }
       }
     };
@@ -206,12 +201,10 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
           <Box sx={styles.userSidebar}>
             <Typography sx={styles.fz20}>Edit Product</Typography>
           </Box>
-          {adminProductLoadingAdd || adminProductLoading ? (
+          {isLoading ? (
             <CircularProgress />
-          ) : adminProductErrorText ? (
-            <Typography sx={styles.colorRed}>
-              {adminProductErrorText}
-            </Typography>
+          ) : fetchError ? (
+            <Typography sx={styles.colorRed}>{fetchError}</Typography>
           ) : (
             <form
               onSubmit={handleSubmit(submitHandler)}
@@ -295,7 +288,7 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
                       accept="image/*"
                     />
                   </Button>
-                  {adminProductLoading && <CircularProgress />}
+                  {isLoading && <CircularProgress />}
                 </ListItem>
                 {preview && (
                   <ListItem sx={styles.preview}>

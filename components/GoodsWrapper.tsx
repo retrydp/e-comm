@@ -253,7 +253,7 @@ const GoodsWrapper: React.FC<WrapperProps> = ({ goods }) => {
             </Toolbar>
             <PresentationSwitch />
           </Grid>
-          {!productsQuantity || <Pagination />}
+          {productsQuantity > parseInt(quantity) && <Pagination />}
         </Grid>
       </Container>
     </>

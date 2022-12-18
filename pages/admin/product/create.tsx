@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -16,7 +15,6 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-
 import { Controller, useForm, FieldValues } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
@@ -25,19 +23,12 @@ import {
   AppResponse,
   ProductSchema,
 } from '../../../utils/types';
-import {
-  adminProductUploadRequest,
-  adminProductUploadSuccess,
-  adminProductUploadError,
-  adminProductAddError,
-  adminProductAddSuccess,
-  adminProductAddRequest,
-} from '../../../store/adminProduct';
 import Image from 'next/image';
 import {
   useFormSettings,
   useInform,
   useAccessProvider,
+  useFetchHandler,
 } from '../../../utils/hooks';
 import apiRoutes from '../../../constants/apiRoutes';
 import notificationMessages from '../../../constants/notificationMessages';
@@ -47,13 +38,11 @@ import styles from '../../../utils/styles';
 const CreateProduct: React.FC = () => {
   const { snackbarSuccess, snackbarError } = useInform();
   const { onNotAdmin } = useAccessProvider();
+  const { isLoading, setIsLoading, setFetchError } = useFetchHandler();
   const [categoryValue, setCategoryValue] = React.useState<string>('bags');
   const [brandValue, setBrandValue] = React.useState<string>('nike');
   const [preview, setPreview] = React.useState<string>();
-  const {
-    adminProduct: { adminProductLoading, adminProductLoadingAdd },
-  } = useAppSelector((store) => store);
-  const dispatch = useAppDispatch();
+
   const {
     handleSubmit,
     setValue,
@@ -87,7 +76,7 @@ const CreateProduct: React.FC = () => {
     images,
   }: FieldValues) => {
     try {
-      dispatch(adminProductAddRequest());
+      setIsLoading(true);
       await axios.put<ProductRequest, AppResponse<ProductSchema>>(
         apiRoutes.ADMIN_PRODUCT_ADD,
         {
@@ -103,15 +92,17 @@ const CreateProduct: React.FC = () => {
         }
       );
       snackbarSuccess(notificationMessages.PRODUCT_CREATED);
-      dispatch(adminProductAddSuccess());
+      setIsLoading(false);
+      setFetchError('');
     } catch (error: unknown) {
+      setIsLoading(false);
       if (isAxiosError<{ message: string }>(error)) {
         const errorText = error.response?.data.message;
         snackbarError(errorText);
-        dispatch(adminProductAddError(errorText));
+        setFetchError(errorText);
       } else {
         snackbarError(`Unexpected error`);
-        dispatch(adminProductAddError(`Unexpected error`));
+        setFetchError(`Unexpected error`);
       }
     }
   };
@@ -129,24 +120,26 @@ const CreateProduct: React.FC = () => {
     const bodyFormData = new FormData();
     bodyFormData.append('file', file);
     try {
-      dispatch(adminProductUploadRequest());
+      setIsLoading(true);
       const { data } = await axios.post<FormData, AppResponse<string>>(
         apiRoutes.ADMIN_UPLOAD,
         bodyFormData
       );
-      dispatch(adminProductUploadSuccess());
+      setIsLoading(false);
+      setFetchError('');
       setValue('images', data.payload);
       setPreview(data.payload);
       snackbarSuccess(notificationMessages.UPLOAD_SUCCESS);
     } catch (error: unknown) {
+      setIsLoading(false);
       setPreview('');
       setValue('images', '');
       if (isAxiosError<{ message: string }>(error)) {
         const errorText = error.response?.data.message;
-        dispatch(adminProductUploadError(errorText));
+        setFetchError(errorText);
         snackbarError(errorText);
       } else {
-        dispatch(adminProductUploadError(`Unexpected error`));
+        setFetchError(`Unexpected error`);
         snackbarError(`Unexpected error`);
       }
     }
@@ -178,7 +171,7 @@ const CreateProduct: React.FC = () => {
           <Box sx={styles.userSidebar}>
             <Typography sx={styles.fz20}>Add Product</Typography>
           </Box>
-          {adminProductLoadingAdd ? (
+          {isLoading ? (
             <CircularProgress />
           ) : (
             <form
@@ -263,7 +256,7 @@ const CreateProduct: React.FC = () => {
                       accept="image/*"
                     />
                   </Button>
-                  {adminProductLoading && <CircularProgress />}
+                  {isLoading && <CircularProgress />}
                 </ListItem>
                 {preview && (
                   <ListItem sx={styles.preview}>

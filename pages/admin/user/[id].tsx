@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../../store';
 import {
   Box,
   Button,
@@ -20,13 +19,9 @@ import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { AdminSidebar } from '../../../components';
 import axios from 'axios';
 import { AppResponse, UserSchema } from '../../../utils/types';
-import {
-  adminUserEditRequest,
-  adminUserEditSuccess,
-  adminUserEditError,
-} from '../../../store/adminUser';
 import { GetServerSideProps } from 'next';
 import {
+  useFetchHandler,
   useFormSettings,
   useInform,
   useAccessProvider,
@@ -44,10 +39,8 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
   const { snackbarSuccess, snackbarError } = useInform();
   const { onNotAdmin } = useAccessProvider();
   const [isAdminValue, setIsAdminValue] = React.useState<boolean>(false);
-  const {
-    adminUser: { adminUserLoading, adminUserErrorText },
-  } = useAppSelector((store) => store);
-  const dispatch = useAppDispatch();
+  const { isLoading, fetchError, setIsLoading, setFetchError } =
+    useFetchHandler();
   const {
     handleSubmit,
     setValue,
@@ -61,7 +54,7 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
    */
   const submitHandler = async ({ name, email, isAdmin }: FieldValues) => {
     try {
-      dispatch(adminUserEditRequest());
+      setIsLoading(true);
       await axios.patch<UserSchema, AppResponse<UserSchema>>(
         `${apiRoutes.ADMIN_USER}${id}`,
         {
@@ -71,14 +64,16 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
         }
       );
       snackbarSuccess(notificationMessages.USER_UPDATE_SUCCESS);
-      dispatch(adminUserEditSuccess());
+      setIsLoading(false);
+      setFetchError('');
     } catch (error: unknown) {
+      setIsLoading(false);
       if (isAxiosError<{ message: string }>(error)) {
         const errorText = error.response?.data.message;
-        dispatch(adminUserEditError(errorText));
+        setFetchError(errorText);
         snackbarError(errorText);
       } else {
-        dispatch(adminUserEditError(`Unexpected error`));
+        setFetchError(`Unexpected error`);
         snackbarError(`Unexpected error`);
       }
     }
@@ -96,22 +91,24 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
     onNotAdmin();
     const fetchUsers = async () => {
       try {
-        dispatch(adminUserEditRequest());
+        setIsLoading(true);
         const { data } = await axios.get<'', AppResponse<UserSchema>>(
           `${apiRoutes.ADMIN_USER}${id}`
         );
-        dispatch(adminUserEditSuccess());
         const formTitles = user.map(({ name }) => name);
         formTitles.forEach((title) => {
           setValue(title, data.payload[title]);
         });
+        setIsLoading(false);
+        setFetchError('');
         setIsAdminValue(data.payload.isAdmin);
       } catch (error: unknown) {
+        setIsLoading(false);
         if (isAxiosError<{ message: string }>(error)) {
           const errorText = error.response?.data.message;
-          dispatch(adminUserEditError(errorText));
+          setFetchError(errorText);
         } else {
-          dispatch(adminUserEditError(`Unexpected error`));
+          setFetchError(`Unexpected error`);
         }
       }
     };
@@ -127,10 +124,10 @@ const EditUser: React.FC<EditUserProps> = ({ id }) => {
           <Box sx={styles.userSidebar}>
             <Typography sx={styles.fz20}>Edit User</Typography>
           </Box>
-          {adminUserLoading ? (
+          {isLoading ? (
             <CircularProgress />
-          ) : adminUserErrorText ? (
-            <Typography sx={styles.colorRed}>{adminUserErrorText}</Typography>
+          ) : fetchError ? (
+            <Typography sx={styles.colorRed}>{fetchError}</Typography>
           ) : (
             <form
               onSubmit={handleSubmit(submitHandler)}
