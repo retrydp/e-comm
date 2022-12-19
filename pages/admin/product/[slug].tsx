@@ -321,7 +321,15 @@ const EditProduct: React.FC<EditProductProps> = ({ slug }) => {
 
 export default EditProduct;
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  res,
+}) => {
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=30, stale-while-revalidate=59'
+  );
+
   const slug = params?.slug;
 
   return { props: { slug } };

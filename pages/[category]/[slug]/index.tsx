@@ -192,8 +192,16 @@ const ProductScreen: React.FC<ProductScreenProps> = ({ product }) => {
 
 export default ProductScreen;
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  res,
+}) => {
   const { slug, category } = query;
+
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=30, stale-while-revalidate=59'
+  );
 
   const validateCategory = (value: typeof category) => {
     const parsedCategory = commonConst.AVAILABLE_CATEGORIES.includes(
