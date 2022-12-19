@@ -1,5 +1,7 @@
 import React from 'react';
-import { Layout, List } from '../components';
+import dynamic from 'next/dynamic';
+const Layout = dynamic(() => import('../components/Layout'));
+const List = dynamic(() => import('../components/List'));
 import {
   Button,
   CircularProgress,

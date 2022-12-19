@@ -1,4 +1,5 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import {
   Box,
   Button,
@@ -15,9 +16,8 @@ import {
   SelectChangeEvent,
   FormControl,
 } from '@mui/material';
-
 import { Controller, useForm, FieldValues } from 'react-hook-form';
-import { AdminSidebar } from '../../../components';
+const AdminSidebar = dynamic(() => import('../../../components/AdminSidebar'));
 import axios from 'axios';
 import {
   ProductRequest,

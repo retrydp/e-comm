@@ -1,5 +1,10 @@
 import React from 'react';
-import { Layout, ModulePlaceholder } from '../components';
+import dynamic from 'next/dynamic';
+const Layout = dynamic(() => import('../components/Layout'));
+const ModulePlaceholder = dynamic(
+  () => import('../components/ModulePlaceholder')
+);
+
 import { useRouter } from 'next/router';
 import { Box, Container, Grid, Skeleton } from '@mui/material';
 import { NavTitles } from '../utils/types';

@@ -1,8 +1,12 @@
-import { Box, Container, Tab, Tabs, Typography } from '@mui/material';
 import React from 'react';
+import dynamic from 'next/dynamic';
+import { Box, Container, Tab, Tabs, Typography } from '@mui/material';
 import styles from '../utils/styles';
-import { Layout, Module } from '../components';
-import { ModulePlaceholder } from '../components';
+const ModulePlaceholder = dynamic(
+  () => import('../components/ModulePlaceholder')
+);
+const Layout = dynamic(() => import('../components/Layout'));
+const Module = dynamic(() => import('../components/Module'));
 import axios from 'axios';
 import { AppResponse, InnerPayload, ProductSchema } from '../utils/types';
 import apiRoutes from '../constants/apiRoutes';

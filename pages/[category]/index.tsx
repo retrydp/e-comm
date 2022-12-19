@@ -1,5 +1,7 @@
 import React from 'react';
-import { Layout, GoodsWrapper } from '../../components';
+import dynamic from 'next/dynamic';
+const Layout = dynamic(() => import('../../components/Layout'));
+const GoodsWrapper = dynamic(() => import('../../components/GoodsWrapper'));
 import { GoodsProps, NavTitles } from '../../utils/types';
 import db from '../../utils/database';
 import Product from '../../models/Product';

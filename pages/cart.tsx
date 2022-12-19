@@ -1,7 +1,9 @@
+import dynamic from 'next/dynamic';
 import { Box, Button, Container, Grid, NoSsr, Typography } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-import { Layout, List } from '../components';
+const Layout = dynamic(() => import('../components/Layout'));
+const List = dynamic(() => import('../components/List'));
 import styles from '../utils/styles';
 import { ArrowBack } from '@mui/icons-material';
 import { useAppSelector } from '../store';

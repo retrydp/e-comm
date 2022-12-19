@@ -1,9 +1,10 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { GetServerSideProps } from 'next';
 import db from '../../../utils/database';
 import Product from '../../../models/Product';
 import { ProductSchema } from '../../../utils/types';
-import { Layout } from '../../../components';
+const Layout = dynamic(() => import('../../../components/Layout'));
 import {
   Box,
   Button,

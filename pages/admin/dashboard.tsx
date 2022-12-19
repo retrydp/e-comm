@@ -1,6 +1,8 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { CssBaseline, Grid } from '@mui/material';
-import { AdminSidebar } from '../../components';
+const AdminSidebar = dynamic(() => import('../../components/AdminSidebar'));
+
 import { useAccessProvider } from '../../utils/hooks';
 
 const AdminDashboard: React.FC = () => {

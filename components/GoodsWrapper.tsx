@@ -1,4 +1,5 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import {
   Box,
@@ -20,7 +21,10 @@ import {
 import styles from '../utils/styles';
 import { FilterAltRounded, ViewList, ViewModule } from '@mui/icons-material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { SideMenuTemplate, Module, List, Pagination } from '../components';
+const SideMenuTemplate = dynamic(() => import('../components/SideMenu'));
+const Module = dynamic(() => import('../components/Module'));
+const List = dynamic(() => import('../components/List'));
+const Pagination = dynamic(() => import('../components/Pagination'));
 import { WrapperProps } from '../utils/types';
 import Image from 'next/image';
 import { useRouter } from 'next/router';

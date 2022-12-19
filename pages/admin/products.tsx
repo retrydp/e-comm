@@ -1,4 +1,5 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import {
   Box,
   Button,
@@ -16,7 +17,7 @@ import styles from '../../utils/styles';
 import { Add } from '@mui/icons-material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import NextLink from 'next/link';
-import { AdminSidebar } from '../../components';
+const AdminSidebar = dynamic(() => import('../../components/AdminSidebar'));
 import axios from 'axios';
 import { AppResponse, ProductSchema } from '../../utils/types';
 import apiRoutes from '../../constants/apiRoutes';
